@@ -100,6 +100,7 @@ public class ModuleManager {
         addModule(new WitchHat());
         addModule(new HitBox());
         addModule(new NoHurtCam());
+        addModule(new Clientfriend());
 
 
         System.err.println("Modules: " + modules.size());
