@@ -96,7 +96,7 @@ public class ModuleManager {
         addModule(new BugUp());
         addModule(new Criticals());
         addModule(new Wings());
-        addModule(new WhitherEffect());
+        //addModule(new WhitherEffect());
         addModule(new WitchHat());
         addModule(new HitBox());
         addModule(new NoHurtCam());

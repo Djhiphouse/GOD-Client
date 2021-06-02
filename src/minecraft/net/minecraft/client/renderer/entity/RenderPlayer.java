@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import me.bratwurst.Client;
 import me.bratwurst.cosmetics.CosmeticCape;
 import me.bratwurst.cosmetics.CosmeticWings;
 import me.bratwurst.cosmetics.CosmeticWitchHat;
@@ -41,6 +42,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         this.addLayer(new LayerArrow(this));
         this.addLayer(new LayerDeadmau5Head(this));
         this.addLayer(new CapeManager(this));
+
         //Kommt noch Muss mann noch Fixen
         //this.addLayer(new CosmeticCape(this));
         //
@@ -48,6 +50,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         this.addLayer(new CosmeticWitchHat(this));
 
         this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
+
 
     }
 
