@@ -763,7 +763,7 @@ public class EntityZombie extends EntityMob
     /**
      * Sets the width and height of the entity. Args: width, height
      */
-    protected final void setSize(float width, float height)
+    public final void setSize(float width, float height)
     {
         boolean flag = this.zombieWidth > 0.0F && this.zombieHeight > 0.0F;
         this.zombieWidth = width;

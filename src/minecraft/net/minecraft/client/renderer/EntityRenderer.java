@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
+import me.bratwurst.Client;
 import me.bratwurst.event.events.Event3D;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -613,28 +614,31 @@ public class EntityRenderer implements IResourceManagerReloadListener {
     }
 
     private void hurtCameraEffect(float partialTicks) {
-        if (this.mc.getRenderViewEntity() instanceof EntityLivingBase) {
-            EntityLivingBase entitylivingbase = (EntityLivingBase) this.mc.getRenderViewEntity();
-            float f = (float) entitylivingbase.hurtTime - partialTicks;
+        if (Client.moduleManager.getModuleByName("NoHurtCam").isToggle()) {
 
-            if (entitylivingbase.getHealth() <= 0.0F) {
-                float f1 = (float) entitylivingbase.deathTime + partialTicks;
-                GlStateManager.rotate(40.0F - 8000.0F / (f1 + 200.0F), 0.0F, 0.0F, 1.0F);
+        } else {
+            if (this.mc.getRenderViewEntity() instanceof EntityLivingBase) {
+                EntityLivingBase entitylivingbase = (EntityLivingBase) this.mc.getRenderViewEntity();
+                float f = (float) entitylivingbase.hurtTime - partialTicks;
+
+                if (entitylivingbase.getHealth() <= 0.0F) {
+                    float f1 = (float) entitylivingbase.deathTime + partialTicks;
+                    GlStateManager.rotate(40.0F - 8000.0F / (f1 + 200.0F), 0.0F, 0.0F, 1.0F);
+                }
+
+                if (f < 0.0F) {
+                    return;
+                }
+
+                f = f / (float) entitylivingbase.maxHurtTime;
+                f = MathHelper.sin(f * f * f * f * (float) Math.PI);
+                float f2 = entitylivingbase.attackedAtYaw;
+                GlStateManager.rotate(-f2, 0.0F, 1.0F, 0.0F);
+                GlStateManager.rotate(-f * 14.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.rotate(f2, 0.0F, 1.0F, 0.0F);
             }
-
-            if (f < 0.0F) {
-                return;
-            }
-
-            f = f / (float) entitylivingbase.maxHurtTime;
-            f = MathHelper.sin(f * f * f * f * (float) Math.PI);
-            float f2 = entitylivingbase.attackedAtYaw;
-            GlStateManager.rotate(-f2, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(-f * 14.0F, 0.0F, 0.0F, 1.0F);
-            GlStateManager.rotate(f2, 0.0F, 1.0F, 0.0F);
         }
     }
-
     /**
      * Setups all the GL settings for view bobbing. Args: partialTickTime
      */

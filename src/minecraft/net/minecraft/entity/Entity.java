@@ -367,7 +367,7 @@ public abstract class Entity implements ICommandSender {
     /**
      * Sets the width and height of the entity. Args: width, height
      */
-    protected void setSize(float width, float height) {
+    public void setSize(float width, float height) {
         if (width != this.width || height != this.height) {
             float f = this.width;
             this.width = width;

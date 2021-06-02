@@ -2,11 +2,11 @@
   <library name="lwjgl-platform-2.9.4-nightly-20150209-natives-windows">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/../../lib/lwjgl-platform-2.9.4-nightly-20150209-natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../lib/jinput-platform-2.0.5-natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../lib/lwjgl_util-2.9.4-nightly-20150209.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../lib/lwjgl-2.9.4-nightly-20150209.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <excluded>
-      <root url="jar://$PROJECT_DIR$/../../lib/lwjgl-platform-2.9.4-nightly-20150209-natives-windows.jar!/" />
-    </excluded>
   </library>
 </component>

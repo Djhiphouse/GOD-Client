@@ -98,6 +98,8 @@ public class ModuleManager {
         addModule(new Wings());
         addModule(new WhitherEffect());
         addModule(new WitchHat());
+        addModule(new HitBox());
+        addModule(new NoHurtCam());
 
 
         System.err.println("Modules: " + modules.size());
