@@ -147,7 +147,7 @@ public class VeloCity extends Module {
        if (f != 0) {
            f++;
            knock = true;
-
+           System.out.println("lol");
        }
     }
     public void Dev() {
