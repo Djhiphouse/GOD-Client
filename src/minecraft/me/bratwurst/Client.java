@@ -150,6 +150,7 @@ public class Client {
                 }
                 if(blocked){
                     System.exit(1);
+                    System.out.println("DU WURDEST GEBANNT");
                     JOptionPane.showMessageDialog(null, "Du bist Gebannt!", "Banned", JOptionPane.ERROR_MESSAGE);
                 }
                 return blocked;
