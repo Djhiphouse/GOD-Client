@@ -1,0 +1,128 @@
+---- Minecraft Crash Report ----
+// Shall we play a game?
+
+Time: 22.04.21 23:38
+Description: Rendering item
+
+com.google.common.util.concurrent.UncheckedExecutionException: java.lang.NullPointerException
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2201)
+	at com.google.common.cache.LocalCache.get(LocalCache.java:3934)
+	at com.google.common.cache.LocalCache.getOrLoad(LocalCache.java:3938)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.get(LocalCache.java:4821)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.getUnchecked(LocalCache.java:4827)
+	at net.minecraft.client.resources.SkinManager.loadSkinFromCache(SkinManager.java:152)
+	at net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer.renderSkull(TileEntitySkullRenderer.java:80)
+	at net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer.renderByItem(TileEntityItemStackRenderer.java:61)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItem(RenderItem.java:181)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemIntoGUI(RenderItem.java:459)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemAndEffectIntoGUI(RenderItem.java:499)
+	at net.minecraft.client.gui.GuiIngame.renderHotbarItem(GuiIngame.java:1082)
+	at net.minecraft.client.gui.GuiIngame.renderTooltip(GuiIngame.java:390)
+	at net.minecraft.client.gui.GuiIngame.renderGameOverlay(GuiIngame.java:161)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1200)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1039)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+Caused by: java.lang.NullPointerException
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.isWhitelistedDomain(YggdrasilMinecraftSessionService.java:210)
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.getTextures(YggdrasilMinecraftSessionService.java:149)
+	at net.minecraft.client.resources.SkinManager$1.load(SkinManager.java:44)
+	at net.minecraft.client.resources.SkinManager$1.load(SkinManager.java:41)
+	at com.google.common.cache.LocalCache$LoadingValueReference.loadFuture(LocalCache.java:3524)
+	at com.google.common.cache.LocalCache$Segment.loadSync(LocalCache.java:2317)
+	at com.google.common.cache.LocalCache$Segment.lockedGetOrLoad(LocalCache.java:2280)
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2195)
+	... 18 more
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2201)
+	at com.google.common.cache.LocalCache.get(LocalCache.java:3934)
+	at com.google.common.cache.LocalCache.getOrLoad(LocalCache.java:3938)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.get(LocalCache.java:4821)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.getUnchecked(LocalCache.java:4827)
+	at net.minecraft.client.resources.SkinManager.loadSkinFromCache(SkinManager.java:152)
+	at net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer.renderSkull(TileEntitySkullRenderer.java:80)
+	at net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer.renderByItem(TileEntityItemStackRenderer.java:61)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItem(RenderItem.java:181)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemIntoGUI(RenderItem.java:459)
+
+-- Item being rendered --
+Details:
+	Item Type: net.minecraft.item.ItemSkull@ef718de
+	Item Aux: 3
+	Item NBT: {ViaRewind1_8to1_9:{data:3s,displayName:"§f§e§lFreunde §7§o*Rechtsklick*",id:397s},SkullOwner:{Id:"6c1608f2-0d6d-36c3-a294-a0b851ecafbe",Properties:{textures:[0:{Value:"e3RleHR1cmVzOntTS0lOOnt1cmw6IiJ9fX0="}]},Name:"SpringFox64"},display:{VB|Protocol1_12_2To1_13|2|Name:"{\"text\":\"§e§lFreunde §7§o*Rechtsklick*\"}",Name:"§f§e§lFreunde §7§o*Rechtsklick*"},SkullOwnerOrig:"766bace2-a150-44dd-b73e-fd9b628af638"}
+	Item Foil: false
+Stacktrace:
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemAndEffectIntoGUI(RenderItem.java:499)
+	at net.minecraft.client.gui.GuiIngame.renderHotbarItem(GuiIngame.java:1082)
+	at net.minecraft.client.gui.GuiIngame.renderTooltip(GuiIngame.java:390)
+	at net.minecraft.client.gui.GuiIngame.renderGameOverlay(GuiIngame.java:161)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 4 total; [EntityPlayerSP['SpringFox64'/182729, l='MpServer', x=8,50, y=65,00, z=8,50], EntityOtherPlayerMP['§1'/298, l='MpServer', x=48,50, y=64,00, z=873,50], EntityOtherPlayerMP['§1'/306, l='MpServer', x=50,50, y=64,00, z=870,50], EntityOtherPlayerMP['§1'/290, l='MpServer', x=50,50, y=64,00, z=860,50]]
+	Chunk stats: MultiplayerChunkCache: 21, 21
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 8,00,64,00,8,00 - World: (8,64,8), Chunk: (at 8,4,8 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 1 game time, 1 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 158 total; [EntityPlayerSP['SpringFox64'/182729, l='MpServer', x=8,50, y=65,00, z=8,50], EntityArmorStand['§fonlinetime-place-3'/256, l='MpServer', x=49,94, y=65,44, z=889,75], EntityArmorStand['§fonlinetime-place-4'/258, l='MpServer', x=53,03, y=64,00, z=890,91], EntityArmorStand['§fonlinetime-place-5'/260, l='MpServer', x=55,91, y=63,50, z=890,84], EntityArmorStand['§fvote-place-1'/262, l='MpServer', x=44,00, y=66,44, z=843,25], EntityArmorStand['§fvote-place-2'/264, l='MpServer', x=47,03, y=65,94, z=842,09], EntityOtherPlayerMP['§1'/298, l='MpServer', x=48,50, y=64,00, z=873,50], EntityArmorStand['§fvote-place-3'/266, l='MpServer', x=50,03, y=65,44, z=841,16], EntityArmorStand['§fvote-place-4'/268, l='MpServer', x=53,09, y=64,00, z=839,97], EntityOtherPlayerMP['§1'/306, l='MpServer', x=50,50, y=64,00, z=870,50], EntityArmorStand['§fvote-place-5'/270, l='MpServer', x=56,03, y=63,50, z=840,09], EntityWither['§e§lV§e§lI§e§lE§9§lL§e§l §e§lS§e§lP§e§lA§e§lß§e§l §e§lA§e§lU§e§lF§e§l §e§lM§e§lI§e§lX§e§lE§e§lL§e§lP§e§lI§e§lX§e§lE§e§lL'/2147473647, l='MpServer', x=0,00, y=0,00, z=48,00], EntityArmorStand['Armor Stand'/275, l='MpServer', x=15,97, y=65,59, z=869,00], EntityArmorStand['Armor Stand'/276, l='MpServer', x=11,00, y=66,72, z=868,84], EntityArmorStand['Armor Stand'/277, l='MpServer', x=10,53, y=67,22, z=861,88], EntityArmorStand['Armor Stand'/278, l='MpServer', x=16,06, y=66,28, z=862,38], EntityArmorStand['Armor Stand'/279, l='MpServer', x=15,66, y=66,41, z=868,47], EntityArmorStand['§f§fTOP-HOLDER-1-Spielzeit'/182554, l='MpServer', x=43,94, y=66,00, z=887,72], EntityArmorStand['Armor Stand'/280, l='MpServer', x=10,63, y=66,63, z=868,78], EntityArmorStand['§f§fTOP-HOLDER-2-Spielzeit'/182555, l='MpServer', x=46,91, y=65,50, z=888,84], EntityArmorStand['Armor Stand'/281, l='MpServer', x=10,53, y=68,06, z=862,47], EntityArmorStand['Armor Stand'/282, l='MpServer', x=15,88, y=66,78, z=862,22], EntityArmorStand['Armor Stand'/283, l='MpServer', x=16,22, y=66,41, z=868,44], EntityArmorStand['§f§fTOP-HOLDER-5-Spielzeit'/182558, l='MpServer', x=55,91, y=64,00, z=890,84], EntityArmorStand['Armor Stand'/284, l='MpServer', x=11,25, y=66,63, z=868,84], EntityArmorStand['§f§fTOP-HOLDER-1-Votes'/182559, l='MpServer', x=44,00, y=66,00, z=843,25], EntityArmorStand['Armor Stand'/285, l='MpServer', x=10,13, y=67,94, z=862,31], EntityArmorStand['Armor Stand'/286, l='MpServer', x=17,53, y=66,16, z=862,22], EntityArmorStand['§f§fTOP-HOLDER-3-Spielzeit'/182556, l='MpServer', x=49,94, y=65,00, z=889,75], EntityArmorStand['§f§fTOP-HOLDER-4-Spielzeit'/182557, l='MpServer', x=53,03, y=64,50, z=890,91], EntityArmorStand['§f§fTOP-HOLDER-4-Votes'/182562, l='MpServer', x=53,09, y=64,50, z=839,97], EntityArmorStand['§f§fTOP-HOLDER-5-Votes'/182563, l='MpServer', x=56,03, y=64,00, z=840,09], EntityOtherPlayerMP['§1'/290, l='MpServer', x=50,50, y=64,00, z=860,50], EntityArmorStand['§f§fTOP-HOLDER-2-Votes'/182560, l='MpServer', x=47,03, y=65,50, z=842,09], EntityArmorStand['§f§fTOP-HOLDER-3-Votes'/182561, l='MpServer', x=50,03, y=65,00, z=841,16], EntityArmorStand['§fnpc-citybuild'/293, l='MpServer', x=50,50, y=64,28, z=860,50], EntityOtherPlayerMP['§1'/290, l='MpServer', x=50,50, y=64,00, z=860,50], EntityArmorStand['§f§fNPCHOLDER'/294, l='MpServer', x=50,50, y=65,44, z=860,50], EntityOtherPlayerMP['§1'/298, l='MpServer', x=48,50, y=64,00, z=873,50], EntityArmorStand['Armor Stand'/42, l='MpServer', x=53,50, y=66,03, z=862,56], EntityArmorStand['§f§1Willkommen §1auf MixelPixel'/43, l='MpServer', x=53,22, y=65,34, z=868,34], EntityItemFrame['entity.ItemFrame.name'/44, l='MpServer', x=16,97, y=71,50, z=865,50], EntityItemFrame['entity.ItemFrame.name'/45, l='MpServer', x=22,03, y=71,50, z=865,50], EntityArmorStand['§fnpc-knockbackffa'/301, l='MpServer', x=48,50, y=64,28, z=873,50], EntityItemFrame['entity.ItemFrame.name'/46, l='MpServer', x=22,03, y=71,50, z=868,50], EntityArmorStand['§f§fNPCHOLDER'/302, l='MpServer', x=48,50, y=65,44, z=873,50], EntityItemFrame['entity.ItemFrame.name'/47, l='MpServer', x=22,03, y=71,50, z=862,50], EntityOtherPlayerMP['§1'/306, l='MpServer', x=50,50, y=64,00, z=870,50], EntityArmorStand['§fnpc-western'/309, l='MpServer', x=50,50, y=64,28, z=870,50], EntityArmorStand['§f§fNPCHOLDER'/310, l='MpServer', x=50,50, y=65,44, z=870,50], EntityArmorStand['Armor Stand'/311, l='MpServer', x=16,59, y=65,38, z=868,97], EntityArmorStand['Armor Stand'/312, l='MpServer', x=10,63, y=67,84, z=862,19], EntityArmorStand['Armor Stand'/313, l='MpServer', x=16,72, y=66,63, z=862,03], EntityArmorStand['Armor Stand'/314, l='MpServer', x=15,63, y=66,59, z=868,78], EntityArmorStand['Armor Stand'/315, l='MpServer', x=16,09, y=66,84, z=862,22], EntityArmorStand['Armor Stand'/316, l='MpServer', x=15,94, y=66,59, z=868,78], EntityArmorStand['Armor Stand'/317, l='MpServer', x=15,94, y=66,72, z=862,75], EntityArmorStand['Armor Stand'/318, l='MpServer', x=16,44, y=66,03, z=869,69], EntityArmorStand['Armor Stand'/319, l='MpServer', x=15,59, y=66,59, z=863,13], EntityArmorStand['Armor Stand'/320, l='MpServer', x=16,31, y=67,03, z=862,03], EntityArmorStand['Armor Stand'/336, l='MpServer', x=16,00, y=66,25, z=862,75], EntityArmorStand['Armor Stand'/337, l='MpServer', x=15,91, y=66,41, z=862,38], EntityArmorStand['Armor Stand'/338, l='MpServer', x=16,34, y=66,88, z=862,00], EntityItemFrame['entity.ItemFrame.name'/141, l='MpServer', x=79,03, y=47,50, z=868,50], EntityArmorStand['§fparkourblock'/143, l='MpServer', x=73,50, y=56,19, z=865,50], EntityPainting['Painting'/219, l='MpServer', x=79,00, y=51,00, z=849,97], EntityItemFrame['entity.ItemFrame.name'/179, l='MpServer', x=4,97, y=71,50, z=862,50], EntityItemFrame['entity.ItemFrame.name'/180, l='MpServer', x=4,97, y=71,50, z=868,50], EntityItemFrame['entity.ItemFrame.name'/181, l='MpServer', x=4,97, y=71,50, z=865,50], EntityItemFrame['entity.ItemFrame.name'/182, l='MpServer', x=10,03, y=71,50, z=865,50], EntityArmorStand['Armor Stand'/185, l='MpServer', x=67,94, y=45,50, z=852,00], EntityArmorStand['Armor Stand'/186, l='MpServer', x=67,94, y=45,50, z=853,88], EntityArmorStand['Armor Stand'/187, l='MpServer', x=67,94, y=45,50, z=855,13], EntityArmorStand['Armor Stand'/188, l='MpServer', x=67,94, y=45,50, z=853,25], EntityArmorStand['Armor Stand'/189, l='MpServer', x=71,09, y=45,50, z=855,13], EntityArmorStand['Armor Stand'/190, l='MpServer', x=70,69, y=45,50, z=851,94], EntityArmorStand['Armor Stand'/191, l='MpServer', x=69,44, y=45,50, z=857,06], EntityArmorStand['Armor Stand'/192, l='MpServer', x=67,94, y=45,50, z=857,00], EntityArmorStand['Armor Stand'/193, l='MpServer', x=71,06, y=45,50, z=857,00], EntityArmorStand['Armor Stand'/194, l='MpServer', x=67,94, y=45,53, z=856,38], EntityArmorStand['Armor Stand'/195, l='MpServer', x=68,81, y=45,50, z=851,94], EntityArmorStand['Armor Stand'/196, l='MpServer', x=71,06, y=45,50, z=852,00], EntityArmorStand['Armor Stand'/197, l='MpServer', x=70,06, y=45,53, z=857,06], EntityArmorStand['Armor Stand'/198, l='MpServer', x=70,69, y=45,50, z=857,06], EntityArmorStand['Armor Stand'/199, l='MpServer', x=68,31, y=45,50, z=857,06], EntityArmorStand['Armor Stand'/200, l='MpServer', x=67,94, y=45,50, z=854,50], EntityArmorStand['Armor Stand'/182731, l='MpServer', x=48,50, y=64,03, z=873,50], EntityArmorStand['Armor Stand'/201, l='MpServer', x=71,06, y=45,50, z=853,25], EntityArmorStand['Armor Stand'/202, l='MpServer', x=71,06, y=45,50, z=855,75], EntityArmorStand['Armor Stand'/203, l='MpServer', x=68,31, y=45,50, z=851,94], EntityArmorStand['Armor Stand'/182734, l='MpServer', x=50,50, y=63,78, z=870,50], EntityArmorStand['Armor Stand'/204, l='MpServer', x=70,06, y=45,50, z=851,94], EntityArmorStand['Armor Stand'/182735, l='MpServer', x=43,94, y=66,44, z=887,72], EntityArmorStand['Armor Stand'/205, l='MpServer', x=67,94, y=45,50, z=855,75], EntityArmorStand['Armor Stand'/182732, l='MpServer', x=48,50, y=63,78, z=873,50], EntityArmorStand['Armor Stand'/206, l='MpServer', x=71,06, y=45,50, z=853,88], EntityArmorStand['Armor Stand'/182733, l='MpServer', x=50,50, y=64,03, z=870,50], EntityArmorStand['Armor Stand'/207, l='MpServer', x=71,06, y=45,50, z=854,50], EntityArmorStand['Armor Stand'/182738, l='MpServer', x=46,91, y=65,94, z=888,84], EntityArmorStand['Armor Stand'/208, l='MpServer', x=67,94, y=45,50, z=852,63], EntityArmorStand['Armor Stand'/182739, l='MpServer', x=46,91, y=65,69, z=888,84], EntityArmorStand['Armor Stand'/209, l='MpServer', x=71,06, y=45,50, z=852,63], EntityArmorStand['Armor Stand'/182736, l='MpServer', x=43,94, y=66,19, z=887,72], EntityArmorStand['Armor Stand'/210, l='MpServer', x=71,06, y=45,50, z=856,38], EntityArmorStand['Armor Stand'/182737, l='MpServer', x=43,94, y=65,94, z=887,72], EntityArmorStand['Armor Stand'/211, l='MpServer', x=68,81, y=45,50, z=857,06], EntityArmorStand['Armor Stand'/182742, l='MpServer', x=50,50, y=63,78, z=860,50], EntityArmorStand['Armor Stand'/212, l='MpServer', x=69,44, y=45,50, z=851,94], EntityArmorStand['Armor Stand'/182743, l='MpServer', x=49,94, y=65,44, z=889,75], EntityArmorStand['Armor Stand'/213, l='MpServer', x=72,41, y=46,00, z=857,09], EntityArmorStand['Armor Stand'/182740, l='MpServer', x=46,91, y=65,44, z=888,84], EntityArmorStand['Armor Stand'/214, l='MpServer', x=72,47, y=46,00, z=856,63], EntityArmorStand['Armor Stand'/182741, l='MpServer', x=50,50, y=64,03, z=860,50], EntityArmorStand['Armor Stand'/215, l='MpServer', x=71,84, y=46,09, z=856,31], EntityArmorStand['Armor Stand'/182746, l='MpServer', x=53,03, y=64,00, z=890,91], EntityArmorStand['Armor Stand'/216, l='MpServer', x=69,28, y=46,34, z=856,28], EntityArmorStand['Armor Stand'/182747, l='MpServer', x=53,03, y=63,75, z=890,91], EntityArmorStand['Armor Stand'/217, l='MpServer', x=70,06, y=46,31, z=854,47], EntityArmorStand['Armor Stand'/182744, l='MpServer', x=49,94, y=65,19, z=889,75], EntityArmorStand['Armor Stand'/218, l='MpServer', x=69,00, y=46,13, z=853,16], EntityArmorStand['Armor Stand'/182745, l='MpServer', x=49,94, y=64,94, z=889,75], EntityPainting['Painting'/219, l='MpServer', x=79,00, y=51,00, z=849,97], EntityArmorStand['Armor Stand'/182750, l='MpServer', x=55,91, y=63,25, z=890,84], EntityArmorStand['Armor Stand'/220, l='MpServer', x=76,47, y=45,22, z=882,88], EntityArmorStand['Armor Stand'/182751, l='MpServer', x=55,91, y=63,00, z=890,84], EntityArmorStand['Armor Stand'/221, l='MpServer', x=76,22, y=45,81, z=884,69], EntityArmorStand['Armor Stand'/182748, l='MpServer', x=53,03, y=63,50, z=890,91], EntityArmorStand['Armor Stand'/222, l='MpServer', x=76,34, y=45,75, z=884,13], EntityArmorStand['Armor Stand'/182749, l='MpServer', x=55,91, y=63,50, z=890,84], EntityArmorStand['Armor Stand'/223, l='MpServer', x=76,75, y=45,72, z=883,63], EntityArmorStand['Armor Stand'/182754, l='MpServer', x=44,00, y=65,94, z=843,25], EntityArmorStand['Armor Stand'/224, l='MpServer', x=76,63, y=45,69, z=884,91], EntityArmorStand['Armor Stand'/182755, l='MpServer', x=47,03, y=65,94, z=842,09], EntityArmorStand['Armor Stand'/182752, l='MpServer', x=44,00, y=66,44, z=843,25], EntityArmorStand['Armor Stand'/182753, l='MpServer', x=44,00, y=66,19, z=843,25], EntityArmorStand['Armor Stand'/182758, l='MpServer', x=73,50, y=55,94, z=865,50], EntityArmorStand['Armor Stand'/182759, l='MpServer', x=73,50, y=55,69, z=865,50], EntityArmorStand['Armor Stand'/182756, l='MpServer', x=47,03, y=65,69, z=842,09], EntityArmorStand['Armor Stand'/182757, l='MpServer', x=47,03, y=65,44, z=842,09], EntityArmorStand['§f§3Mini Monty'/232, l='MpServer', x=15,97, y=65,88, z=869,00], EntityArmorStand['Armor Stand'/182762, l='MpServer', x=50,03, y=64,94, z=841,16], EntityArmorStand['§f§6Mr. Blop'/233, l='MpServer', x=10,94, y=65,22, z=868,81], EntityArmorStand['Armor Stand'/182763, l='MpServer', x=53,09, y=64,00, z=839,97], EntityArmorStand['§f§dPixi'/234, l='MpServer', x=10,53, y=66,78, z=862,19], EntityArmorStand['Armor Stand'/182760, l='MpServer', x=50,03, y=65,44, z=841,16], EntityArmorStand['§f§5Dr. Auge'/235, l='MpServer', x=15,97, y=66,25, z=862,16], EntityArmorStand['Armor Stand'/182761, l='MpServer', x=50,03, y=65,19, z=841,16], EntityArmorStand['Armor Stand'/182766, l='MpServer', x=56,03, y=63,50, z=840,09], EntityArmorStand['Armor Stand'/182767, l='MpServer', x=56,03, y=63,25, z=840,09], EntityArmorStand['Armor Stand'/182764, l='MpServer', x=53,09, y=63,75, z=839,97], EntityArmorStand['Armor Stand'/182765, l='MpServer', x=53,09, y=63,50, z=839,97], EntityArmorStand['Armor Stand'/182768, l='MpServer', x=56,03, y=63,00, z=840,09], EntityArmorStand['Armor Stand'/245, l='MpServer', x=15,97, y=66,88, z=869,00], EntityArmorStand['Armor Stand'/246, l='MpServer', x=10,97, y=65,56, z=868,81], EntityArmorStand['Armor Stand'/247, l='MpServer', x=10,78, y=67,19, z=862,13], EntityArmorStand['Armor Stand'/248, l='MpServer', x=15,28, y=66,13, z=861,31], EntityArmorStand['§fonlinetime-place-1'/252, l='MpServer', x=43,94, y=66,44, z=887,72], EntityArmorStand['§fonlinetime-place-2'/254, l='MpServer', x=46,91, y=65,94, z=888,84]]
+	Retry entities: 0 total; []
+	Server brand: PixelBungee <- Paper
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 474405744 bytes (452 MB) / 765460480 bytes (730 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

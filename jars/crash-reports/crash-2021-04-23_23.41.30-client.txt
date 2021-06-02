@@ -1,0 +1,128 @@
+---- Minecraft Crash Report ----
+// My bad.
+
+Time: 23.04.21 23:41
+Description: Loading entity NBT
+
+java.lang.NullPointerException: Loading entity NBT
+	at net.minecraft.entity.item.EntityFallingBlock.readEntityFromNBT(EntityFallingBlock.java:249)
+	at net.minecraft.entity.Entity.readFromNBT(Entity.java:1511)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.spawnNewEntity(MobSpawnerBaseLogic.java:177)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.func_180612_a(MobSpawnerBaseLogic.java:347)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderMob(TileEntityMobSpawnerRenderer.java:24)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:15)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:9)
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntityAt(TileEntityRendererDispatcher.java:134)
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntity(TileEntityRendererDispatcher.java:114)
+	at net.minecraft.client.renderer.RenderGlobal.renderEntities(RenderGlobal.java:818)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1506)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1346)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1179)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1039)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.entity.item.EntityFallingBlock.readEntityFromNBT(EntityFallingBlock.java:249)
+
+-- Entity being loaded --
+Details:
+	Entity Type: FallingSand (net.minecraft.entity.item.EntityFallingBlock)
+	Entity ID: 4753
+	Entity Name: Falling Block
+	Entity's Exact location: 0,00, 0,00, 0,00
+	Entity's Block location: 0,00,0,00,0,00 - World: (0,0,0), Chunk: (at 0,0,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Entity's Momentum: 0,00, 0,00, 0,00
+	Entity's Rider: ~~ERROR~~ NullPointerException: null
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.entity.Entity.readFromNBT(Entity.java:1511)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.spawnNewEntity(MobSpawnerBaseLogic.java:177)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.func_180612_a(MobSpawnerBaseLogic.java:347)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderMob(TileEntityMobSpawnerRenderer.java:24)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:15)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:9)
+
+-- Block Entity Details --
+Details:
+	Name: MobSpawner // net.minecraft.tileentity.TileEntityMobSpawner
+	Block type: ID #52 (tile.mobSpawner // net.minecraft.block.BlockMobSpawner)
+	Block data value: 0 / 0x0 / 0b0000
+	Block location: World: (167,92,276), Chunk: (at 7,5,4 in 10,17; contains blocks 160,0,272 to 175,255,287), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Actual block type: ID #52 (tile.mobSpawner // net.minecraft.block.BlockMobSpawner)
+	Actual block data value: 0 / 0x0 / 0b0000
+Stacktrace:
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntityAt(TileEntityRendererDispatcher.java:134)
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntity(TileEntityRendererDispatcher.java:114)
+	at net.minecraft.client.renderer.RenderGlobal.renderEntities(RenderGlobal.java:818)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1506)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1346)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['God312'/2605, l='MpServer', x=167,89, y=91,00, z=277,44], EntityOtherPlayerMP['PoishiiLP'/2498, l='MpServer', x=166,44, y=92,00, z=275,66]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 152,00,64,00,252,00 - World: (152,64,252), Chunk: (at 8,4,12 in 9,15; contains blocks 144,0,240 to 159,255,255), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 27047 game time, 27047 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 26 total; [EntityCow['Cow'/192, l='MpServer', x=202,59, y=62,00, z=295,09], EntityOtherPlayerMP['PoishiiLP'/2498, l='MpServer', x=166,44, y=92,00, z=275,66], EntityItem['item.tile.sapling.jungle'/2634, l='MpServer', x=162,63, y=91,00, z=263,28], EntityCow['Cow'/145, l='MpServer', x=157,44, y=65,00, z=314,69], EntityCow['Cow'/146, l='MpServer', x=150,50, y=68,00, z=302,50], EntityCow['Cow'/147, l='MpServer', x=148,44, y=68,00, z=304,53], EntityCow['Cow'/148, l='MpServer', x=147,44, y=68,00, z=303,44], EntityBat['Bat'/2593, l='MpServer', x=149,53, y=13,07, z=273,58], EntityCow['Cow'/162, l='MpServer', x=196,34, y=73,00, z=238,25], EntityCow['Cow'/164, l='MpServer', x=183,25, y=68,00, z=248,53], EntityCow['Cow'/165, l='MpServer', x=174,53, y=72,69, z=286,44], EntityCow['Cow'/166, l='MpServer', x=172,26, y=72,00, z=288,26], EntityCow['Cow'/167, l='MpServer', x=182,75, y=64,00, z=313,53], EntityCow['Cow'/168, l='MpServer', x=178,28, y=74,00, z=302,47], EntityPlayerSP['God312'/2605, l='MpServer', x=167,89, y=91,00, z=277,44], EntityOtherPlayerMP['PoishiiLP'/2498, l='MpServer', x=166,44, y=92,00, z=275,66], EntityCow['Cow'/177, l='MpServer', x=180,72, y=71,00, z=240,50], EntityCow['Cow'/178, l='MpServer', x=178,53, y=62,00, z=245,28], EntityCow['Cow'/179, l='MpServer', x=202,59, y=69,00, z=248,19], EntityCow['Cow'/180, l='MpServer', x=175,44, y=69,00, z=239,34], EntityBat['Bat'/2553, l='MpServer', x=138,47, y=21,00, z=318,06], EntityCow['Cow'/186, l='MpServer', x=202,16, y=72,00, z=266,53], EntityCow['Cow'/187, l='MpServer', x=212,44, y=64,00, z=243,44], EntityCow['Cow'/189, l='MpServer', x=182,44, y=69,00, z=283,50], EntityCow['Cow'/190, l='MpServer', x=202,41, y=70,00, z=287,53], EntityCow['Cow'/191, l='MpServer', x=203,44, y=71,00, z=281,44]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 322957312 bytes (307 MB) / 494927872 bytes (472 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

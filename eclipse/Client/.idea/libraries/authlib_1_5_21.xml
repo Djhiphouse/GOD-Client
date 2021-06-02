@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="authlib-1.5.21">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../lib/authlib-1.5.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../lib/ViaVersion-3.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

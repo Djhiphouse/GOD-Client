@@ -1,0 +1,92 @@
+---- Minecraft Crash Report ----
+// Hi. I'm Minecraft, and I'm a crashaholic.
+
+Time: 09.05.21 22:08
+Description: Unexpected error
+
+java.lang.NullPointerException: Unexpected error
+	at net.minecraft.client.renderer.ItemRenderer.renderItemInFirstPerson(ItemRenderer.java:345)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:913)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:869)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1669)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1346)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1179)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1039)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.renderer.ItemRenderer.renderItemInFirstPerson(ItemRenderer.java:345)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:913)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:869)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1669)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1346)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['God375'/1784, l='MpServer', x=-216,46, y=72,00, z=247,53], EntityOtherPlayerMP['§cGodAdmin | §7Bratwurst001'/201, l='MpServer', x=-217,03, y=64,00, z=238,53]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -215,00,64,00,254,00 - World: (-215,64,254), Chunk: (at 9,4,14 in -14,15; contains blocks -224,0,240 to -209,255,255), Region: (-1,0; contains chunks -32,0 to -1,31, blocks -512,0,0 to -1,255,511)
+	Level time: 3847096 game time, 3847096 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 25 total; [EntityPlayerSP['God375'/1784, l='MpServer', x=-216,46, y=72,00, z=247,53], EntityOtherPlayerMP['§cGodAdmin | §7Bratwurst001'/201, l='MpServer', x=-217,03, y=64,00, z=238,53], EntityOtherPlayerMP['§cGodAdmin | §7Bratwurst001'/201, l='MpServer', x=-217,03, y=64,00, z=238,53], EntityChicken['Chicken'/458, l='MpServer', x=-239,41, y=70,00, z=274,72], EntityBat['Bat'/336, l='MpServer', x=-229,00, y=48,10, z=224,97], EntityPig['Pig'/80, l='MpServer', x=-262,47, y=62,00, z=211,19], EntityRabbit['Rabbit'/81, l='MpServer', x=-261,50, y=62,00, z=212,91], EntityArmorStand['Â§ahi'/85, l='MpServer', x=-246,50, y=71,00, z=245,50], EntityArmorStand['Â§ahi'/86, l='MpServer', x=-246,50, y=71,00, z=244,50], EntityArmorStand['Â§ahi'/87, l='MpServer', x=-248,50, y=71,00, z=244,50], EntityArmorStand['Â§ahi'/88, l='MpServer', x=-250,50, y=71,00, z=245,50], EntityArmorStand['§cHACKED'/89, l='MpServer', x=-243,50, y=70,00, z=248,50], EntityArmorStand['§cHACKED'/90, l='MpServer', x=-247,50, y=71,00, z=247,50], EntityArmorStand['§cHACKED'/91, l='MpServer', x=-247,50, y=71,00, z=246,50], EntityBat['Bat'/1756, l='MpServer', x=-251,78, y=34,38, z=210,25], EntityChicken['Chicken'/98, l='MpServer', x=-234,25, y=62,69, z=205,22], EntityChicken['Chicken'/99, l='MpServer', x=-226,22, y=68,00, z=264,47], EntityBat['Bat'/1515, l='MpServer', x=-236,25, y=46,10, z=223,75], EntityChicken['Chicken'/108, l='MpServer', x=-193,38, y=62,55, z=241,91], EntityChicken['Chicken'/111, l='MpServer', x=-196,31, y=62,61, z=243,75], EntityBat['Bat'/1583, l='MpServer', x=-241,75, y=50,10, z=231,47], EntityMinecartChest['container.minecart'/114, l='MpServer', x=-186,50, y=37,06, z=243,50], EntityItem['item.item.egg'/1719, l='MpServer', x=-194,56, y=60,00, z=241,50], EntitySquid['Squid'/1783, l='MpServer', x=-166,22, y=59,16, z=248,78], EntityItem['item.item.egg'/1723, l='MpServer', x=-226,38, y=68,00, z=264,31]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:472)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 430334168 bytes (410 MB) / 878706688 bytes (838 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

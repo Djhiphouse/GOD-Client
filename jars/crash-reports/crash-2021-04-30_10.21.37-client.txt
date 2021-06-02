@@ -1,0 +1,72 @@
+---- Minecraft Crash Report ----
+// Why did you do that?
+
+Time: 30.04.21 10:21
+Description: Initializing game
+
+java.lang.NullPointerException: Initializing game
+	at me.bratwurst.module.modules.combat.Aura.<init>(Aura.java:121)
+	at me.bratwurst.manager.ModuleManager.LoadModule(ModuleManager.java:31)
+	at me.bratwurst.manager.ModuleManager.<init>(ModuleManager.java:25)
+	at me.bratwurst.Client.init(Client.java:68)
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:579)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:440)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at me.bratwurst.module.modules.combat.Aura.<init>(Aura.java:121)
+	at me.bratwurst.manager.ModuleManager.LoadModule(ModuleManager.java:31)
+	at me.bratwurst.manager.ModuleManager.<init>(ModuleManager.java:25)
+	at me.bratwurst.Client.init(Client.java:68)
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:579)
+
+-- Initialization --
+Details:
+Stacktrace:
+	at net.minecraft.client.Minecraft.run(Minecraft.java:440)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 300191800 bytes (286 MB) / 644874240 bytes (615 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

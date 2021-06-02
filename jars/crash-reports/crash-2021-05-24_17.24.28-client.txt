@@ -1,0 +1,102 @@
+---- Minecraft Crash Report ----
+// Uh... Did I do that?
+
+Time: 24.05.21 17:24
+Description: Updating screen events
+
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at me.bratwurst.module.Commands.irc.onCommand(irc.java:52)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:66)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:330)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1567)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1015)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at me.bratwurst.module.Commands.irc.onCommand(irc.java:52)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:66)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:330)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+
+-- Affected screen --
+Details:
+	Screen name: net.minecraft.client.gui.GuiChat
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['§b[§4GodUser§b] §7God842'/72782, l='MpServer', x=166,45, y=72,00, z=256,13]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 148,00,64,00,252,00 - World: (148,64,252), Chunk: (at 4,4,12 in 9,15; contains blocks 144,0,240 to 159,255,255), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 41171879 game time, 41171879 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 24 total; [EntityPlayerSP['§b[§4GodUser§b] §7God842'/72782, l='MpServer', x=166,45, y=72,00, z=256,13], EntityZombie['Zombie'/71745, l='MpServer', x=123,50, y=13,00, z=284,50], EntityCreeper['Creeper'/71937, l='MpServer', x=198,50, y=65,00, z=290,50], EntityCreeper['Creeper'/72257, l='MpServer', x=201,19, y=75,00, z=228,13], EntitySkeleton['Skeleton'/73025, l='MpServer', x=167,50, y=32,00, z=221,50], EntityPig['Pig'/58561, l='MpServer', x=202,44, y=76,00, z=230,22], EntityPig['Pig'/134, l='MpServer', x=164,50, y=76,00, z=225,50], EntitySkeleton['Skeleton'/72967, l='MpServer', x=213,50, y=16,00, z=228,50], EntitySkeleton['Skeleton'/72966, l='MpServer', x=211,50, y=16,00, z=229,50], EntityZombie['Zombie'/70347, l='MpServer', x=125,50, y=33,00, z=297,50], EntityZombie['Zombie'/72979, l='MpServer', x=201,50, y=14,00, z=211,50], EntityCreeper['Creeper'/72981, l='MpServer', x=140,50, y=19,00, z=271,50], EntityCreeper['Creeper'/72982, l='MpServer', x=140,50, y=19,00, z=270,50], EntityPig['Pig'/63512, l='MpServer', x=132,94, y=66,00, z=294,91], EntityChicken['Chicken'/58656, l='MpServer', x=209,47, y=81,00, z=230,59], EntitySkeleton['Skeleton'/71843, l='MpServer', x=205,50, y=70,00, z=270,50], EntitySheep['Sheep'/35500, l='MpServer', x=154,47, y=69,00, z=293,72], EntityZombie['Zombie'/73005, l='MpServer', x=118,50, y=38,00, z=290,50], EntitySkeleton['Skeleton'/70702, l='MpServer', x=203,50, y=12,00, z=234,50], EntityCow['Cow'/32371, l='MpServer', x=173,44, y=68,00, z=225,22], EntityZombie['Zombie'/70969, l='MpServer', x=209,50, y=26,00, z=212,50], EntityZombie['Zombie'/72952, l='MpServer', x=128,69, y=22,00, z=241,41], EntityCreeper['Creeper'/72379, l='MpServer', x=123,50, y=34,00, z=296,50], EntitySkeleton['Skeleton'/71935, l='MpServer', x=197,50, y=65,00, z=290,50]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:104)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	Java Version: 1.8.0_281, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 360265072 bytes (343 MB) / 685244416 bytes (653 MB) up to 1881145344 bytes (1794 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce 940MX/PCIe/SSE2 GL version 4.6.0 NVIDIA 466.47, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 466.47
+	OpenGlRenderer: NVIDIA GeForce 940MX/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 4

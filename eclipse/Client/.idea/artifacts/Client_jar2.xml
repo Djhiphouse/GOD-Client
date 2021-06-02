@@ -1,0 +1,63 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Client:jar2">
+    <output-path>$USER_HOME$/AppData/Roaming/.minecraft/versions/Client</output-path>
+    <root id="archive" name="Client.jar">
+      <element id="module-output" name="Client" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/twitch-external-platform-4.5-natives-windows-64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/httpclient-4.3.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/netty-all-4.0.23.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/guava-17.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/oshi-core-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/commons-io-2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/log4j-core-2.0-beta9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/soundsystem-20120107.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/codecwav-20101023.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/Libi/slick.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/icu4j-core-mojang-51.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/commons-logging-1.1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/lwjgl-platform-2.9.4-nightly-20150209-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/gson-2.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jinput-platform-2.0.5-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/lwjgl_util-2.9.4-nightly-20150209.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/Libi/vecmath.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/twitch-6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jna-3.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/commons-compress-1.8.1.jar" path-in-jar="/" />
+      <element id="dir-copy" path="$PROJECT_DIR$" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/authlib-1.5.21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/realms-1.7.39.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jinput-2.0.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/commons-codec-1.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/platform-3.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/log4j-api-2.0-beta9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/codecjorbis-20101023.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/librarylwjglopenal-20100824.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jutils-1.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/libraryjavasound-20101123.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/twitch-platform-6.5-natives-windows-64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jopt-simple-4.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/lwjgl-2.9.4-nightly-20150209.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/commons-lang3-3.3.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/httpcore-4.3.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/netty-1.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Music/Libi/discord-rpc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/ViaBackwards-3.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/ViaRewind-1.5.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/ViaSnakeYaml-1.27.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/ViaVersion-3.2.1.jar" path-in-jar="/" />
+      <element id="library" level="project" name="okhttp-4.9.0" />
+      <element id="library" level="project" name="kotlin-stdlib-1.5.0" />
+      <element id="library" level="project" name="okio-2.10.0" />
+      <element id="library" level="project" name="ViaVersion-3.2.1" />
+      <element id="library" level="project" name="lwjgl_util-2.9.4-nightly-20150209" />
+      <element id="library" level="project" name="lwjgl-platform-2.9.4-nightly-20150209-natives-windows" />
+      <element id="library" level="project" name="lwjgl-2.9.4-nightly-20150209" />
+      <element id="library" level="project" name="Client" />
+      <element id="library" level="project" name="authlib-1.5.21" />
+      <element id="library" level="project" name="discord-rpc" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../kotlin-stdlib-1.5.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../okhttp-4.9.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../okio-2.10.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
