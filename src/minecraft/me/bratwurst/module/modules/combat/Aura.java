@@ -10,6 +10,7 @@ import me.bratwurst.event.events.EventMove;
 import me.bratwurst.manager.FreundManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.module.modules.World.Clientfriend;
 import me.bratwurst.utils.RenderGuiEvent;
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
@@ -104,13 +105,19 @@ public class Aura extends Module {
     }
 
     public void Attack(EntityPlayer entity, EventMotionUpdate e) {
-
+        if (Clientfriend.antibot.contains(entity)) {
+            return;
+        }
+        if (!Client.getInstance().getModuleManager().getModuleByName("Clientfriend").isToggle()) {
+            Clientfriend.antibot.clear();
+        }
         if (AntiBot.antibot.contains(entity)) {
             return;
         }
         if (!Client.getInstance().getModuleManager().getModuleByName("AntiBot").isToggle()) {
             AntiBot.antibot.clear();
         }
+
 
 
         if (NoRotate.getValBoolean()) {
