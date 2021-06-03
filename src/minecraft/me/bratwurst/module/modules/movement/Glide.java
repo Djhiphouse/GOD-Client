@@ -142,21 +142,16 @@ public class Glide extends Module {
     public static int tick = 0;
 
     public void Damage() {
-        if (tick == 1) {
+    if (tick == 0) {
+        mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 3.5, mc.thePlayer.posZ);
+        tick++;
 
-            this.mc.thePlayer.motionY = 0.0D;
-            if (this.mc.thePlayer.ticksExisted % 3 == 0) {
-                double y = this.mc.thePlayer.posY - 1.0E-10D;
-                this.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer.C04PacketPlayerPosition(this.mc.thePlayer.posX, y, this.mc.thePlayer.posZ, true));
-            }
-             this.mc.thePlayer.setPosition(this.mc.thePlayer.posX,mc.thePlayer.posY + 1.0E-10D , this.mc.thePlayer.posZ);
+    }else {
+        if(mc.thePlayer.hurtTime > 0) {
 
-
-        } else {
-            BetterMccentral(2);
         }
-
     }
+   }
 
     public void Down(int delay) {
         if (TimeHelper.hasReached(delay)) {

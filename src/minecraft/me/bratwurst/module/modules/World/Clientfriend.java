@@ -34,6 +34,7 @@ public class Clientfriend extends Module {
                     if (!antibot.contains(bot) && !bot.getName().startsWith("§a[") || !bot.getName().startsWith("§b[")) {
                         antibot.add((EntityLivingBase) bot);
 
+
                     }
 
                 }

@@ -53,7 +53,7 @@ public class Sacffold extends Module {
         moveBlocksToHotbar();
         int Speed = delay.getValInt();
         BlockPos blockPos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
-        setBlockAndFacing(blockPos);
+        setBlockAndFacing(blockPos,event);
         if (NoSprint.getValBoolean()) {
             mc.thePlayer.setSprinting(false);
 
@@ -78,9 +78,7 @@ public class Sacffold extends Module {
             }
             if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock) {
                 if (event.getState() == EventMotionUpdate.State.PRE) {
-                    float[] rotate = getRotations(blockPos, currentFacing);
-                    event.setYaw(rotate[0]);
-                    event.setPitch(rotate[1]);
+                   setBlockAndFacing(blockPos,event);
 
 
                 } else if (event.getState() == EventMotionUpdate.State.POST && TimeHelper.hasReached(Speed)) {
@@ -119,24 +117,9 @@ public class Sacffold extends Module {
             }
         }
 
-    public static float[] getRotations(BlockPos block, EnumFacing face) {
-        double x = block.getX() + 0.5 - mc.thePlayer.posX + (double) face.getFrontOffsetX() / 2;
-        double z = block.getZ() + 0.5 - mc.thePlayer.posZ + (double) face.getFrontOffsetZ() / 2;
-        double d1 = mc.thePlayer.posY + mc.thePlayer.getEyeHeight() - (block.getY() + 0.5);
-        double d3 = MathHelper.sqrt_double(x * x + z * z);
-        float yaw = (float) (Math.atan2(z, x) * 20 / Math.PI) - 90;
-        float pitch = (float) (Math.atan2(d1, d3) * 180 / Math.PI);
-        if (yaw < 0.0F) {
-            yaw += 360f;
-        }
-        return new float[]{yaw, pitch};
-    }
 
-    public void placmentblock(BlockPos pos, EnumFacing facing) {
-        if (mc.thePlayer.getCurrentEquippedItem().getItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), currentPos, currentFacing, new Vec3(currentPos.getX(), currentPos.getY(), currentPos.getZ()))) {
-            mc.thePlayer.swingItem();
-        }
-    }
+
+
 
     private Vec3 getVec3(BlockData data) {
         BlockPos pos = data.getPosition();
@@ -216,114 +199,18 @@ public class Sacffold extends Module {
         return Math.round(min + (float) Math.random() * ((max - min)));
     }
 
-    public void setBlockAndFacing(BlockPos var1) {
+    public void setBlockAndFacing(BlockPos var1, EventMotionUpdate e) {
         //if(!shouldDownwards()) {
-        if (this.mc.theWorld.getBlockState(var1.add(0, -1, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, -1, 0);
-            currentFacing = EnumFacing.UP;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 0, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, 0, 0);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, 0, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, 0, 0);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, -1)).getBlock() != Blocks.air) {
+        int yaw = (int) (mc.thePlayer.rotationYaw + 180);
+        float pitch = 90.5F;
+              e.setYaw(yaw);
+              e.setPitch( pitch);
+        placmentblock(currentPos, currentFacing);
 
-            currentPos = var1.add(0, 0, -1);
-            currentFacing = EnumFacing.SOUTH;
-
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, 1)).getBlock() != Blocks.air) {
-
-            currentPos = var1.add(0, 0, 1);
-            currentFacing = EnumFacing.NORTH;
-
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 0, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, 0, -1);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 0, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, 0, 1);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, 0, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, 0, -1);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, 0, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, 0, 1);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, -1, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, -1, 0);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, -1, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, -1, 0);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, -1, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, -1, -1);
-            currentFacing = EnumFacing.SOUTH;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, -1, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, -1, 1);
-            currentFacing = EnumFacing.NORTH;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, -1, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, -1, -1);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, -1, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, -1, 1);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, -1, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, -1, -1);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, -1, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, -1, 1);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-2, 0, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-2, 0, 0);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(2, 0, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(2, 0, 0);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, -2)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, 0, -2);
-            currentFacing = EnumFacing.SOUTH;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, 2)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, 0, 2);
-            currentFacing = EnumFacing.NORTH;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-2, 0, -2)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-2, 0, -2);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-2, 0, 2)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-2, 0, 2);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(2, 0, -2)).getBlock() != Blocks.air) {
-            currentPos = var1.add(2, 0, -2);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(2, 0, 2)).getBlock() != Blocks.air) {
-            currentPos = var1.add(2, 0, 2);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, 1, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, 1, 0);
-            currentFacing = EnumFacing.DOWN;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 1, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, 1, 0);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, 1, 0)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, 1, 0);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, 1, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, 1, -1);
-            currentFacing = EnumFacing.SOUTH;
-        } else if (this.mc.theWorld.getBlockState(var1.add(0, 1, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(0, 1, 1);
-            currentFacing = EnumFacing.NORTH;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 1, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, 1, -1);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 1, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(-1, 1, 1);
-            currentFacing = EnumFacing.EAST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, 1, -1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, 1, -1);
-            currentFacing = EnumFacing.WEST;
-        } else if (this.mc.theWorld.getBlockState(var1.add(1, 1, 1)).getBlock() != Blocks.air) {
-            currentPos = var1.add(1, 1, 1);
-            currentFacing = EnumFacing.WEST;
+    }
+    public void placmentblock(BlockPos pos, EnumFacing facing) {
+        if (mc.thePlayer.getCurrentEquippedItem().getItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), currentPos, currentFacing, new Vec3(currentPos.getX(), currentPos.getY(), currentPos.getZ()))) {
+            mc.thePlayer.swingItem();
         }
     }
 
