@@ -70,7 +70,6 @@ public class Aura extends Module {
                     String tname = target.getName();
                     String tuuid = target.getUniqueID().toString();
                      if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()
-<<<<<<< Updated upstream
                         && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()&& target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) ) {
                          String TargetName = target.getName();
                          String UUIId  = target.getUniqueID().toString();
@@ -81,9 +80,9 @@ public class Aura extends Module {
                              System.out.println("off");
                          }
                          System.out.println(EntityPlayer.cachedRanks);
-=======
+
                         && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()&& target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tuuid)) {
->>>>>>> Stashed changes
+
                         //onrender(Event);
                         this.target1 = target;
                          if (target1.onGround ) {

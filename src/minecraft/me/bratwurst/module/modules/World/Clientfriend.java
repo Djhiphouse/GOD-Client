@@ -33,16 +33,13 @@ public class Clientfriend extends Module {
                     System.out.println(bot);
                     if (bot.getDisplayName().equals("§a[§bGod§cOwner§a] §7God531")) {
 
-<<<<<<< Updated upstream
-=======
                         antibot.add((EntityLivingBase) bot);
->>>>>>> Stashed changes
 
 
+                    }
                 }
             }
         }
-
     }
 
     @Override
