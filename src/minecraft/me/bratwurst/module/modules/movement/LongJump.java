@@ -7,8 +7,10 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.module.modules.Player.Nofall;
 import me.bratwurst.utils.PlayerUtil;
 import me.bratwurst.utils.TimeHelper;
+import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.settings.KeyBinding;
@@ -30,7 +32,6 @@ public class LongJump extends Module {
     private float groundTicks;
 
 
-
     double motionY;
 
     int count;
@@ -50,15 +51,13 @@ public class LongJump extends Module {
     protected double startY;
 
 
-
-
     private int stage;
     ArrayList<Packet> Packets = new ArrayList<>();
     ArrayList<Vector3d> loc = new ArrayList<>();
     private Vector3d startVector3d;
     public double x, y, z;
 
-    public Setting Bypass, Speed, veryBlock, Speeddown;
+    public Setting Nofall, Speed, veryBlock, Speeddown;
     public static Setting mode1;
 
     public LongJump() {
@@ -66,67 +65,86 @@ public class LongJump extends Module {
         ArrayList<String> options = new ArrayList<>();
         options.add("Bettermccentral");
         options.add("Redesky");
-        options.add("Hypixel");
-
+        options.add("Damage");
 
 
         Client.setmgr.rSetting(mode1 = new Setting("LongJump Mode", this, "Mccentral", options));
     }
 
 
+    @Override
+    public void setup() {
 
+        Client.setmgr.rSetting(Nofall = new Setting("Nofall", this, true));
+    }
+public static  int state = 0;
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
-        if (mode1.getValString().equalsIgnoreCase("Mccentral")) {
-
-        }else if (mode1.getValString().equalsIgnoreCase("Bettermccentral")) {
+        if (mode1.getValString().equalsIgnoreCase("Bettermccentral")) {
             BetterMccentral();
 
-        }else if (mode1.getValString().equalsIgnoreCase("Redesky")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Redesky")) {
             Redesky();
-        }else if (mode1.getValString().equalsIgnoreCase("Hypixel"))
-         Damage2();
+        } else if (mode1.getValString().equalsIgnoreCase("Damage"))
+            Schadenundfly();
+
+
     }
-    public static  int tick = 0;
-    public void Damage2() {
+
+    public static int tick = 0;
+
+    public void Schadenundfly() {
         if (tick == 0) {
+            if (Client.moduleManager.getModuleByName("Nofall").isEnabled()) {
+                Client.moduleManager.getModuleByName("Nofall").toggle();
+            }
             NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
             double x = mc.thePlayer.posX;
             double z = mc.thePlayer.posZ;
             double y = mc.thePlayer.posY;
-            for (int i = 0; i < 100; ++i) {
+            for (int i = 0; i < 80; ++i) {
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.00499999888241191 + 1.0100003516674E-1, z, false));
 
             }
+
             netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer(true));
+            netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer(false));
             tick++;
+
+            Client.moduleManager.getModuleByName("Nofall").toggle();
 
         } else {
             if (mc.thePlayer.hurtTime > 0.4 && mc.thePlayer.moveForward != 0) {
-                Jump(0.1,-0.02,500,true,19.5F,4F,1.9f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,1.3f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,0.7f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,0.8f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,1f);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.9f, 1);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.3f, 1);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.7f, 1);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.8f, 1);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1f, 1);
                 DamageSource.hungerDamage = 0F;
 
+
+                if (!Client.moduleManager.getModuleByName("Nofall").isEnabled() && Nofall.getValBoolean()) {
+                    Client.moduleManager.getModuleByName("Nofall").toggle();
+                }
 
             }
         }
     }
-    private  int toggleState = 0;
-    public static final TimeHelper time = new TimeHelper();
-    public void Jump(double hight, double move, int time, boolean jump, float movespeed, float strafing, float Timerspeed ) {
-        // Jump
 
+    public static int Ground = 0;
+    private int toggleState = 0;
+    public static final TimeHelper time = new TimeHelper();
+
+    public void Jump(double hight, double move, int time, boolean jump, float movespeed, float strafing, float Timerspeed, double Pitchspeed) {
         if (jump == true) {
             mc.thePlayer.jump();
             mc.thePlayer.jump();
             mc.thePlayer.jump();
             mc.thePlayer.jump();
         }
+        Groundcheck();
 
         //eigentlicher jump
         double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
@@ -145,10 +163,11 @@ public class LongJump extends Module {
         mc.thePlayer.motionY = y;
         mc.thePlayer.moveForward *= movespeed;
         mc.thePlayer.moveStrafing *= strafing;
-        mc.timer.timerSpeed =  timer;
+        mc.timer.timerSpeed = timer;
 
-        mc.timer.timerSpeed =  timer;
+        mc.timer.timerSpeed = timer;
 
+        Groundcheck();
         //
         //begrenzung
         double aktuelleY = mc.thePlayer.posY;
@@ -164,30 +183,25 @@ public class LongJump extends Module {
             mc.thePlayer.motionY = yy;
             mc.thePlayer.moveForward *= 9.0F;
             mc.thePlayer.moveStrafing *= 2.0F;
+
+
         }
 
-        //Warten lassen bis er enttogllen soll
-        // Methode
 
-        if(mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
-            System.out.println(toggleState);
+    }
+    public static boolean Groundstand;
+    public void Groundcheck() {
+        PlayerUtils.sendMessage("GHropuen");
+        if(mc.thePlayer.onGround && state == 1) {
             toggle();
-
-            System.out.println(mc.timer.timerSpeed);
             return;
-
         }
-        if(mc.thePlayer.onGround && toggleState == 0) {
+        if(mc.thePlayer.onGround && state == 0) {
             mc.thePlayer.jump();
-            System.out.println(toggleState);
-            toggleState = 1;
-
-
-
+            PlayerUtils.sendMessage("");
+            state = 1;
         }
     }
-
-
     public void BetterMccentral() {
         double jump1 = 1.5;
         if (mc.thePlayer.onGround) ;
@@ -226,91 +240,80 @@ public class LongJump extends Module {
         }
     }
 
-public void Cubecraft() {
-    mc.timer.timerSpeed = 0.3F;
-    float x2 = 1.0F + getSpeedEffect() * 0.45F;
-    if (mc.thePlayer.onGround) {
-        double x = mc.thePlayer.posX, y = mc.thePlayer.posY, z = mc.thePlayer.posZ;
-        for (int index = 0; index < 49; index++) {
-            mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet)new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.0625D, z, false));
-            mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet)new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, false));
+    public void Cubecraft() {
+        mc.timer.timerSpeed = 0.3F;
+        float x2 = 1.0F + getSpeedEffect() * 0.45F;
+        if (mc.thePlayer.onGround) {
+            double x = mc.thePlayer.posX, y = mc.thePlayer.posY, z = mc.thePlayer.posZ;
+            for (int index = 0; index < 49; index++) {
+                mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet) new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.0625D, z, false));
+                mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet) new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, false));
+            }
+            mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet) new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, true));
+            if (this.groundTicks > 0.0F) {
+                this.groundTicks = 0.0F;
+                return;
+            }
+            this.groundTicks++;
+            mc.thePlayer.motionX *= 1.0D;
+            mc.thePlayer.motionZ *= 1.0D;
+            mc.thePlayer.motionY = 0.5D;
         }
-        mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet)new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, true));
-        if (this.groundTicks > 0.0F) {
-            this.groundTicks = 0.0F;
-            return;
-        }
-        this.groundTicks++;
-        mc.thePlayer.motionX *= 1.0D;
-        mc.thePlayer.motionZ *= 1.0D;
-        mc.thePlayer.motionY = 0.5D;
-    }
-    if (mc.thePlayer.onGround) {
-        this.air = 0.0F;
-    } else {
-        mc.thePlayer.motionX *= 0.0D;
-        mc.thePlayer.motionZ *= 0.0D;
-        double speed = 3.0D + (getSpeedEffect() * 0.2F) - (this.air / 25.0F);
-        mc.thePlayer.jumpMovementFactor = (float)((speed > 0.2800000011920929D) ? speed : 0.2800000011920929D);
-        this.air = (float)(this.air + x2 * 1.0D * 2.0D);
-    }
-    this.stage = -999;
-    if (mc.thePlayer.isCollidedVertically)
-        this.stage = -2;
-  }
-
-public void Mineplex() {
-    mc.thePlayer.cameraYaw = 0.18181817F;
-    if (!mc.thePlayer.onGround &&  this.air > 0.0F) {
-        this.air++;
-        if (mc.thePlayer.isCollidedVertically)
+        if (mc.thePlayer.onGround) {
             this.air = 0.0F;
-        if (mc.thePlayer.isCollidedHorizontally && !this.collided)
-            this.collided = !this.collided;
-        double speed = this.half ? (0.5D - (this.air / 100.0F)) : (0.658D - (this.air / 100.0F));
-        mc.thePlayer.motionX = 0.0D;
-        mc.thePlayer.motionZ = 0.0D;
-        this.motionY -= 0.04000000000001D;
-        if (this.air > 24.0F)
-            this.motionY -= 0.02D;
-        if (this.air == 12.0F)
-            this.motionY = -0.005D;
-        if (speed < 0.3D)
-            speed = 0.3D;
-        if (this.collided)
-            speed = 0.2873D;
-        mc.thePlayer.motionY = this.motionY;
-        setMotion(speed);
-    } else if (this.air > 0.0F) {
-        this.air = 0.0F;
+        } else {
+            mc.thePlayer.motionX *= 0.0D;
+            mc.thePlayer.motionZ *= 0.0D;
+            double speed = 3.0D + (getSpeedEffect() * 0.2F) - (this.air / 25.0F);
+            mc.thePlayer.jumpMovementFactor = (float) ((speed > 0.2800000011920929D) ? speed : 0.2800000011920929D);
+            this.air = (float) (this.air + x2 * 1.0D * 2.0D);
+        }
+        this.stage = -999;
+        if (mc.thePlayer.isCollidedVertically)
+            this.stage = -2;
     }
-    if (mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically && (mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F)) {
-        double groundspeed = 0.0D;
-        this.collided = mc.thePlayer.isCollidedHorizontally;
-        this.groundTicks++;
-        mc.thePlayer.motionX *= groundspeed;
-        mc.thePlayer.motionZ *= groundspeed;
-        this.half = (mc.thePlayer.posY != (int)mc.thePlayer.posY);
-        mc.thePlayer.motionY = 0.4299999D;
-        this.air = 1.0F;
-        this.motionY = mc.thePlayer.motionY;
+
+    public void Mineplex() {
+        mc.thePlayer.cameraYaw = 0.18181817F;
+        if (!mc.thePlayer.onGround && this.air > 0.0F) {
+            this.air++;
+            if (mc.thePlayer.isCollidedVertically)
+                this.air = 0.0F;
+            if (mc.thePlayer.isCollidedHorizontally && !this.collided)
+                this.collided = !this.collided;
+            double speed = this.half ? (0.5D - (this.air / 100.0F)) : (0.658D - (this.air / 100.0F));
+            mc.thePlayer.motionX = 0.0D;
+            mc.thePlayer.motionZ = 0.0D;
+            this.motionY -= 0.04000000000001D;
+            if (this.air > 24.0F)
+                this.motionY -= 0.02D;
+            if (this.air == 12.0F)
+                this.motionY = -0.005D;
+            if (speed < 0.3D)
+                speed = 0.3D;
+            if (this.collided)
+                speed = 0.2873D;
+            mc.thePlayer.motionY = this.motionY;
+            setMotion(speed);
+        } else if (this.air > 0.0F) {
+            this.air = 0.0F;
+        }
+        if (mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically && (mc.thePlayer.moveForward != 0.0F || mc.thePlayer.moveStrafing != 0.0F)) {
+            double groundspeed = 0.0D;
+            this.collided = mc.thePlayer.isCollidedHorizontally;
+            this.groundTicks++;
+            mc.thePlayer.motionX *= groundspeed;
+            mc.thePlayer.motionZ *= groundspeed;
+            this.half = (mc.thePlayer.posY != (int) mc.thePlayer.posY);
+            mc.thePlayer.motionY = 0.4299999D;
+            this.air = 1.0F;
+            this.motionY = mc.thePlayer.motionY;
+        }
     }
-}
-  @EventTarget
+
+    @EventTarget
     public int getSpeedEffect() {
         return mc.thePlayer.isPotionActive(Potion.moveSpeed) ? (mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1) : 0;
-    }
-    @Override
-    public void onDisable() {
-        super.onDisable();
-        mc.thePlayer.motionX = 0.0D;
-        mc.thePlayer.motionZ = 0.0D;
-        mc.thePlayer.setSpeed(0.0D);
-        mc.timer.timerSpeed = 1.0F;
-        mc.thePlayer.capabilities.allowFlying = false;
-
-        mc.thePlayer.capabilities.isFlying = false;
-
     }
 
     public void setMotion(double speed) {
@@ -338,17 +341,34 @@ public void Mineplex() {
             mc.thePlayer.motionZ = forward * speed * Math.sin(Math.toRadians((yaw + 90.0F))) - strafe * speed * Math.cos(Math.toRadians((yaw + 90.0F)));
         }
     }
+
     double getMotion(int stage) {
-        double[] mot = { 0.359D, 0.273D, 0.201D, 0.129D, 0.057D, -0.015D, -0.087D, -0.159D };
+        double[] mot = {0.359D, 0.273D, 0.201D, 0.129D, 0.057D, -0.015D, -0.087D, -0.159D};
         stage--;
         if (stage >= 0 && stage < mot.length)
             return mot[stage];
         return mc.thePlayer.motionY;
     }
+
     public void Redesky() {
         mc.thePlayer.capabilities.isFlying = true;
         mc.thePlayer.capabilities.allowFlying = true;
-       Math.sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX * mc.thePlayer.motionZ * mc.thePlayer.motionZ);
+        Math.sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX * mc.thePlayer.motionZ * mc.thePlayer.motionZ);
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+        mc.thePlayer.motionX = 0.0D;
+        mc.thePlayer.motionZ = 0.0D;
+        mc.thePlayer.setSpeed(0.0D);
+        mc.timer.timerSpeed = 1.0F;
+        mc.thePlayer.capabilities.allowFlying = false;
+
+        mc.thePlayer.capabilities.isFlying = false;
+        tick = 0;
+        toggleState = 0;
+        Ground = 0;
     }
 
 
