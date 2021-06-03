@@ -68,7 +68,6 @@ public class Aura extends Module {
                 EntityPlayer target = (EntityPlayer) o;
                 if (target != mc.thePlayer && target != null) {
                     String tname = target.getName();
-                    String tuuid = target.getUniqueID().toString();
                      if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()
                         && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()&& target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) ) {
                          String TargetName = target.getName();
@@ -80,9 +79,12 @@ public class Aura extends Module {
                              System.out.println("off");
                          }
                          System.out.println(EntityPlayer.cachedRanks);
+<<<<<<< HEAD
 
                         && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()&& target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tuuid)) {
 
+=======
+>>>>>>> parent of edbe718d (Updates)
                         //onrender(Event);
                         this.target1 = target;
                          if (target1.onGround ) {

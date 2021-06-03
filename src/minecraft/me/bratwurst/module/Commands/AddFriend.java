@@ -3,10 +3,6 @@ package me.bratwurst.module.Commands;
 import me.bratwurst.manager.Command;
 import me.bratwurst.manager.FreundManager;
 import me.bratwurst.utils.player.PlayerUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumChatFormatting;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,18 +10,25 @@ import java.util.HashSet;
 public class AddFriend extends Command {
     private final HashSet<String> hashSet = new HashSet<>();
     private static final AddFriend instance = new AddFriend();
-
     public AddFriend() {
         super("Freund", "Freund", "Freund");
     }
 
     @Override
     public void onCommand(String command, String[] args) {
+        System.out.println(Arrays.toString(args));
+        System.out.println("Args0: " + args[0]);
+
+        System.out.println(Arrays.toString(args));
+        System.out.println("Args0: " + args[0]);
 
         if (args.length == 2) {
             switch (args[0].toLowerCase()) {
                 case "add":
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of edbe718d (Updates)
                     PlayerUtils.sendMessage("Du hast " + args[1] + " zu deinen Freunden hinzugefügt!");
                     FreundManager.getInstance().addFriend("§a[§bGod§cOwner§a]§7 " + args[1]);
                     FreundManager.getInstance().addFriend("§a[§bGod§cDev§a] §7"+ args[1]);
@@ -44,6 +47,7 @@ public class AddFriend extends Command {
                     FreundManager.getInstance().removeFriend("§b[§eGodFreund§b] §7" + args[1]);
                     FreundManager.getInstance().removeFriend("§b[§4GodUser§b] §7" + args[1]);
                     FreundManager.getInstance().removeFriend(args[1]);
+<<<<<<< HEAD
 
                     for (Entity TargetPlayer : Minecraft.getMinecraft().theWorld.loadedEntityList) {
                         if (TargetPlayer instanceof EntityPlayer) {
@@ -95,14 +99,13 @@ public class AddFriend extends Command {
                     }else{
                         PlayerUtils.sendMessage("Dieser User ist nicht Online!");
                     }
+=======
+>>>>>>> parent of edbe718d (Updates)
 
                     break;
                 default:
                     PlayerUtils.sendMessage("#addfriend [add/remove] [name]");
             }
-        }else{
-                PlayerUtils.sendMessage("Dieser spieler ist nicht online");
-                return;
         }
 
     }

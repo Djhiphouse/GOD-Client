@@ -30,10 +30,11 @@ public class Clientfriend extends Module {
         for (Entity bot : mc.theWorld.loadedEntityList) {
             if (bot instanceof EntityPlayer) {
                 if (bot != mc.thePlayer) {
-                    System.out.println(bot);
-                    if (bot.getDisplayName().equals("§a[§bGod§cOwner§a] §7God531")) {
 
+<<<<<<< HEAD
                         antibot.add((EntityLivingBase) bot);
+=======
+>>>>>>> parent of edbe718d (Updates)
 
 
                     }
