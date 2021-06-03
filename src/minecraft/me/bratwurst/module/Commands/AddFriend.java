@@ -26,7 +26,10 @@ public class AddFriend extends Command {
             switch (args[0].toLowerCase()) {
                 case "add":
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of edbe718d (Updates)
 =======
 >>>>>>> parent of edbe718d (Updates)
                     PlayerUtils.sendMessage("Du hast " + args[1] + " zu deinen Freunden hinzugefügt!");
@@ -47,6 +50,7 @@ public class AddFriend extends Command {
                     FreundManager.getInstance().removeFriend("§b[§eGodFreund§b] §7" + args[1]);
                     FreundManager.getInstance().removeFriend("§b[§4GodUser§b] §7" + args[1]);
                     FreundManager.getInstance().removeFriend(args[1]);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
                     for (Entity TargetPlayer : Minecraft.getMinecraft().theWorld.loadedEntityList) {
@@ -99,6 +103,8 @@ public class AddFriend extends Command {
                     }else{
                         PlayerUtils.sendMessage("Dieser User ist nicht Online!");
                     }
+=======
+>>>>>>> parent of edbe718d (Updates)
 =======
 >>>>>>> parent of edbe718d (Updates)
 
