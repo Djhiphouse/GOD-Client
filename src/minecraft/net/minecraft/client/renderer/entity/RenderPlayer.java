@@ -46,7 +46,9 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         //Kommt noch Muss mann noch Fixen
         //this.addLayer(new CosmeticCape(this));
         //
-        this.addLayer(new CosmeticWings(this));
+
+                this.addLayer(new CosmeticWings(this));
+
         this.addLayer(new CosmeticWitchHat(this));
 
         this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));

@@ -233,12 +233,12 @@ public class PlayerProfileCache
             this.usernameToProfileEntryMap.clear();
             this.uuidToProfileEntryMap.clear();
             this.gameProfiles.clear();
-
-            for (PlayerProfileCache.ProfileEntry playerprofilecache$profileentry : Lists.reverse(list))
+            if (list != null)
             {
-                if (playerprofilecache$profileentry != null)
-                {
-                    this.addEntry(playerprofilecache$profileentry.getGameProfile(), playerprofilecache$profileentry.getExpirationDate());
+                for (PlayerProfileCache.ProfileEntry playerprofilecache$profileentry : Lists.reverse(list)) {
+                    if (playerprofilecache$profileentry != null) {
+                        this.addEntry(playerprofilecache$profileentry.getGameProfile(), playerprofilecache$profileentry.getExpirationDate());
+                    }
                 }
             }
         }
