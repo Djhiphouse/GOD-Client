@@ -17,14 +17,13 @@ public class Teleport extends Module {
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
         for (Entity Target : Minecraft.getMinecraft().theWorld.loadedEntityList) {
-            if (Target instanceof EntityPlayer) {
-                if (Target != null && Target != mc.thePlayer && Target.getDistanceToEntity(mc.thePlayer) <= 100) {
+                   if (Target != null) {
                     if (mc.gameSettings.keyBindAttack.pressed) {
                         double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
                         double x;
                         double z;
                         int distance = (int) mc.thePlayer.getDistanceToEntity(Target);
-                        int step = 1;
+                        int step = -1;
                         System.out.println(distance);
                         z = mc.thePlayer.posZ;
                         x = mc.thePlayer.posX;
@@ -41,17 +40,61 @@ public class Teleport extends Module {
                                     mc.thePlayer.swingItem();
                                 }
                             }else {
-                                mc.playerController.attackEntity(mc.thePlayer, Target);
-                                mc.thePlayer.swingItem();
-                                return;
+                                for (int o = 0; o < 20; o++) {
+                                    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x + -Math.sin(yaw) * i, mc.thePlayer.posY, z + Math.cos(yaw) * i, mc.thePlayer.onGround));
+                                    x += -Math.sin(yaw) * step;
+                                    z += Math.cos(yaw) * step;
+                                    mc.thePlayer.setPosition(mc.thePlayer.posX + -Math.sin(yaw) * distance, mc.thePlayer.posY, mc.thePlayer.posZ + Math.cos(yaw) * distance);
+                                    mc.gameSettings.keyBindAttack.pressed = false;
+                                    if (Target.getDistanceToEntity(mc.thePlayer) <= 5) {
+                                        mc.playerController.attackEntity(mc.thePlayer, Target);
+                                        mc.thePlayer.swingItem();
+                                    }
+                                    mc.playerController.attackEntity(mc.thePlayer, Target);
+                                    mc.thePlayer.swingItem();
+                                    return;
+                                }
                             }
-
                         }
 
                     }
                 }
             }
         }
-    }
 
+    public void onbacktp() {
+
+        for (Entity Target : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+            if (Target instanceof EntityPlayer) {
+                if (Target != null && Target != mc.thePlayer) {
+                    mc.playerController.attackEntity(mc.thePlayer, Target);
+                    mc.thePlayer.swingItem();
+                    if (mc.gameSettings.keyBindAttack.pressed) {
+                        double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+                        double x;
+                        double z;
+                        int distance = (int) mc.thePlayer.getDistanceToEntity(Target);
+                        int step = 1;
+                        System.out.println(distance);
+                        z = mc.thePlayer.posZ;
+                        x = mc.thePlayer.posX;
+                        for (int i = 0; i < distance; i++) {
+                            if (Target.getDistanceToEntity(mc.thePlayer) >= 0.2) {
+                                mc.playerController.attackEntity(mc.thePlayer, Target);
+                                mc.thePlayer.swingItem();
+                                mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x + -Math.sin(yaw) * i, mc.thePlayer.posY, z + Math.cos(yaw) * i, mc.thePlayer.onGround));
+                                x += -Math.sin(yaw) * step;
+                                z += Math.cos(yaw) * step;
+                                mc.thePlayer.setPosition(mc.thePlayer.posX + -Math.sin(yaw) * distance, mc.thePlayer.posY, mc.thePlayer.posZ + Math.cos(yaw) * distance);
+                                mc.gameSettings.keyBindAttack.pressed = false;
+
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
 }

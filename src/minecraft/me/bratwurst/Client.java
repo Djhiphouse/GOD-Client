@@ -130,6 +130,7 @@ public class Client {
                 }
 
                 String hwid = Client.hwid;
+                networkClient.getIrcClient().send("");
                 System.out.println("Hallo: " + uuid + " hwid " + hwid);
                 Client.networkClient.setStatus(uuid, hwid)
                         .exceptionally(throwable -> {

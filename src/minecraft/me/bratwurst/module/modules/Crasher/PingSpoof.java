@@ -11,8 +11,9 @@ import me.bratwurst.module.Module;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 
 public class PingSpoof extends Module {
-    public Setting Ping, Bypass, Range, MoveFix;
+    public Setting Ping;
     public static Setting mode1;
+
     public PingSpoof() {
         super("PingSpoof", Category.EXPLOIT);
     }
@@ -23,14 +24,14 @@ public class PingSpoof extends Module {
         Client.setmgr.rSetting(Ping = new Setting("Ping:", this, 800, 1, 2000, false));
 
     }
+
     @EventTarget
     public void ProcessPacketEvent(ProcessPacketEvent e) {
-        if (TimeHelper.hasReached(Ping.getValInt())) {
+
 
         if (e.getPacket() instanceof C00PacketKeepAlive) {
             e.setCancelled(true);
         }
-        TimeHelper.reset();
-        }
+
     }
 }

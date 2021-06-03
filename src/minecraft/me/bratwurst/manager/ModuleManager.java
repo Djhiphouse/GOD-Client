@@ -102,6 +102,7 @@ public class ModuleManager {
         addModule(new NoHurtCam());
         addModule(new Clientfriend());
         addModule(new Teleport());
+        addModule(new Superhit());
 
         System.err.println("Modules: " + modules.size());
     }

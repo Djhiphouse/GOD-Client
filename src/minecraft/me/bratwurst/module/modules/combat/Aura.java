@@ -59,7 +59,8 @@ public class Aura extends Module {
     }
 
   //  public boolean MoveFix = true;
-
+  public static int Groundticks = 0;
+    public static int Airticks = 0;
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
         for (Object o : mc.theWorld.loadedEntityList) {
@@ -69,8 +70,27 @@ public class Aura extends Module {
                     String tname = target.getName();
                      if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()
                         && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()&& target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) ) {
+                         String TargetName = target.getName();
+                         String UUIId  = target.getUniqueID().toString();
+                         if (EntityPlayer.cachedRanks.containsKey(UUIId)) {
+                             System.out.println("on");
+                             return;
+                         }else {
+                             System.out.println("off");
+                         }
+                         System.out.println(EntityPlayer.cachedRanks);
                         //onrender(Event);
                         this.target1 = target;
+                         if (target1.onGround ) {
+                             Groundticks++;
+                         }else if (target1.isAirBorne) {
+                             Airticks++;
+                         }
+
+                    //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
+                      //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
+
+
                         if (Rotate.getValBoolean()) {
                             float[] rotate = Aacrotate((EntityPlayer) target1);
                             yaw = rotate[0];
@@ -194,14 +214,14 @@ public class Aura extends Module {
         if (mc.thePlayer.isUsingItem() && bocking) {
             bocking = false;
         } else {
-            mc.thePlayer.setItemInUse(mc.thePlayer.getCurrentEquippedItem(), 2000);
+            mc.thePlayer.setItemInUse(mc.thePlayer.getCurrentEquippedItem(), 7000);
             bocking = true;
         }
     }
 
 
     public static int CounterScale = 40;
-    /*
+
     @EventTarget
     public void onrender(Event2D e) {
         if (mc.thePlayer.getDistanceToEntity(target1) <= Range.getValInt()) {
@@ -250,8 +270,8 @@ public class Aura extends Module {
                 CounterScale = 40;
              }
            GlStateManager.pushMatrix();
-            GlStateManager.translate(210, 280, 1);
-            Gui.drawRect(width + 70, height + 30, width - 80, height - 30, new Color(0, 0, 0, 190).getRGB());
+            GlStateManager.translate(250, 280, 1);
+            Gui.drawRect(width + 90, height + 30, width - 80, height - 30, new Color(0, 0, 0, 190).getRGB());
             Gui.drawRect(width + CounterScale, height + -2, width - 40, height - 9, new Color(10, 66, 175, 174).getRGB());
             if(CounterScale == 0) {
                 Gui.drawRect(width - CounterScale, height + -2, width - 40, height - 9, new Color(10, 66, 175, 174).getRGB());
@@ -277,7 +297,7 @@ public class Aura extends Module {
 
 
                 GlStateManager.color(1f, 1f, 1f);
-                GuiInventory.drawEntityOnScreen(150, 28, 25, 0, 0, target1);
+                GuiInventory.drawEntityOnScreen(176, 28, 25, 0, 0, target1);
 
 
 
@@ -287,14 +307,14 @@ public class Aura extends Module {
 
                 GL11.glColor4f(1, 1, 1, 1);
                 GlStateManager.scale(1.0f, 1.0f, 1.0f);
-                GlStateManager.translate(210, 280, 1);
+                GlStateManager.translate(580, 280, 1);
                 GL11.glPopMatrix();
             }
 
 
         }
 
-*/
+
 /*
   @EventTarget
     public  void onMoveFix(EventMove eventMove) {
@@ -370,11 +390,26 @@ public static  float changerotet = 1;
         return (long) ((Math.random() * (1000 / min - 1000 / max + 1)) + 1000 / max);
     }
 
+@EventTarget
+public void Test() {
+    if (target1.onGround ) {
+        Groundticks++;
+    }else if (target1.isAirBorne) {
+        Airticks++;
+    }
+
+        PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
+        PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
+
+    }
+
+
     @Override
     public void onDisable() {
         super.onDisable();
        hit = 0;
-
+    Groundticks = 0;
+    Airticks = 0;
 
     }
 }

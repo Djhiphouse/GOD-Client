@@ -198,6 +198,7 @@ public class Crasher extends Module {
             this.mc.getNetHandler().addToSendQueue((Packet) new C03PacketPlayer.C04PacketPlayerPosition(this.mc.thePlayer.posX, yPos, this.mc.thePlayer.posZ, true));
         for (int i = 0; i < 6685; i += 5)
             this.mc.getNetHandler().addToSendQueue((Packet) new C03PacketPlayer.C04PacketPlayerPosition(this.mc.thePlayer.posX + i, 255.0D, this.mc.thePlayer.posZ + i, true));
+        toggle();
     }
 
     public void Flycrasher() {

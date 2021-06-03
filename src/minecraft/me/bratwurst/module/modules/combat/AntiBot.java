@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class AntiBot extends Module {
@@ -26,7 +27,7 @@ public class AntiBot extends Module {
         options.add("Hypixel");
         options.add("Mineplex");
         options.add("Timolia");
-        options.add("TESTEN");
+        options.add("Jartex");
         Client.setmgr.rSetting(mode1 = new Setting("AntiBot Mode", this, "Checks", options));
     }
 
@@ -35,15 +36,15 @@ public class AntiBot extends Module {
         for (Entity bot : mc.theWorld.loadedEntityList) {
             if (bot instanceof EntityPlayer) {
                 if (bot != mc.thePlayer && bot != null) {
-                   if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
-                       legit((EntityPlayer) bot);
-                   }else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
-                       Hypixel((EntityPlayer) bot);
-                   }else if (mode1.getValString().equalsIgnoreCase("Timolia")) {
-                      Timolia((EntityPlayer) bot);
-                   }else if (mode1.getValString().equalsIgnoreCase("TESTEN")) {
-                       Test((EntityPlayer) bot);
-                   }
+                    if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
+                        legit((EntityPlayer) bot);
+                    } else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
+                        Hypixel((EntityPlayer) bot);
+                    } else if (mode1.getValString().equalsIgnoreCase("Timolia")) {
+                        Timolia((EntityPlayer) bot);
+                    } else if (mode1.getValString().equalsIgnoreCase("Jartex")) {
+                        Jartex((EntityPlayer) bot);
+                    }
 
                 }
             }
@@ -52,43 +53,40 @@ public class AntiBot extends Module {
     }
 
     public void legit(EntityPlayer bot) {
-      if (bot.getCustomNameTag() == ""  && mc.thePlayer.ticksExisted >= 40 && !antibot.contains(bot)) {
+        if (bot.getCustomNameTag() == "" && mc.thePlayer.ticksExisted >= 40 && !antibot.contains(bot)) {
             antibot.add(bot);
 
         }
     }
 
     public void Hypixel(EntityPlayer bot) {
-        if (bot.getCustomNameTag() == ""  && mc.thePlayer.ticksExisted >= 120 && !antibot.contains(bot)) {
+        if (bot.getCustomNameTag() == "" && mc.thePlayer.ticksExisted >= 120 && !antibot.contains(bot)) {
             antibot.add(bot);
 
         }
     }
 
-public void Timolia(EntityPlayer bot) {
-    if ( !antibot.contains(bot) && !bot.getName().startsWith("&")) {
-        antibot.add(bot);
+    public void Timolia(EntityPlayer bot) {
+        if (!antibot.contains(bot) && !bot.getName().startsWith("&")) {
+            antibot.add(bot);
+        }
     }
-}
-public static int Groundticks = 0;
-    public static int Airticks = 0;
-public void Test(EntityPlayer bot) {
 
+    public static int Groundticks = Aura.Groundticks;
+    public static int Airticks = Aura.Airticks;
 
+    public void Jartex(EntityPlayer bot) {
         if (bot.onGround ) {
             Groundticks++;
         }else if (bot.isAirBorne) {
             Airticks++;
         }
-        if (Aura.target1.getDistanceToEntity(mc.thePlayer) <= 5) {
-            PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
-            PlayerUtils.sendMessage("UUid: " + Aura.target1.getUniqueID().toString() + "Name: " + Aura.target1.getName() +  " Coustumname: " + Aura.target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + Aura.target1.ticksExisted + " leben: " + Aura.target1.getHealth() + " Inventotysize: " + Aura.target1.getInventory().length + " falldistance: " + Aura.target1.fallDistance);
-
+        if (bot.getCustomNameTag() == "" && mc.thePlayer.ticksExisted >= 40 && Groundticks > 410 && mc.thePlayer.ticksExisted >= 80 && !antibot.contains(bot)) {
+            antibot.add(bot);
         }
 
+    }
 
-
-}
     @Override
     public void onDisable() {
         super.onDisable();

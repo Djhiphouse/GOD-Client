@@ -7,11 +7,15 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.PlayerUtil;
+import me.bratwurst.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovementInput;
 
 import javax.vecmath.Vector3d;
@@ -60,15 +64,9 @@ public class LongJump extends Module {
     public LongJump() {
         super("LongJump", Category.MOVEMENT);
         ArrayList<String> options = new ArrayList<>();
-        options.add("Mccentral");
-        options.add("Vanilla");
         options.add("Bettermccentral");
-        options.add("Mineplex");
-        options.add("Hypixel");
-        options.add("Hypixelold");
-        options.add("Cubecraft");
-        options.add("newCubecraft");
         options.add("Redesky");
+        options.add("Hypixel");
 
 
 
@@ -80,43 +78,116 @@ public class LongJump extends Module {
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Mccentral")) {
-            Mccentral();
+
         }else if (mode1.getValString().equalsIgnoreCase("Bettermccentral")) {
             BetterMccentral();
-        }else if (mode1.getValString().equalsIgnoreCase("Vanilla")) {
-            vanilla();
-        }else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
-           Mineplex();
-        }else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
-            Hypixel();
-        }else if (mode1.getValString().equalsIgnoreCase("Cubecraft")) {
-           Cubecraft();
-        }else if (mode1.getValString().equalsIgnoreCase("newCubecraft")) {
-            cubecraft2();
-        }else if (mode1.getValString().equalsIgnoreCase("Hypixelold")) {
-           Hypixel2();
+
         }else if (mode1.getValString().equalsIgnoreCase("Redesky")) {
             Redesky();
-        }
-
+        }else if (mode1.getValString().equalsIgnoreCase("Hypixel"))
+         Damage2();
     }
+    public static  int tick = 0;
+    public void Damage2() {
+        if (tick == 0) {
+            NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
+            double x = mc.thePlayer.posX;
+            double z = mc.thePlayer.posZ;
+            double y = mc.thePlayer.posY;
+            for (int i = 0; i < 100; ++i) {
+                netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
+                netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
+                netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.00499999888241191 + 1.0100003516674E-1, z, false));
 
-    public void Mccentral() {
-        if (mc.thePlayer.onGround) ;
-        if (mc.thePlayer.onGround) {
-            mc.thePlayer.jump();
-            mc.timer.timerSpeed = 1.0F;
+            }
+            netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer(true));
+            tick++;
+
         } else {
-            mc.timer.timerSpeed = 1.05F;
-            double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
-            double x = -Math.sin(yaw) * 2.4;
-            double z = Math.cos(yaw) * 2.4;
-            mc.thePlayer.motionX = x;
-            mc.thePlayer.motionZ = z;
-            mc.thePlayer.moveForward *= 19.0F;
-            mc.thePlayer.moveStrafing *= 4.0F;
+            if (mc.thePlayer.hurtTime > 0.4 && mc.thePlayer.moveForward != 0) {
+                Jump(0.1,-0.02,500,true,19.5F,4F,1.9f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,1.3f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,0.7f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,0.8f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,1f);
+                DamageSource.hungerDamage = 0F;
+
+
+            }
         }
     }
+    private  int toggleState = 0;
+    public static final TimeHelper time = new TimeHelper();
+    public void Jump(double hight, double move, int time, boolean jump, float movespeed, float strafing, float Timerspeed ) {
+        // Jump
+
+        if (jump == true) {
+            mc.thePlayer.jump();
+            mc.thePlayer.jump();
+            mc.thePlayer.jump();
+            mc.thePlayer.jump();
+        }
+
+        //eigentlicher jump
+        double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+        double pitch = mc.thePlayer.posY;
+        double x = -Math.sin(yaw) * 0.5;
+        double z = Math.cos(yaw) * 0.5;
+        double y = pitch * 0.008;
+        float timer = Timerspeed;
+      /*
+        mc.thePlayer.rotationPitchHead = 90;
+        mc.thePlayer.rotationPitch = 90;
+        mc.thePlayer.rotationYaw = 90;
+*/
+        mc.thePlayer.motionX = x;
+        mc.thePlayer.motionZ = z;
+        mc.thePlayer.motionY = y;
+        mc.thePlayer.moveForward *= movespeed;
+        mc.thePlayer.moveStrafing *= strafing;
+        mc.timer.timerSpeed =  timer;
+
+        mc.timer.timerSpeed =  timer;
+
+        //
+        //begrenzung
+        double aktuelleY = mc.thePlayer.posY;
+        if (aktuelleY >= aktuelleY + 9) {
+            double yaww = Math.toRadians(mc.thePlayer.rotationYaw);
+            double pitchc = mc.thePlayer.posY;
+            double xx = -Math.sin(yaw) * hight;
+            double zz = Math.cos(yaw) * hight;
+            double yy = mc.thePlayer.motionY = -0.001;
+
+            mc.thePlayer.motionX = xx;
+            mc.thePlayer.motionZ = zz;
+            mc.thePlayer.motionY = yy;
+            mc.thePlayer.moveForward *= 9.0F;
+            mc.thePlayer.moveStrafing *= 2.0F;
+        }
+
+        //Warten lassen bis er enttogllen soll
+        // Methode
+
+        if(mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
+            System.out.println(toggleState);
+            toggle();
+
+            System.out.println(mc.timer.timerSpeed);
+            return;
+
+        }
+        if(mc.thePlayer.onGround && toggleState == 0) {
+            mc.thePlayer.jump();
+            System.out.println(toggleState);
+            toggleState = 1;
+
+
+
+        }
+    }
+
+
     public void BetterMccentral() {
         double jump1 = 1.5;
         if (mc.thePlayer.onGround) ;
@@ -134,16 +205,7 @@ public class LongJump extends Module {
             mc.thePlayer.moveStrafing *= 4.0F;
         }
     }
-    public void vanilla() {
-        mc.thePlayer.motionY = 0.09;
-        double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
-        double x = -Math.sin(yaw) * 0.5;
-        double z = Math.cos(yaw) * 0.5;
-        mc.thePlayer.motionX = x;
-        mc.thePlayer.motionZ = z;
-        mc.thePlayer.moveForward *= 19.0F;
-        mc.thePlayer.moveStrafing *= 4.0F;
-    }
+
     public void cubecraft2() {
         if (mc.thePlayer.moveForward != 0) {
             (mc.getMinecraft()).gameSettings.keyBindLeft.pressed = false;
@@ -163,35 +225,7 @@ public class LongJump extends Module {
             mc.thePlayer.onGround = false;
         }
     }
-public void  Hypixel() {
-    float x2 = 0.3F + getSpeedEffect() * 0.45F;
-    if (mc.thePlayer.moveForward != 0 && mc.thePlayer.onGround) {
-        setMotion(0.15D);
-        this.stage = 1;
-        mc.thePlayer.jump();
-    }
-    if (this.counter > 10)
-        this.air = x2 * 20.0F;
-    if (mc.thePlayer.onGround) {
-        this.air = 0.0F;
-    } else {
-        double speed = 0.95D + getSpeedEffect() * 0.2D - (this.air / 30.0F);
-        if (speed < mc.thePlayer.getBaseMoveSpeed() - 0.05D)
-            speed = mc.thePlayer.getBaseMoveSpeed() - 0.05D;
-        setMotion(speed);
-        this.air += x2;
-        this.counter++;
-    }
-}
-public void Hypixel2() {
-   if (!mc.thePlayer.onGround) {
-        if (mc.thePlayer.isCollidedVertically)
-            this.stage = 0;
-        mc.thePlayer.motionY = getMotion(this.stage);
-        if (this.stage > 0)
-            this.stage++;
-    }
-}
+
 public void Cubecraft() {
     mc.timer.timerSpeed = 0.3F;
     float x2 = 1.0F + getSpeedEffect() * 0.45F;
@@ -262,7 +296,7 @@ public void Mineplex() {
         this.motionY = mc.thePlayer.motionY;
     }
 }
-
+  @EventTarget
     public int getSpeedEffect() {
         return mc.thePlayer.isPotionActive(Potion.moveSpeed) ? (mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1) : 0;
     }

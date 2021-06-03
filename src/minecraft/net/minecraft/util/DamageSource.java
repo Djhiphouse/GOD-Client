@@ -33,7 +33,7 @@ public class DamageSource
      * Whether or not the damage ignores modification by potion effects or enchantments.
      */
     private boolean damageIsAbsolute;
-    private float hungerDamage = 0.3F;
+    public static float hungerDamage = 0.3F;
 
     /** This kind of damage is based on fire or not. */
     private boolean fireDamage;

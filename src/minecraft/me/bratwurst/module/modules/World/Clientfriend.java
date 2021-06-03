@@ -19,7 +19,7 @@ public class Clientfriend extends Module {
     public static Setting mode1;
 
     public Clientfriend() {
-        super("Clientfriend", Category.COMBAT);
+        super("Clientfriend", Category.WORLD);
         ArrayList<String> options = new ArrayList<>();
 
 
@@ -31,11 +31,7 @@ public class Clientfriend extends Module {
             if (bot instanceof EntityPlayer) {
                 if (bot != mc.thePlayer) {
 
-                    if (!antibot.contains(bot) && !bot.getName().startsWith("§a[") || !bot.getName().startsWith("§b[")) {
-                        antibot.add((EntityLivingBase) bot);
 
-
-                    }
 
                 }
             }
@@ -47,5 +43,10 @@ public class Clientfriend extends Module {
     public void onDisable() {
         super.onDisable();
         antibot.clear();
+    }
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
     }
 }
