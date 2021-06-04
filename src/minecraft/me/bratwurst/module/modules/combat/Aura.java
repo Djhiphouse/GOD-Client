@@ -221,7 +221,7 @@ public class Aura extends Module {
 
 
     public static int CounterScale = 40;
-
+/*
     @EventTarget
     public void onrender(Event2D e) {
         if (mc.thePlayer.getDistanceToEntity(target1) <= Range.getValInt()) {
@@ -314,6 +314,7 @@ public class Aura extends Module {
 
         }
 
+*/
 
 /*
   @EventTarget

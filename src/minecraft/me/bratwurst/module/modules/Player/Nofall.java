@@ -7,6 +7,7 @@ import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.manager.TimeHelper;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -60,7 +61,8 @@ public class Nofall extends Module {
     }
 
     public void Vanilla() {
-        if (!Client.getInstance().getModuleManager().getModuleByName("Glide").isToggle()) {
+        if ( Client.getInstance().getModuleManager().getModuleByName("LongJump").isToggle() || !Client.getInstance().getModuleManager().getModuleByName("LongJump").isEnabled() ) {
+            PlayerUtils.sendMessage("Fall");
             if (mc.thePlayer.fallDistance > 2F) {
                 Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
             }

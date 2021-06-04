@@ -101,7 +101,7 @@ public class LongJump extends Module {
             double z = mc.thePlayer.posZ;
             double y = mc.thePlayer.posY;
             for (int i = 0; i < 80; ++i) {
-                
+
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.00499999888241191 + 1.0100003516674E-1, z, false));
@@ -141,7 +141,8 @@ public class LongJump extends Module {
             mc.thePlayer.jump();
             mc.thePlayer.jump();
         }
-        Groundcheck();
+
+
 
         //eigentlicher jump
         double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
@@ -150,6 +151,8 @@ public class LongJump extends Module {
         double z = Math.cos(yaw) * 0.5;
         double y = pitch * 0.008;
         float timer = Timerspeed;
+
+
       /*
         mc.thePlayer.rotationPitchHead = 90;
         mc.thePlayer.rotationPitch = 90;
@@ -183,15 +186,7 @@ public class LongJump extends Module {
 
 
         }
-        if(mc.thePlayer.onGround && state == 1) {
-            toggle();
-            return;
-        }
-        if(mc.thePlayer.onGround && state == 0) {
-            mc.thePlayer.jump();
-            PlayerUtils.sendMessage("");
-            state = 1;
-        }
+
 
     }
     public static boolean Groundstand;
@@ -374,6 +369,7 @@ public class LongJump extends Module {
         tick = 0;
         toggleState = 0;
         Ground = 0;
+        state = 0;
     }
 
 
