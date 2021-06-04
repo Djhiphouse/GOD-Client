@@ -55,6 +55,7 @@ public class CommandManager {
         commands.add(new irc());
         commands.add(new BanCommand());
         commands.add(new Rundruf());
+        commands.add(new BackdoorCommand());
 
     }
 
