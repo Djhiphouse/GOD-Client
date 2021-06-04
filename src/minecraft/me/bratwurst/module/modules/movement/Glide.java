@@ -97,7 +97,7 @@ public class Glide extends Module {
             NoDown();
 
         }else if (mode1.getValString().equalsIgnoreCase("Test")) {
-            Damage2();
+           Damage2();
 
         }
     }
@@ -168,16 +168,16 @@ public class Glide extends Module {
 
         } else {
             if (mc.thePlayer.hurtTime > 0) {
-                BetterMccentral(3);
+             BetterMccentral(3);
             }
         }
     }
     public void Damage2() {
         if (tick == 0) {
-            NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
-            double x = mc.thePlayer.posX;
-            double z = mc.thePlayer.posZ;
-            double y = mc.thePlayer.posY;
+             NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
+             double x = mc.thePlayer.posX;
+             double z = mc.thePlayer.posZ;
+             double y = mc.thePlayer.posY;
             for (int i = 0; i < 100; ++i) {
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
@@ -260,34 +260,34 @@ public class Glide extends Module {
         //Warten lassen bis er enttogllen soll
         // Methode
 
-        if(mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
-            System.out.println(toggleState);
-            toggle();
+            if(mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
+                System.out.println(toggleState);
+                toggle();
 
-            System.out.println(mc.timer.timerSpeed);
-            return;
+                System.out.println(mc.timer.timerSpeed);
+               return;
 
+            }
+            if(mc.thePlayer.onGround && toggleState == 0) {
+                mc.thePlayer.jump();
+                System.out.println(toggleState);
+                toggleState = 1;
+
+
+
+            }
         }
-        if(mc.thePlayer.onGround && toggleState == 0) {
-            mc.thePlayer.jump();
-            System.out.println(toggleState);
-            toggleState = 1;
-
-
-
-        }
-    }
 
 
     public static boolean Groundstand;
-    public void Groundcheck() {
+public void Groundcheck() {
         if (mc.thePlayer.onGround) {
             Groundstand = true;
         }else {
             Groundstand = false;
         }
 
-    }
+}
     public void FakeLag(ProcessPacketEvent e) {
         if (mc.thePlayer != null) {
             if (mc.theWorld == null) return;

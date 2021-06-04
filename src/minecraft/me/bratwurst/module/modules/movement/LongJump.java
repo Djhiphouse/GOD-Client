@@ -77,7 +77,7 @@ public class LongJump extends Module {
 
         Client.setmgr.rSetting(Nofall = new Setting("Nofall", this, true));
     }
-    public static  int state = 0;
+public static  int state = 0;
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Bettermccentral")) {
