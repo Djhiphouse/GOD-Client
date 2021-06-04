@@ -95,14 +95,13 @@ public class LongJump extends Module {
 
     public void Schadenundfly() {
         if (tick == 0) {
-            if (Client.moduleManager.getModuleByName("Nofall").isEnabled()) {
-                Client.moduleManager.getModuleByName("Nofall").toggle();
-            }
+
             NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
             double x = mc.thePlayer.posX;
             double z = mc.thePlayer.posZ;
             double y = mc.thePlayer.posY;
             for (int i = 0; i < 80; ++i) {
+                
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.00499999888241191 + 1.0100003516674E-1, z, false));
@@ -110,10 +109,10 @@ public class LongJump extends Module {
             }
 
             netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer(true));
-            netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer(false));
+
             tick++;
 
-            Client.moduleManager.getModuleByName("Nofall").toggle();
+
 
         } else {
             if (mc.thePlayer.hurtTime > 0.4 && mc.thePlayer.moveForward != 0) {
@@ -125,9 +124,7 @@ public class LongJump extends Module {
                 DamageSource.hungerDamage = 0F;
 
 
-                if (!Client.moduleManager.getModuleByName("Nofall").isEnabled() && Nofall.getValBoolean()) {
-                    Client.moduleManager.getModuleByName("Nofall").toggle();
-                }
+
 
             }
         }
@@ -167,7 +164,7 @@ public class LongJump extends Module {
 
         mc.timer.timerSpeed = timer;
 
-        Groundcheck();
+
         //
         //begrenzung
         double aktuelleY = mc.thePlayer.posY;
@@ -181,17 +178,25 @@ public class LongJump extends Module {
             mc.thePlayer.motionX = xx;
             mc.thePlayer.motionZ = zz;
             mc.thePlayer.motionY = yy;
-            mc.thePlayer.moveForward *= 9.0F;
-            mc.thePlayer.moveStrafing *= 2.0F;
+            mc.thePlayer.moveForward *= movespeed;
+            mc.thePlayer.moveStrafing *= strafing;
 
 
         }
-
+        if(mc.thePlayer.onGround && state == 1) {
+            toggle();
+            return;
+        }
+        if(mc.thePlayer.onGround && state == 0) {
+            mc.thePlayer.jump();
+            PlayerUtils.sendMessage("");
+            state = 1;
+        }
 
     }
     public static boolean Groundstand;
     public void Groundcheck() {
-        PlayerUtils.sendMessage("GHropuen");
+
         if(mc.thePlayer.onGround && state == 1) {
             toggle();
             return;
