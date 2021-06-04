@@ -1,9 +1,11 @@
-package net.minecraft.client.gui;
+package me.bratwurst.guiMain;
+
 
 import me.bratwurst.AltManager.GuiAltManager;
 
 import me.bratwurst.Client;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -16,7 +18,7 @@ import org.lwjgl.opengl.GLContext;
 import java.awt.*;
 import java.io.IOException;
 
-public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
+public class GuiMainMenuGOD extends GuiScreen implements GuiYesNoCallback {
     private final Object threadLock = new Object();
     private String openGLWarning1;
 
@@ -32,7 +34,7 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private int field_92019_w;
 
 
-    public GuiMainMenu() {
+    public GuiMainMenuGOD() {
         this.openGLWarning2 = field_96138_a;
         this.openGLWarning1 = "";
 
@@ -125,11 +127,13 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         String s1;
         String s3;
         this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
-         s1 = EnumChatFormatting.AQUA + "Coded by " + EnumChatFormatting.BLUE  + "Bratwurst001";
+        s1 = EnumChatFormatting.AQUA + "Coded by " + EnumChatFormatting.BLUE  + "Bratwurst001";
         this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
-         s2 = EnumChatFormatting.AQUA + "Version: " + EnumChatFormatting.BLUE + Client.getInstance().CLIENT_VERSION;
+        s2 = EnumChatFormatting.AQUA + "Version: " + EnumChatFormatting.BLUE + Client.getInstance().CLIENT_VERSION;
         this.drawString(this.fontRendererObj, s2, 2, 2, Color.WHITE.getRGB());
-
+        this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 35, -1);
+        s2 = EnumChatFormatting.AQUA + "GOD: " + EnumChatFormatting.BLUE + Client.getInstance().CLIENT_VERSION;
+        this.drawString(this.fontRendererObj, s2, 460,150, Color.WHITE.getRGB());
 
 
 
