@@ -97,7 +97,7 @@ public class Glide extends Module {
             NoDown();
 
         }else if (mode1.getValString().equalsIgnoreCase("Test")) {
-           Damage2();
+            Damage2();
 
         }
     }
@@ -168,16 +168,16 @@ public class Glide extends Module {
 
         } else {
             if (mc.thePlayer.hurtTime > 0) {
-             BetterMccentral(3);
+                BetterMccentral(3);
             }
         }
     }
     public void Damage2() {
         if (tick == 0) {
-             NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
-             double x = mc.thePlayer.posX;
-             double z = mc.thePlayer.posZ;
-             double y = mc.thePlayer.posY;
+            NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
+            double x = mc.thePlayer.posX;
+            double z = mc.thePlayer.posZ;
+            double y = mc.thePlayer.posY;
             for (int i = 0; i < 100; ++i) {
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
                 netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
@@ -189,7 +189,11 @@ public class Glide extends Module {
 
         } else {
             if (mc.thePlayer.hurtTime > 0.4 && mc.thePlayer.moveForward != 0) {
-             BetterMccentral(12);
+                Jump(0.1,-0.02,500,true,19.5F,4F,1.9f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,1.3f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,0.7f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,0.8f);
+                Jump(0.1,-0.02,500,true,19.5F,4F,1f);
                 DamageSource.hungerDamage = 0F;
 
 
@@ -203,17 +207,87 @@ public class Glide extends Module {
             TimeHelper.reset();
         }
     }
+    private  int toggleState = 0;
+    public static final TimeHelper time = new TimeHelper();
+    public void Jump(double hight, double move, int time, boolean jump, float movespeed, float strafing, float Timerspeed ) {
+        // Jump
+
+        if (jump == true) {
+            mc.thePlayer.jump();
+            mc.thePlayer.jump();
+            mc.thePlayer.jump();
+            mc.thePlayer.jump();
+        }
+
+        //eigentlicher jump
+        double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+        double pitch = mc.thePlayer.posY;
+        double x = -Math.sin(yaw) * 0.5;
+        double z = Math.cos(yaw) * 0.5;
+        double y = pitch * 0.008;
+        float timer = Timerspeed;
+      /*
+        mc.thePlayer.rotationPitchHead = 90;
+        mc.thePlayer.rotationPitch = 90;
+        mc.thePlayer.rotationYaw = 90;
+*/
+        mc.thePlayer.motionX = x;
+        mc.thePlayer.motionZ = z;
+        mc.thePlayer.motionY = y;
+        mc.thePlayer.moveForward *= movespeed;
+        mc.thePlayer.moveStrafing *= strafing;
+        mc.timer.timerSpeed =  timer;
+
+        mc.timer.timerSpeed =  timer;
+
+        //
+        //begrenzung
+        double aktuelleY = mc.thePlayer.posY;
+        if (aktuelleY >= aktuelleY + 9) {
+            double yaww = Math.toRadians(mc.thePlayer.rotationYaw);
+            double pitchc = mc.thePlayer.posY;
+            double xx = -Math.sin(yaw) * hight;
+            double zz = Math.cos(yaw) * hight;
+            double yy = mc.thePlayer.motionY = -0.001;
+
+            mc.thePlayer.motionX = xx;
+            mc.thePlayer.motionZ = zz;
+            mc.thePlayer.motionY = yy;
+            mc.thePlayer.moveForward *= 9.0F;
+            mc.thePlayer.moveStrafing *= 2.0F;
+        }
+
+        //Warten lassen bis er enttogllen soll
+        // Methode
+
+        if(mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
+            System.out.println(toggleState);
+            toggle();
+
+            System.out.println(mc.timer.timerSpeed);
+            return;
+
+        }
+        if(mc.thePlayer.onGround && toggleState == 0) {
+            mc.thePlayer.jump();
+            System.out.println(toggleState);
+            toggleState = 1;
+
+
+
+        }
+    }
 
 
     public static boolean Groundstand;
-public void Groundcheck() {
+    public void Groundcheck() {
         if (mc.thePlayer.onGround) {
             Groundstand = true;
         }else {
             Groundstand = false;
         }
 
-}
+    }
     public void FakeLag(ProcessPacketEvent e) {
         if (mc.thePlayer != null) {
             if (mc.theWorld == null) return;
@@ -398,7 +472,7 @@ public void Groundcheck() {
         mc.thePlayer.capabilities.allowFlying = false;
 
         mc.thePlayer.capabilities.isFlying = false;
-
+        toggleState = 0;
         mc.timer.timerSpeed =  1F;
         System.out.println(mc.timer.timerSpeed);
         DamageSource.hungerDamage = 0.3F;
