@@ -3,6 +3,9 @@ package me.bratwurst.module.Commands;
 import me.bratwurst.manager.Command;
 import me.bratwurst.manager.FreundManager;
 import me.bratwurst.utils.player.PlayerUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,24 +28,21 @@ public class AddFriend extends Command {
         if (args.length == 2) {
             switch (args[0].toLowerCase()) {
                 case "add":
-                    PlayerUtils.sendMessage("Du hast " + args[1] + " zu deinen Freunden hinzugefügt!");
-                    FreundManager.getInstance().addFriend("§a[§bGod§cOwner§a]§7 " + args[1]);
-                    FreundManager.getInstance().addFriend("§a[§bGod§cDev§a] §7"+ args[1]);
-                    FreundManager.getInstance().addFriend("§b[§aGod§eSup§b] §7" + args[1]);
-                    FreundManager.getInstance().addFriend("§b[§3GodPartner§b] §7" + args[1]);
-                    FreundManager.getInstance().addFriend("§b[§eGodFreund§b] §7" + args[1]);
-                    FreundManager.getInstance().addFriend("§b[§4GodUser§b] §7" + args[1]);
-                    FreundManager.getInstance().addFriend(args[1]);
+                    for (Entity TargetName : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+                        if (TargetName instanceof EntityPlayer && TargetName != mc.thePlayer) {
+                            if (TargetName.getDistanceToEntity(mc.thePlayer) <= 5) {
+                                String freund = TargetName.getName();
+                                FreundManager.getInstance().addFriend(freund);
+                                PlayerUtils.sendMessage(freund);
+                            }else{
+                                PlayerUtils.sendMessage("Du musst in der nähe sein!");
+                            }
+                        }
+                    }
+
                     break;
                 case "remove":
-                    PlayerUtils.sendMessage("Du hast " + args[1] + "  von deinen Freunden entfernt!");
-                    FreundManager.getInstance().removeFriend("§a[§bGod§cOwner§a] §7" + args[1]);
-                    FreundManager.getInstance().removeFriend("§a[§bGod§cDev§a] §7"+ args[1]);
-                    FreundManager.getInstance().removeFriend("§b[§aGod§eSup§b] §7" + args[1]);
-                    FreundManager.getInstance().removeFriend("§b[§3GodPartner§b] §7" + args[1]);
-                    FreundManager.getInstance().removeFriend("§b[§eGodFreund§b] §7" + args[1]);
-                    FreundManager.getInstance().removeFriend("§b[§4GodUser§b] §7" + args[1]);
-                    FreundManager.getInstance().removeFriend(args[1]);
+
 
                     break;
                 default:

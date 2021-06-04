@@ -1,5 +1,6 @@
 package me.bratwurst.cosmetics;
 
+import me.bratwurst.Client;
 import me.bratwurst.cosmetics.profile.DragonWingsProfile;
 import me.bratwurst.utils.ColorUtil;
 import me.bratwurst.utils.ColorUtils;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class CosmeticWings extends Cosmetic {
+
     private ModelRenderer wing;
 
     private ModelRenderer wingTip;
