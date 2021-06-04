@@ -121,7 +121,7 @@ public class LongJump extends Module {
             }
             mc.thePlayer.jump();
         } else {
-            if(state < 17) {
+            if(state < 17 && mc.thePlayer.hurtTime > 0.1) {
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.9f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.3f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.7f, 1);
