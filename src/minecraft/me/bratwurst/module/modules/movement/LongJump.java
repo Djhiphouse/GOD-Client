@@ -77,7 +77,9 @@ public class LongJump extends Module {
 
         Client.setmgr.rSetting(Nofall = new Setting("Nofall", this, true));
     }
-    public static  int state = 0;
+
+    public static int state = 0;
+
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Bettermccentral")) {
@@ -90,47 +92,52 @@ public class LongJump extends Module {
 
 
     }
-
+    public static int Ground = 0;
     public static int tick = 0;
+    public static boolean onground;
+
+    public int disableState, damageState;
 
     public void Schadenundfly() {
-        if (tick == 0) {
-
-            NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
-            double x = mc.thePlayer.posX;
-            double z = mc.thePlayer.posZ;
-            double y = mc.thePlayer.posY;
-            for (int i = 0; i < 80; ++i) {
-                
-                netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
-                netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
-                netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.00499999888241191 + 1.0100003516674E-1, z, false));
-
+        if(mc.thePlayer.onGround) {
+            if(disableState == 1) {
+                toggle();
+                return;
             }
-
-            netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer(true));
-
-            tick++;
-
-
-
+            if(damageState == 0) {
+                if (Client.getInstance().getModuleManager().getModuleByName("Nofall").isEnabled() && Nofall.getValBoolean())
+                    Client.getInstance().getModuleManager().getModuleByName("Nofall").toggle();
+                NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
+                double x = mc.thePlayer.posX;
+                double z = mc.thePlayer.posZ;
+                double y = mc.thePlayer.posY;
+                for (int i = 0; i < 80; ++i) {
+                    netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.060100000351667404, z, false));
+                    netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 01000237487257E-1, z, false));
+                    netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.00499999888241191 + 1.0100003516674E-1, z, false));
+                }
+                netHandlerPlayClient.addToSendQueueSilent(new C03PacketPlayer(true));
+                damageState = 1;
+            }
+            mc.thePlayer.jump();
         } else {
-            if (mc.thePlayer.hurtTime > 0.4 && mc.thePlayer.moveForward != 0) {
+            if(state < 17) {
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.9f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.3f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.7f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.8f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1f, 1);
+                disableState = 1;
                 DamageSource.hungerDamage = 0F;
-
-
-
-
+                state++;
+            } else {
+            //    toggle();
             }
         }
     }
 
-    public static int Ground = 0;
+
+
     private int toggleState = 0;
     public static final TimeHelper time = new TimeHelper();
 
@@ -141,7 +148,14 @@ public class LongJump extends Module {
             mc.thePlayer.jump();
             mc.thePlayer.jump();
         }
-        Groundcheck();
+        if (!mc.thePlayer.onGround && !Client.getInstance().getModuleManager().getModuleByName("Nofall").isEnabled() && Nofall.getValBoolean()) {
+            Client.getInstance().getModuleManager().getModuleByName("Nofall").toggle();
+
+        }
+
+
+
+
 
         //eigentlicher jump
         double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
@@ -150,6 +164,8 @@ public class LongJump extends Module {
         double z = Math.cos(yaw) * 0.5;
         double y = pitch * 0.008;
         float timer = Timerspeed;
+
+
       /*
         mc.thePlayer.rotationPitchHead = 90;
         mc.thePlayer.rotationPitch = 90;
@@ -183,30 +199,26 @@ public class LongJump extends Module {
 
 
         }
-        if(mc.thePlayer.onGround && state == 1) {
+        if (mc.thePlayer.onGround && state == 3) {
             toggle();
             return;
         }
-        if(mc.thePlayer.onGround && state == 0) {
+        if (mc.thePlayer.onGround && state <= 3) {
             mc.thePlayer.jump();
-            PlayerUtils.sendMessage("");
+
             state = 1;
         }
 
+
     }
+
     public static boolean Groundstand;
+
     public void Groundcheck() {
 
-        if(mc.thePlayer.onGround && state == 1) {
-            toggle();
-            return;
-        }
-        if(mc.thePlayer.onGround && state == 0) {
-            mc.thePlayer.jump();
-            PlayerUtils.sendMessage("");
-            state = 1;
-        }
+
     }
+
     public void BetterMccentral() {
         double jump1 = 1.5;
         if (mc.thePlayer.onGround) ;
@@ -370,10 +382,15 @@ public class LongJump extends Module {
         mc.timer.timerSpeed = 1.0F;
         mc.thePlayer.capabilities.allowFlying = false;
 
+        damageState = 0;
+        disableState = 0;
+
         mc.thePlayer.capabilities.isFlying = false;
         tick = 0;
         toggleState = 0;
         Ground = 0;
+        state = 0;
+        onground = false;
     }
 
 

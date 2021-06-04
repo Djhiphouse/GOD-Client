@@ -69,16 +69,16 @@ public class Aura extends Module {
                 if (target != mc.thePlayer && target != null) {
                     String tname = target.getName();
                      if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()
-                        && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble() && target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) ) {
+                        && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()&& target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) ) {
                          String TargetName = target.getName();
                          String UUIId  = target.getUniqueID().toString();
                          if (EntityPlayer.cachedRanks.containsKey(UUIId)) {
-                         //    System.out.println("on");
+                             System.out.println("on");
                              return;
                          }else {
-                          //   System.out.println("off");
+                             System.out.println("off");
                          }
-                      //   System.out.println(EntityPlayer.cachedRanks);
+                         System.out.println(EntityPlayer.cachedRanks);
                         //onrender(Event);
                         this.target1 = target;
                          if (target1.onGround ) {
@@ -315,6 +315,7 @@ public class Aura extends Module {
         }
 
 */
+
 /*
   @EventTarget
     public  void onMoveFix(EventMove eventMove) {

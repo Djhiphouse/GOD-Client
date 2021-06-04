@@ -12,7 +12,7 @@ import net.minecraft.inventory.ContainerChest;
 
 public class Chesteal extends Module {
     public static Setting mode1;
-    public static Setting  Delay;
+    public static Setting  Delay,AutoClose;
 
     public Chesteal() {
         super("Chesteal", Category.PLAYER);
@@ -21,6 +21,7 @@ public class Chesteal extends Module {
     @Override
     public void setup() {
        Client.setmgr.rSetting(Delay = new Setting("Delay", this, 50, 1, 400, true));
+        Client.setmgr.rSetting(AutoClose = new Setting("AutoClose", this, true));
 
     }
 
@@ -45,7 +46,19 @@ public class Chesteal extends Module {
                     }
                 }
             }
+            if (isChestEmpty(container) && AutoClose.getValBoolean()) {
+                this.mc.thePlayer.closeScreen();
+                this.mc.updateDisplay();
+                this.mc.displayGuiScreen(null);
+            }
         }
+    }
+    public static boolean isChestEmpty(ContainerChest chest) {
+        for (int i = 0; i < chest.getLowerChestInventory().getSizeInventory(); i++) {
+            if (chest.getLowerChestInventory().getStackInSlot(i) != null)
+                return false;
+        }
+        return true;
     }
 
 }

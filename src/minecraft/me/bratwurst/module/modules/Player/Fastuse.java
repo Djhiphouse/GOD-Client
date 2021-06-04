@@ -48,6 +48,8 @@ public class Fastuse extends Module {
                     }
                 }
             }
+        }else {
+            mc.timer.timerSpeed = 1;
         }
     }
     public void cubecraft() {
@@ -67,7 +69,16 @@ public class Fastuse extends Module {
                     }
                 }
             }
+        }else {
+
+            mc.timer.timerSpeed = 1;
         }
         Fastuse.mc.timer.timerSpeed = 1.0f;
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+        mc.timer.timerSpeed = 1;
     }
 }
