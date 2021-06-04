@@ -31,19 +31,12 @@ public class Clientfriend extends Module {
             if (bot instanceof EntityPlayer) {
                 if (bot != mc.thePlayer) {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        antibot.add((EntityLivingBase) bot);
-=======
->>>>>>> parent of edbe718d (Updates)
-=======
->>>>>>> parent of edbe718d (Updates)
 
 
-                    }
                 }
             }
         }
+
     }
 
     @Override
