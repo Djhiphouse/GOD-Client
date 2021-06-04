@@ -39,9 +39,7 @@ public class VentusRadio extends Module {
     }
 
     public void einslive(WebSocket webSocket, Response response) {
-        webSocket.send("Hello, it's SSaurel !");
-        webSocket.send("What's up ?");
-        webSocket.send(ByteString.decodeHex("deadbeef"));
+
 
     }
 }
