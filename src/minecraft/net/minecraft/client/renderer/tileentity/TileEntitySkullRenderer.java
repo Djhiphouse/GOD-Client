@@ -5,6 +5,8 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import java.util.Map;
 import java.util.UUID;
+
+import me.bratwurst.Client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelHumanoidHead;
@@ -73,23 +75,27 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
                 case 3:
                     modelbase = this.humanoidHead;
                     ResourceLocation resourcelocation = DefaultPlayerSkin.getDefaultSkinLegacy();
-/*
-                    if (p_180543_7_ != null)
-                    {
-                        Minecraft minecraft = Minecraft.getMinecraft();
-                        Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(p_180543_7_);
+                    if (Client.getInstance().getModuleManager().getModuleByName("AntiExploitCrash").isEnabled()) {
 
-                        if (map.containsKey(Type.SKIN))
+                    }else {
+                        if (p_180543_7_ != null)
                         {
-                            resourcelocation = minecraft.getSkinManager().loadSkin((MinecraftProfileTexture)map.get(Type.SKIN), Type.SKIN);
-                        }
-                        else
-                        {
-                            UUID uuid = EntityPlayer.getUUID(p_180543_7_);
-                            resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+                            Minecraft minecraft = Minecraft.getMinecraft();
+                            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(p_180543_7_);
+
+                            if (map.containsKey(Type.SKIN))
+                            {
+                                resourcelocation = minecraft.getSkinManager().loadSkin((MinecraftProfileTexture)map.get(Type.SKIN), Type.SKIN);
+                            }
+                            else
+                            {
+                                UUID uuid = EntityPlayer.getUUID(p_180543_7_);
+                                resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+                            }
                         }
                     }
-*/
+
+
                     this.bindTexture(resourcelocation);
                     break;
 

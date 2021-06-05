@@ -112,7 +112,7 @@ public class ModuleManager {
         addModule(new TargetHud());
         addModule(new MidClick());
         addModule(new AntiBan());
-        addModule(new AntiCobweb());
+        addModule(new AntiExploitCrash());
         System.err.println("Modules: " + modules.size());
     }
 
