@@ -2,6 +2,7 @@ package me.bratwurst.module.modules.Crasher;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
@@ -30,6 +31,9 @@ public class Crashskull extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
+        if (!Client.getInstance().getModuleManager().getModuleByName("AntiExploitCrash").isEnabled()) {
+            Client.getInstance().getModuleManager().getModuleByName("AntiExploitCrash").toggle();
+        }
         if (!mc.thePlayer.capabilities.isCreativeMode) {
             PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "Das funktioniert nur im Creativemode.");
 
