@@ -37,6 +37,7 @@ public class Speed extends Module {
         options.add("MC-CentralFast");
 
 
+
         Client.setmgr.rSetting(mode1 = new Setting("Speed Mode", this, "NCPbhop", options));
     }
 
