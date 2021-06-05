@@ -4,6 +4,7 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -75,7 +76,7 @@ public class Teleport extends Module {
                         double z;
                         int distance = (int) mc.thePlayer.getDistanceToEntity(Target);
                         int step = 1;
-                        System.out.println(distance);
+
                         z = mc.thePlayer.posZ;
                         x = mc.thePlayer.posX;
                         for (int i = 0; i < distance; i++) {

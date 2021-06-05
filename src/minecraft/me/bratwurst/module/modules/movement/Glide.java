@@ -261,7 +261,7 @@ public static int fly = 0;
     public static int onshot = 0;
 
     public void Bowfly(EventMotionUpdate e) {
-        PlayerUtils.sendMessage("onbow");
+
 
         ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
 
@@ -363,16 +363,17 @@ public static int fly = 0;
         // Methode
 
         if (mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
-            System.out.println(toggleState);
+
+
+
             toggle();
 
-            System.out.println(mc.timer.timerSpeed);
             return;
 
         }
         if (mc.thePlayer.onGround && toggleState == 0) {
             mc.thePlayer.jump();
-            System.out.println(toggleState);
+
             toggleState = 1;
 
 
@@ -565,7 +566,7 @@ public static int fly = 0;
         mc.thePlayer.capabilities.isFlying = false;
         toggleState = 0;
         mc.timer.timerSpeed = 1F;
-        System.out.println(mc.timer.timerSpeed);
+
         DamageSource.hungerDamage = 0.3F;
        fly2 = 0;
         fly = 0;

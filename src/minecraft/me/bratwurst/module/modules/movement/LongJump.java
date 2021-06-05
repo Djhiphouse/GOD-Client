@@ -158,8 +158,6 @@ public class LongJump extends Module {
 
 
 
-
-
         //eigentlicher jump
         double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
         double pitch = mc.thePlayer.posY;
