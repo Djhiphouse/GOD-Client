@@ -73,7 +73,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
                 case 3:
                     modelbase = this.humanoidHead;
                     ResourceLocation resourcelocation = DefaultPlayerSkin.getDefaultSkinLegacy();
-
+/*
                     if (p_180543_7_ != null)
                     {
                         Minecraft minecraft = Minecraft.getMinecraft();
@@ -89,7 +89,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
                             resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
                         }
                     }
-
+*/
                     this.bindTexture(resourcelocation);
                     break;
 

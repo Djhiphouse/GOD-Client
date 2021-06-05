@@ -14,6 +14,7 @@ import java.util.concurrent.Callable;
 
 import me.bratwurst.Client;
 import me.bratwurst.event.events.Event3D;
+import me.bratwurst.event.events.EventMiddleClick;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;

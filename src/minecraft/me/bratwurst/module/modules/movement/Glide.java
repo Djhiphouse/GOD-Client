@@ -4,10 +4,7 @@ import de.Hero.settings.Setting;
 import me.bratwurst.Client;
 import me.bratwurst.event.Event;
 import me.bratwurst.event.EventTarget;
-import me.bratwurst.event.events.EventMotionUpdate;
-import me.bratwurst.event.events.EventMove;
-import me.bratwurst.event.events.EventUpdate;
-import me.bratwurst.event.events.ProcessPacketEvent;
+import me.bratwurst.event.events.*;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.Player.Nofall;
@@ -18,10 +15,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumFacing;
 
 import javax.vecmath.Vector3d;
 import java.sql.Time;
@@ -32,7 +36,14 @@ public class Glide extends Module {
     ArrayList<Vector3d> loc = new ArrayList<>();
     private Vector3d startVector3d;
     public double x, y, z;
-
+    int bow;
+    boolean enable;
+    private boolean wasinairaac;
+    public static int yprocents = 160;
+    public static int xzprocents = 190;
+    public static float ymultiplier;
+    public static float xzmulitplier;
+    public static boolean boost = true;
     public Setting Bypass, Speed, mccSpeed, Speeddown, InfiniteFly;
     public static Setting mode1;
 
@@ -51,6 +62,8 @@ public class Glide extends Module {
         options.add("Spartan");
         options.add("NoDown");
         options.add("Test");
+        options.add("bowfly");
+        options.add("FakeFlag");
 
 
         Client.setmgr.rSetting(mode1 = new Setting("Glide Mode", this, "Mccentral", options));
@@ -71,7 +84,7 @@ public class Glide extends Module {
 
     @EventTarget
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdate(EventMotionUpdate e) {
         if (mode1.getValString().equalsIgnoreCase("Mccentral")) {
 
             Damage();
@@ -96,8 +109,14 @@ public class Glide extends Module {
         } else if (mode1.getValString().equalsIgnoreCase("NoDown")) {
             NoDown();
 
-        }else if (mode1.getValString().equalsIgnoreCase("Test")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Test")) {
             Damage2();
+
+        } else if (mode1.getValString().equalsIgnoreCase("bowfly")) {
+            Bowfly(e);
+
+        } else if (mode1.getValString().equalsIgnoreCase("FakeFlag")) {
+            FakeFlagFly();
 
         }
     }
@@ -119,6 +138,42 @@ public class Glide extends Module {
 
         }
     }
+    public static int fly2 = 0;
+public static int fly = 0;
+    public void FakeFlagFly() {
+
+        fly++;
+        if (fly <= 45) {
+            double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+
+
+            int step = -1;
+
+            z = mc.thePlayer.posZ;
+            x = mc.thePlayer.posX;
+            double x = mc.thePlayer.posX;
+            double y = mc.thePlayer.posY;
+            double z = mc.thePlayer.posZ;
+            mc.thePlayer.setPositionAndUpdate(x + -Math.sin(yaw) * -0.2, mc.thePlayer.posY, z + Math.cos(yaw) * -0.2);
+
+            if (TimeHelper.hasReached(300)) {
+                mc.thePlayer.setPositionAndUpdate(x + -Math.sin(yaw) * +1, mc.thePlayer.posY, z + Math.cos(yaw) * +1);
+                TimeHelper.reset();
+            }
+
+        } else {
+
+            fly2++;
+            if (fly2 <= 300) {
+                BetterMccentral(50);
+                BetterMccentral(50);
+                BetterMccentral(50);
+            }
+
+        }
+
+    }
+
 
     public void Vanilla(int Speed) {
         if (Bypass.getValBoolean()) {
@@ -172,6 +227,7 @@ public class Glide extends Module {
             }
         }
     }
+
     public void Damage2() {
         if (tick == 0) {
             NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
@@ -189,17 +245,61 @@ public class Glide extends Module {
 
         } else {
             if (mc.thePlayer.hurtTime > 0.4 && mc.thePlayer.moveForward != 0) {
-                Jump(0.1,-0.02,500,true,19.5F,4F,1.9f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,1.3f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,0.7f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,0.8f);
-                Jump(0.1,-0.02,500,true,19.5F,4F,1f);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.9f);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.3f);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.7f);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.8f);
+                Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1f);
                 DamageSource.hungerDamage = 0F;
 
 
             }
         }
     }
+
+
+    public static int onshot = 0;
+
+    public void Bowfly(EventMotionUpdate e) {
+        PlayerUtils.sendMessage("onbow");
+
+        ItemStack stack = mc.thePlayer.getCurrentEquippedItem();
+
+        if (onshot == 0) {
+            int yaw = (int) (mc.thePlayer.rotationYaw + 180);
+            float pitch = -87.5F;
+            e.setYaw(yaw);
+            e.setPitch(pitch);
+            PlayerUtils.sendMessage(EnumChatFormatting.DARK_RED + "Schiesse mit demm Bogen leicht in die luft so das dich der Pfeill trifft ");
+
+        }
+        if (mc.thePlayer.hurtTime > 0.1) {
+            onshot++;
+            BetterMccentral(3);
+            mc.thePlayer.moveForward = 2;
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+            BetterMccentral(3);
+
+
+        }
+
+
+    }
+
+
     public void Down(int delay) {
         if (TimeHelper.hasReached(delay)) {
             this.mc.thePlayer.jump();
@@ -207,9 +307,11 @@ public class Glide extends Module {
             TimeHelper.reset();
         }
     }
-    private  int toggleState = 0;
+
+    private int toggleState = 0;
     public static final TimeHelper time = new TimeHelper();
-    public void Jump(double hight, double move, int time, boolean jump, float movespeed, float strafing, float Timerspeed ) {
+
+    public void Jump(double hight, double move, int time, boolean jump, float movespeed, float strafing, float Timerspeed) {
         // Jump
 
         if (jump == true) {
@@ -236,9 +338,9 @@ public class Glide extends Module {
         mc.thePlayer.motionY = y;
         mc.thePlayer.moveForward *= movespeed;
         mc.thePlayer.moveStrafing *= strafing;
-        mc.timer.timerSpeed =  timer;
+        mc.timer.timerSpeed = timer;
 
-        mc.timer.timerSpeed =  timer;
+        mc.timer.timerSpeed = timer;
 
         //
         //begrenzung
@@ -260,7 +362,7 @@ public class Glide extends Module {
         //Warten lassen bis er enttogllen soll
         // Methode
 
-        if(mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
+        if (mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
             System.out.println(toggleState);
             toggle();
 
@@ -268,26 +370,15 @@ public class Glide extends Module {
             return;
 
         }
-        if(mc.thePlayer.onGround && toggleState == 0) {
+        if (mc.thePlayer.onGround && toggleState == 0) {
             mc.thePlayer.jump();
             System.out.println(toggleState);
             toggleState = 1;
 
 
-
         }
     }
 
-
-    public static boolean Groundstand;
-    public void Groundcheck() {
-        if (mc.thePlayer.onGround) {
-            Groundstand = true;
-        }else {
-            Groundstand = false;
-        }
-
-    }
     public void FakeLag(ProcessPacketEvent e) {
         if (mc.thePlayer != null) {
             if (mc.theWorld == null) return;
@@ -313,28 +404,28 @@ public class Glide extends Module {
 
     public void BetterMccentral(int Speedfly) {
         Speedfly = mccSpeed.getValInt();
-        if (Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown()) {
-            double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
-            double pitch = Math.toRadians(mc.thePlayer.rotationPitch);
-            double x = -Math.sin(yaw) * Speedfly;
-            double z = Math.cos(yaw) * Speedfly;
-            double y = -Math.sin(pitch) * 0.1;
 
-            mc.thePlayer.motionX = x;
-            mc.thePlayer.motionZ = z;
-            mc.thePlayer.motionY = y;
+        double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+        double pitch = Math.toRadians(mc.thePlayer.rotationPitch);
+        double x = -Math.sin(yaw) * Speedfly;
+        double z = Math.cos(yaw) * Speedfly;
+        double y = -Math.sin(pitch) * 0.1;
+
+        mc.thePlayer.motionX = x;
+        mc.thePlayer.motionZ = z;
+        mc.thePlayer.motionY = y;
+        mc.thePlayer.moveForward *= 19.0F;
+        mc.thePlayer.moveStrafing *= 4.0F;
+        if (Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) {
+            double pitch2 = Math.toRadians(mc.thePlayer.rotationPitch);
+            double yy = -Math.sin(pitch2) * 0.9;
+            mc.thePlayer.motionY = yy;
             mc.thePlayer.moveForward *= 19.0F;
             mc.thePlayer.moveStrafing *= 4.0F;
-            if (Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) {
-                double pitch2 = Math.toRadians(mc.thePlayer.rotationPitch);
-                double yy = -Math.sin(pitch2) * 0.9;
-                mc.thePlayer.motionY = yy;
-                mc.thePlayer.moveForward *= 19.0F;
-                mc.thePlayer.moveStrafing *= 4.0F;
-
-            }
 
         }
+
+
         if (InfiniteFly.getValBoolean()) {
             if (TimeHelper.hasReached(2500)) {
                 this.mc.thePlayer.jump();
@@ -470,11 +561,13 @@ public class Glide extends Module {
         jumptick = 0;
         gamemode = 0;
         mc.thePlayer.capabilities.allowFlying = false;
-
+        onshot = 0;
         mc.thePlayer.capabilities.isFlying = false;
         toggleState = 0;
-        mc.timer.timerSpeed =  1F;
+        mc.timer.timerSpeed = 1F;
         System.out.println(mc.timer.timerSpeed);
         DamageSource.hungerDamage = 0.3F;
+       fly2 = 0;
+        fly = 0;
     }
 }

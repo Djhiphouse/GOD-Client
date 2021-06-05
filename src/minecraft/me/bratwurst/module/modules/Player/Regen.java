@@ -6,6 +6,7 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
 
@@ -44,17 +45,20 @@ public class Regen extends Module {
     private void packetRegen(int packets) {
 
         if (mc.thePlayer.onGround) {
-            for (int i = 0; i < packets; ++i) {
-                mc.getNetHandler().addToSendQueueSilent(new C03PacketPlayer(true));
+            if ( !mc.thePlayer.capabilities.isCreativeMode && mc.thePlayer.getFoodStats().getFoodLevel() > 17 && mc.thePlayer.getHealth() < 20.0F && mc.thePlayer.getHealth() != 0.0F && mc.thePlayer.onGround) {
+                for(int i = 0; i < 17; ++i) {
+                    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
+                }
             }
         }
 
     }
 
     public void Normal() {
-        if (mc.thePlayer.isPotionActive(Potion.regeneration)) {
-            this.packetRegen((int) ((int) packets / 40.0D
-                    * (double) mc.thePlayer.getActivePotionEffect(Potion.regeneration).getAmplifier()));
+        if ( mc.thePlayer.getActivePotionEffect(Potion.regeneration) != null && (mc.thePlayer.onGround   && mc.thePlayer.getHealth() < mc.thePlayer.getMaxHealth())) {
+            for(int i = 0; (float)i < mc.thePlayer.getMaxHealth() - mc.thePlayer.getHealth() && mc.thePlayer.getActivePotionEffect(Potion.regeneration) != null; ++i) {
+                this.mc.getNetHandler().addToSendQueue(new C03PacketPlayer(true));
+            }
         }
     }
 

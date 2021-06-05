@@ -49,7 +49,7 @@ public final class ItemStack
     /**
      * A NBTTagMap containing data about an ItemStack. Can only be used for non stackable items
      */
-    private NBTTagCompound stackTagCompound;
+    public NBTTagCompound stackTagCompound;
     private int itemDamage;
 
     /** Item frame this stack is on, or null if not on an item frame. */

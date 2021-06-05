@@ -65,7 +65,7 @@ public class Client {
     }
     public static Minecraft mc = Minecraft.getMinecraft();
 
-    public final String CLIENT_NAME = "God", CLIENT_VERSION = "0.8", CLIENT_CODER = "Bratwust001";
+    public final String CLIENT_NAME = "God", CLIENT_VERSION = "0.9", CLIENT_CODER = "Bratwust001";
 
     public final String CLIENT_PREFIX = EnumChatFormatting.AQUA + "[" + EnumChatFormatting.BLUE + "GOD" + EnumChatFormatting.AQUA + "]";
 
@@ -111,7 +111,7 @@ public class Client {
         try {
             ConfigManager.createFile();
         } catch (Exception e) {
-            System.out.println("fehler beim erstellen");
+
         }
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
@@ -119,19 +119,19 @@ public class Client {
             try {
                 EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
                 if (thePlayer == null) {
-                    System.out.println("thePlayer is null");
+
                     return;
                 }
 
                 UUID uuid = thePlayer.getUniqueID();
                 if (uuid == null) {
-                    System.out.println("uuid is null");
+
                     return;
                 }
 
                 String hwid = Client.hwid;
                 networkClient.getIrcClient().send("");
-                System.out.println("Hallo: " + uuid + " hwid " + hwid);
+
                 Client.networkClient.setStatus(uuid, hwid)
                         .exceptionally(throwable -> {
                             throwable.printStackTrace();
@@ -151,7 +151,7 @@ public class Client {
                 }
                 if(blocked){
                     System.exit(1);
-                    System.out.println("DU WURDEST GEBANNT");
+
                     JOptionPane.showMessageDialog(null, "Du bist Gebannt!", "Banned", JOptionPane.ERROR_MESSAGE);
                 }
                 return blocked;

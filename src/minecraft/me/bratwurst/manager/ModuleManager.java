@@ -8,9 +8,9 @@ import me.bratwurst.module.modules.Crasher.*;
 import me.bratwurst.module.modules.Player.*;
 import me.bratwurst.module.modules.World.*;
 import me.bratwurst.module.modules.combat.*;
-import me.bratwurst.module.modules.cosmetics.WhitherEffect;
 import me.bratwurst.module.modules.cosmetics.Wings;
 import me.bratwurst.module.modules.cosmetics.WitchHat;
+import me.bratwurst.module.modules.Crasher.Crashskull;
 import me.bratwurst.module.modules.fun.Parkour;
 import me.bratwurst.module.modules.movement.*;
 import me.bratwurst.module.modules.render.*;
@@ -103,7 +103,15 @@ public class ModuleManager {
         addModule(new Clientfriend());
         addModule(new Teleport());
         addModule(new Superhit());
-
+        addModule(new Crashskull());
+        addModule(new Crashblock());
+        addModule(new ExtraEchant());
+        addModule(new NameProtect());
+        addModule(new bowfly());
+        addModule(new nuker());
+        addModule(new TargetHud());
+        addModule(new MidClick());
+        addModule(new AntiBan());
         System.err.println("Modules: " + modules.size());
     }
 

@@ -177,7 +177,7 @@ public class ClickGUI extends GuiScreen {
             GL11.glPushMatrix();
             GL11.glTranslatef(s.getScaledWidth() / 2, s.getScaledHeight() / 2, 0.0F);
             GL11.glScalef(4.0F, 4.0F, 0F);
-            FontUtil.drawTotalCenteredStringWithShadow(EnumChatFormatting.AQUA + "Warte uaf Taste", 0, -10, 0xffffffff);
+            FontUtil.drawTotalCenteredStringWithShadow(EnumChatFormatting.AQUA + "Drücke auf die Taste auf der du dieses Module togglen möctest", 0, -10, 0xffffffff);
             GL11.glScalef(0.5F, 0.5F, 0F);
             FontUtil.drawTotalCenteredStringWithShadow(EnumChatFormatting.AQUA + "Drücke ESCAPE um denn HotKey zurück zu setzen " + mb.mod.getName() + (mb.mod.getKey() > -1 ? " (" + Keyboard.getKeyName(mb.mod.getKey()) + ")" : ""), 0, 0, 0xffffffff);
             GL11.glScalef(0.25F, 0.25F, 0F);

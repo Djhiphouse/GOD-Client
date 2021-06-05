@@ -22,7 +22,7 @@ public abstract class Event {
     }
 
 
-    public Event call() {
+    public  Event call() {
         this.cancelled = false;
         if(this != null) {
             call(this);

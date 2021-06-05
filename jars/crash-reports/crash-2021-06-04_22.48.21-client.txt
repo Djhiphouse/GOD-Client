@@ -1,0 +1,128 @@
+---- Minecraft Crash Report ----
+// Hi. I'm Minecraft, and I'm a crashaholic.
+
+Time: 04.06.21 22:48
+Description: Rendering item
+
+com.google.common.util.concurrent.UncheckedExecutionException: java.lang.NullPointerException
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2201)
+	at com.google.common.cache.LocalCache.get(LocalCache.java:3934)
+	at com.google.common.cache.LocalCache.getOrLoad(LocalCache.java:3938)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.get(LocalCache.java:4821)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.getUnchecked(LocalCache.java:4827)
+	at net.minecraft.client.resources.SkinManager.loadSkinFromCache(SkinManager.java:152)
+	at net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer.renderSkull(TileEntitySkullRenderer.java:80)
+	at net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer.renderByItem(TileEntityItemStackRenderer.java:61)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItem(RenderItem.java:181)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemIntoGUI(RenderItem.java:459)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemAndEffectIntoGUI(RenderItem.java:499)
+	at net.minecraft.client.gui.GuiIngame.renderHotbarItem(GuiIngame.java:1123)
+	at net.minecraft.client.gui.GuiIngame.renderTooltip(GuiIngame.java:431)
+	at net.minecraft.client.gui.GuiIngame.renderGameOverlay(GuiIngame.java:197)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1204)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1039)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+Caused by: java.lang.NullPointerException
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.isWhitelistedDomain(YggdrasilMinecraftSessionService.java:210)
+	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.getTextures(YggdrasilMinecraftSessionService.java:149)
+	at net.minecraft.client.resources.SkinManager$1.load(SkinManager.java:44)
+	at net.minecraft.client.resources.SkinManager$1.load(SkinManager.java:41)
+	at com.google.common.cache.LocalCache$LoadingValueReference.loadFuture(LocalCache.java:3524)
+	at com.google.common.cache.LocalCache$Segment.loadSync(LocalCache.java:2317)
+	at com.google.common.cache.LocalCache$Segment.lockedGetOrLoad(LocalCache.java:2280)
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2195)
+	... 18 more
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2201)
+	at com.google.common.cache.LocalCache.get(LocalCache.java:3934)
+	at com.google.common.cache.LocalCache.getOrLoad(LocalCache.java:3938)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.get(LocalCache.java:4821)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.getUnchecked(LocalCache.java:4827)
+	at net.minecraft.client.resources.SkinManager.loadSkinFromCache(SkinManager.java:152)
+	at net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer.renderSkull(TileEntitySkullRenderer.java:80)
+	at net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer.renderByItem(TileEntityItemStackRenderer.java:61)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItem(RenderItem.java:181)
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemIntoGUI(RenderItem.java:459)
+
+-- Item being rendered --
+Details:
+	Item Type: net.minecraft.item.ItemSkull@2272cbb0
+	Item Aux: 3
+	Item NBT: {SkullOwner:{Id:"9d744c33-f3c4-4040-a7fc-73b47c840f0c",Properties:{textures:[0:{Value:"eyJ0ZXh0­dXJlcyI6eyJTS0lOIjp7InVybCI6IiJ9fX0="}]},Name:"Crashskull"},display:{Name:"Hold me :D"},crash:1b}
+	Item Foil: false
+Stacktrace:
+	at net.minecraft.client.renderer.entity.RenderItem.renderItemAndEffectIntoGUI(RenderItem.java:499)
+	at net.minecraft.client.gui.GuiIngame.renderHotbarItem(GuiIngame.java:1123)
+	at net.minecraft.client.gui.GuiIngame.renderTooltip(GuiIngame.java:431)
+	at net.minecraft.client.gui.GuiIngame.renderGameOverlay(GuiIngame.java:197)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God62'/14121, l='MpServer', x=169,43, y=88,00, z=231,84]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 144,00,67,00,245,00 - World: (144,67,245), Chunk: (at 0,4,5 in 9,15; contains blocks 144,0,240 to 159,255,255), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 60527811 game time, 1681021 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 25 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God62'/14121, l='MpServer', x=169,43, y=88,00, z=231,84], EntityZombie['Zombie'/14021, l='MpServer', x=173,50, y=95,00, z=232,50], EntityZombie['Zombie'/14342, l='MpServer', x=153,50, y=26,00, z=277,50], EntityPig['Pig'/137, l='MpServer', x=170,50, y=68,00, z=194,69], EntityPig['Pig'/139, l='MpServer', x=164,50, y=76,00, z=225,50], EntityCow['Cow'/140, l='MpServer', x=173,44, y=68,00, z=225,53], EntityZombie['Zombie'/13454, l='MpServer', x=176,50, y=35,00, z=230,50], EntityChicken['Chicken'/81, l='MpServer', x=133,34, y=71,00, z=225,53], EntityRabbit['Rabbit'/152, l='MpServer', x=189,63, y=78,00, z=237,81], EntitySpider['Spider'/14299, l='MpServer', x=209,50, y=14,00, z=212,50], EntityZombie['Zombie'/14300, l='MpServer', x=209,50, y=14,00, z=202,50], EntityZombie['Zombie'/14301, l='MpServer', x=206,50, y=14,00, z=202,50], EntitySkeleton['Skeleton'/14304, l='MpServer', x=132,50, y=19,00, z=255,50], EntitySkeleton['Skeleton'/14305, l='MpServer', x=131,50, y=19,00, z=254,50], EntityWitch['Witch'/11245, l='MpServer', x=121,50, y=30,00, z=192,50], EntityCreeper['Creeper'/13679, l='MpServer', x=191,50, y=15,00, z=249,50], EntitySkeleton['Skeleton'/14064, l='MpServer', x=174,50, y=71,00, z=247,50], EntityCreeper['Creeper'/13296, l='MpServer', x=129,50, y=26,00, z=243,50], EntityCreeper['Creeper'/14002, l='MpServer', x=151,06, y=68,67, z=277,34], EntityPig['Pig'/181, l='MpServer', x=152,31, y=67,00, z=221,47], EntityZombie['Zombie'/14326, l='MpServer', x=207,50, y=15,00, z=225,50], EntityCreeper['Creeper'/13882, l='MpServer', x=186,50, y=21,00, z=244,50], EntityCreeper['Creeper'/12220, l='MpServer', x=168,50, y=31,00, z=195,50], EntitySkeleton['Skeleton'/13054, l='MpServer', x=199,50, y=74,00, z=228,50], EntityZombie['Zombie'/12799, l='MpServer', x=213,50, y=76,00, z=188,50]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 533747008 bytes (509 MB) / 824705024 bytes (786 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12
