@@ -1497,6 +1497,11 @@ public class Block
         registerBlock(id, new ResourceLocation(textualID), block_);
     }
 
+    public boolean isSolidFullCube()
+    {
+        return this.blockMaterial.blocksMovement() && this.isFullCube();
+    }
+
     public static enum EnumOffsetType
     {
         NONE,

@@ -7,6 +7,8 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.module.modules.Crasher.AntiBan;
+import me.bratwurst.module.modules.Player.AntiAim;
 import me.bratwurst.module.modules.Player.Nofall;
 import me.bratwurst.utils.PlayerUtil;
 import me.bratwurst.utils.TimeHelper;
@@ -102,6 +104,7 @@ public class LongJump extends Module {
         if(mc.thePlayer.onGround) {
             if(disableState == 1) {
                 toggle();
+               AntiBan.Flagcounter = 0;
                 return;
             }
             if(damageState == 0) {
