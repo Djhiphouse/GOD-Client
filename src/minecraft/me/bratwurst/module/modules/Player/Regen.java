@@ -6,6 +6,7 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
@@ -22,21 +23,25 @@ public class Regen extends Module {
         ArrayList<String> options = new ArrayList<>();
         options.add("Normal");
         options.add("Packet");
-        Client.setmgr.rSetting(mode1 = new Setting("Regen Mode", this, "Normal",options));
+        options.add("Burst");
+        Client.setmgr.rSetting(mode1 = new Setting("Regen Mode", this, "Normal", options));
     }
+
     @Override
     public void setup() {
-        Client.setmgr.rSetting(Packets = new Setting("Packets:", this, 5, 1, 200, true));
+        Client.setmgr.rSetting(Packets = new Setting("Packets:", this, 300, 50, 1200, true));
     }
 
     int packets = 3;
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
-        if (mode1.getValString().equalsIgnoreCase("Packet")){
+        if (mode1.getValString().equalsIgnoreCase("Packet")) {
             packetRegen(Packets.getValInt());
-        }else if (mode1.getValString().equalsIgnoreCase("Normal")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Normal")) {
             Normal();
+        }else if (mode1.getValString().equalsIgnoreCase("Burst")) {
+            Burst(Packets.getValInt());
         }
 
 
@@ -45,8 +50,8 @@ public class Regen extends Module {
     private void packetRegen(int packets) {
 
         if (mc.thePlayer.onGround) {
-            if ( !mc.thePlayer.capabilities.isCreativeMode && mc.thePlayer.getFoodStats().getFoodLevel() > 17 && mc.thePlayer.getHealth() < 20.0F && mc.thePlayer.getHealth() != 0.0F && mc.thePlayer.onGround) {
-                for(int i = 0; i < 17; ++i) {
+            if (!mc.thePlayer.capabilities.isCreativeMode && mc.thePlayer.getFoodStats().getFoodLevel() > 17 && mc.thePlayer.getHealth() < 20.0F && mc.thePlayer.getHealth() != 0.0F && mc.thePlayer.onGround) {
+                for (int i = 0; i < 17; ++i) {
                     mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
                 }
             }
@@ -55,11 +60,25 @@ public class Regen extends Module {
     }
 
     public void Normal() {
-        if ( mc.thePlayer.getActivePotionEffect(Potion.regeneration) != null && (mc.thePlayer.onGround   && mc.thePlayer.getHealth() < mc.thePlayer.getMaxHealth())) {
-            for(int i = 0; (float)i < mc.thePlayer.getMaxHealth() - mc.thePlayer.getHealth() && mc.thePlayer.getActivePotionEffect(Potion.regeneration) != null; ++i) {
+        if (mc.thePlayer.getActivePotionEffect(Potion.regeneration) != null && (mc.thePlayer.onGround && mc.thePlayer.getHealth() < mc.thePlayer.getMaxHealth())) {
+            for (int i = 0; (float) i < mc.thePlayer.getMaxHealth() - mc.thePlayer.getHealth() && mc.thePlayer.getActivePotionEffect(Potion.regeneration) != null; ++i) {
                 this.mc.getNetHandler().addToSendQueue(new C03PacketPlayer(true));
             }
         }
+    }
+
+    public void Burst(int bursttime) {
+        if (mc.thePlayer.onGround) {
+            if (TimeHelper.hasReached(bursttime)) {
+                if (!mc.thePlayer.capabilities.isCreativeMode && mc.thePlayer.getFoodStats().getFoodLevel() > 17 && mc.thePlayer.getHealth() < 20.0F && mc.thePlayer.getHealth() != 0.0F && mc.thePlayer.onGround) {
+                    for (int i = 0; i < 10; ++i) {
+                        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
+                    }
+                }
+                TimeHelper.reset();
+            }
+        }
+
     }
 
 }
