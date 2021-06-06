@@ -30,7 +30,8 @@ import java.util.Random;
 public class Aura extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
-    public static Setting minCps, maxCps, Range, FailHits, Rotate,AutoBlock,NoRotate,LegitAutoBlock,Movefix,Smoth;
+    public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,
+            Throughwalls;
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
     public static float yaw;
@@ -56,11 +57,13 @@ public class Aura extends Module {
         Client.setmgr.rSetting(Rotate = new Setting("Rotate++", this, false));
         Client.setmgr.rSetting(LegitAutoBlock = new Setting("LegitAutoBlock", this, false));
         Client.setmgr.rSetting(Smoth = new Setting("Smothrotate", this, false));
+        Client.setmgr.rSetting(Throughwalls = new Setting("Throughwalls", this, false));
     }
 
-  //  public boolean MoveFix = true;
-  public static int Groundticks = 0;
+    //  public boolean MoveFix = true;
+    public static int Groundticks = 0;
     public static int Airticks = 0;
+
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
         for (Object o : mc.theWorld.loadedEntityList) {
@@ -68,54 +71,51 @@ public class Aura extends Module {
                 EntityPlayer target = (EntityPlayer) o;
                 if (target != mc.thePlayer && target != null) {
                     String tname = target.getName();
-                     if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()
-                        && !FreundManager.getInstance().isFriend(tname) &&  target instanceof EntityPlayer&& target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()&& target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) ) {
-                         String TargetName = target.getName();
-                         String UUIId  = target.getUniqueID().toString();
-                         if (EntityPlayer.cachedRanks.containsKey(UUIId)) {
-                             System.out.println("on");
-                             return;
-                         }else {
-                             System.out.println("off");
-                         }
-                         System.out.println(EntityPlayer.cachedRanks);
+                    if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()
+                            && !FreundManager.getInstance().isFriend(tname) && target instanceof EntityPlayer && target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble() && target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname)) {
+                        String TargetName = target.getName();
+                        String UUIId = target.getUniqueID().toString();
+
                         //onrender(Event);
                         this.target1 = target;
-                         if (target1.onGround ) {
-                             Groundticks++;
-                         }else if (target1.isAirBorne) {
-                             Airticks++;
-                         }
-
-                    //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
-                      //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
-
-
-                        if (Rotate.getValBoolean()) {
-                            float[] rotate = Aacrotate((EntityPlayer) target1);
-                            yaw = rotate[0];
-                            pitch = rotate[1];
-                            mc.thePlayer.rotationYawHead = rotate[0];
-                            mc.thePlayer.rotationYaw = yaw;
-                            mc.thePlayer.rotationPitchHead =pitch;
-                            mc.thePlayer.rotationPitch = pitch;
+                        if (target1.onGround) {
+                            Groundticks++;
+                        } else if (target1.isAirBorne) {
+                            Airticks++;
                         }
+                        if (!Throughwalls.getValBoolean() && !mc.thePlayer.canEntityBeSeen(target)) {
+
+                            return;
+                        }
+                            //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
+                            //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
+
+
+                            if (Rotate.getValBoolean()) {
+                                float[] rotate = Aacrotate((EntityPlayer) target1);
+                                yaw = rotate[0];
+                                pitch = rotate[1];
+                                mc.thePlayer.rotationYawHead = rotate[0];
+                                mc.thePlayer.rotationYaw = yaw;
+                                mc.thePlayer.rotationPitchHead = pitch;
+                                mc.thePlayer.rotationPitch = pitch;
+                            }
                         if (FailHits.getValBoolean() && mc.objectMouseOver != null
                                 && mc.objectMouseOver.entityHit != null) {
                             Attack(target, e);
-                        }else {
+                        } else {
                             Attack(target, e);
                         }
-                        if(AutoBlock.getValBoolean()) {
-                           autoB();
+                        if (AutoBlock.getValBoolean()) {
+                            autoB();
                         }
-                          if (LegitAutoBlock.getValBoolean()) {
-                              if (mc.thePlayer.isUsingItem() && bocking) {
-                                  bocking = false;
-                              }
-                              mc.thePlayer.setItemInUse(mc.thePlayer.getCurrentEquippedItem(), 20000);
-                              bocking = true;
-                          }
+                        if (LegitAutoBlock.getValBoolean()) {
+                            if (mc.thePlayer.isUsingItem() && bocking) {
+                                bocking = false;
+                            }
+                            mc.thePlayer.setItemInUse(mc.thePlayer.getCurrentEquippedItem(), 20000);
+                            bocking = true;
+                        }
                     } else {
                         target1 = null;
                     }
@@ -137,7 +137,6 @@ public class Aura extends Module {
         if (!Client.getInstance().getModuleManager().getModuleByName("AntiBot").isToggle()) {
             AntiBot.antibot.clear();
         }
-
 
 
         if (NoRotate.getValBoolean()) {
@@ -181,7 +180,7 @@ public class Aura extends Module {
 
     @EventTarget
     public void moveEvent(EventMove event) {
-        if(Movefix.getValBoolean() && target1 != null && target1.getDistanceToEntity(mc.thePlayer) >= 1.5F) {
+        if (Movefix.getValBoolean() && target1 != null && target1.getDistanceToEntity(mc.thePlayer) >= 1.5F) {
             float f = event.getStrafe() * event.getStrafe() + event.getForward() * event.getForward();
 
             if (f >= 1.0E-4F) {
@@ -343,8 +342,9 @@ public class Aura extends Module {
 
     public static boolean Spin = false;
     public static double legitrote = 180;
-public static  int hit = 0;
-public static  float changerotet = 1;
+    public static int hit = 0;
+    public static float changerotet = 1;
+
     public static float[] Aacrotate(EntityPlayer e) {
 
         Random rdm = new Random();
@@ -363,11 +363,11 @@ public static  float changerotet = 1;
         if (FailHits.getValBoolean()) {
 
 
-            return new float[] { updateRotation(mc.thePlayer.rotationYaw, yaw , 180f),
-                    updateRotation(mc.thePlayer.rotationPitch, pitch + randomrotate(-300, 9000), 180f) };
+            return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw, 180f),
+                    updateRotation(mc.thePlayer.rotationPitch, pitch + randomrotate(-300, 9000), 180f)};
         } else {
-            return new float[] { updateRotation(mc.thePlayer.rotationYaw, yaw + 1/2, 180f),
-                    updateRotation(mc.thePlayer.rotationPitch, pitch + 1, 180f) };
+            return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw + 1 / 2, 180f),
+                    updateRotation(mc.thePlayer.rotationPitch, pitch + 1, 180f)};
         }
 
     }
@@ -391,16 +391,16 @@ public static  float changerotet = 1;
         return (long) ((Math.random() * (1000 / min - 1000 / max + 1)) + 1000 / max);
     }
 
-@EventTarget
-public void Test() {
-    if (target1.onGround ) {
-        Groundticks++;
-    }else if (target1.isAirBorne) {
-        Airticks++;
-    }
+    @EventTarget
+    public void Test() {
+        if (target1.onGround) {
+            Groundticks++;
+        } else if (target1.isAirBorne) {
+            Airticks++;
+        }
 
-        PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
-        PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
+        PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "--------------------------------------------------------------------------------------------------------------------");
+        PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() + " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
 
     }
 
@@ -408,9 +408,9 @@ public void Test() {
     @Override
     public void onDisable() {
         super.onDisable();
-       hit = 0;
-    Groundticks = 0;
-    Airticks = 0;
+        hit = 0;
+        Groundticks = 0;
+        Airticks = 0;
 
     }
 }
