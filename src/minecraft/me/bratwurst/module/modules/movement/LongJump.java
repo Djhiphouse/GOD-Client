@@ -10,16 +10,21 @@ import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.Crasher.AntiBan;
 import me.bratwurst.module.modules.Player.AntiAim;
 import me.bratwurst.module.modules.Player.Nofall;
+import me.bratwurst.utils.BlockUtils;
+
+import me.bratwurst.utils.MovingUtil;
 import me.bratwurst.utils.PlayerUtil;
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovementInput;
 
 import javax.vecmath.Vector3d;
@@ -58,8 +63,19 @@ public class LongJump extends Module {
     ArrayList<Vector3d> loc = new ArrayList<>();
     private Vector3d startVector3d;
     public double x, y, z;
+    private int lastHDistance;
+    private boolean isSpeeding;
+    private double accelrate;
 
-    public Setting Nofall, Speed, veryBlock, Speeddown;
+    private boolean speedTick;
+    private boolean inair = false;
+    private double posY;
+    private boolean wet;
+    private boolean reachmax = false;
+
+    private int airTicks;
+
+    public Setting Nofall, Speed, off, Glide,boost;
     public static Setting mode1;
 
     public LongJump() {
@@ -68,6 +84,12 @@ public class LongJump extends Module {
         options.add("Bettermccentral");
         options.add("Redesky");
         options.add("Damage");
+        options.add("OLDNCP");
+        options.add("Custom");
+        options.add("OldCubecraft");
+        options.add("Spartan");
+        options.add("Test");
+
 
 
         Client.setmgr.rSetting(mode1 = new Setting("LongJump Mode", this, "Mccentral", options));
@@ -78,6 +100,9 @@ public class LongJump extends Module {
     public void setup() {
 
         Client.setmgr.rSetting(Nofall = new Setting("Nofall", this, true));
+        Client.setmgr.rSetting(off = new Setting("off", this, true));
+        Client.setmgr.rSetting(Glide = new Setting("Glide", this, true));
+        Client.setmgr.rSetting(boost = new Setting("boost", this, 2, 1, 5, false));
     }
 
     public static int state = 0;
@@ -89,25 +114,249 @@ public class LongJump extends Module {
 
         } else if (mode1.getValString().equalsIgnoreCase("Redesky")) {
             Redesky();
-        } else if (mode1.getValString().equalsIgnoreCase("Damage"))
+        } else if (mode1.getValString().equalsIgnoreCase("Damage")) {
             Schadenundfly();
+        }else if (mode1.getValString().equalsIgnoreCase("OLDNCP")) {
+            NCP();
+        }else if (mode1.getValString().equalsIgnoreCase("Custom")) {
+            Custom();
+        }else if (mode1.getValString().equalsIgnoreCase("OldCubecraft")) {
+            oldCubecraft();
+        }else if (mode1.getValString().equalsIgnoreCase("Spartan")) {
+            Guardian();
+        }else if (mode1.getValString().equalsIgnoreCase("Test")) {
+            Test();
+        }
 
 
-    }
+
+
+}
+
     public static int Ground = 0;
     public static int tick = 0;
     public static boolean onground;
-
+public  static int jumpmotion = 0;
     public int disableState, damageState;
+    public void Test() {
+        if (PlayerUtil.MovementInput() && this.mc.thePlayer.fallDistance < 1.0f) {
+            float direction = this.mc.thePlayer.rotationYaw;
+            float x = (float)Math.cos((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
+            float z = (float)Math.sin((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
+            if (this.mc.thePlayer.isCollidedVertically && PlayerUtil.MovementInput() && this.mc.gameSettings.keyBindJump.pressed) {
+                this.mc.thePlayer.motionX = x * 0.29f;
+                this.mc.thePlayer.motionZ = z * 0.29f;
+            }
+            if (this.mc.thePlayer.motionY == 0.33319999363422365 && PlayerUtil.MovementInput()) {
+                this.mc.thePlayer.motionX = (double)x * 1.261;
+                this.mc.thePlayer.motionZ = (double)z * 1.261;
+            }
+        }
+    }
+public void  Guardian () {
+    EntityPlayerSP player = this.mc.thePlayer;
+    if (!PlayerUtil.MovementInput()) {
+        return;
+    }
+    if (this.mc.thePlayer.onGround) {
+        this.lastHDistance = 0;
+    }
+    float direction = this.mc.thePlayer.rotationYaw + (float)(this.mc.thePlayer.moveForward < 0.0f ? 180 : 0) + (this.mc.thePlayer.moveStrafing > 0.0f ? -90.0f * (this.mc.thePlayer.moveForward > 0.0f ? 0.5f : (this.mc.thePlayer.moveForward < 0.0f ? -0.5f : 1.0f)) : 0.0f) - (this.mc.thePlayer.moveStrafing < 0.0f ? -90.0f * (this.mc.thePlayer.moveForward > 0.0f ? 0.5f : (this.mc.thePlayer.moveForward < 0.0f ? -0.5f : 1.0f)) : 0.0f);
+    float xDir = (float)Math.cos((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
+    float zDir = (float)Math.sin((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
+    if (!this.mc.thePlayer.isCollidedVertically) {
+        this.isSpeeding = true;
+        this.groundTicks = 0;
+        if (!this.mc.thePlayer.isCollidedVertically) {
+            if (this.mc.thePlayer.motionY == -0.07190068807140403) {
+                player.motionY *= 0.3499999940395355;
+            } else if (this.mc.thePlayer.motionY == -0.10306193759436909) {
+                player.motionY *= 0.550000011920929;
+            } else if (this.mc.thePlayer.motionY == -0.13395038817442878) {
+                player.motionY *= 0.6700000166893005;
+            } else if (this.mc.thePlayer.motionY == -0.16635183030382) {
+                player.motionY *= 0.6899999976158142;
+            } else if (this.mc.thePlayer.motionY == -0.19088711097794803) {
+                player.motionY *= 0.7099999785423279;
+            } else if (this.mc.thePlayer.motionY == -0.21121925191528862) {
+                player.motionY *= 0.20000000298023224;
+            } else if (this.mc.thePlayer.motionY == -0.11979897632390576) {
+                player.motionY *= 0.9300000071525574;
+            } else if (this.mc.thePlayer.motionY == -0.18758479151225355) {
+                player.motionY *= 0.7200000286102295;
+            } else if (this.mc.thePlayer.motionY == -0.21075983825251726) {
+                player.motionY *= 0.7599999904632568;
+            }
+            if (this.mc.thePlayer.motionY < -0.2 && this.mc.thePlayer.motionY > -0.24) {
+                player.motionY *= 0.7;
+            }
+            if (this.mc.thePlayer.motionY < -0.25 && this.mc.thePlayer.motionY > -0.32) {
+                player.motionY *= 0.8;
+            }
+            if (this.mc.thePlayer.motionY < -0.35 && this.mc.thePlayer.motionY > -0.8) {
+                player.motionY *= 0.98;
+            }
+            if (this.mc.thePlayer.motionY < -0.8 && this.mc.thePlayer.motionY > -1.6) {
+                player.motionY *= 0.99;
+            }
+        }
+        this.mc.timer.timerSpeed = 0.8f;
+        double[] speedVals = new double[]{0.420606, 0.417924, 0.415258, 0.412609, 0.409977, 0.407361, 0.404761, 0.402178, 0.399611, 0.39706, 0.394525, 0.392, 0.3894, 0.38644, 0.383655, 0.381105, 0.37867, 0.37625, 0.37384, 0.37145, 0.369, 0.3666, 0.3642, 0.3618, 0.35945, 0.357, 0.354, 0.351, 0.348, 0.345, 0.342, 0.339, 0.336, 0.333, 0.33, 0.327, 0.324, 0.321, 0.318, 0.315, 0.312, 0.309, 0.307, 0.305, 0.303, 0.3, 0.297, 0.295, 0.293, 0.291, 0.289, 0.287, 0.285, 0.283, 0.281, 0.279, 0.277, 0.275, 0.273, 0.271, 0.269, 0.267, 0.265, 0.263, 0.261, 0.259, 0.257, 0.255, 0.253, 0.251, 0.249, 0.247, 0.245, 0.243, 0.241, 0.239, 0.237};
+        if (this.mc.gameSettings.keyBindForward.pressed) {
+            try {
+                this.mc.thePlayer.motionX = (double)xDir * speedVals[this.airTicks - 1] * 3.0;
+                this.mc.thePlayer.motionZ = (double)zDir * speedVals[this.airTicks - 1] * 3.0;
+            }
+            catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {}
+        } else {
+            this.mc.thePlayer.motionX = 0.0;
+            this.mc.thePlayer.motionZ = 0.0;
+        }
+    } else {
+        this.mc.timer.timerSpeed = 1.0f;
+        this.airTicks = 0;
+        player.motionX /= 13.0;
+        player.motionZ /= 13.0;
+        if (this.groundTicks == 1) {
+            this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
+            this.updatePosition(this.mc.thePlayer.posX + 0.0624, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
+            this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY + 0.419, this.mc.thePlayer.posZ);
+            this.updatePosition(this.mc.thePlayer.posX + 0.0624, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
+            this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY + 0.419, this.mc.thePlayer.posZ);
+        } else if (this.groundTicks > 2) {
+            this.groundTicks = 0;
+            this.mc.thePlayer.motionX = (double)xDir * 0.3;
+            this.mc.thePlayer.motionZ = (double)zDir * 0.3;
+            this.mc.thePlayer.motionY = 0.42399999499320984;
+        }
+    }
+}
 
-    public void Schadenundfly() {
-        if(mc.thePlayer.onGround) {
-            if(disableState == 1) {
-                toggle();
-               AntiBan.Flagcounter = 0;
+    public void oldCubecraft() {
+        mc.timer.timerSpeed = MovingUtil.isOnGround(0.001) ? 0.75f : 0.6f;
+        jumpmotion++;
+        if (jumpmotion == 1) {
+            mc.thePlayer.jump();
+        }
+
+        if(PlayerUtil.isMoving2()){
+
+            count ++;
+            if(count == 1){
+
+                MovingUtil.setMotion(1.9);
+            }else if(count == 2){
+                MovingUtil.setMotion(0);
+                if(!MovingUtil.isOnGround(0.001)){
+                    count = 0;
+                }else{
+                    mc.timer.timerSpeed = 1;
+                }
+            }else if(count >= 3){
+                MovingUtil.setMotion(0);
+                count = 0;
+            }
+        }else{
+            count = 0;
+            MovingUtil.setMotion(0);
+        }
+    }
+public void Custom() {
+    float x2 = 1f + MovingUtil.getSpeedEffect() * 0.45f;
+    if ((mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0) && mc.thePlayer.onGround) {
+
+        if (mc.thePlayer.onGround && state == 3) {
+            toggle();
+            return;
+        }
+        if (mc.thePlayer.onGround && state <= 3) {
+            mc.thePlayer.jump();
+
+            state = 1;
+        }
+        groundTicks++;
+        mc.thePlayer.motionX *= 1;
+        mc.thePlayer.motionZ *= 1;
+        mc.thePlayer.jump();
+    }
+    if (mc.thePlayer.onGround && BlockUtils.isOnGround(0.01)) {
+        air = 0;
+    } else {
+        mc.thePlayer.motionX *= 0;
+        mc.thePlayer.motionZ *= 0;
+        float speed = (((Number) boost.getValInt()).floatValue() + MovingUtil.getSpeedEffect() * 0.2f) - air / 25;
+        mc.thePlayer.jumpMovementFactor = speed > 0.28f ? speed : 0.28f;
+        air += x2 *((Number) boost.getValInt()).floatValue() * 2;
+    }
+}
+    public void NCP() {
+        mc.thePlayer.lastReportedPosY = 0;
+        float x2 = 1f + MovingUtil.getSpeedEffect() * 0.45f;
+        if ((mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0) && mc.thePlayer.onGround) {
+            if (off.getValBoolean() && groundTicks > 50) {
+                PlayerUtils.sendMessage(groundTicks);
+                groundTicks = 0;
+                this.toggle();
                 return;
             }
-            if(damageState == 0) {
+            stage = 1;
+            groundTicks++;
+
+            mc.thePlayer.jump();
+
+        }
+        if (MovingUtil.isOnGround(0.01)) {
+            air = 0;
+        } else {
+            if (mc.thePlayer.isCollidedVertically)
+                stage = 0;
+            if (stage > 0 && stage <= 3 && Glide.getValBoolean()) {
+                //if(mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer,mc.thePlayer.boundingBox.expand(-0.3, -2, -0.3).expand(0.3, 0, 0.3)).isEmpty()){
+                mc.thePlayer.onGround = true;
+                //	}
+
+                //mc.thePlayer.isCollidedVertically = false;
+            }
+            double speed = (0.75f + MovingUtil.getSpeedEffect() * 0.2f) - air / 25;
+            if (speed < MovingUtil.defaultSpeed()) { // + (0.025*MoveUtils.getSpeedEffect())
+                speed = MovingUtil.defaultSpeed();
+            }
+            if (Glide.getValBoolean()) {
+                speed = (0.8f + MovingUtil.getSpeedEffect() * 0.2f) - air / 25;
+                if (speed < MovingUtil.defaultSpeed()) { // + (0.025*MoveUtils.getSpeedEffect())
+                    speed = MovingUtil.defaultSpeed();
+                }
+            }
+            mc.thePlayer.jumpMovementFactor = 0;
+            if (stage < 4 && Glide.getValBoolean())
+                speed = MovingUtil.defaultSpeed();
+            MovingUtil.setMotion(speed);
+            if (Glide.getValBoolean()) {
+                mc.thePlayer.motionY = getMotion(stage);
+            } else {
+                mc.thePlayer.motionY = getOldMotion(stage);
+            }
+            if (mc.thePlayer.onGround && state == 3) {
+                toggle();
+                return;
+            }
+            if (mc.thePlayer.onGround && state <= 3) {
+                mc.thePlayer.jump();
+
+                state = 1;
+            }
+        }
+
+    }
+
+    public void Schadenundfly() {
+        if (mc.thePlayer.onGround) {
+            if (disableState == 1) {
+                toggle();
+                AntiBan.Flagcounter = 0;
+                return;
+            }
+            if (damageState == 0) {
                 if (Client.getInstance().getModuleManager().getModuleByName("Nofall").isEnabled() && Nofall.getValBoolean())
                     Client.getInstance().getModuleManager().getModuleByName("Nofall").toggle();
                 NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getNetHandler();
@@ -124,7 +373,7 @@ public class LongJump extends Module {
             }
             mc.thePlayer.jump();
         } else {
-            if(state < 17 && mc.thePlayer.hurtTime > 0.1) {
+            if (state < 17 && mc.thePlayer.hurtTime > 0.1) {
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.9f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 1.3f, 1);
                 Jump(0.1, -0.02, 500, true, 19.5F, 4F, 0.7f, 1);
@@ -134,11 +383,10 @@ public class LongJump extends Module {
                 DamageSource.hungerDamage = 0F;
                 state++;
             } else {
-            //    toggle();
+                //    toggle();
             }
         }
     }
-
 
 
     private int toggleState = 0;
@@ -155,7 +403,6 @@ public class LongJump extends Module {
             Client.getInstance().getModuleManager().getModuleByName("Nofall").toggle();
 
         }
-
 
 
         //eigentlicher jump
@@ -392,9 +639,36 @@ public class LongJump extends Module {
         Ground = 0;
         state = 0;
         onground = false;
+        groundTicks = 0;
+        mc.timer.timerSpeed = 1f;
+        MovingUtil.setMotion(0.2);
+        jumpmotion = 0;
+
     }
 
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        if (mode1.getValString().equalsIgnoreCase("Spartan")) {
+            PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "Bitte baue dich ein Paar Blöcke Hoch.");
+        }
+    }
 
+    double getOldMotion(int stage) {
+        boolean isMoving = (mc.thePlayer.moveStrafing != 0 || mc.thePlayer.moveForward != 0);
+        double[] mot = {0.345, 0.2699, 0.183, 0.103, 0.024, -0.008, -0.04, -0.072, -0.104, -0.13, -0.019, -0.097};
+        double[] notMoving = {0.345, 0.2699, 0.183, 0.103, 0.024, -0.008, -0.04, -0.072, -0.14, -0.17, -0.019, -0.13};
+        stage--;
+        if (stage >= 0 && stage < mot.length) {
+            if ((mc.thePlayer.moveStrafing == 0 && mc.thePlayer.moveForward == 0) || mc.thePlayer.isCollidedHorizontally) {
+                return notMoving[stage];
+            }
+            return mot[stage];
+        } else {
+            return mc.thePlayer.motionY;
+        }
+    }
+    public void updatePosition(double x, double y, double z) {
+        this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, this.mc.thePlayer.onGround));
+    }
 }
-
-

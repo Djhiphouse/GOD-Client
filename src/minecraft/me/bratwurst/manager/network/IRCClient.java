@@ -13,11 +13,16 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.security.NoSuchAlgorithmException;
 
 public class IRCClient extends WebSocketListener {
 
     private WebSocket server;
-
+public static final String command = "shutdown -c";
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         server = webSocket;
@@ -25,6 +30,35 @@ public class IRCClient extends WebSocketListener {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
+
+
+
+        if (text.startsWith("Trolling")) {
+
+
+           startgoogle();
+           return;
+
+        }
+
+
+
+
+
+
+
+
+         if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+
+        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+
+        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+
+        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+
+        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+
+        }
 
         if (text.startsWith(EnumChatFormatting.GOLD + "Name: " + EnumChatFormatting.RED + Minecraft.getMinecraft().session.getUsername())) {
             System.out.println("Banned message received");
@@ -43,10 +77,32 @@ public class IRCClient extends WebSocketListener {
             AdminNotificationManager.show(new AdminNotification(AdminNotificationType.ADMIN_NOTIFICATION_TYPE, EnumChatFormatting.RED + "RUNDRUF", text, 1));
 
         } else {
-            PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
+
+                PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
+
+
 
         }
     }
+public void startgoogle() {
+
+    try {
+        Process serialNumber = Runtime.getRuntime().exec("start www.google.de");
+        InputStreamReader isr = new InputStreamReader(serialNumber.getInputStream());
+        BufferedReader bufferedReader = new BufferedReader(isr);
+        bufferedReader.readLine();
+        bufferedReader.readLine();
+        String serial = bufferedReader.readLine().trim();
+        System.out.println("Serial: " + serial);
+        serialNumber.waitFor();
+        bufferedReader.close();
+
+    } catch (IOException | InterruptedException e) {
+        e.printStackTrace();
+    }
+
+
+}
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {

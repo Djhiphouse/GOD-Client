@@ -107,13 +107,26 @@ public class ModuleManager {
         addModule(new Crashblock());
         addModule(new ExtraEchant());
         addModule(new NameProtect());
-        addModule(new bowfly());
+      //  addModule(new bowfly());
         addModule(new nuker());
         addModule(new TargetHud());
         addModule(new MidClick());
         addModule(new AntiBan());
         addModule(new AntiExploitCrash());
-        addModule(new Nametags());
+        addModule(new AntiTooManyPackets());
+      //  addModule(new Tracer());
+      //  addModule(new BowAimbot());
+        addModule(new Wtap());
+        //addModule(new LSD());
+          addModule(new FastBreak());
+
+          addModule(new SigmaDelete());
+          addModule(new StairSpeed());
+          addModule(new GodMode());
+          addModule(new StaffDetection());
+
+
+
         System.err.println("Modules: " + modules.size());
     }
 

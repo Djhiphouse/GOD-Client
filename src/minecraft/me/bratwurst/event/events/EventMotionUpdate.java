@@ -8,7 +8,7 @@ public class EventMotionUpdate extends Event {
     float yaw, pitch, lastYaw, lastPitch;
     Event.State state;
     boolean onGround;
-
+    public int key;
     public EventMotionUpdate(double x, double y, double z, float yaw, float pitch, float lastYaw, float lastPitch, boolean onGround, Event.State state) {
         this.x = x;
         this.y = y;
@@ -21,7 +21,10 @@ public class EventMotionUpdate extends Event {
         this.onGround = onGround;
 
     }
-
+    public void MouseEvent(int key)
+    {
+        this.key = key;
+    }
     public boolean isPre() {
         return this.state == Event.State.PRE;
     }

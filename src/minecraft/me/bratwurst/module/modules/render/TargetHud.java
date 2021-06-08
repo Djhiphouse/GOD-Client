@@ -9,7 +9,7 @@ import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.combat.Aura;
 import me.bratwurst.utils.ColorUtils;
 import me.bratwurst.utils.REderUtIl;
-import me.bratwurst.utils.RenderUtils;
+
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;

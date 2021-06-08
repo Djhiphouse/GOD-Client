@@ -48,19 +48,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatFileWriter;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MovementInput;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 
 public class EntityPlayerSP extends AbstractClientPlayer {
     public final NetHandlerPlayClient sendQueue;
     private final StatFileWriter statWriter;
+    public AxisAlignedBB boundingBox;
 
 
     /**
@@ -73,7 +68,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
      * The last Y position which was transmitted to the server, used to determine when the Y position changes and needs
      * to be re-transmitted
      */
-    private double lastReportedPosY;
+    public double lastReportedPosY;
 
     /**
      * The last Z position which was transmitted to the server, used to determine when the Z position changes and needs

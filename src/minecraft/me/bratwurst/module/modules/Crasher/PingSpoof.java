@@ -21,7 +21,7 @@ public class PingSpoof extends Module {
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Ping = new Setting("Ping:", this, 800, 1, 2000, false));
+        Client.setmgr.rSetting(Ping = new Setting("Ping:", this, 800, 1, 2000, true));
 
     }
 
@@ -30,8 +30,14 @@ public class PingSpoof extends Module {
 
 
         if (e.getPacket() instanceof C00PacketKeepAlive) {
+
+            mc.getNetHandler().getNetworkManager().sendPacket(new C00PacketKeepAlive(10000));
+
             e.setCancelled(true);
         }
 
+
     }
+
 }
+

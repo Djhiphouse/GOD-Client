@@ -6,6 +6,9 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.BlockUtils;
+
+import me.bratwurst.utils.MovingUtil;
 import me.bratwurst.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -17,6 +20,27 @@ import net.minecraft.util.Timer;
 import java.util.ArrayList;
 
 public class Speed extends Module {
+
+    private int counter;
+
+    private float air;
+
+    private float groundTicks;
+
+
+    double motionY;
+
+    int count;
+
+    boolean collided;
+
+    boolean half;
+
+    protected double motionVa;
+
+    private boolean jump;
+
+    double speed = 0.0D;
     private double lastDist;
     private boolean wasinairaac;
     public Setting Speed, Bypass, TeleportDelay, TPRange;
@@ -25,16 +49,14 @@ public class Speed extends Module {
     public Speed() {
         super("Speed", Category.MOVEMENT);
         ArrayList<String> options = new ArrayList<>();
-        options.add("Onground");
         options.add("NCPbhop");
         options.add("Teleport");
-        options.add("AAC 3.3.1");
-        options.add("AAC 3.3.10");
-        options.add("AACYPort");
+       options.add("AACYPort");
         options.add("AACBhop");
         options.add("Hypixel");
         options.add("StrafeHop");
         options.add("MC-CentralFast");
+        options.add("LowHop");
 
 
 
@@ -44,7 +66,7 @@ public class Speed extends Module {
     @Override
     public void setup() {
         Client.setmgr.rSetting(Bypass = new Setting("Bypass", this, false));
-        Client.setmgr.rSetting(Speed = new Setting("Speed", this, 1, 1, 5, false));
+        Client.setmgr.rSetting(Speed = new Setting("Speed", this, 0.3, 0.1, 1, false));
         Client.setmgr.rSetting(TeleportDelay = new Setting("TPDelay", this, 1000, 65, 2000, true));
         Client.setmgr.rSetting(TPRange = new Setting("TPrange", this, 1, 1, 4, true));
 
@@ -74,10 +96,56 @@ public class Speed extends Module {
             StrafeHop();
         } else if (mode1.getValString().equalsIgnoreCase("MC-CentralFast")) {
             Mccentralfast();
+        }else if (mode1.getValString().equalsIgnoreCase("LowHop")) {
+            Mccentralfast();
         }
     }
 
+public void lowhop() {
+    if (!mc.thePlayer.onGround && !BlockUtils.isOnGround(0.01) && air > 0) {
+        air++;
+        if (mc.thePlayer.isCollidedVertically) {
+            air = 0;
+        }
+        if (mc.thePlayer.isCollidedHorizontally && !collided) {
+            collided = !collided;
+        }
+        double speed = half ? 0.5 - air / 100 : 0.658 - air / 100;
+        mc.thePlayer.motionX = 0;
+        mc.thePlayer.motionZ = 0;
+        motionY -= 0.04000000000001;
+        if (air > 24) {
+            motionY -= 0.02;
+        }
+        if (air == 12) {
+            motionY = -0.005;
+        }
+        if (speed < 0.3)
+            speed = 0.3;
+        if (collided)
+            speed = 0.2873;
+        mc.thePlayer.motionY = motionY;
+        MovingUtil.setMotion(speed);
+    } else {
+        if (air > 0) {
+            air = 0;
+        }
+    }
+    if (mc.thePlayer.onGround && MovingUtil.isOnGround(0.01) && mc.thePlayer.isCollidedVertically && (mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0)) {
 
+        double groundspeed = 0;
+        collided = mc.thePlayer.isCollidedHorizontally;
+        groundTicks++;
+
+        mc.thePlayer.motionX *= groundspeed;
+        mc.thePlayer.motionZ *= groundspeed;
+
+        half = mc.thePlayer.posY != (int) mc.thePlayer.posY;
+        mc.thePlayer.motionY = 0.4299999;
+        air = 1;
+        motionY = mc.thePlayer.motionY;
+    }
+}
     private void StrafeHop() {
         if (this.mc.thePlayer.moveForward > 0.0F)
             if (this.mc.thePlayer.onGround) {

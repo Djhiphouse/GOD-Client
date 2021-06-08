@@ -26,4 +26,9 @@ public class Event2D extends Event {
     public void setHeight(double height) {
         this.height = height;
     }
+
+    @Override
+    public boolean isPre() {
+        return false;
+    }
 }

@@ -16,4 +16,8 @@ public class Event3D extends Event {
     public void setPartialTicks(float partialTicks) {
         this.partialTicks = partialTicks;
     }
+    @Override
+    public boolean isPre() {
+        return false;
+    }
 }

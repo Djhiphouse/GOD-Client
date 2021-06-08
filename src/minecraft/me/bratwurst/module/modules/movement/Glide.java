@@ -46,6 +46,11 @@ public class Glide extends Module {
     public static boolean boost = true;
     public Setting Bypass, Speed, mccSpeed, Speeddown, InfiniteFly;
     public static Setting mode1;
+    private double groundX;
+    private double groundY;
+    private double groundZ;
+    private int counter;
+    public float i;
 
     public Glide() {
 
@@ -64,6 +69,7 @@ public class Glide extends Module {
         options.add("Test");
         options.add("bowfly");
         options.add("FakeFlag");
+        options.add("HypixelZoom");
 
 
         Client.setmgr.rSetting(mode1 = new Setting("Glide Mode", this, "Mccentral", options));
@@ -123,6 +129,9 @@ public class Glide extends Module {
 
     public int ms = 163;
 
+
+
+
     public void Mccentral() {
         double y = mc.thePlayer.posY;
         if (TimeHelper.hasPassed(ms)) {
@@ -138,8 +147,10 @@ public class Glide extends Module {
 
         }
     }
+
     public static int fly2 = 0;
-public static int fly = 0;
+    public static int fly = 0;
+
     public void FakeFlagFly() {
 
         fly++;
@@ -365,7 +376,6 @@ public static int fly = 0;
         if (mc.thePlayer.onGround || !mc.thePlayer.onGround && toggleState == 1) {
 
 
-
             toggle();
 
             return;
@@ -568,7 +578,7 @@ public static int fly = 0;
         mc.timer.timerSpeed = 1F;
 
         DamageSource.hungerDamage = 0.3F;
-       fly2 = 0;
+        fly2 = 0;
         fly = 0;
     }
 }

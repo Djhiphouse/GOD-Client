@@ -55,6 +55,8 @@ import net.minecraft.world.WorldServer;
 public abstract class Entity implements ICommandSender {
     private static final AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     private static int nextEntityID;
+    public AxisAlignedBB boundingBox;
+    public int aps;
     private int entityId;
     public double renderDistanceWeight;
 
@@ -128,7 +130,7 @@ public abstract class Entity implements ICommandSender {
     /**
      * Axis aligned bounding box.
      */
-    private AxisAlignedBB boundingBox;
+
     public boolean onGround;
 
     /**

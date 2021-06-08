@@ -29,7 +29,7 @@ public class Regen extends Module {
 
     @Override
     public void setup() {
-        Client.setmgr.rSetting(Packets = new Setting("Packets:", this, 300, 50, 1200, true));
+        Client.setmgr.rSetting(Packets = new Setting("Packets:", this, 10, 1, 25, true));
     }
 
     int packets = 3;
@@ -51,7 +51,7 @@ public class Regen extends Module {
 
         if (mc.thePlayer.onGround) {
             if (!mc.thePlayer.capabilities.isCreativeMode && mc.thePlayer.getFoodStats().getFoodLevel() > 17 && mc.thePlayer.getHealth() < 20.0F && mc.thePlayer.getHealth() != 0.0F && mc.thePlayer.onGround) {
-                for (int i = 0; i < 17; ++i) {
+                for (int i = 0; i < packets; ++i) {
                     mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
                 }
             }
@@ -69,9 +69,9 @@ public class Regen extends Module {
 
     public void Burst(int bursttime) {
         if (mc.thePlayer.onGround) {
-            if (TimeHelper.hasReached(bursttime)) {
+            if (TimeHelper.hasReached(300)) {
                 if (!mc.thePlayer.capabilities.isCreativeMode && mc.thePlayer.getFoodStats().getFoodLevel() > 17 && mc.thePlayer.getHealth() < 20.0F && mc.thePlayer.getHealth() != 0.0F && mc.thePlayer.onGround) {
-                    for (int i = 0; i < 10; ++i) {
+                    for (int i = 0; i < bursttime; ++i) {
                         mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
                     }
                 }
