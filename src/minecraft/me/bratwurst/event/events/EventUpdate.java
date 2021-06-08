@@ -13,7 +13,12 @@ public class EventUpdate extends Event {
     public boolean alwaysSend;
     private double stepHeight;
     private boolean active;
+    private boolean isPre;
 
+    private boolean sneaking;
+    public static float YAW, PITCH, PREVYAW, PREVPITCH;
+    public static boolean SNEAKING;
+    public int key;
 
 
     public EventUpdate(double x, double y, double z, float yaw, float pitch, boolean onGround) {
@@ -25,6 +30,7 @@ public class EventUpdate extends Event {
         this.onGround = onGround;
         this.state = EventState.PRE;
     }
+
     public EventUpdate() {
         this.state = EventState.POST;
     }
@@ -48,12 +54,25 @@ public class EventUpdate extends Event {
     public void setActive(boolean bypass) {
         this.active = bypass;
     }
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
+    }
 
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
+    }
     public void setAlwaysSend(boolean alwaysSend) {
         this.alwaysSend = alwaysSend;
     }
     public void setOnGround(boolean onGround) {
         this.onGround = onGround;
     }
+
+
+    @Override
+    public boolean isPre() {
+        return false;
+    }
 }
+
 

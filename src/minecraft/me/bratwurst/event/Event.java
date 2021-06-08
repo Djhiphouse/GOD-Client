@@ -11,6 +11,8 @@ public abstract class Event {
 
     private boolean cancelled;
 
+    public abstract boolean isPre();
+
     public enum State {
         PRE("PRE", 0),
 

@@ -26,4 +26,8 @@ public final class RenderGuiEvent extends Event {
     public float getPartialTicks() {
         return this.partialTicks;
     }
+    @Override
+    public boolean isPre() {
+        return false;
+    }
 }

@@ -4,8 +4,9 @@ import java.awt.Color;
 import net.minecraft.client.Minecraft;
 
 public class ColorUtil {
-    public static int RainbowEffect() {
-        return Color.HSBtoRGB((float)(System.currentTimeMillis() % 3000L) / 3000.0F, 0.8F, 1.0F);
+    public static Color RainbowEffect() {
+        Color color = new Color(1f,1f,1f);
+        return color;
     }
 
     public static void drawChromaString(String text, int x, int y, boolean shadow) {

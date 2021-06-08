@@ -18,4 +18,8 @@ public class ProcessPacketEvent extends Event {
         this.packet = packet;
     }
 
+    @Override
+    public boolean isPre() {
+        return false;
+    }
 }

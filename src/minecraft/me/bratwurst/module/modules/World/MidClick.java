@@ -5,6 +5,7 @@ import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMiddleClick;
 import me.bratwurst.event.events.EventMotionUpdate;
+import me.bratwurst.event.events.EventMouse;
 import me.bratwurst.manager.FreundManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;

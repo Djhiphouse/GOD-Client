@@ -160,7 +160,7 @@ public class VeloCity extends Module {
         }
     }
 public void legit(){
-        if (mc.thePlayer.onGround){
+        if (mc.thePlayer.hurtTime > 0.1 && !mc.thePlayer.onGround){
             mc.thePlayer.setSprinting(false);
             mc.thePlayer.setSneaking(true);
         }else {

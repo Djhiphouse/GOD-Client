@@ -11,6 +11,7 @@ import me.bratwurst.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C0CPacketInput;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.client.C13PacketPlayerAbilities;
@@ -27,6 +28,7 @@ public class Disabler extends Module {
         options.add("Ghostlie.live");
         options.add("Hypixel");
         options.add("KAURI");
+
         Client.instance.setmgr.rSetting(new Setting("Disable Anticheat", this, "Slide", options));
     }
     @EventTarget

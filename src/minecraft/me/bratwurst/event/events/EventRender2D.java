@@ -36,5 +36,8 @@ public class EventRender2D extends Event {
     public void setHeight(int height) {
         this.height = height;
     }
-
+    @Override
+    public boolean isPre() {
+        return false;
+    }
 }
