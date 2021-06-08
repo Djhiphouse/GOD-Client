@@ -1,0 +1,102 @@
+---- Minecraft Crash Report ----
+// Don't be sad, have a hug! <3
+
+Time: 08.06.21 17:29
+Description: Updating screen events
+
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at me.bratwurst.module.Commands.CosmeticsCommand.onCommand(CosmeticsCommand.java:17)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:69)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:331)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1567)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1015)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at me.bratwurst.module.Commands.CosmeticsCommand.onCommand(CosmeticsCommand.java:17)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:69)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:331)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+
+-- Affected screen --
+Details:
+	Screen name: net.minecraft.client.gui.GuiChat
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['God93'/23834, l='MpServer', x=144,84, y=68,00, z=245,89]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 144,00,67,00,245,00 - World: (144,67,245), Chunk: (at 0,4,5 in 9,15; contains blocks 144,0,240 to 159,255,255), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 67053139 game time, 8206349 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 21 total; [EntityPlayerSP['God93'/23834, l='MpServer', x=144,84, y=68,00, z=245,89], EntityCreeper['Creeper'/23936, l='MpServer', x=100,50, y=65,00, z=214,50], EntityCreeper['Creeper'/22018, l='MpServer', x=162,50, y=23,00, z=282,50], EntitySkeleton['Skeleton'/21155, l='MpServer', x=172,34, y=69,00, z=209,84], EntityZombie['Zombie'/20611, l='MpServer', x=156,28, y=70,00, z=257,13], EntityZombie['Zombie'/23299, l='MpServer', x=185,28, y=18,00, z=214,28], EntityZombie['Zombie'/23939, l='MpServer', x=129,50, y=13,00, z=287,50], EntitySkeleton['Skeleton'/23940, l='MpServer', x=128,50, y=13,00, z=288,50], EntitySkeleton['Skeleton'/23941, l='MpServer', x=129,50, y=13,00, z=290,50], EntityZombie['Zombie'/23302, l='MpServer', x=161,09, y=23,00, z=281,50], EntityPig['Pig'/139, l='MpServer', x=164,50, y=76,00, z=225,50], EntityCow['Cow'/140, l='MpServer', x=173,44, y=68,00, z=225,53], EntitySkeleton['Skeleton'/23309, l='MpServer', x=188,50, y=18,00, z=215,50], EntityCreeper['Creeper'/22767, l='MpServer', x=169,50, y=88,00, z=201,50], EntityRabbit['Rabbit'/23216, l='MpServer', x=145,63, y=67,00, z=217,69], EntityZombie['Zombie'/22773, l='MpServer', x=192,50, y=76,00, z=199,50], EntityZombie['Zombie'/22774, l='MpServer', x=190,50, y=76,00, z=202,50], EntityRabbit['Rabbit'/152, l='MpServer', x=189,28, y=78,00, z=235,25], EntityPig['Pig'/91, l='MpServer', x=105,44, y=77,00, z=257,00], EntityCreeper['Creeper'/23932, l='MpServer', x=178,50, y=71,00, z=208,50], EntityCreeper['Creeper'/22077, l='MpServer', x=135,91, y=65,00, z=222,41]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	Java Version: 1.8.0_281, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 306449792 bytes (292 MB) / 604504064 bytes (576 MB) up to 1881145344 bytes (1794 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce 940MX/PCIe/SSE2 GL version 4.6.0 NVIDIA 466.47, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 466.47
+	OpenGlRenderer: NVIDIA GeForce 940MX/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 4

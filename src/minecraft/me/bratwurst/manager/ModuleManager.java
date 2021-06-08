@@ -113,6 +113,7 @@ public class ModuleManager {
         addModule(new MidClick());
         addModule(new AntiBan());
         addModule(new AntiExploitCrash());
+        addModule(new Nametags());
         System.err.println("Modules: " + modules.size());
     }
 
