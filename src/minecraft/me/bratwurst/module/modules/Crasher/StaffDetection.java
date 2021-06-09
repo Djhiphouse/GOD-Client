@@ -1,5 +1,8 @@
 package me.bratwurst.module.modules.Crasher;
 
+/*
+
+
 import de.Hero.settings.Setting;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
@@ -124,11 +127,11 @@ public class StaffDetection extends Module {
                 EntityPlayer player = (EntityPlayer) e;
                 switch (player.getName()) {
                     //hier die namen rein bzw: case "Bratwurst001":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
+                    case "w":
+                    case "ww":
+                    case "www":
+                    case "wwww":
+                    case "wwwww":
 
 
                         if (TimeHelper.hasReached(2000)) {
@@ -263,3 +266,4 @@ public class StaffDetection extends Module {
         }
     }
 }
+*/

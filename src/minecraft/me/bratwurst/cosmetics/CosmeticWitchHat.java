@@ -44,7 +44,7 @@ public class CosmeticWitchHat extends Cosmetic {
     }
 
     public void render(AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float headYaw, float headPitch, float scale) {
-        if(CosmeticsCommand.cos != true){
+        if(CosmeticsCommand.cos != true && CosmeticsCommand.hat != true){
             return;
         }
 
