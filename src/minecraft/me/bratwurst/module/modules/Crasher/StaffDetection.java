@@ -1,6 +1,6 @@
 package me.bratwurst.module.modules.Crasher;
 
-/*
+
 
 
 import de.Hero.settings.Setting;
@@ -46,7 +46,9 @@ public class StaffDetection extends Module {
     public void onUpdate(EventUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Neruxvace")) {
             Neruxvace();
-        }else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
+        }
+          /*
+        else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
             Mineplex();
         }else if (mode1.getValString().equalsIgnoreCase("Mush")) {
             Mush();
@@ -55,6 +57,8 @@ public class StaffDetection extends Module {
         }else if (mode1.getValString().equalsIgnoreCase("Rededark")) {
             Rededark();
         }
+          /*
+           */
     }
 
     public void Neruxvace() {
@@ -120,7 +124,7 @@ public class StaffDetection extends Module {
             }
         }
     }
-
+/*
     public void Mineplex() {
         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
@@ -155,8 +159,9 @@ public class StaffDetection extends Module {
                 }
             }
         }
+      */
     }
-
+  /*
     public void Mccentral() {
         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
@@ -191,9 +196,11 @@ public class StaffDetection extends Module {
                 }
             }
         }
+
+
+
     }
-
-
+/*
     public void Mush() {
         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
@@ -228,8 +235,9 @@ public class StaffDetection extends Module {
                 }
             }
         }
-    }
 
+    }
+/*
     public void Rededark() {
         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
@@ -265,5 +273,6 @@ public class StaffDetection extends Module {
             }
         }
     }
-}
-*/
+
+ */
+

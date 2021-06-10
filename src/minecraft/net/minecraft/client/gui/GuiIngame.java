@@ -63,6 +63,7 @@ import javax.vecmath.Tuple4b;
 
 public class GuiIngame extends Gui
 {
+    public static int Pingtoserver;
     DecimalFormat df = new DecimalFormat("#.##");
     private static final ResourceLocation vignetteTexPath = new ResourceLocation("textures/misc/vignette.png");
     private static final ResourceLocation widgetsTexPath = new ResourceLocation("textures/gui/widgets.png");
@@ -417,14 +418,18 @@ public class GuiIngame extends Gui
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[Version] >> "  + EnumChatFormatting.AQUA + Minecraft.getMinecraft().thePlayer.getClientBrand(), 2, 70, -1);
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[XYZ] >> " + EnumChatFormatting.AQUA + "X: " + Math.round(Minecraft.getMinecraft().getRenderViewEntity().posX) + " Y: " + Math.round(Minecraft.getMinecraft().getRenderViewEntity().posY) + " Z: " + Math.round(Minecraft.getMinecraft().getRenderViewEntity().posZ), 2, 80, -1);
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[TPS] >> " + EnumChatFormatting.GREEN + this.df.format(TPSUtils.tps) + " TPS", 2, 90, -1);
-        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[PING] >> " + EnumChatFormatting.GREEN + Minecraft.getMinecraft().getCurrentServerData().pingToServer + " MS", 2, 100, -1);
+        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[PING] >> " + EnumChatFormatting.GREEN + TPSUtils.lagms + " MS", 2, 100, -1);
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[ONLINE] >> "  + EnumChatFormatting.AQUA +  mc.getNetHandler().playerInfoMap.size() + "/" + mc.getNetHandler().currentServerMaxPlayers, 2, 110, -1);
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[FPS] >> "  + EnumChatFormatting.AQUA + + Minecraft.getDebugFPS(), 2, 120, -1);
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[IGN] >> "  + EnumChatFormatting.AQUA +  Minecraft.getMinecraft().session.getUsername(), 2, 130, -1);
         NotificationManager.render();
         AdminNotificationManager.render();
-       return;
+         Renderping();
+         return ;
 
+    }
+    public void Renderping() {
+      Pingtoserver = (int) Minecraft.getMinecraft().getCurrentServerData().pingToServer;
     }
 
 

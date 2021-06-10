@@ -12,7 +12,7 @@ import java.util.List;
 
 public enum TPSUtils {
     instance("instance", 0);
-    public static int lagms;
+    public static long lagms;
     private static int packetsPerSecondTemp;
     private static int packetsPerSecond;
     private static long lastMS;
@@ -65,6 +65,7 @@ public enum TPSUtils {
             TimeHelper.reset();
             tps /= 2.0;
         }
+
         if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null) {
             tpsList.clear();
         }
@@ -104,6 +105,7 @@ public enum TPSUtils {
         if (startTime <= 999999999) {
             return 0;
         }
+        lagms =  Minecraft.getMinecraft().getCurrentServerData().pingToServer;
         return System.currentTimeMillis();
     }
 

@@ -6,6 +6,7 @@ import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.event.events.EventUpdate;
+import me.bratwurst.manager.TimeHelper;
 import me.bratwurst.manager.pathfinding.CustomVec3;
 import me.bratwurst.manager.pathfinding.PathfindingUtils;
 import me.bratwurst.module.Category;
@@ -36,7 +37,7 @@ public class InfiniteAura extends Module {
     private ModuleButton mb = null;
     public static EntityLivingBase target1;
     public static Setting minCps, Target, Range, Delay, APS;
-    private static EntityLivingBase en ;
+    private static EntityLivingBase en;
     boolean attack = true;
     double x;
     double y;
@@ -54,6 +55,7 @@ public class InfiniteAura extends Module {
     public static final int maxYTP = 90;
 
     public ArrayList<CustomVec3> path = new ArrayList<>();
+
     public InfiniteAura() {
         super("InfiniteAura", Category.COMBAT);
     }
@@ -67,18 +69,26 @@ public class InfiniteAura extends Module {
 
 
     }
-
+public static float hits;
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
-        for (Entity target : Minecraft.getMinecraft().theWorld.loadedEntityList) {
-            if (target instanceof  EntityPlayer && Target != null) {
-               if (target != mc.thePlayer) {
-                   if (TimeHelper.hasReached(APS.getValInt())) {
-                       teleportAndAttack(target);
-                       TimeHelper.reset();
-                   }
+        for (Object o : mc.theWorld.loadedEntityList) {
+            if (o instanceof EntityPlayer) {
+                EntityPlayer target = (EntityPlayer) o;
+                if (target != mc.thePlayer && target != null) {
+                   hits =  target.getDistanceToEntity(mc.thePlayer);
+                       PlayerUtils.sendMessage(target.getName());
+                       if (TimeHelper.hasReached(APS.getValInt())) {
 
-               }
+                           teleportAndAttack(target);
+                           TimeHelper.reset();
+                       }
+
+
+
+
+
+                }
             }
         }
 
@@ -90,21 +100,30 @@ public class InfiniteAura extends Module {
 
         path = PathfindingUtils.computePath(from, to);
 
-        for(CustomVec3 paths : path)
+        for (CustomVec3 paths : path)
             mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(paths.getX(), paths.getY(), paths.getZ(), true));
 
         // CLIENT SIDED
-        mc.thePlayer.swingItem();
+
 
         // SERVER SIDED
         // mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
 
-        Minecraft.getMinecraft().playerController.attackEntity(Minecraft.getMinecraft().thePlayer, target);
+          if (hits >= hits-1) {
+              mc.playerController.attackEntity(mc.thePlayer,target);
+              mc.thePlayer.swingItem();
+              hits = 0;
+          }
+
+
+
+
         Collections.reverse(path);
 
-        for(CustomVec3 paths : path)
+        for (CustomVec3 paths : path)
             mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(paths.getX(), paths.getY(), paths.getZ(), true));
     }
+
 
     public void teleport(int x, int y, int z) {
         CustomVec3 from = new CustomVec3(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
@@ -112,9 +131,10 @@ public class InfiniteAura extends Module {
 
         path = PathfindingUtils.computePath(from, to);
 
-        for(CustomVec3 paths : path)
+        for (CustomVec3 paths : path)
             mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(paths.getX(), paths.getY(), paths.getZ(), true));
 
         mc.thePlayer.setPosition(x, y, z);
     }
+
 }
