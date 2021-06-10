@@ -24,6 +24,8 @@ import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import me.bratwurst.event.events.ProcessPacketEvent;
+import me.bratwurst.utils.TPSUtils;
+import me.bratwurst.utils.TimeHelper;
 import net.minecraft.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
@@ -166,15 +168,18 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
             return;
         }
 
-        if (this.channel.isOpen())
-        {
-            try
-            {
+        if (this.channel.isOpen()) {
+            try {
+                TPSUtils.lagms = 0;
+                TPSUtils.onPacketReceive(p_channelRead0_2_);
                 p_channelRead0_2_.processPacket(this.packetListener);
             }
-            catch (ThreadQuickExitException var4)
-            {
-                ;
+            catch (ThreadQuickExitException threadQuickExitException) {
+                if (TimeHelper.hasReached(100)) {
+                    TPSUtils.lagms++;
+                    TimeHelper.reset();
+                }
+
             }
         }
 

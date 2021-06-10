@@ -9,6 +9,8 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
 {
+
+
     /**
      * The integer value containing the number of ticks that have passed since the player's death
      */

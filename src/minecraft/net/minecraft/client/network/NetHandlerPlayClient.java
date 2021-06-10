@@ -13,6 +13,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import me.bratwurst.Client;
+import me.bratwurst.event.ArrayHelper;
 import me.bratwurst.module.modules.combat.VeloCity;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.java.games.util.plugins.Plugins;
@@ -232,6 +233,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      */
     private final GuiScreen guiScreenServer;
 
+
     /**
      * Reference to the Minecraft instance, which many handler methods operate on
      */
@@ -251,7 +253,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      * reset upon respawning
      */
     private boolean doneLoadingTerrain;
-    private final Map<UUID, NetworkPlayerInfo> playerInfoMap = Maps.<UUID, NetworkPlayerInfo>newHashMap();
+    public final Map<UUID, NetworkPlayerInfo> playerInfoMap = Maps.<UUID, NetworkPlayerInfo>newHashMap();
     public int currentServerMaxPlayers = 20;
     private boolean field_147308_k = false;
 

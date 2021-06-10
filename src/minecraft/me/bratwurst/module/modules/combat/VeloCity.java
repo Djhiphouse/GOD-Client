@@ -4,8 +4,14 @@ import de.Hero.settings.Setting;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventUpdate;
+import me.bratwurst.event.events.ProcessPacketEvent;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.player.PlayerUtils;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.network.play.server.S27PacketExplosion;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
@@ -26,6 +32,7 @@ public class VeloCity extends Module {
         options.add("0knock");
         options.add("Dev");
         options.add("legit");
+        options.add("Packet");
 
         Client.setmgr.rSetting(mode1 = new Setting("Velocity Mode", this, "Hypixel", options));
     }
@@ -129,6 +136,18 @@ public class VeloCity extends Module {
                 mc.thePlayer.jump();
             }
         }
+    }
+    @EventTarget
+    public void  Packetnoknock(ProcessPacketEvent e) {
+
+        if (mode1.getValString().equalsIgnoreCase("Packet")) {
+            Packet packet = e.getPacket();
+            if (packet instanceof S12PacketEntityVelocity || packet instanceof S27PacketExplosion) {
+                e.setCancelled(true);
+            }
+        }
+
+
     }
     public void Hypixel() {
         knock = false;

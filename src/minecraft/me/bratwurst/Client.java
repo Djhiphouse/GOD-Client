@@ -51,6 +51,7 @@ public class Client {
      * EntityRenderer:
      * - EventRender3D
      */
+    public static boolean java8 = true;
     public boolean Premium = false;
     public boolean Freund = false;
     public boolean Supporter = false;
@@ -65,7 +66,7 @@ public class Client {
     }
     public static Minecraft mc = Minecraft.getMinecraft();
 
-    public final String CLIENT_NAME = "God", CLIENT_VERSION = "0.9", CLIENT_CODER = "Bratwust001";
+    public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.0", CLIENT_CODER = "Bratwust001";
 
     public final String CLIENT_PREFIX = EnumChatFormatting.AQUA + "[" + EnumChatFormatting.BLUE + "GOD" + EnumChatFormatting.AQUA + "]";
 

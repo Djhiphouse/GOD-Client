@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -15,6 +16,9 @@ import me.bratwurst.adminNotifications.AdminNotificationManager;
 import me.bratwurst.event.events.Event2D;
 import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.modules.combat.Aura;
+import me.bratwurst.utils.Holder;
+import me.bratwurst.utils.TPSUtils;
+import me.bratwurst.utils.Time;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -55,8 +59,12 @@ import optifine.Config;
 import optifine.CustomColors;
 import org.lwjgl.opengl.GL11;
 
+import javax.vecmath.Tuple4b;
+
 public class GuiIngame extends Gui
 {
+    public static int Pingtoserver;
+    DecimalFormat df = new DecimalFormat("#.##");
     private static final ResourceLocation vignetteTexPath = new ResourceLocation("textures/misc/vignette.png");
     private static final ResourceLocation widgetsTexPath = new ResourceLocation("textures/gui/widgets.png");
     private static final ResourceLocation pumpkinBlurTexPath = new ResourceLocation("textures/misc/pumpkinblur.png");
@@ -395,14 +403,33 @@ public class GuiIngame extends Gui
         GlStateManager.disableLighting();
         GlStateManager.enableAlpha();
 
+        if (!mc.isSingleplayer()) {
+            int x2 = (int)mc.thePlayer.posX;
+            int y2 = (int)mc.thePlayer.posY;
+            int z2 = (int) mc.thePlayer.posZ;
+            long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+            long lastPacketMS = Time.getCurrentTime() - Holder.getLastPacketMS();
+            if (lastPacketMS > 1000L && Holder.getTPS() > 0.0) {
+                Holder.setTPS(Holder.getTPS() - 0.01);
+            }
+        }
+
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE + "[Adresse] >> " + EnumChatFormatting.AQUA + Minecraft.getMinecraft().getNetHandler().getNetworkManager().getRemoteAddress(), 2, 60, -1);
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[Version] >> "  + EnumChatFormatting.AQUA + Minecraft.getMinecraft().thePlayer.getClientBrand(), 2, 70, -1);
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[XYZ] >> " + EnumChatFormatting.AQUA + "X: " + Math.round(Minecraft.getMinecraft().getRenderViewEntity().posX) + " Y: " + Math.round(Minecraft.getMinecraft().getRenderViewEntity().posY) + " Z: " + Math.round(Minecraft.getMinecraft().getRenderViewEntity().posZ), 2, 80, -1);
-        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[FPS] >> "  + EnumChatFormatting.AQUA + + Minecraft.getDebugFPS(), 2, 90, -1);
-        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[IGN] >> "  + EnumChatFormatting.AQUA +  Minecraft.getMinecraft().session.getUsername(), 2, 100, -1);
+        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[TPS] >> " + EnumChatFormatting.GREEN + this.df.format(TPSUtils.tps) + " TPS", 2, 90, -1);
+        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[PING] >> " + EnumChatFormatting.GREEN + TPSUtils.lagms + " MS", 2, 100, -1);
+        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[ONLINE] >> "  + EnumChatFormatting.AQUA +  mc.getNetHandler().playerInfoMap.size() + "/" + mc.getNetHandler().currentServerMaxPlayers, 2, 110, -1);
+        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[FPS] >> "  + EnumChatFormatting.AQUA + + Minecraft.getDebugFPS(), 2, 120, -1);
+        this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[IGN] >> "  + EnumChatFormatting.AQUA +  Minecraft.getMinecraft().session.getUsername(), 2, 130, -1);
         NotificationManager.render();
         AdminNotificationManager.render();
+         Renderping();
+         return ;
 
+    }
+    public void Renderping() {
+      Pingtoserver = (int) Minecraft.getMinecraft().getCurrentServerData().pingToServer;
     }
 
 
