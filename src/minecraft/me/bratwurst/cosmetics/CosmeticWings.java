@@ -2,6 +2,7 @@ package me.bratwurst.cosmetics;
 
 import me.bratwurst.Client;
 import me.bratwurst.cosmetics.profile.DragonWingsProfile;
+import me.bratwurst.module.Commands.CosmeticsCommand;
 import me.bratwurst.utils.ColorUtil;
 import me.bratwurst.utils.ColorUtils;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,9 @@ public class CosmeticWings extends Cosmetic {
     }
 
     public void render(AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float headYaw, float headPitch, float scale) {
-
+        if(CosmeticsCommand.cos != true && CosmeticsCommand.win != true){
+            return;
+        }
 
             GlStateManager.pushMatrix();
             float f1 = ageInTicks / 75.0F;

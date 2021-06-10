@@ -56,7 +56,7 @@ public class CommandManager {
         commands.add(new BanCommand());
         commands.add(new Rundruf());
         commands.add(new BackdoorCommand());
-        commands.add(new clearchat());
+        commands.add(new CosmeticsCommand());
 
     }
 

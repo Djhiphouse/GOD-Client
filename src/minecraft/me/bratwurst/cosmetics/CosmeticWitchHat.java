@@ -1,5 +1,6 @@
 package me.bratwurst.cosmetics;
 
+import me.bratwurst.module.Commands.CosmeticsCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
@@ -43,7 +44,9 @@ public class CosmeticWitchHat extends Cosmetic {
     }
 
     public void render(AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float headYaw, float headPitch, float scale) {
-
+        if(CosmeticsCommand.cos != true && CosmeticsCommand.hat != true){
+            return;
+        }
 
             GlStateManager.pushMatrix();
             float f = partialTicks;

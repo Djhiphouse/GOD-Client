@@ -1,5 +1,8 @@
 package me.bratwurst.module.modules.Crasher;
 
+/*
+
+
 import de.Hero.settings.Setting;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
@@ -26,13 +29,10 @@ public class StaffDetection extends Module {
         super("StaffDetection", Category.EXPLOIT);
         ArrayList<String> options = new ArrayList<>();
         options.add("Neruxvace");
-        /*
         options.add("Mineplex");
         options.add("Mush");
         options.add("mccentral");
         options.add("Rededark");
-        */
-
         Client.setmgr.rSetting(mode1 = new Setting("Server", this, "Neruxvace", options));
     }
 
@@ -46,9 +46,7 @@ public class StaffDetection extends Module {
     public void onUpdate(EventUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Neruxvace")) {
             Neruxvace();
-        }
-        /*
-        else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
+        }else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
             Mineplex();
         }else if (mode1.getValString().equalsIgnoreCase("Mush")) {
             Mush();
@@ -57,8 +55,6 @@ public class StaffDetection extends Module {
         }else if (mode1.getValString().equalsIgnoreCase("Rededark")) {
             Rededark();
         }
-        */
-
     }
 
     public void Neruxvace() {
@@ -124,18 +120,18 @@ public class StaffDetection extends Module {
             }
         }
     }
-/*
+
     public void Mineplex() {
         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) e;
                 switch (player.getName()) {
                     //hier die namen rein bzw: case "Bratwurst001":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
+                    case "w":
+                    case "ww":
+                    case "www":
+                    case "wwww":
+                    case "wwwww":
 
 
                         if (TimeHelper.hasReached(2000)) {
@@ -268,6 +264,6 @@ public class StaffDetection extends Module {
                 }
             }
         }
-     */
     }
-
+}
+*/
