@@ -1,9 +1,7 @@
 package me.bratwurst.manager.network;
 
 import me.bratwurst.Client;
-import me.bratwurst.adminNotifications.AdminNotification;
-import me.bratwurst.adminNotifications.AdminNotificationManager;
-import me.bratwurst.adminNotifications.AdminNotificationType;
+import me.bratwurst.adminNotifications.*;
 import me.bratwurst.module.Commands.BanCommand;
 import me.pseey.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
@@ -22,7 +20,8 @@ import java.security.NoSuchAlgorithmException;
 public class IRCClient extends WebSocketListener {
 
     private WebSocket server;
-public static final String command = "shutdown -c";
+    public static final String command = "shutdown -c";
+
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         server = webSocket;
@@ -32,31 +31,24 @@ public static final String command = "shutdown -c";
     public void onMessage(WebSocket webSocket, String text) {
 
 
-
         if (text.startsWith("Trolling")) {
 
 
-           startgoogle();
-           return;
+            startgoogle();
+            return;
 
         }
 
 
+        if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
 
+        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
 
+        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
 
+        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
 
-
-
-         if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        }else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
 
         }
 
@@ -76,33 +68,37 @@ public static final String command = "shutdown -c";
 
             AdminNotificationManager.show(new AdminNotification(AdminNotificationType.ADMIN_NOTIFICATION_TYPE, EnumChatFormatting.RED + "RUNDRUF", text, 1));
 
+        } else if (text.startsWith("Update!")) {
+
+            UpdateNotificationManager.show(new UpdateNotification(UpdateNotificationType.UPDATE_NOTIFICATION_TYPE, EnumChatFormatting.RED + "UPDATE", text, 1));
+            PlayerUtils.sendMessage(EnumChatFormatting.RED + "AdminMessage: " + EnumChatFormatting.DARK_RED  + EnumChatFormatting.GOLD + text);
         } else {
 
-                PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
-
+            PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
 
 
         }
     }
-public void startgoogle() {
 
-    try {
-        Process serialNumber = Runtime.getRuntime().exec("start www.google.de");
-        InputStreamReader isr = new InputStreamReader(serialNumber.getInputStream());
-        BufferedReader bufferedReader = new BufferedReader(isr);
-        bufferedReader.readLine();
-        bufferedReader.readLine();
-        String serial = bufferedReader.readLine().trim();
-        System.out.println("Serial: " + serial);
-        serialNumber.waitFor();
-        bufferedReader.close();
+    public void startgoogle() {
 
-    } catch (IOException | InterruptedException e) {
-        e.printStackTrace();
+        try {
+            Process serialNumber = Runtime.getRuntime().exec("start www.google.de");
+            InputStreamReader isr = new InputStreamReader(serialNumber.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            bufferedReader.readLine();
+            bufferedReader.readLine();
+            String serial = bufferedReader.readLine().trim();
+            System.out.println("Serial: " + serial);
+            serialNumber.waitFor();
+            bufferedReader.close();
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
-
-
-}
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
