@@ -21,6 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -30,7 +31,7 @@ import java.util.Random;
 public class Aura extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
-    public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,
+    public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Raycast,
             Throughwalls;
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
@@ -58,6 +59,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(LegitAutoBlock = new Setting("LegitAutoBlock", this, false));
         Client.setmgr.rSetting(Smoth = new Setting("Smothrotate", this, false));
         Client.setmgr.rSetting(Throughwalls = new Setting("Throughwalls", this, false));
+
     }
 
     //  public boolean MoveFix = true;
@@ -100,10 +102,7 @@ public class Aura extends Module {
                                 mc.thePlayer.rotationPitchHead = pitch;
                                 mc.thePlayer.rotationPitch = pitch;
                             }
-                        if (FailHits.getValBoolean() && mc.objectMouseOver != null
-                                && mc.objectMouseOver.entityHit != null) {
-                            Attack(target, e);
-                        } else {
+                        if (FailHits.getValBoolean()) {
                             Attack(target, e);
                         }
                         if (AutoBlock.getValBoolean()) {
@@ -363,7 +362,7 @@ public class Aura extends Module {
         if (FailHits.getValBoolean()) {
 
 
-            return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw, 180f),
+            return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw+ randomrotate(-3000, 90), 180f),
                     updateRotation(mc.thePlayer.rotationPitch, pitch + randomrotate(-300, 9000), 180f)};
         } else {
             return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw + 1 / 2, 180f),

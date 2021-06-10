@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class Disabler extends Module {
     public static Setting mode1;
     ArrayList<Packet> Packets = new ArrayList<>();
+
     public Disabler() {
         super("Disabler", Category.EXPLOIT);
         ArrayList<String> options = new ArrayList<>();
@@ -28,21 +29,32 @@ public class Disabler extends Module {
         options.add("Ghostlie.live");
         options.add("Hypixel");
         options.add("KAURI");
+        options.add("Replaysucht");
 
         Client.instance.setmgr.rSetting(new Setting("Disable Anticheat", this, "Slide", options));
     }
+
     @EventTarget
     public void onUpdate(EventUpdate event) {
-  if (mode1.getValString().equalsIgnoreCase("Ghostlie.live")) {
-      ghostlie();
-  }else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
-      Watchdog();
+        if (mode1.getValString().equalsIgnoreCase("Ghostlie.live")) {
+            ghostlie();
+        } else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
+            Watchdog();
 
+        } else if (mode1.getValString().equalsIgnoreCase("Replaysucht")) {
+         Replaysucht();
         }
     }
 
-
-
+public void Replaysucht() {
+       if (!mc.thePlayer.onGround) {
+           if (TimeHelper.hasReached(1)) {
+               mc.clickMouse();
+               mc.thePlayer.swingItem();
+               TimeHelper.reset();
+           }
+       }
+}
     public void ghostlie() {
         if (TimeHelper.hasReached(200)) {
             Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C0CPacketInput(999, 999, true, true));
@@ -50,20 +62,22 @@ public class Disabler extends Module {
         }
 
     }
+
     public void Watchdog() {
         if (Client.moduleManager.getModuleByName("Glide").isToggle()) {
             PlayerCapabilities playerCapabilities = new PlayerCapabilities();
             playerCapabilities.isFlying = true;
             playerCapabilities.allowFlying = true;
-            playerCapabilities.setFlySpeed((float)2.0D);
+            playerCapabilities.setFlySpeed((float) 2.0D);
             mc.getNetHandler().addToSendQueueSilent(new C13PacketPlayerAbilities(playerCapabilities));
         }
 
     }
-    public void ProcessPacketEvent(ProcessPacketEvent e){
+
+    public void ProcessPacketEvent(ProcessPacketEvent e) {
 
         for (Packet p : Packets) {
-            if(p instanceof C0FPacketConfirmTransaction){
+            if (p instanceof C0FPacketConfirmTransaction) {
                 e.setCancelled(true);
             }
 

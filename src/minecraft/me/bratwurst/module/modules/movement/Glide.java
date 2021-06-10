@@ -70,6 +70,7 @@ public class Glide extends Module {
         options.add("bowfly");
         options.add("FakeFlag");
         options.add("HypixelZoom");
+        options.add("Disabler");
 
 
         Client.setmgr.rSetting(mode1 = new Setting("Glide Mode", this, "Mccentral", options));
@@ -124,6 +125,9 @@ public class Glide extends Module {
         } else if (mode1.getValString().equalsIgnoreCase("FakeFlag")) {
             FakeFlagFly();
 
+        }else if (mode1.getValString().equalsIgnoreCase("Disabler")) {
+            Disabler();
+
         }
     }
 
@@ -131,7 +135,21 @@ public class Glide extends Module {
 
 
 
-
+public void Disabler() {
+    if (mc.thePlayer.ticksExisted % 1 == 0) {
+        mc.thePlayer.onGround = true;
+        mc.thePlayer.capabilities.isFlying = true;
+        double yaw = mc.thePlayer.posY;
+        yaw = Math.toRadians(yaw);
+        double dY = Math.sin(yaw) * 0.28D;
+        mc.thePlayer.motionY = dY;
+        if (!mc.thePlayer.isInWater()) {
+            mc.thePlayer.ticksExisted = 15;
+            mc.thePlayer.isInWater();
+            mc.thePlayer.motionY = 0.0D;
+        }
+    }
+}
     public void Mccentral() {
         double y = mc.thePlayer.posY;
         if (TimeHelper.hasPassed(ms)) {
