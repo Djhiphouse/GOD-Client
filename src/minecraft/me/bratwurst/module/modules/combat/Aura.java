@@ -32,7 +32,7 @@ import java.util.Random;
 public class Aura extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
-    public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Raycast,
+    public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Criticalshits,
             Throughwalls,AutoEz,AutoGG;
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
@@ -62,13 +62,14 @@ public class Aura extends Module {
         Client.setmgr.rSetting(Throughwalls = new Setting("Throughwalls", this, false));
         Client.setmgr.rSetting(AutoEz = new Setting("AutoEz", this, false));
         Client.setmgr.rSetting(AutoGG = new Setting("AutoGG", this, false));
+        Client.setmgr.rSetting(Criticalshits = new Setting("Criticalshits", this, true));
 
     }
 
     //  public boolean MoveFix = true;
     public static int Groundticks = 0;
     public static int Airticks = 0;
-
+public static boolean Criticalshitsallow;
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
         for (Object o : mc.theWorld.loadedEntityList) {
@@ -91,6 +92,11 @@ public class Aura extends Module {
                         if (!Throughwalls.getValBoolean() && !mc.thePlayer.canEntityBeSeen(target)) {
 
                             return;
+                        }
+                        if (Criticalshits.getValBoolean()) {
+                            Criticalshitsallow = true;
+                        }else {
+                            Criticalshitsallow = false;
                         }
                             //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
                             //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
