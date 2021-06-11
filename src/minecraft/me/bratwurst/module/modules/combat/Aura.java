@@ -97,13 +97,10 @@ public static boolean Criticalshitsallow;
                             if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValInt()) {
 
                                 Criticalshitsallow = true;
-                        }
-
-                        }else {
-                            if (target.getDistanceToEntity(mc.thePlayer) >= Range.getValInt()) {
-
-                                Criticalshitsallow = true;
+                            } else {
+                                Criticalshitsallow = false;
                             }
+
                         }
                             //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
                             //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
@@ -119,10 +116,17 @@ public static boolean Criticalshitsallow;
                                 mc.thePlayer.rotationPitch = pitch;
                             }
                             if (target.isDead && target.ticksExisted > 20 && AutoGG.getValBoolean()) {
-                                PlayerUtil.SendPacketchat(target.getName() + " " + "GG");
+                                if (TimeHelper.hasReached(50)){
+                                    PlayerUtil.SendPacketchat("GG");
+                                    TimeHelper.reset();
+                                }
                             }
                         if (target.isDead && target.ticksExisted > 20 && AutoEz.getValBoolean()) {
-                            PlayerUtil.SendPacketchat(target.getName() + " " + "EZ Kill");
+                            if (TimeHelper.hasReached(50)){
+                                PlayerUtil.SendPacketchat("EZ Kill");
+                                TimeHelper.reset();
+                            }
+
                         }
                         if (FailHits.getValBoolean()) {
                             Attack(target, e);
