@@ -425,6 +425,7 @@ public static boolean Criticalshitsallow;
         hit = 0;
         Groundticks = 0;
         Airticks = 0;
+        Criticalshitsallow = false;
 
     }
 }
