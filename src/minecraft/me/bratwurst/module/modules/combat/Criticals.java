@@ -32,12 +32,16 @@ public class Criticals extends Module {
 
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
-        if (mode1.getValString().equalsIgnoreCase("Jump")) {
-            Jump();
-        } else if (mode1.getValString().equalsIgnoreCase("Packet")) {
-            packet();
-        } else if (mode1.getValString().equalsIgnoreCase("Legit")) {
-            legit();
+        if (Aura.Criticalshitsallow == true) {
+
+
+            if (mode1.getValString().equalsIgnoreCase("Jump")) {
+                Jump();
+            } else if (mode1.getValString().equalsIgnoreCase("Packet")) {
+                packet();
+            } else if (mode1.getValString().equalsIgnoreCase("Legit")) {
+                legit();
+            }
         }
     }
 
@@ -65,8 +69,6 @@ public class Criticals extends Module {
                 TimeHelper.reset();
                 PlayerUtils.sendMessage("Jumping");
             }
-
-
 
 
         } else {
