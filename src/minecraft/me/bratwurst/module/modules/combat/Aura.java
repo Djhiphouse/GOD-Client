@@ -102,6 +102,11 @@ public static boolean Criticalshitsallow;
                             }
 
                         }
+                        if (Criticalshits.getValBoolean()) {
+                            if (target.getDistanceToEntity(mc.thePlayer) >= Range.getValInt()) {
+                                Criticalshitsallow = false;
+                            }
+                        }
                             //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
                             //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
 
