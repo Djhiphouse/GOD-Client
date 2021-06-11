@@ -11,6 +11,7 @@ import me.bratwurst.manager.FreundManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.World.Clientfriend;
+import me.bratwurst.utils.PlayerUtil;
 import me.bratwurst.utils.RenderGuiEvent;
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
@@ -32,7 +33,7 @@ public class Aura extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
     public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Raycast,
-            Throughwalls;
+            Throughwalls,AutoEz,AutoGG;
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
     public static float yaw;
@@ -59,6 +60,8 @@ public class Aura extends Module {
         Client.setmgr.rSetting(LegitAutoBlock = new Setting("LegitAutoBlock", this, false));
         Client.setmgr.rSetting(Smoth = new Setting("Smothrotate", this, false));
         Client.setmgr.rSetting(Throughwalls = new Setting("Throughwalls", this, false));
+        Client.setmgr.rSetting(AutoEz = new Setting("AutoEz", this, false));
+        Client.setmgr.rSetting(AutoGG = new Setting("AutoGG", this, false));
 
     }
 
@@ -102,6 +105,12 @@ public class Aura extends Module {
                                 mc.thePlayer.rotationPitchHead = pitch;
                                 mc.thePlayer.rotationPitch = pitch;
                             }
+                            if (target.isDead && target.ticksExisted > 20 && AutoGG.getValBoolean()) {
+                                PlayerUtil.SendPacketchat(target.getName() + " " + "GG");
+                            }
+                        if (target.isDead && target.ticksExisted > 20 && AutoEz.getValBoolean()) {
+                            PlayerUtil.SendPacketchat(target.getName() + " " + "EZ Kill");
+                        }
                         if (FailHits.getValBoolean()) {
                             Attack(target, e);
                         }

@@ -36,7 +36,7 @@ public class InfiniteAura extends Module {
     public static Setting mode1;
     private ModuleButton mb = null;
     public static EntityLivingBase target1;
-    public static Setting minCps, Target, Range, Delay, APS;
+    public static Setting minCps, Target, Range, Delay, APS,canbeseen;
     private static EntityLivingBase en;
     boolean attack = true;
     double x;
@@ -66,25 +66,37 @@ public class InfiniteAura extends Module {
         Client.setmgr.rSetting(Target = new Setting("Targets", this, 2, 1, 20, true));
         Client.setmgr.rSetting(Range = new Setting("Range", this, 75, 50, 200, true));
         Client.setmgr.rSetting(APS = new Setting("APS", this, 1500, 800, 2000, true));
-
+        Client.setmgr.rSetting(canbeseen = new Setting("canbeseen", this,  true));
 
     }
-public static float hits;
+
+    public static float hits;
+
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
         for (Object o : mc.theWorld.loadedEntityList) {
             if (o instanceof EntityPlayer) {
                 EntityPlayer target = (EntityPlayer) o;
                 if (target != mc.thePlayer && target != null) {
-                   hits =  target.getDistanceToEntity(mc.thePlayer);
-                       PlayerUtils.sendMessage(target.getName());
-                       if (TimeHelper.hasReached(APS.getValInt())) {
+                    hits = target.getDistanceToEntity(mc.thePlayer);
+               //
+                  if (canbeseen.getValBoolean()) {
+                      if (TimeHelper.hasReached(APS.getValInt())) {
+                          PlayerUtils.sendMessage("Tpdelay" + APS.getValInt());
+                          teleportAndAttack(target);
+                          TimeHelper.reset();
 
-                           teleportAndAttack(target);
-                           TimeHelper.reset();
-                       }
+                          Attack = 0;
+                      }
+                  }else {
+                      if (TimeHelper.hasReached(APS.getValInt())) {
+                          PlayerUtils.sendMessage("Tpdelay" + APS.getValInt());
+                          teleportAndAttack(target);
+                          TimeHelper.reset();
 
-
+                          Attack = 0;
+                      }
+                  }
 
 
 
@@ -93,7 +105,7 @@ public static float hits;
         }
 
     }
-
+    public static  int Attack;
     public void teleportAndAttack(Entity target) {
         CustomVec3 from = new CustomVec3(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
         CustomVec3 to = new CustomVec3(target.posX, target.posY, target.posZ);
@@ -101,6 +113,7 @@ public static float hits;
         path = PathfindingUtils.computePath(from, to);
 
         for (CustomVec3 paths : path)
+
             mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(paths.getX(), paths.getY(), paths.getZ(), true));
 
         // CLIENT SIDED
@@ -109,12 +122,10 @@ public static float hits;
         // SERVER SIDED
         // mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
 
-          if (hits >= hits-1) {
-              mc.playerController.attackEntity(mc.thePlayer,target);
-              mc.thePlayer.swingItem();
-              hits = 0;
-          }
 
+
+
+            mc.playerController.attackEntity(mc.thePlayer,target);
 
 
 
@@ -136,5 +147,6 @@ public static float hits;
 
         mc.thePlayer.setPosition(x, y, z);
     }
+
 
 }

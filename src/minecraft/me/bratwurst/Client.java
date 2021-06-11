@@ -20,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
+import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.util.EnumChatFormatting;
 import okhttp3.OkHttpClient;
 import org.lwjgl.Sys;

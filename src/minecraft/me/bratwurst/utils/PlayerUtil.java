@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
@@ -46,7 +47,9 @@ public class PlayerUtil {
         }
 
     }
-
+    public static void SendPacketchat(String message){
+        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
+    }
     public static void toFwd(double speed) {
         float yaw = PlayerUtil.mc.thePlayer.rotationYaw * 0.017453292f;
         PlayerUtil.mc.thePlayer.motionX -= (double) MathHelper.sin(yaw) * speed;
