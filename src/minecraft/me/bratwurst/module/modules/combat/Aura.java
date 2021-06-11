@@ -93,7 +93,7 @@ public static boolean Criticalshitsallow;
 
                             return;
                         }
-                        if (Criticalshits.getValBoolean()) {
+                        if (Criticalshits.getValBoolean() && target.getDistanceToEntity(mc.thePlayer) <= Range.getValInt() ) {
                             Criticalshitsallow = true;
                         }else {
                             Criticalshitsallow = false;
