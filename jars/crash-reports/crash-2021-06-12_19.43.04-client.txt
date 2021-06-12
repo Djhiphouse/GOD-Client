@@ -1,0 +1,88 @@
+---- Minecraft Crash Report ----
+// Daisy, daisy...
+
+Time: 12.06.21 19:43
+Description: Unexpected error
+
+java.lang.NullPointerException: Unexpected error
+	at net.minecraft.client.renderer.RenderGlobal.drawSelectionBox(RenderGlobal.java:2240)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1544)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1351)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1184)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1039)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.renderer.RenderGlobal.drawSelectionBox(RenderGlobal.java:2240)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1544)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1351)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God375'/73545, l='MpServer', x=142,60, y=79,00, z=228,76], EntityOtherPlayerMP['skinnyniglets'/69207, l='MpServer', x=152,97, y=70,00, z=245,78]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 144,00,67,00,245,00 - World: (144,67,245), Chunk: (at 0,4,5 in 9,15; contains blocks 144,0,240 to 159,255,255), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 74125973 game time, 15279183 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 34 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God375'/73545, l='MpServer', x=142,60, y=79,00, z=228,76], EntityOtherPlayerMP['skinnyniglets'/69207, l='MpServer', x=152,97, y=70,00, z=245,78], EntityRabbit['Rabbit'/69387, l='MpServer', x=105,06, y=68,00, z=266,50], EntityPig['Pig'/139, l='MpServer', x=164,50, y=76,00, z=225,50], EntityCreeper['Creeper'/73418, l='MpServer', x=108,50, y=35,00, z=266,50], EntityCow['Cow'/140, l='MpServer', x=173,44, y=68,00, z=225,53], EntityCreeper['Creeper'/72850, l='MpServer', x=112,50, y=24,00, z=269,50], EntityOtherPlayerMP['skinnyniglets'/69207, l='MpServer', x=152,97, y=70,00, z=245,78], EntityZombie['Zombie'/73241, l='MpServer', x=188,50, y=26,00, z=218,50], EntityCreeper['Creeper'/70683, l='MpServer', x=108,50, y=36,00, z=263,50], EntityPig['Pig'/73563, l='MpServer', x=101,50, y=68,00, z=277,50], EntityPig['Pig'/91, l='MpServer', x=105,44, y=77,00, z=257,00], EntityBat['Bat'/73565, l='MpServer', x=186,66, y=25,69, z=216,22], EntitySkeleton['Skeleton'/69276, l='MpServer', x=185,88, y=23,00, z=241,50], EntityBat['Bat'/73567, l='MpServer', x=184,91, y=27,25, z=215,88], EntityBat['Bat'/73566, l='MpServer', x=183,25, y=22,41, z=215,53], EntitySkeleton['Skeleton'/71969, l='MpServer', x=181,50, y=36,00, z=201,50], EntityZombie['Zombie'/72353, l='MpServer', x=190,50, y=16,00, z=255,50], EntityCreeper['Creeper'/72352, l='MpServer', x=188,50, y=16,00, z=256,50], EntityCreeper['Creeper'/72931, l='MpServer', x=168,06, y=32,00, z=207,72], EntityRabbit['Rabbit'/69410, l='MpServer', x=109,97, y=64,00, z=205,06], EntitySpider['Spider'/72930, l='MpServer', x=166,50, y=31,00, z=202,28], EntityCreeper['Creeper'/71782, l='MpServer', x=185,50, y=16,00, z=197,50], EntitySkeleton['Skeleton'/70701, l='MpServer', x=180,50, y=37,00, z=194,50], EntitySpider['Spider'/72495, l='MpServer', x=188,50, y=18,00, z=214,50], EntitySheep['Sheep'/39599, l='MpServer', x=166,16, y=67,00, z=192,53], EntityBat['Bat'/73520, l='MpServer', x=188,56, y=18,10, z=248,53], EntityCreeper['Creeper'/73328, l='MpServer', x=95,50, y=39,00, z=251,50], EntityZombie['Zombie'/73396, l='MpServer', x=167,50, y=31,00, z=196,50], EntityCow['Cow'/44984, l='MpServer', x=177,25, y=71,00, z=205,72], EntitySkeleton['Skeleton'/73529, l='MpServer', x=168,50, y=31,00, z=196,50], EntityCow['Cow'/44985, l='MpServer', x=187,53, y=70,00, z=245,56], EntityZombie['Zombie'/70522, l='MpServer', x=132,50, y=25,00, z=191,50], EntitySheep['Sheep'/43901, l='MpServer', x=183,34, y=71,88, z=227,59]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:472)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 673672640 bytes (642 MB) / 952631296 bytes (908 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

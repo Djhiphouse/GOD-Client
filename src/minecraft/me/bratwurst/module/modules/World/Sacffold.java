@@ -9,6 +9,7 @@ import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.Player.Eagle;
 import me.bratwurst.module.modules.Player.SafeWalk;
+import me.bratwurst.utils.MainUtil;
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.block.BlockAir;
@@ -33,8 +34,8 @@ public class Sacffold extends Module {
         super("Scaffold", Category.WORLD);
     }
 
-    public float Yaw;
-    public float Pitch;
+    public static float Yaw;
+    public static float Pitch;
 
     @Override
     public void setup() {
@@ -54,72 +55,106 @@ public class Sacffold extends Module {
         int Speed = delay.getValInt();
         BlockPos blockPos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
         setBlockAndFacing(blockPos,event);
+
+
+
+
         if (NoSprint.getValBoolean()) {
             mc.thePlayer.setSprinting(false);
 
         } else {
             mc.thePlayer.setSprinting(true);
         }
-
-            if (TowerMotion.getValBoolean()) {
-                if (Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown()) {
-                    this.mc.thePlayer.motionY += 0.039000;
-
-                       placmentblock(blockPos, currentFacing);
-
-
-                } else {
-
+         int d = 0;
+        if (TowerMotion.getValBoolean()) {
+            if (Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown()) {
+                if (mc.thePlayer.onGround) {
+                    mc.timer.timerSpeed = 0.8f;
+                    if (d == 0) {
+                       MainUtil.setpos(mc.thePlayer.posX,mc.thePlayer.posY + 1,mc.thePlayer.posZ ,false,false);
+                       d++;
+                    }else {
+                        MainUtil.setpos(mc.thePlayer.posX,mc.thePlayer.posY + 0.1,mc.thePlayer.posZ ,false,false);
+                    }
+                }else {
+                    mc.timer.timerSpeed = 1F;
                 }
-                if (LegitTower.getValBoolean() && !TowerMotion.getValBoolean()) {
-                    mc.thePlayer.jump();
-                    placmentblock(blockPos, currentFacing);
-                }
+
+                placmentblock(blockPos, currentFacing);
+
+
+            } else {
+
             }
-            if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock) {
-                if (event.getState() == EventMotionUpdate.State.PRE) {
-                   setBlockAndFacing(blockPos,event);
+            if (LegitTower.getValBoolean() && !TowerMotion.getValBoolean()) {
+                mc.thePlayer.jump();
+                placmentblock(blockPos, currentFacing);
+            }
+        }
+        if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock) {
+            if (event.getState() == EventMotionUpdate.State.PRE) {
+                float[] rotate = getRotations(blockPos, currentFacing);
+                event.setYaw(rotate[0]);
+                event.setPitch(rotate[1]);
 
 
-                } else if (event.getState() == EventMotionUpdate.State.POST && TimeHelper.hasReached(Speed)) {
-                    if (Fastbrige.getValBoolean()) {
-                        if (this.mc.thePlayer != null && this.mc.theWorld != null) {
-                            ItemStack i = this.mc.thePlayer.getCurrentEquippedItem();
-                            BlockPos bP = new BlockPos(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 0.9D, this.mc.thePlayer.posZ);
-                            if (i != null) {
-                                if (i.getItem() instanceof ItemBlock) {
-                                    this.mc.gameSettings.keyBindSneak.pressed = false;
-                                    if (this.mc.theWorld.getBlockState(bP).getBlock() == Blocks.air) {
-                                        this.mc.gameSettings.keyBindSneak.pressed = true;
-                                        if (NoSprint.getValBoolean()) {
-                                            Minecraft.getMinecraft().thePlayer.setSprinting(true);
-                                            placmentblock(blockPos, currentFacing);
-                                        } else {
-                                            placmentblock(blockPos, currentFacing);
-                                        }
-
+            } else if (event.getState() == EventMotionUpdate.State.POST && TimeHelper.hasReached(Speed)) {
+                if (Fastbrige.getValBoolean()) {
+                    if (this.mc.thePlayer != null && this.mc.theWorld != null) {
+                        ItemStack i = this.mc.thePlayer.getCurrentEquippedItem();
+                        BlockPos bP = new BlockPos(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 0.9D, this.mc.thePlayer.posZ);
+                        if (i != null) {
+                            if (i.getItem() instanceof ItemBlock) {
+                                this.mc.gameSettings.keyBindSneak.pressed = false;
+                                if (this.mc.theWorld.getBlockState(bP).getBlock() == Blocks.air) {
+                                    this.mc.gameSettings.keyBindSneak.pressed = true;
+                                    if (NoSprint.getValBoolean()) {
+                                        Minecraft.getMinecraft().thePlayer.setSprinting(true);
+                                        placmentblock(blockPos, currentFacing);
+                                    } else {
+                                        placmentblock(blockPos, currentFacing);
                                     }
+
                                 }
                             }
                         }
-                    } else {
-                        if (NoSprint.getValBoolean()) {
-                            mc.thePlayer.setSprinting(false);
-                            placmentblock(blockPos, currentFacing);
-                        }
+                    }
+                } else {
+                    if (NoSprint.getValBoolean()) {
+                        mc.thePlayer.setSprinting(false);
                         placmentblock(blockPos, currentFacing);
                     }
-
-                    TimeHelper.reset();
+                    placmentblock(blockPos, currentFacing);
                 }
 
-
+                TimeHelper.reset();
             }
+
+
+        }
+        moveBlocksToHotbar();
+    }
+
+    public static float[] getRotations(BlockPos block, EnumFacing face) {
+        double x = block.getX() + 0.5 - mc.thePlayer.posX + (double) face.getFrontOffsetX() / 2;
+        double z = block.getZ() + 0.5 - mc.thePlayer.posZ + (double) face.getFrontOffsetZ() / 2;
+        double d1 = mc.thePlayer.posY + mc.thePlayer.getEyeHeight() - (block.getY() + 0.5);
+        double d3 = MathHelper.sqrt_double(x * x + z * z);
+        float yaw = (float) (Math.atan2(z, x) * 20 / Math.PI) - 90;
+        float pitch = (float) (Math.atan2(d1, d3) * 180 / Math.PI);
+        if (yaw < 0.0F) {
+            yaw += 360f;
+        }
+        return new float[]{yaw, pitch};
+    }
+
+    public void placmentblock(BlockPos pos, EnumFacing facing) {
+        moveBlocksToHotbar();
+        if (mc.thePlayer.getCurrentEquippedItem().getItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), currentPos, currentFacing, new Vec3(currentPos.getX(), currentPos.getY(), currentPos.getZ()))) {
+            mc.thePlayer.swingItem();
         }
 
-
-
-
+    }
 
     private Vec3 getVec3(BlockData data) {
         BlockPos pos = data.getPosition();
@@ -199,21 +234,143 @@ public class Sacffold extends Module {
         return Math.round(min + (float) Math.random() * ((max - min)));
     }
 
-    public void setBlockAndFacing(BlockPos var1, EventMotionUpdate e) {
+    public void setBlockAndFacing(BlockPos var1,EventMotionUpdate e) {
         //if(!shouldDownwards()) {
-        int yaw = (int) (mc.thePlayer.rotationYaw + 180);
-        float pitch = 90.5F;
-              e.setYaw(yaw);
-              e.setPitch( pitch);
-        placmentblock(currentPos, currentFacing);
+        moveBlocksToHotbar();
+        if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock) {
+        if (this.mc.theWorld.getBlockState(var1.add(0, -1, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, -1, 0);
+            currentFacing = EnumFacing.UP;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 0, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, 0, 0);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, 0, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, 0, 0);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, -1)).getBlock() != Blocks.air) {
 
-    }
-    public void placmentblock(BlockPos pos, EnumFacing facing) {
-        if (mc.thePlayer.getCurrentEquippedItem().getItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), currentPos, currentFacing, new Vec3(currentPos.getX(), currentPos.getY(), currentPos.getZ()))) {
-            mc.thePlayer.swingItem();
+            currentPos = var1.add(0, 0, -1);
+            currentFacing = EnumFacing.SOUTH;
+
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, 1)).getBlock() != Blocks.air) {
+
+            currentPos = var1.add(0, 0, 1);
+            currentFacing = EnumFacing.NORTH;
+
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 0, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, 0, -1);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 0, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, 0, 1);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, 0, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, 0, -1);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, 0, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, 0, 1);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, -1, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, -1, 0);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, -1, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, -1, 0);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, -1, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, -1, -1);
+            currentFacing = EnumFacing.SOUTH;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, -1, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, -1, 1);
+            currentFacing = EnumFacing.NORTH;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, -1, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, -1, -1);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, -1, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, -1, 1);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, -1, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, -1, -1);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, -1, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, -1, 1);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-2, 0, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-2, 0, 0);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(2, 0, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(2, 0, 0);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, -2)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, 0, -2);
+            currentFacing = EnumFacing.SOUTH;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, 0, 2)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, 0, 2);
+            currentFacing = EnumFacing.NORTH;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-2, 0, -2)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-2, 0, -2);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-2, 0, 2)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-2, 0, 2);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(2, 0, -2)).getBlock() != Blocks.air) {
+            currentPos = var1.add(2, 0, -2);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(2, 0, 2)).getBlock() != Blocks.air) {
+            currentPos = var1.add(2, 0, 2);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, 1, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, 1, 0);
+            currentFacing = EnumFacing.DOWN;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 1, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, 1, 0);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, 1, 0)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, 1, 0);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, 1, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, 1, -1);
+            currentFacing = EnumFacing.SOUTH;
+        } else if (this.mc.theWorld.getBlockState(var1.add(0, 1, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(0, 1, 1);
+            currentFacing = EnumFacing.NORTH;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 1, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, 1, -1);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(-1, 1, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(-1, 1, 1);
+            currentFacing = EnumFacing.EAST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, 1, -1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, 1, -1);
+            currentFacing = EnumFacing.WEST;
+        } else if (this.mc.theWorld.getBlockState(var1.add(1, 1, 1)).getBlock() != Blocks.air) {
+            currentPos = var1.add(1, 1, 1);
+            currentFacing = EnumFacing.WEST;
+        }
+        int yaw = (int) (mc.thePlayer.rotationYaw + 180);
+        float pitch = 87.3f;
+        e.setYaw(yaw);
+        e.setPitch( pitch);
         }
     }
 
     public BlockPos currentPos;
     public EnumFacing currentFacing;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //if (Helper.mc().getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net")

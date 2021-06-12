@@ -36,7 +36,7 @@ public class AutpGapple extends Module {
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
-        PlayerUtils.sendMessage("Call");
+
         if (mc.thePlayer != null && mc.theWorld != null) {
             int gAppleSlot = findGoldenApple();
             if (gAppleSlot != -1) {

@@ -124,8 +124,8 @@ public class ModuleManager {
           addModule(new StairSpeed());
           addModule(new GodMode());
           addModule(new StaffDetection());
-          addModule(new AutpGapple());
-          addModule(new ChestAura());
+
+          addModule(new BlockOverlay());
 
 
 

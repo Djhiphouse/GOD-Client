@@ -11,9 +11,7 @@ import me.bratwurst.manager.FreundManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.World.Clientfriend;
-import me.bratwurst.utils.PlayerUtil;
-import me.bratwurst.utils.RenderGuiEvent;
-import me.bratwurst.utils.TimeHelper;
+import me.bratwurst.utils.*;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -33,12 +31,12 @@ public class Aura extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
     public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Criticalshits,
-            Throughwalls,AutoEz,AutoGG;
+            Throughwalls,AutoEz,AutoGG,correctMovement;
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
     public static float yaw;
     public float pitch;
-
+    public static boolean flagged;
     public boolean Attack = false;
     public boolean rotation = false, bocking = false;
 
@@ -63,6 +61,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(AutoEz = new Setting("AutoEz", this, false));
         Client.setmgr.rSetting(AutoGG = new Setting("AutoGG", this, false));
         Client.setmgr.rSetting(Criticalshits = new Setting("Criticalshits", this, true));
+        Client.setmgr.rSetting(correctMovement = new Setting("correctMovement", this, false));
 
     }
 
@@ -93,10 +92,19 @@ public static boolean Criticalshitsallow;
 
                             return;
                         }
-                        if (Criticalshits.getValBoolean() && target.getDistanceToEntity(mc.thePlayer) <= Range.getValInt() ) {
-                            Criticalshitsallow = true;
-                        }else {
-                            Criticalshitsallow = false;
+                        if (Criticalshits.getValBoolean()) {
+                            if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValInt()) {
+
+                                Criticalshitsallow = true;
+                            } else {
+                                Criticalshitsallow = false;
+                            }
+
+                        }
+                        if (Criticalshits.getValBoolean()) {
+                            if (target.getDistanceToEntity(mc.thePlayer) >= Range.getValInt()) {
+                                Criticalshitsallow = false;
+                            }
                         }
                             //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
                             //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
@@ -112,10 +120,17 @@ public static boolean Criticalshitsallow;
                                 mc.thePlayer.rotationPitch = pitch;
                             }
                             if (target.isDead && target.ticksExisted > 20 && AutoGG.getValBoolean()) {
-                                PlayerUtil.SendPacketchat(target.getName() + " " + "GG");
+                                if (TimeHelper.hasReached(50)){
+                                    PlayerUtil.SendPacketchat("GG");
+                                    TimeHelper.reset();
+                                }
                             }
                         if (target.isDead && target.ticksExisted > 20 && AutoEz.getValBoolean()) {
-                            PlayerUtil.SendPacketchat(target.getName() + " " + "EZ Kill");
+                            if (TimeHelper.hasReached(50)){
+                                PlayerUtil.SendPacketchat("EZ Kill");
+                                TimeHelper.reset();
+                            }
+
                         }
                         if (FailHits.getValBoolean()) {
                             Attack(target, e);
@@ -191,6 +206,17 @@ public static boolean Criticalshitsallow;
         }
         Attack = false;
     }
+@EventTarget
+public void CorrectMovment(EventMove event) {
+
+        if (correctMovement.getValBoolean() && target1 != null && target1.getDistanceToEntity(mc.thePlayer) <= 2){
+            StrafeUtil.customSilentMoveFlying(event,yaw);
+            event.setCancelled(true);
+            flagged = true;
+        } else {
+            flagged = false;
+        }
+}
 
     @EventTarget
     public void moveEvent(EventMove event) {
