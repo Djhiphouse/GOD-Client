@@ -13,6 +13,6 @@ public class FastBreak extends Module {
     }
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
-        this.mc.thePlayer.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 8040, 70));
+        this.mc.thePlayer.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 15, 3));
     }
 }

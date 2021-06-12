@@ -4,8 +4,10 @@ import com.mojang.authlib.Agent;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
+import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import net.minecraft.client.gui.*;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -18,7 +20,7 @@ public class GuiAddAlt extends GuiScreen {
     private PasswordField password;
     private String status;
     private GuiTextField username;
-
+    ParticleSystem partikelsystem = new ParticleSystem(1000,230);
     public GuiAddAlt(final GuiAltManager manager) {
         this.status = EnumChatFormatting.GRAY + "Idle...";
         this.manager = manager;
@@ -56,19 +58,22 @@ public class GuiAddAlt extends GuiScreen {
 
     @Override
     public void drawScreen(final int i, final int j, final float f) {
-        ScaledResolution res = new ScaledResolution(mc);
-        rectangle(0, 0, res.getScaledWidth(), res.getScaledHeight(), Colors.getColor(0));
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/Backhub.png"));
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+        render();
         this.username.drawTextBox();
         this.password.drawTextBox();
         this.drawCenteredString(this.fontRendererObj, "Add Alt", this.width / 2, 20, -1);
         if (this.username.getText().isEmpty()) {
-            this.drawString(this.mc.fontRendererObj, "Username / E-Mail", this.width / 2 - 96, 66, -7829368);
+            this.drawString(this.mc.fontRendererObj, EnumChatFormatting.GREEN +"Username / E-Mail", this.width / 2 - 96, 66, -7829368);
         }
         if (this.password.getText().isEmpty()) {
-            this.drawString(this.mc.fontRendererObj, "Password", this.width / 2 - 96, 106, -7829368);
+            this.drawString(this.mc.fontRendererObj, EnumChatFormatting.RED +"Password", this.width / 2 - 96, 106, -7829368);
         }
         this.drawCenteredString(this.fontRendererObj, this.status, this.width / 2, 30, -1);
+
         super.drawScreen(i, j, f);
+
     }
 
     public static void rectangle(double left, double top, double right, double bottom, int color) {
@@ -79,9 +84,9 @@ public class GuiAddAlt extends GuiScreen {
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 92 + 12, "Login"));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 116 + 12, "Back"));
-        buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 116 + 36, "Import user:pass"));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 92 + 12,  EnumChatFormatting.GREEN +"Login"));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 116 + 12, EnumChatFormatting.RED +"Back"));
+        buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 116 + 36, EnumChatFormatting.GREEN +"Import user:pass"));
         this.username = new GuiTextField(this.eventButton, this.mc.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
         this.password = new PasswordField(this.mc.fontRendererObj, this.width / 2 - 100, 100, 200, 20);
     }
@@ -126,7 +131,7 @@ public class GuiAddAlt extends GuiScreen {
 
         private final void checkAndAddAlt(final String username, final String password) {
             if (!username.contains("@")) {
-                GuiAddAlt.access$0(GuiAddAlt.this, "§cAlt failed!");
+                GuiAddAlt.access$0(GuiAddAlt.this, EnumChatFormatting.RED + "Alt failed!");
             }
             final YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
             final YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) service.createUserAuthentication(Agent.MINECRAFT);
@@ -154,5 +159,9 @@ public class GuiAddAlt extends GuiScreen {
                 this.checkAndAddAlt(this.username, this.password);
             }
         }
+    }
+    public void render() {
+        partikelsystem.render();
+        partikelsystem.tick(15);
     }
 }

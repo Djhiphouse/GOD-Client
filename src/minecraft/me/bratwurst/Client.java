@@ -11,8 +11,6 @@ import me.bratwurst.manager.ConfigManager;
 import me.bratwurst.manager.HWIDcheck.HWIDcheck;
 import me.bratwurst.manager.ModuleManager;
 import me.bratwurst.manager.network.GodNetworkClient;
-import me.bratwurst.manager.network.IRCClient;
-import me.bratwurst.module.Commands.BanCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.Items;
@@ -20,10 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.util.EnumChatFormatting;
-import okhttp3.OkHttpClient;
-import org.lwjgl.Sys;
 
 import javax.swing.*;
 import java.util.UUID;
@@ -115,6 +110,7 @@ public class Client {
         } catch (Exception e) {
 
         }
+
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleAtFixedRate(() -> {
