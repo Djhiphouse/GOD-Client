@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import me.bratwurst.AltManager.GuiAltManager;
 
 import me.bratwurst.Client;
+import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private final Object threadLock = new Object();
     private String openGLWarning1;
-
+   private ParticleSystem particleSystem = new ParticleSystem(500,150);
     private String openGLWarning2;
 
     private String openGLWarningLink;
@@ -99,9 +100,10 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         int j = this.height / 4 + 48 + 10;
         this.mc.getTextureManager().bindTexture(new ResourceLocation("client/BackGround.jpg"));
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
-
+        render();
         String s2;
 
+        //#nofilter
 
 
 
@@ -142,6 +144,12 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
+
+    }
+    public void render() {
+
+        particleSystem.render();
+        particleSystem.tick(15);
     }
 
     /**
