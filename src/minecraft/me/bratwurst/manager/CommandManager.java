@@ -58,6 +58,7 @@ public class CommandManager {
         commands.add(new BackdoorCommand());
         commands.add(new CosmeticsCommand());
         commands.add(new UpdateCommand());
+        commands.add(new trollmenu());
 
     }
 

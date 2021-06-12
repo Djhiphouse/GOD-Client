@@ -11,10 +11,12 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
 public class IRCClient extends WebSocketListener {
@@ -40,7 +42,8 @@ public class IRCClient extends WebSocketListener {
         }
 
 
-        if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+      if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+
 
         } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
 

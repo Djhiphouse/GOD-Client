@@ -7,6 +7,7 @@ import me.bratwurst.event.events.EventMove;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.combat.Aura;
+import me.bratwurst.utils.StrafeUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -19,18 +20,21 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 
 public class TargetStrafe extends Module {
+    public static boolean flagged;
+
     public TargetStrafe() {
         super("TargetStrafe", Category.MOVEMENT);
     }
+
     public boolean esp = true;
     public static double distance = 8;
     float speed = 0.099f;
 
     @EventTarget
     public void onPlayerUpdate(EventMove event) {
-      if (Client.getInstance().getModuleManager().getModuleByName("Aura").isToggle()){
-          mc.thePlayer.movementInput.setForward(0);
-          doStrafeAtSpeed(event, getSpeed() + speed);
+        if (Client.getInstance().getModuleManager().getModuleByName("Aura").isToggle()) {
+            mc.thePlayer.movementInput.setForward(0);
+            doStrafeAtSpeed(event, getSpeed() + speed);
 
         }
     }
@@ -43,10 +47,21 @@ public class TargetStrafe extends Module {
     public final static boolean doStrafeAtSpeed(EventMove event, final double moveSpeed) {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.thePlayer.getDistanceToEntity(Aura.target1) < distance) {
-            mc.thePlayer.setSpeed(moveSpeed);
-        } else {
+            if (Aura.target1.getDistanceToEntity(mc.thePlayer) <= 6) {
+                StrafeUtil.customSilentMoveFlying(event, Aura.yaw);
+                mc.gameSettings.keyBindJump.pressed = true;
+                event.setCancelled(true);
+                flagged = true;
+            } else {
+                mc.gameSettings.keyBindJump.pressed = false;
+
+                flagged = false;
+            }
             mc.thePlayer.setSpeed(moveSpeed);
         }
+
+
+
 
         return true;
     }

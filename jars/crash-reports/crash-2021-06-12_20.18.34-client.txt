@@ -1,0 +1,102 @@
+---- Minecraft Crash Report ----
+// Surprise! Haha. Well, this is awkward.
+
+Time: 12.06.21 20:18
+Description: Updating screen events
+
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at me.bratwurst.module.Commands.trollmenu.onCommand(trollmenu.java:15)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:71)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:330)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1567)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1015)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at me.bratwurst.module.Commands.trollmenu.onCommand(trollmenu.java:15)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:71)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:330)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+
+-- Affected screen --
+Details:
+	Screen name: net.minecraft.client.gui.GuiChat
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God500'/76546, l='MpServer', x=148,50, y=68,00, z=228,83], EntityOtherPlayerMP['skinnyniglets'/69207, l='MpServer', x=152,97, y=70,00, z=245,78]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 144,00,67,00,245,00 - World: (144,67,245), Chunk: (at 0,4,5 in 9,15; contains blocks 144,0,240 to 159,255,255), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 74168567 game time, 15321777 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 27 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God500'/76546, l='MpServer', x=148,50, y=68,00, z=228,83], EntityOtherPlayerMP['skinnyniglets'/69207, l='MpServer', x=152,97, y=70,00, z=245,78], EntityPig['Pig'/139, l='MpServer', x=164,50, y=76,00, z=225,50], EntityCreeper['Creeper'/75338, l='MpServer', x=109,34, y=65,00, z=226,91], EntityCow['Cow'/140, l='MpServer', x=173,44, y=68,00, z=225,53], EntityZombie['Zombie'/76623, l='MpServer', x=161,94, y=31,00, z=209,44], EntityZombie['Zombie'/75150, l='MpServer', x=104,50, y=64,00, z=217,50], EntitySkeleton['Skeleton'/76625, l='MpServer', x=165,50, y=30,00, z=208,50], EntityCreeper['Creeper'/76624, l='MpServer', x=164,56, y=30,00, z=208,56], EntityBat['Bat'/76626, l='MpServer', x=122,42, y=27,59, z=276,39], EntityOtherPlayerMP['skinnyniglets'/69207, l='MpServer', x=152,97, y=70,00, z=245,78], EntitySkeleton['Skeleton'/75801, l='MpServer', x=110,50, y=13,00, z=217,50], EntitySpider['Spider'/75736, l='MpServer', x=188,28, y=18,00, z=215,28], EntityPig['Pig'/73563, l='MpServer', x=114,28, y=70,00, z=256,47], EntityPig['Pig'/91, l='MpServer', x=105,44, y=77,00, z=257,00], EntityZombie['Zombie'/76064, l='MpServer', x=191,50, y=16,00, z=245,50], EntityZombie['Zombie'/76579, l='MpServer', x=189,50, y=15,00, z=249,50], EntityRabbit['Rabbit'/69410, l='MpServer', x=109,59, y=63,00, z=201,22], EntityZombie['Zombie'/76581, l='MpServer', x=191,50, y=15,00, z=248,50], EntityCreeper['Creeper'/76647, l='MpServer', x=191,81, y=18,00, z=214,31], EntityCreeper['Creeper'/76582, l='MpServer', x=194,50, y=15,00, z=251,50], EntityCreeper['Creeper'/76713, l='MpServer', x=193,50, y=25,00, z=217,50], EntitySkeleton['Skeleton'/75373, l='MpServer', x=102,50, y=63,00, z=193,50], EntitySheep['Sheep'/39599, l='MpServer', x=169,63, y=67,00, z=194,53], EntitySkeleton['Skeleton'/76660, l='MpServer', x=115,50, y=30,00, z=199,50], EntityCow['Cow'/44984, l='MpServer', x=189,03, y=74,00, z=220,09], EntityCow['Cow'/44985, l='MpServer', x=152,50, y=69,00, z=244,72]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 828060992 bytes (789 MB) / 1004011520 bytes (957 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

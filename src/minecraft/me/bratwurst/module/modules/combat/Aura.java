@@ -209,7 +209,7 @@ public static boolean Criticalshitsallow;
 @EventTarget
 public void CorrectMovment(EventMove event) {
 
-        if (correctMovement.getValBoolean() && target1 != null){
+        if (correctMovement.getValBoolean() && target1 != null && target1.getDistanceToEntity(mc.thePlayer) <= 2){
             StrafeUtil.customSilentMoveFlying(event,yaw);
             event.setCancelled(true);
             flagged = true;

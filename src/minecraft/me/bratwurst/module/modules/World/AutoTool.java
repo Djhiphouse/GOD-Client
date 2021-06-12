@@ -15,8 +15,7 @@ public class AutoTool extends Module {
     }
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
-        if (!mc.gameSettings.keyBindAttack.pressed)
-            return;
+
 
         if (mc.objectMouseOver == null)
             return;

@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import me.bratwurst.Client;
+import me.bratwurst.module.modules.render.BlockOverlay;
 import me.bratwurst.module.modules.render.PlayerESP;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
@@ -109,6 +110,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import shadersmod.client.Shaders;
@@ -2234,7 +2236,18 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             if (Config.isShaders()) {
                 Shaders.disableTexture2D();
             }
+            if (me.bratwurst.Client.moduleManager.getModuleByName("BlockOverlay").isEnabled()) {
 
+                        GlStateManager.color(0f, 0.6f, 5f, 0.76f);
+                        GL11.glLineWidth(3.0f);
+
+
+
+
+            }else {
+                GlStateManager.color(0f, 0.0f, 0f, 0.7f);
+                GL11.glLineWidth(2.0f);
+            }
             GlStateManager.depthMask(false);
             float f = 0.002F;
             BlockPos blockpos = movingObjectPositionIn.getBlockPos();

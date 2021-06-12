@@ -45,25 +45,16 @@ public class MainUtil extends Utils {
     }
 
 
-    public static void onground(boolean boden, boolean packet, boolean check) {
-        if (check == true) {
-            if (Minecraft.getMinecraft().thePlayer.onGround) {
-                if (boden == true) {
-                    if (packet == true) {
-                        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY, Minecraft.getMinecraft().thePlayer.posZ, true));
-                    } else {
-                        Minecraft.getMinecraft().thePlayer.onGround = true;
-                    }
-                } else {
-                    Minecraft.getMinecraft().thePlayer.onGround = true;
-                    return;
-                }
+    public static void setpos(double x, double y, double z, boolean packet, boolean groundpacket) {
+        if (packet == true)
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX + x,mc.thePlayer.posY + y,mc.thePlayer.posZ+z,groundpacket));
 
-            }
-        }
-
-
+        if (packet == false)
+            mc.thePlayer.setPosition(x,y,z);
     }
+
+
+
 
     public static void setMoveSpeed(int Speed, boolean bodencheck,boolean Bleibamboden) {
         if (bodencheck == true || Bleibamboden == true) {
@@ -101,7 +92,13 @@ public class MainUtil extends Utils {
         }
 
     }
+    public void positionupdate(double x,double y,double z,boolean packet,boolean groundpacket) {
+        if (packet == true)
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX + x,mc.thePlayer.posY + y,mc.thePlayer.posZ+z,groundpacket));
 
+        if (packet == false)
+            mc.thePlayer.setPositionAndUpdate(x,y,z);
+    }
     public static void SetFakegm(int gamemode) {
         if (gamemode == 0) {
             Minecraft.getMinecraft().thePlayer.setGameType(WorldSettings.GameType.SURVIVAL);
@@ -134,4 +131,5 @@ public class MainUtil extends Utils {
 
         }
     }
+
 }
