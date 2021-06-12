@@ -41,7 +41,7 @@ public class ParticleSystem {
 
     public void render() {
         for (Particle particle : particleList) {
-            GL11.glColor4f(255f, 0f, 0f, particle.getAlpha() / 255.0f);
+            GL11.glColor4f(0f, 210f, 189f, particle.getAlpha() / 255.0f);
             GL11.glPointSize(particle.getSize());
             GL11.glBegin(GL11.GL_POINTS);
 
@@ -70,9 +70,9 @@ public class ParticleSystem {
                         particle.getY(),
                         nearestParticle.getX(),
                         nearestParticle.getY(),
-                         255.0f,
                          0f,
-                         0f);
+                         213f,
+                         190f);
             }
 
         }
@@ -82,7 +82,7 @@ public class ParticleSystem {
     private void drawLine(float x, float y, float x1, float y1, float r, float g, float b) {
 
         GL11.glColor3f(r, g, b );
-        GL11.glLineWidth(1.4f);
+        GL11.glLineWidth(1.1f);
         GL11.glBegin(GL11.GL_LINES);
 
         GL11.glVertex2f(x, y);

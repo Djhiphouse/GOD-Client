@@ -1,6 +1,7 @@
 package me.bratwurst.AltManager;
 
 import de.Hero.clickgui.util.FontUtil;
+import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -28,7 +29,7 @@ public class GuiAltManager extends GuiScreen {
     private int offset;
     public Alt selectedAlt;
     private String status;
-
+    ParticleSystem partikelsystem = new ParticleSystem(1000,230);
     public GuiAltManager() {
         this.selectedAlt = null;
         this.status = EnumChatFormatting.GRAY + "Idle...";
@@ -142,7 +143,9 @@ public class GuiAltManager extends GuiScreen {
         FontUtil.drawStringWithShadow(byPseey, -Minecraft.getMinecraft().fontRendererObj.getStringWidth(byPseey), -Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, 0xff11F86B);
         /*															*/
         GL11.glPopMatrix();
-
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/Backhub.png"));
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+        render();
         if (lastOffset != offset) {
             int diff = offset - lastOffset;
             lastOffset += diff / 4;
@@ -150,7 +153,7 @@ public class GuiAltManager extends GuiScreen {
         ScaledResolution res = new ScaledResolution(mc);
         int w = res.getScaledWidth();
         int h = res.getScaledHeight();
-        mc.getTextureManager().bindTexture(new ResourceLocation("client/altmanager/Backhub.png"));
+
         drawScaledCustomSizeModalRect(0, 0, 0, 0, w + 2, h, w + 2, h, w + 2, h);
 
         rectangle(0, 0, res.getScaledWidth(), res.
@@ -305,5 +308,8 @@ public class GuiAltManager extends GuiScreen {
         final int factor = scale.getScaleFactor();
         GL11.glScissor((int) (x * factor), (int) ((scale.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
-
+    public void render() {
+        partikelsystem.render();
+        partikelsystem.tick(15);
+    }
 }

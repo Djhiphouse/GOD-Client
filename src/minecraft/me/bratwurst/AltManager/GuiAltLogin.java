@@ -1,5 +1,6 @@
 package me.bratwurst.AltManager;
 
+import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import net.minecraft.client.gui.*;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +17,7 @@ extends GuiScreen {
     private final GuiScreen previousScreen;
     private AltLoginThread thread;
     private GuiTextField username;
-
+    ParticleSystem partikelsystem = new ParticleSystem(1000,230);
     public GuiAltLogin(final GuiScreen previousScreen) {
         this.previousScreen = previousScreen;
     }
@@ -53,24 +54,26 @@ extends GuiScreen {
 
     @Override
     public void drawScreen(final int x, final int y, final float z) {
-        ScaledResolution res = new ScaledResolution(mc);
 
-        int w = res.getScaledWidth();
-        int h = res.getScaledHeight();
-        mc.getTextureManager().bindTexture(new ResourceLocation("client/altmanager/Backhub.png"));
-        drawScaledCustomSizeModalRect(0, 0, 0, 0, w + 2, h, w + 2, h, w + 2, h);
-        rectangle(0, 0, res.getScaledWidth(), res.getScaledHeight(), Colors.getColor(0));
+
+
+
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/Backhub.png"));
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+        render();
         this.username.drawTextBox();
         this.password.drawTextBox();
-        this.drawCenteredString(this.mc.fontRendererObj, "Alt Login", this.width / 2, 20, -1);
+        this.drawCenteredString(this.mc.fontRendererObj, EnumChatFormatting.GREEN +"Alt Login", this.width / 2, 20, -1);
         this.drawCenteredString(this.mc.fontRendererObj, (this.thread == null) ? (EnumChatFormatting.GRAY + "Idle...") : this.thread.getStatus(), this.width / 2, 29, -1);
         if (this.username.getText().isEmpty()) {
-            this.drawString(this.mc.fontRendererObj, "Username / E-Mail", this.width / 2 - 96, 66, -7829368);
+            this.drawString(this.mc.fontRendererObj, EnumChatFormatting.GREEN +"Username / E-Mail", this.width / 2 - 96, 66, -7829368);
         }
         if (this.password.getText().isEmpty()) {
-            this.drawString(this.mc.fontRendererObj, "Password", this.width / 2 - 96, 106, -7829368);
+            this.drawString(this.mc.fontRendererObj, EnumChatFormatting.RED +"Password", this.width / 2 - 96, 106, -7829368);
         }
+
         super.drawScreen(x, y, z);
+
     }
     
     public static void rectangle(double left, double top, double right, double bottom, int color) {
@@ -80,9 +83,9 @@ extends GuiScreen {
     @Override
     public void initGui() {
         final int var3 = this.height / 4 + 24;
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, var3 + 72 + 12, "Login"));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, var3 + 72 + 12 + 24, "Back"));
-        buttonList.add(new GuiButton(2, this.width / 2 - 100, var3 + 72 + 12 + 48, "Import user:pass"));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, var3 + 72 + 12, EnumChatFormatting.GREEN +"Login"));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, var3 + 72 + 12 + 24, EnumChatFormatting.RED +"Back"));
+        buttonList.add(new GuiButton(2, this.width / 2 - 100, var3 + 72 + 12 + 48, EnumChatFormatting.GREEN +"Import user:pass"));
         this.username = new GuiTextField(var3, this.mc.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
         this.password = new PasswordField(this.mc.fontRendererObj, this.width / 2 - 100, 100, 200, 20);
         this.username.setFocused(true);
@@ -131,6 +134,10 @@ extends GuiScreen {
     public void updateScreen() {
         this.username.updateCursorCounter();
         this.password.updateCursorCounter();
+    }
+    public void render() {
+        partikelsystem.render();
+        partikelsystem.tick(15);
     }
 }
 

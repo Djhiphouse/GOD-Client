@@ -1,12 +1,14 @@
 package me.bratwurst.AltManager;
 
 import me.bratwurst.Client;
+import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
 import java.io.BufferedReader;
@@ -19,7 +21,7 @@ public class GuiTheAltening extends GuiScreen {
     private GuiScreen previousScreen;
     private AltLoginThread thread;
     private GuiTextField token;
-
+    ParticleSystem partikelsystem = new ParticleSystem(1000,230);
     protected Minecraft mc = Minecraft.getMinecraft();
     public GuiTheAltening(final GuiScreen previousScreen) {
         this.previousScreen = previousScreen;
@@ -116,16 +118,19 @@ public class GuiTheAltening extends GuiScreen {
     }
     @Override
     public void drawScreen(final int x, final int y, final float z) {
-        this.drawDefaultBackground();
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/Backhub.png"));
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+        render();
+
         this.api.drawTextBox();
         this.token.drawTextBox();
         mc.fontRendererObj.drawString(EnumChatFormatting.AQUA +"Alt Login", this.width / 2, 20, -1);
         mc.fontRendererObj.drawString((this.thread == null) ? EnumChatFormatting.BLUE +"Waiting..." : this.thread.getStatus(), this.width / 2, 29, -1);
         if (this.api.getText().isEmpty()) {
-            mc.fontRendererObj.drawStringWithShadow("API", (float)(this.width / 2 - 94), 106.0f, -7829368);
+            mc.fontRendererObj.drawStringWithShadow(EnumChatFormatting.AQUA + "API", (float)(this.width / 2 - 94), 106.0f, -7829368);
         }
         if (this.token.getText().isEmpty()) {
-            mc.fontRendererObj.drawStringWithShadow("Token", (float)(this.width / 2 - 94), 156.0f, -7829368);
+            mc.fontRendererObj.drawStringWithShadow(EnumChatFormatting.AQUA + "Token", (float)(this.width / 2 - 94), 156.0f, -7829368);
         }
         super.drawScreen(x, y, z);
     }
@@ -133,9 +138,9 @@ public class GuiTheAltening extends GuiScreen {
     @Override
     public void initGui() {
         final int var3 = this.height / 4 + 24;
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, 125, "Generate"));
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, 175, "Login"));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, 198, "Back"));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, 125, EnumChatFormatting.GREEN +"Generate"));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, 175, EnumChatFormatting.AQUA +"Login"));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, 198, EnumChatFormatting.RED +"Back"));
         this.api = new PasswordField(mc.fontRendererObj, this.width / 2 - 98, 100, 195, 20);
         this.token = new GuiTextField(var3, mc.fontRendererObj, this.width / 2 - 98, 150, 195, 20);
         this.api.setFocused(true);
@@ -188,5 +193,8 @@ public class GuiTheAltening extends GuiScreen {
         this.api.updateCursorCounter();
         this.token.updateCursorCounter();
     }
-
+    public void render() {
+        partikelsystem.render();
+        partikelsystem.tick(15);
+    }
 }

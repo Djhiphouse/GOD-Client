@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import me.bratwurst.AltManager.GuiAltManager;
 
 import me.bratwurst.Client;
+import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import me.bratwurst.utils.DrawMenuLogoUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -21,7 +22,7 @@ import java.io.IOException;
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private final Object threadLock = new Object();
     private String openGLWarning1;
-
+ParticleSystem partikelsystem = new ParticleSystem(1000,230);
     private String openGLWarning2;
 
     private String openGLWarningLink;
@@ -98,24 +99,16 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-//Window Klein
-//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 50, this.height / 3 +40 , 98, 20, I18n.format("test", new Object[0])));
-//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 50, this.height / 3 +20 , 98, 20, I18n.format("test", new Object[0])));
 
-//        //Window Mittel
-//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 63, this.height / 3 +26 , 98, 20, I18n.format("test", new Object[0])));
-//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 63, this.height / 3 +46 , 98, 20, I18n.format("test", new Object[0])));
 
-//        //Window Groß
-//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 66, this.height / 3 +26 , 80, 20, I18n.format("test", new Object[0])));
-//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 66, this.height / 3 +46 , 80, 20, I18n.format("test", new Object[0])));
-//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 66, this.height / 3 +66 , 80, 20, I18n.format("test", new Object[0])));
-
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+        render();
         GlStateManager.color(1, 1, 1);
         int j = this.height / 4 + 48 + 10;
         //Hintergrund
-        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
-        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+
+
         //backScreen
         drawRect(this.width / 9 - 15, this.height / 6 - 15, this.width - 50, this.height / 2 + this.height / 3, new Color(56, 56, 56, 255).getRGB());
         // MainMenu Logo (TEXT)
@@ -175,5 +168,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
                 this.mc.displayGuiScreen(guiconfirmopenlink);
             }
         }
+    }
+    public void render() {
+       partikelsystem.render();
+       partikelsystem.tick(15);
     }
 }
