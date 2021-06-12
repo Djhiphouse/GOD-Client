@@ -13,6 +13,7 @@ import java.util.Random;
 import me.bratwurst.Client;
 import me.bratwurst.adminNotifications.AdminNotification;
 import me.bratwurst.adminNotifications.AdminNotificationManager;
+import me.bratwurst.adminNotifications.UpdateNotificationManager;
 import me.bratwurst.event.events.Event2D;
 import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.modules.combat.Aura;
@@ -424,6 +425,7 @@ public class GuiIngame extends Gui
         this.drawString(mc.fontRendererObj, EnumChatFormatting.BLUE +"[IGN] >> "  + EnumChatFormatting.AQUA +  Minecraft.getMinecraft().session.getUsername(), 2, 130, -1);
         NotificationManager.render();
         AdminNotificationManager.render();
+        UpdateNotificationManager.render();
          Renderping();
          return ;
 

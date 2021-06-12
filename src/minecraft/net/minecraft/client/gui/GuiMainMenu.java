@@ -3,7 +3,7 @@ package net.minecraft.client.gui;
 import me.bratwurst.AltManager.GuiAltManager;
 
 import me.bratwurst.Client;
-import me.bratwurst.manager.PartikelSystem.ParticleSystem;
+import me.bratwurst.utils.DrawMenuLogoUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,13 +14,14 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
+public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private final Object threadLock = new Object();
     private String openGLWarning1;
-   private ParticleSystem particleSystem = new ParticleSystem(500,150);
+
     private String openGLWarning2;
 
     private String openGLWarningLink;
@@ -51,11 +52,12 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         //    addButton();
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, j, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, j + i * 1, I18n.format("menu.multiplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(14, this.width / 2 - 100, j + i * 2, I18n.format("AltManager", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 9, this.height / 2, 98, 20, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new GuiButton(4, this.width / 9, this.height / 2 + i * 1, 98, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(1, this.width / 9, this.height / 2 - i * 3, 98, 20, I18n.format("menu.singleplayer", new Object[0])));
+        this.buttonList.add(new GuiButton(2, this.width / 9, this.height / 2 - i * 2, 98, 20, I18n.format("menu.multiplayer", new Object[0])));
+        this.buttonList.add(new GuiButton(14, this.width / 9, this.height / 2 - i * 1, 98, 20, I18n.format("AltManager", new Object[0])));
+
 
         synchronized (this.threadLock) {
             this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
@@ -96,15 +98,31 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+//Window Klein
+//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 50, this.height / 3 +40 , 98, 20, I18n.format("test", new Object[0])));
+//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 50, this.height / 3 +20 , 98, 20, I18n.format("test", new Object[0])));
+
+//        //Window Mittel
+//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 63, this.height / 3 +26 , 98, 20, I18n.format("test", new Object[0])));
+//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 63, this.height / 3 +46 , 98, 20, I18n.format("test", new Object[0])));
+
+//        //Window Groß
+//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 66, this.height / 3 +26 , 80, 20, I18n.format("test", new Object[0])));
+//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 66, this.height / 3 +46 , 80, 20, I18n.format("test", new Object[0])));
+//        this.buttonList.add(new GuiButton(7777, this.width / 2 - 66, this.height / 3 +66 , 80, 20, I18n.format("test", new Object[0])));
+
         GlStateManager.color(1, 1, 1);
         int j = this.height / 4 + 48 + 10;
-        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/BackGround.jpg"));
+        //Hintergrund
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
-        render();
+        //backScreen
+        drawRect(this.width / 9 - 15, this.height / 6 - 15, this.width - 50, this.height / 2 + this.height / 3, new Color(56, 56, 56, 255).getRGB());
+        // MainMenu Logo (TEXT)
+
+         final String Logo = "GOD";
+        DrawMenuLogoUtil.drawString(5, Logo, this.width / 12, this.height / 12, Color.CYAN.getRGB());
         String s2;
-
-        //#nofilter
-
 
 
         GlStateManager.pushMatrix();
@@ -116,24 +134,21 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         GlStateManager.popMatrix();
 
-        Color color5 =  new Color(0, 0, 0, 190);
+    //    Color color5 = new Color(0, 0, 0, 190);
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(5, 60, 50);
-        Gui.drawRect(70, 30, 80, 30, color5.getRGB());
+      //  Gui.drawRect(70, 30, 80, 30, color5.getRGB());
         GlStateManager.popMatrix();
 
         String s = EnumChatFormatting.AQUA + "Module: " + EnumChatFormatting.BLUE + Client.getInstance().getModuleManager().getEnabledModules().size() + " / " + Client.getInstance().getModuleManager().modules.size();
         String s1;
         String s3;
         this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
-         s1 = EnumChatFormatting.AQUA + "Coded by " + EnumChatFormatting.BLUE  + "Bratwurst001";
+        s1 = EnumChatFormatting.AQUA + "Coded by " + EnumChatFormatting.BLUE + "Bratwurst001";
         this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
-         s2 = EnumChatFormatting.AQUA + "Version: " + EnumChatFormatting.BLUE + Client.getInstance().CLIENT_VERSION;
+        s2 = EnumChatFormatting.AQUA + "Version: " + EnumChatFormatting.BLUE + Client.getInstance().CLIENT_VERSION;
         this.drawString(this.fontRendererObj, s2, 2, 2, Color.WHITE.getRGB());
-
-
-
 
 
         String infos = EnumChatFormatting.AQUA + "Account - Infos:";
@@ -143,13 +158,8 @@ public class  GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
         this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
 
+
         super.drawScreen(mouseX, mouseY, partialTicks);
-
-    }
-    public void render() {
-
-        particleSystem.render();
-        particleSystem.tick(15);
     }
 
     /**

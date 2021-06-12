@@ -2,7 +2,10 @@ package me.bratwurst.manager.network;
 
 import me.bratwurst.Client;
 import me.bratwurst.adminNotifications.*;
+import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.Commands.BanCommand;
+import me.bratwurst.utils.Notification;
+import me.bratwurst.utils.NotificationType;
 import me.pseey.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -71,10 +74,11 @@ public class IRCClient extends WebSocketListener {
 
             AdminNotificationManager.show(new AdminNotification(AdminNotificationType.ADMIN_NOTIFICATION_TYPE, EnumChatFormatting.RED + "RUNDRUF", text, 1));
 
-        } else if (text.startsWith("Update!")) {
+        } else if (text.startsWith("Version")) {
 
-            UpdateNotificationManager.show(new UpdateNotification(UpdateNotificationType.UPDATE_NOTIFICATION_TYPE, EnumChatFormatting.RED + "UPDATE", text, 1));
-            PlayerUtils.sendMessage(EnumChatFormatting.RED + "AdminMessage: " + EnumChatFormatting.DARK_RED  + EnumChatFormatting.GOLD + text);
+
+            UpdateNotificationManager.show(new UpdateNotification(UpdateNotificationType.UPDATE, EnumChatFormatting.RED + "UPDATE",EnumChatFormatting.GOLD + text, 1));
+
         } else {
 
             PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);

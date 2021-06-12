@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import java.awt.*;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import net.minecraft.client.AnvilConverterException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
@@ -229,8 +231,11 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+
         this.field_146638_t.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, this.field_146628_f, this.width / 2, 20, 16777215);
+
+
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
