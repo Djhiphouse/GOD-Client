@@ -57,7 +57,7 @@ public class DiscordRP {
 
 		}).build();
 
-		DiscordRPC.discordInitialize("836897694260789249", handlers, true);
+		DiscordRPC.discordInitialize("852954950962380900", handlers, true);
 
 		new Thread("Discord RPC Callback") {
 

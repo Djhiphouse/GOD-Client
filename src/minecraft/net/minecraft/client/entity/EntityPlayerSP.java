@@ -4,6 +4,7 @@ import me.bratwurst.Client;
 import me.bratwurst.event.Event;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.event.events.EventUpdate;
+import me.bratwurst.module.modules.Player.Chesteal;
 import me.bratwurst.module.modules.Player.NoSlowdown;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
@@ -167,6 +168,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
             this.mc.getSoundHandler().playSound(new MovingSoundMinecartRiding(this, (EntityMinecart) entityIn));
         }
     }
+
     public void setSpeed(double speed) {
         boolean isMovingStraight;
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
@@ -226,12 +228,14 @@ public class EntityPlayerSP extends AbstractClientPlayer {
         lastPitch += (rotationPitch - lastPitch) / 4;
 
     }
+
     public double getBaseMoveSpeed() {
         double baseSpeed = 0.2875D;
         if (this.mc.thePlayer.isPotionActive(Potion.moveSpeed))
             baseSpeed *= 1.0D + 0.2D * (this.mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1);
         return baseSpeed;
     }
+
     /**
      * called every tick when the player is on foot. Performs all the things that normally happen during movement.
      */
@@ -587,6 +591,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
 
         if ("minecraft:chest".equals(s)) {
             this.mc.displayGuiScreen(new GuiChest(this.inventory, chestInventory));
+
         } else if ("minecraft:hopper".equals(s)) {
             this.mc.displayGuiScreen(new GuiHopper(this.inventory, chestInventory));
         } else if ("minecraft:furnace".equals(s)) {
@@ -598,7 +603,10 @@ public class EntityPlayerSP extends AbstractClientPlayer {
         } else if (!"minecraft:dispenser".equals(s) && !"minecraft:dropper".equals(s)) {
             this.mc.displayGuiScreen(new GuiChest(this.inventory, chestInventory));
         } else {
+
             this.mc.displayGuiScreen(new GuiDispenser(this.inventory, chestInventory));
+
+
         }
     }
 
@@ -721,10 +729,10 @@ public class EntityPlayerSP extends AbstractClientPlayer {
         this.movementInput.updatePlayerMoveState();
 
         if (this.isUsingItem() && !this.isRiding()) {
-            if (Client.getInstance().getModuleManager().getModuleByName("NoSlowdown").isToggle()){
+            if (Client.getInstance().getModuleManager().getModuleByName("NoSlowdown").isToggle()) {
                 this.movementInput.moveStrafe *= 1F;
                 this.movementInput.moveForward *= 1F;
-            }else {
+            } else {
                 this.movementInput.moveStrafe *= 0.2F;
                 this.movementInput.moveForward *= 0.2F;
 

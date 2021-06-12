@@ -42,6 +42,7 @@ public class EventMove extends Event {
     public void setCancelled(boolean state) {
         this.cancelled = state;
     }
+
     public void setSpeed(double moveSpeed, float pseudoYaw, double pseudoStrafe, double pseudoForward) {
         double forward = pseudoForward;
         double strafe = pseudoStrafe;
@@ -72,6 +73,11 @@ public class EventMove extends Event {
         z = (forward * moveSpeed * mz - strafe * moveSpeed * mx);
     }
 
+
+
+
+
+
     public void setSpeed(double moveSpeed) {
         float forward = Minecraft.getMinecraft().thePlayer.movementInput.moveForward;
         float strafe = Minecraft.getMinecraft().thePlayer.movementInput.moveStrafe;
@@ -98,5 +104,6 @@ public class EventMove extends Event {
 
         }
     }
+
 
 }

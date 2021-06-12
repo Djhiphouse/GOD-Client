@@ -11,9 +11,7 @@ import me.bratwurst.manager.FreundManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.World.Clientfriend;
-import me.bratwurst.utils.PlayerUtil;
-import me.bratwurst.utils.RenderGuiEvent;
-import me.bratwurst.utils.TimeHelper;
+import me.bratwurst.utils.*;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -33,12 +31,12 @@ public class Aura extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
     public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Criticalshits,
-            Throughwalls,AutoEz,AutoGG;
+            Throughwalls,AutoEz,AutoGG,correctMovement;
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
     public static float yaw;
     public float pitch;
-
+    public static boolean flagged;
     public boolean Attack = false;
     public boolean rotation = false, bocking = false;
 
@@ -63,6 +61,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(AutoEz = new Setting("AutoEz", this, false));
         Client.setmgr.rSetting(AutoGG = new Setting("AutoGG", this, false));
         Client.setmgr.rSetting(Criticalshits = new Setting("Criticalshits", this, true));
+        Client.setmgr.rSetting(correctMovement = new Setting("correctMovement", this, false));
 
     }
 
@@ -207,6 +206,17 @@ public static boolean Criticalshitsallow;
         }
         Attack = false;
     }
+@EventTarget
+public void CorrectMovment(EventMove event) {
+
+        if (correctMovement.getValBoolean() && target1 != null){
+            StrafeUtil.customSilentMoveFlying(event,yaw);
+            event.setCancelled(true);
+            flagged = true;
+        } else {
+            flagged = false;
+        }
+}
 
     @EventTarget
     public void moveEvent(EventMove event) {

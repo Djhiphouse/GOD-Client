@@ -12,7 +12,7 @@ import net.minecraft.inventory.ContainerChest;
 
 public class Chesteal extends Module {
     public static Setting mode1;
-    public static Setting  Delay,AutoClose;
+    public static Setting  Delay,AutoClose,SlietCheast;
 
     public Chesteal() {
         super("Chesteal", Category.PLAYER);
@@ -30,8 +30,9 @@ public class Chesteal extends Module {
         Chest();
 
     }
-
+public static boolean Slient = false;
     public void Chest() {
+
         if (mc.thePlayer.openContainer != null && mc.thePlayer.openContainer instanceof ContainerChest) {
             ContainerChest container = (ContainerChest) mc.thePlayer.openContainer;
             if (!container.getLowerChestInventory().getName().contains("Chest")) {

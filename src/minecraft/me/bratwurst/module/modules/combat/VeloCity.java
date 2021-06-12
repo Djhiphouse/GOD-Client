@@ -7,6 +7,8 @@ import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.event.events.ProcessPacketEvent;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+
+import me.bratwurst.utils.MainUtil;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C02PacketUseEntity;
@@ -63,6 +65,7 @@ public class VeloCity extends Module {
             Dev();
         }else if (mode1.getValString().equalsIgnoreCase("legit")) {
             legit();
+
         }
     }
 
