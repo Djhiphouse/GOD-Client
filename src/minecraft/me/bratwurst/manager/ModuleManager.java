@@ -125,6 +125,7 @@ public class ModuleManager {
           addModule(new GodMode());
           addModule(new StaffDetection());
           addModule(new AutpGapple());
+          addModule(new ChestAura());
 
 
 
