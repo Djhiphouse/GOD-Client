@@ -53,7 +53,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         //    addButton();
 
         this.buttonList.add(new GuiButton(0, this.width / 9, this.height / 2, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 9, this.height / 2 + i * 1, 98, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(4, this.width / 9 , this.height / 2 + i * 1, 98, 20, I18n.format("menu.quit", new Object[0])));
         this.buttonList.add(new GuiButton(1, this.width / 9, this.height / 2 - i * 3, 98, 20, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new GuiButton(2, this.width / 9, this.height / 2 - i * 2, 98, 20, I18n.format("menu.multiplayer", new Object[0])));
         this.buttonList.add(new GuiButton(14, this.width / 9, this.height / 2 - i * 1, 98, 20, I18n.format("AltManager", new Object[0])));
@@ -117,7 +117,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
         //backScreen
-        drawRect(this.width / 9 - 15, this.height / 6 - 15, this.width - 50, this.height / 2 + this.height / 3, new Color(56, 56, 56, 255).getRGB());
+        drawRect(this.width / 9 -5, this.height / 6 -3, this.width - 100, this.height / 2 + this.height / 3 -23, new Color(56, 56, 56, 255).getRGB());
         // MainMenu Logo (TEXT)
 
          final String Logo = "GOD";
