@@ -27,7 +27,7 @@ public class GuiChangeLog extends GuiScreen {
 
     protected void actionPerformed(GuiButton button) throws IOException {
         if (button.id == 200) {
-            mc.displayGuiScreen(new GuiClientSettings());
+            mc.displayGuiScreen(new GuiMainMenu());
         }
 
     }
@@ -57,23 +57,32 @@ public class GuiChangeLog extends GuiScreen {
         final String New14 = EnumChatFormatting.GREEN + "- New GodMode";
         final String New15 = EnumChatFormatting.GREEN + "- New ClickNuker";
         final String New16 = EnumChatFormatting.GREEN + "- New StaffDetection";
-        DrawMenuLogoUtil.drawString(3, Logo, this.width / 8 + 6, this.height / 20, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New, this.width / 3 + 50, this.height / 4, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New2, this.width / 3+ 50, this.height / 1 - 370, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New3, this.width / 3+ 50, this.height / 1 - 356, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New4, this.width / 3+ 50, this.height / 1 - 343, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New5, this.width / 3+ 50, this.height / 1 - 330, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New6, this.width / 3+ 50, this.height / 1 - 317, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New7, this.width / 3+ 50, this.height / 1 - 304, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New8, this.width / 3+ 50, this.height / 1 - 291, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New9, this.width / 3 + 185, this.height / 1 - 386, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New10, this.width / 3 + 185, this.height / 1 - 370, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New11, this.width / 3 + 185, this.height / 1 - 356, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New12, this.width / 3 + 185, this.height / 1 - 343, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New13, this.width / 3 + 185, this.height / 1 - 330, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New14, this.width / 3 + 185, this.height / 1 - 317, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New15, this.width / 3 + 185, this.height / 1 - 304, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New16, this.width / 3 + 185, this.height / 1 - 291, Color.CYAN.getRGB());
+        int i = 15;
+
+        //LOGO
+        DrawMenuLogoUtil.drawString(3, Logo, this.width / 11 , this.height / 20, Color.CYAN.getRGB());
+
+        //REIHE 1
+        DrawMenuLogoUtil.drawString(1, New, this.width / 5, this.height / 4 + i *1, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New2, this.width / 5, this.height / 4 + i *2, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New3, this.width / 5, this.height / 4 + i *3, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New4, this.width / 5, this.height / 4 + i *4, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New5, this.width / 5, this.height / 4 + i *5, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New6, this.width / 5, this.height / 4 + i *6, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New7, this.width / 5, this.height / 4 + i *7, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New16, this.width / 5, this.height / 4 + i *8, Color.CYAN.getRGB());
+
+        //REIHE 2
+        int b = 15;
+        DrawMenuLogoUtil.drawString(1, New8, this.width / 2 + b, this.height / 4 + i *1, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New9, this.width / 2 + b, this.height / 4 + i *2, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New10, this.width / 2 + b, this.height / 4 + i *3, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New11, this.width / 2 + b, this.height / 4 + i *4, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New12, this.width / 2 + b, this.height / 4 + i *5, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New13, this.width / 2 + b, this.height / 4 + i *6, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New14, this.width / 2 + b, this.height / 4 + i *7, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New15, this.width / 2 + b, this.height / 4 + i *8, Color.CYAN.getRGB());
+
 
 
 

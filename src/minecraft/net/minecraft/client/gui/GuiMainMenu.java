@@ -2,15 +2,12 @@ package net.minecraft.client.gui;
 
 import me.bratwurst.AltManager.GuiAltManager;
 
-import me.bratwurst.Client;
 import me.bratwurst.guiMain.*;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import me.bratwurst.utils.DrawMenuLogoUtil;
-import me.bratwurst.utils.ShaderLoaderUtils;
 import me.bratwurst.utils.ShaderUtils;
 import me.bratwurst.utils.WbUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.resources.DefaultPlayerSkin;
@@ -21,7 +18,6 @@ import org.apache.commons.io.Charsets;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -32,6 +28,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private static final ResourceLocation youtube = new ResourceLocation("client/logo/youtube.png");
     private static final ResourceLocation discord = new ResourceLocation("client/logo/discord.png");
     private static final ResourceLocation settings = new ResourceLocation("client/logo/settingslogo.png");
+    private static final ResourceLocation changelog = new ResourceLocation("client/logo/cl.png");
+    private static final ResourceLocation dashboard = new ResourceLocation("client/logo/db.png");
     private final Object threadLock = new Object();
     private String openGLWarning1;
 ParticleSystem partikelsystem = new ParticleSystem(1000,230);
@@ -73,10 +71,12 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
         this.buttonList.add(new GuiButton(2, 0, this.height / 2 - i * 2, this.width /7, 20, I18n.format("menu.multiplayer", new Object[0])));
         this.buttonList.add(new GuiButton(14, 0, this.height / 2 - i * 1, this.width /7, 20, I18n.format("AltManager", new Object[0])));
 
-        this.buttonList.add(new GuiLogoButton(9992 , scaledResolution, this.width - 100, this.height /6 , 35, 35, youtube, false));
-        this.buttonList.add(new GuiLogoButton(9993 , scaledResolution, this.width - 100, this.height /6 +i *2, 35, 35, discord, false));
-        this.buttonList.add(new GuiLogoButton(9994 , scaledResolution, this.width - 100, this.height /6 +i *4, 35, 35, settings, false));
-        this.buttonList.add(new GuiLogoButton(9995, scaledResolution, 5,  5, 32, 32, loadPlayerHead(Minecraft.getMinecraft().getSession().getUsername()), true));
+        this.buttonList.add(new GuiLogoButton(9992 , scaledResolution, this.width - 50, this.height /6 , 35, 35, youtube, false));
+        this.buttonList.add(new GuiLogoButton(9993 , scaledResolution, this.width - 50, this.height /6 +i *2 -2, 35, 35, discord, false));
+        this.buttonList.add(new GuiLogoButton(9994 , scaledResolution, this.width - 50, this.height /6 +i *4 -2, 35, 35, settings, false));
+        this.buttonList.add(new GuiLogoButton(9995 , scaledResolution, this.width - 50, this.height /6 +i *6 -2, 35, 35, changelog, false));
+        this.buttonList.add(new GuiLogoButton(9996 , scaledResolution, this.width - 50, this.height /12 - 18, 35, 35, dashboard, false));
+//        this.buttonList.add(new GuiLogoButton(9996, scaledResolution, this.width  - 50,  50, 32, 32, loadPlayerHead(Minecraft.getMinecraft().getSession().getUsername()), true));
         synchronized (this.threadLock) {
             this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
             this.field_92024_r = this.fontRendererObj.getStringWidth(this.openGLWarning2);
@@ -116,22 +116,26 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
 
         if (button.id == 9992) {
                 try {
-                    WbUtils.openWebsite(new URI("https://www.google.de"));
+                    //YOUTUBE
+                    WbUtils.openWebsite(new URI("https://www.youtube.com/channel/UC3wpyB8yjpb_x2HrPIJQgAQ"));
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
         }
         if (button.id == 9993) {
             try {
-                WbUtils.openWebsite(new URI("https://www.google.de"));
+                //DISCORD
+                WbUtils.openWebsite(new URI("https://discord.gg/Zwnp84Cqhz"));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
         }
         if (button.id == 9994) {
             this.mc.displayGuiScreen(new GuiClientSettings());
+        }if (button.id == 9995) {
+            this.mc.displayGuiScreen(new GuiChangeLog());
         }
-        if (button.id == 9995) {
+        if (button.id == 9996) {
             this.mc.displayGuiScreen(new GuiClientDashboard());
         }
     }
@@ -183,8 +187,8 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
         GL11.glScaled(size, size, size);
         GlStateManager.color(1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(loadPlayerHead(name));
-        DrawKopf.drawTexturedModalRect(x / size, (y - 3.0D) / size, 32.0D, 32.0D, 32.0D, 32.0D);
-        DrawKopf.drawTexturedModalRect(x / size, (y - 3.0D) / size, 160.0D, 32.0D, 32.0D, 32.0D);
+        GuiDrawKopf.drawTexturedModalRect(x / size, (y - 3.0D) / size, 32.0D, 32.0D, 32.0D, 32.0D);
+        GuiDrawKopf.drawTexturedModalRect(x / size, (y - 3.0D) / size, 160.0D, 32.0D, 32.0D, 32.0D);
         GL11.glPopMatrix();
     }
 
