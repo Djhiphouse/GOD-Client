@@ -3,26 +3,35 @@ package net.minecraft.client.gui;
 import me.bratwurst.AltManager.GuiAltManager;
 
 import me.bratwurst.Client;
-import me.bratwurst.guiMain.GuiClientSettings;
+import me.bratwurst.guiMain.*;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import me.bratwurst.utils.DrawMenuLogoUtil;
 import me.bratwurst.utils.ShaderLoaderUtils;
 import me.bratwurst.utils.ShaderUtils;
+import me.bratwurst.utils.WbUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.io.Charsets;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
 
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
+    private static final ResourceLocation youtube = new ResourceLocation("client/logo/youtube.png");
+    private static final ResourceLocation discord = new ResourceLocation("client/logo/discord.png");
+    private static final ResourceLocation settings = new ResourceLocation("client/logo/settingslogo.png");
     private final Object threadLock = new Object();
     private String openGLWarning1;
 ParticleSystem partikelsystem = new ParticleSystem(1000,230);
@@ -54,17 +63,20 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
     public void initGui() {
         int i = 24;
         int j = this.height / 4 + 48;
+        ScaledResolutionGod scaledResolution = new ScaledResolutionGod(this.mc);
 
         //    addButton();
 
-        this.buttonList.add(new GuiButton(0, this.width  /9, this.height / 2, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width /9 , this.height / 2 + i * 1, 98, 20, I18n.format("menu.quit", new Object[0])));
-        this.buttonList.add(new GuiButton(1, this.width /9, this.height / 2 - i * 3, 98, 20, I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width /9, this.height / 2 - i * 2, 98, 20, I18n.format("menu.multiplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(14, this.width /9, this.height / 2 - i * 1, 98, 20, I18n.format("AltManager", new Object[0])));
-        this.buttonList.add(new GuiButton(55, this.width  /9, this.height / 2 + i * 2, 98, 20, I18n.format("ClientSettings", new Object[0])));
+        this.buttonList.add(new GuiButton(0, 0, this.height / 2, this.width /7, 20, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new GuiButton(4, 0 , this.height / 2 + i * 1, this.width /7, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(1, 0, this.height / 2 - i * 3, this.width /7, 20, I18n.format("menu.singleplayer", new Object[0])));
+        this.buttonList.add(new GuiButton(2, 0, this.height / 2 - i * 2, this.width /7, 20, I18n.format("menu.multiplayer", new Object[0])));
+        this.buttonList.add(new GuiButton(14, 0, this.height / 2 - i * 1, this.width /7, 20, I18n.format("AltManager", new Object[0])));
 
-
+        this.buttonList.add(new GuiLogoButton(9992 , scaledResolution, this.width - 100, this.height /6 , 35, 35, youtube, false));
+        this.buttonList.add(new GuiLogoButton(9993 , scaledResolution, this.width - 100, this.height /6 +i *2, 35, 35, discord, false));
+        this.buttonList.add(new GuiLogoButton(9994 , scaledResolution, this.width - 100, this.height /6 +i *4, 35, 35, settings, false));
+        this.buttonList.add(new GuiLogoButton(9995, scaledResolution, 5,  5, 32, 32, loadPlayerHead(Minecraft.getMinecraft().getSession().getUsername()), true));
         synchronized (this.threadLock) {
             this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
             this.field_92024_r = this.fontRendererObj.getStringWidth(this.openGLWarning2);
@@ -101,76 +113,86 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
         if (button.id == 4) {
             this.mc.shutdown();
         }
-        if (button.id == 55) {
+
+        if (button.id == 9992) {
+                try {
+                    WbUtils.openWebsite(new URI("https://www.google.de"));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+        }
+        if (button.id == 9993) {
+            try {
+                WbUtils.openWebsite(new URI("https://www.google.de"));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+        if (button.id == 9994) {
             this.mc.displayGuiScreen(new GuiClientSettings());
+        }
+        if (button.id == 9995) {
+            this.mc.displayGuiScreen(new GuiClientDashboard());
         }
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
         //Hintergrund
+
        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
-        ///backScreen
-       // drawRect(this.width / 9 -5, this.height / 6 -3, this.width - 100, this.height / 2 + this.height / 3 -23, new Color(56, 56, 56, 0).getRGB());
 
         if (GuiClientSettings.shader == true){
-            renderShader();
+           renderShader();
         }else if (GuiClientSettings.particle == true) {
             render();
+        }else if (GuiClientSettings.shader == false){
+            DrawMenuLogoUtil.drawString(5, null, this.width / 12, this.height / 24, Color.CYAN.getRGB());
         }
         GlStateManager.color(1, 1, 1);
         int j = this.height / 4 + 48 + 10;
         //Hintergrund
 
-        ///backScreen
+        //backScreen
        // drawRect(this.width / 9 -5, this.height / 6 -3, this.width - 100, this.height / 2 + this.height / 3 -23, new Color(56, 56, 56, 255).getRGB());
-        // MainMenu Logo (TEXT)
-        mc.getTextureManager().bindTexture(new ResourceLocation("client/ingame2.png"));
-        drawModalRectWithCustomSizedTexture(-55, -20, 0.0f, 0.0f, 180, 150, 230.0f, 200.0f);
-      ///  final String Logo = "GOD";
+        ///backScreen
+        //COLOR new Color(56, 56, 56, 0).getRGB()
+        drawRect( -50,  this.height, this.width /7 , 0, new Color(56, 55, 55, 134).getRGB());
+
+
+        // MainMenu Logo
+//        mc.getTextureManager().bindTexture(new ResourceLocation("client/log.png"));
+//        drawModalRectWithCustomSizedTexture(this.width /2 - 50, this.height /2 - 100, 0.0f, 0.0f, 250, 200, 250.0f, 300.0f);
+      DrawMenuLogoUtil.drawString(3, "GOD", 6, 2, Color.CYAN.getRGB());
+//
+// /  final String Logo = "GOD";
       //  DrawMenuLogoUtil.drawString(5, Logo, this.width / 12, this.height / 24, Color.CYAN.getRGB());
 
 
 
-        String s2;
 
-
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(210, 280, 1);
-        Gui.drawRect(width + 70, height + 30, width - 80, height - 30, new Color(0, 0, 0, 190).getRGB());
-        mc.fontRendererObj.drawString("§3Range: " + "Nichts", width - 75, height - 25, -1);
-        mc.fontRendererObj.drawStringWithShadow("§3Fall Distance: " + "Keine", width - 75, height + 20, -1);
-        GlStateManager.color(1f, 1f, 1f);
-
-        GlStateManager.popMatrix();
-
-    //    Color color5 = new Color(0, 0, 0, 190);
-
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(5, 60, 50);
-      //  Gui.drawRect(70, 30, 80, 30, color5.getRGB());
-        GlStateManager.popMatrix();
-
-        String s = EnumChatFormatting.AQUA + "Module: " + EnumChatFormatting.BLUE + Client.getInstance().getModuleManager().getEnabledModules().size() + " / " + Client.getInstance().getModuleManager().modules.size();
-        String s1;
-        String s3;
-        this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
-        s1 = EnumChatFormatting.AQUA + "Coded by " + EnumChatFormatting.BLUE + "Bratwurst001";
-        this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
-        s2 = EnumChatFormatting.AQUA + "Version: " + EnumChatFormatting.BLUE + Client.getInstance().CLIENT_VERSION;
-        this.drawString(this.fontRendererObj, s2, 2, 2, Color.WHITE.getRGB());
-
-
-        String infos = EnumChatFormatting.AQUA + "Account - Infos:";
-        this.drawString(this.fontRendererObj, infos, this.width - this.fontRendererObj.getStringWidth(infos) - 2, 2, -1);
         String username = EnumChatFormatting.AQUA + "Name: " + EnumChatFormatting.BLUE + Minecraft.getMinecraft().getSession().getUsername();
-        this.drawString(this.fontRendererObj, username, this.width - this.fontRendererObj.getStringWidth(username) - 2, 15, Color.ORANGE.getRGB());
-        this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
-        this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
 
+        this.drawString(this.fontRendererObj, username, 2, this.height - 10, -1);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+    private void drawPlayerHead(String name, double x, double y, double size) {
+        GL11.glPushMatrix();
+        GL11.glScaled(size, size, size);
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+        this.mc.getTextureManager().bindTexture(loadPlayerHead(name));
+        DrawKopf.drawTexturedModalRect(x / size, (y - 3.0D) / size, 32.0D, 32.0D, 32.0D, 32.0D);
+        DrawKopf.drawTexturedModalRect(x / size, (y - 3.0D) / size, 160.0D, 32.0D, 32.0D, 32.0D);
+        GL11.glPopMatrix();
+    }
+
+    public static ResourceLocation loadPlayerHead(String name) {
+        ResourceLocation resourcelocation = new ResourceLocation("avatar/" + name);
+        ThreadDownloadImageData t = new ThreadDownloadImageData(null, "https://minotar.net/avatar/" + name, DefaultPlayerSkin.getDefaultSkin(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(Charsets.UTF_8))), (IImageBuffer)new ImageBufferDownload());
+        Minecraft.getMinecraft().getTextureManager().loadTexture(resourcelocation, (ITextureObject)t);
+        return resourcelocation;
     }
 
     /**

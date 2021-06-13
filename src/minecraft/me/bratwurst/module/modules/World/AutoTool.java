@@ -1,5 +1,6 @@
 package me.bratwurst.module.modules.World;
 
+import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
@@ -15,7 +16,6 @@ public class AutoTool extends Module {
     }
     @EventTarget
     public void onUpdate(EventMotionUpdate event) {
-
 
         if (mc.objectMouseOver == null)
             return;

@@ -1,16 +1,19 @@
 package me.bratwurst.guiMain;
 import me.bratwurst.cosmetics.CosmeticWings;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
+import me.bratwurst.manager.network.GodNetworkClient;
 import me.bratwurst.utils.DrawMenuLogoUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.UUID;
 
 public class GuiClientDashboard extends GuiScreen {
     ParticleSystem partikelsystem = new ParticleSystem(1000,230);
@@ -23,7 +26,7 @@ public class GuiClientDashboard extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if(button.id == 200){
-            mc.displayGuiScreen(new GuiClientSettings());
+            mc.displayGuiScreen(new GuiMainMenu());
         }
 
     }
@@ -71,17 +74,14 @@ public class GuiClientDashboard extends GuiScreen {
             statushat = EnumChatFormatting.RED + "OFF";
         }
 
-        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6 + 24+ 24, 150, 20, I18n.format(EnumChatFormatting.AQUA + hat)));
+
+        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6 + 24+ 24, 150, 20, "HAT"));
         this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6 + 24 + 24, 150, 20, I18n.format(statushat)));
 
-//        String uuidname = "UUID";
-//        String uuid = EnumChatFormatting.GOLD + Minecraft.getMinecraft().thePlayer.getUniqueID().toString();
-//        if(uuid == null){
-//            uuid = EnumChatFormatting.RED + "UNBEKANNT!";
-//        }
-//        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6 + 24+ 24 + 24, 150, 20, I18n.format(EnumChatFormatting.BLUE + uuidname)));
-//        this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6 + 24 + 24 + 24, 150, 20, I18n.format(uuid)));
-        super.drawScreen(mouseX, mouseY, partialTicks);
+
+
+
+     super.drawScreen(mouseX, mouseY, partialTicks);
     }
     public void render() {
         partikelsystem.render();
