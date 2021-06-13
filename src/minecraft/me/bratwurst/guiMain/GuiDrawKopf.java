@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.Charsets;
 
 
-public class DrawKopf {
+public class GuiDrawKopf {
     public static final Map<String, ResourceLocation> playerHeads = new HashMap<>();
     public static void loadPlayerHead(String name) {
         ResourceLocation resourcelocation = new ResourceLocation("heads/" + name);

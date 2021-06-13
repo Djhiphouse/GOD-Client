@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class GuiPortscanner extends GuiScreen {
     ParticleSystem partikelsystem = new ParticleSystem(1000, 370);
+    public GuiScreen parentScreen;
 
     public static ArrayList<String> ClosedPort = new ArrayList<>();
     public void initGui() {
@@ -37,13 +38,12 @@ public static  boolean Packetjoin = false;
     protected void actionPerformed(final GuiButton button) {
         if (button.id == 200) {
             ValuePacket = 0;
-            this.mc.displayGuiScreen((GuiScreen) null);
+            this.mc.displayGuiScreen(this.parentScreen);
             this.mc.setIngameFocus();
 
         }
         if (button.id == 202) {
             while (ValuePacket <= 20) {
-                render();
                 ValuePacket++;
                 ValuePacket++;
                 ValuePacket++;
@@ -55,31 +55,7 @@ public static  boolean Packetjoin = false;
                 ValuePacket++;
                 ValuePacket++;
                 ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                ValuePacket++;
-                render();
                 try {
-                    Thread.sleep(200);
                     if (ValuePacket <= 1 )
                     Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketPing());
                     if (ValuePacket >= 5 )
@@ -124,13 +100,15 @@ public static  boolean Packetjoin = false;
         final String ServerPing = EnumChatFormatting.BLUE + "ServerPing: " + EnumChatFormatting.AQUA + Minecraft.getMinecraft().getCurrentServerData().pingToServer + "\n";
         final String ServerBrand = EnumChatFormatting.BLUE + "Version: " + EnumChatFormatting.AQUA + Minecraft.getMinecraft().thePlayer.getClientBrand() + "\n";
 
-        DrawMenuLogoUtil.drawString(3, Logo, this.width / 8 -12, this.height / 20, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, New, this.width / 3 + 10, this.height / 4 - 10, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, ServerAdresse, this.width / 3 + 10, this.height / 4 + 10 , Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, Serverport, this.width / 3 + 10, this.height / 4 + 25, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, ServerPing, this.width / 3 + 10, this.height / 4 + 40, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, ServerBrand, this.width / 3 + 10, this.height / 4 + 55, Color.CYAN.getRGB());
-
+        DrawMenuLogoUtil.drawString(3, Logo, this.width / 11 , this.height / 20, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, New, this.width / 9, this.height / 4 - 5, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, ServerAdresse, this.width / 9, this.height / 4 + 15 , Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, Serverport, this.width / 9, this.height / 4 + 30, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, ServerPing, this.width / 9, this.height / 4 + 45, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, ServerBrand, this.width / 9, this.height / 4 + 60, Color.CYAN.getRGB());
+        //TPS CORDS (X) this.width / 2-50, (Y) this.height / 2 - 15
+        DrawMenuLogoUtil.drawString(1, Packets, this.width / 2+ 25, this.height / 2 + 7 , Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, FailedPacketsend, this.width / 2+25, this.height / 2+ 20, Color.CYAN.getRGB());
 
 
 
@@ -146,10 +124,7 @@ public static  boolean Packetjoin = false;
     }
 
     public void render() {
-        final String Packets = EnumChatFormatting.GREEN + "Packets send: " + EnumChatFormatting.DARK_RED + ValuePacket + "\n";
-        final String FailedPacketsend = EnumChatFormatting.GREEN + "Packets lost: " + EnumChatFormatting.DARK_RED + FailedPacket + "\n";
-        DrawMenuLogoUtil.drawString(1, Packets, this.width / 3 + 200, this.height / 3 + 20, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, FailedPacketsend, this.width / 3 + 200, this.height / 3+ 30, Color.CYAN.getRGB());
+
         partikelsystem.render();
         partikelsystem.tick(15);
     }

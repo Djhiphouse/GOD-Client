@@ -21,7 +21,7 @@ public class GuiClientSettings extends GuiScreen {
 
 
         this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("MenuEffect")));
-  //      this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("Dashboard")));
+        this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("Cosmetics")));
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done", new Object[0])));
 
 
@@ -36,6 +36,9 @@ public class GuiClientSettings extends GuiScreen {
             mc.displayGuiScreen(new GuiParticleSetting());
 
         }
+        if(button.id == 113){
+//            mc.displayGuiScreen(new GuiCosmetics());
+        }
 
 
     }
@@ -49,7 +52,8 @@ public class GuiClientSettings extends GuiScreen {
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
         render();
         //backScreen
-        drawRect(this.width / 9 - 15, this.height / 6 - 25, this.width - 50, this.height / 2 + this.height / 3, new Color(56, 56, 56, 255).getRGB());
+        drawRect(this.width / 9 - 15, this.height / 6 - 25, this.width - 50, this.height / 2 + this.height / 3, new Color(40, 40, 40, 138).getRGB());
+
         final String Logo = "Settings";
         DrawMenuLogoUtil.drawString(3, Logo, this.width / 7, this.height / 20, Color.CYAN.getRGB());
 
