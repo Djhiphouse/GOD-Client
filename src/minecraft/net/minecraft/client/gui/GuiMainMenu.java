@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import me.bratwurst.AltManager.GuiAltManager;
 
 import me.bratwurst.Client;
+import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import me.bratwurst.utils.DrawMenuLogoUtil;
 import net.minecraft.client.Minecraft;
@@ -58,6 +59,7 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
         this.buttonList.add(new GuiButton(1, this.width / 9, this.height / 2 - i * 3, 98, 20, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new GuiButton(2, this.width / 9, this.height / 2 - i * 2, 98, 20, I18n.format("menu.multiplayer", new Object[0])));
         this.buttonList.add(new GuiButton(14, this.width / 9, this.height / 2 - i * 1, 98, 20, I18n.format("AltManager", new Object[0])));
+        this.buttonList.add(new GuiButton(55, this.width  - 205, this.height / 2 + i * 1, 98, 20, I18n.format("ClientSettings", new Object[0])));
 
 
         synchronized (this.threadLock) {
@@ -96,25 +98,37 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
         if (button.id == 4) {
             this.mc.shutdown();
         }
+        if (button.id == 55) {
+            this.mc.displayGuiScreen(new GuiClientSettings());
+        }
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
-
+        //Hintergrund
         this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
-        render();
+        ///backScreen
+        drawRect(this.width / 9 -5, this.height / 6 -3, this.width - 100, this.height / 2 + this.height / 3 -23, new Color(56, 56, 56, 255).getRGB());
+
+        if(GuiClientSettings.particle != true){
+
+        }else{
+            render();
+        }
         GlStateManager.color(1, 1, 1);
         int j = this.height / 4 + 48 + 10;
         //Hintergrund
 
-
-        //backScreen
+        ///backScreen
         drawRect(this.width / 9 -5, this.height / 6 -3, this.width - 100, this.height / 2 + this.height / 3 -23, new Color(56, 56, 56, 255).getRGB());
         // MainMenu Logo (TEXT)
 
-         final String Logo = "GOD";
+        final String Logo = "GOD";
         DrawMenuLogoUtil.drawString(5, Logo, this.width / 12, this.height / 12, Color.CYAN.getRGB());
+
+
+
         String s2;
 
 

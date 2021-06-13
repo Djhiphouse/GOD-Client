@@ -2,6 +2,8 @@ package net.minecraft.client.gui;
 
 import java.awt.*;
 import java.io.IOException;
+
+import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessorComposite;
@@ -19,6 +21,7 @@ import net.minecraft.world.EnumDifficulty;
 
 public class GuiOptions extends GuiScreen implements GuiYesNoCallback
 {
+    ParticleSystem partikelsystem = new ParticleSystem(1000,230);
     private static final GameSettings.Options[] field_146440_f = new GameSettings.Options[] {GameSettings.Options.FOV};
     private final GuiScreen field_146441_g;
 
@@ -235,11 +238,16 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
         //Hintergrund
         this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
         Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+        render();
         //backScreen
         drawRect(this.width / 9 - 15, this.height / 6 - 25, this.width - 50, this.height / 2 + this.height / 3, new Color(56, 56, 56, 255).getRGB());
 
 
         this.drawCenteredString(this.fontRendererObj, this.field_146442_a, this.width / 2, 15, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+    public void render() {
+        partikelsystem.render();
+        partikelsystem.tick(15);
     }
 }
