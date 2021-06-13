@@ -1,11 +1,14 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
+import me.bratwurst.guiMain.GuiPortscanner;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.realms.RealmsBridge;
+import net.minecraft.util.EnumChatFormatting;
 
 public class GuiIngameMenu extends GuiScreen
 {
@@ -31,6 +34,7 @@ public class GuiIngameMenu extends GuiScreen
 
         this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + i, I18n.format("menu.returnToGame", new Object[0])));
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + i, 98, 20, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 4 + 72 + i, I18n.format(EnumChatFormatting.RED + "ServerPinger", new Object[0])));
         GuiButton guibutton;
         this.buttonList.add(guibutton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + i, 98, 20, I18n.format("menu.shareToLan", new Object[0])));
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.achievements", new Object[0])));
@@ -86,6 +90,9 @@ public class GuiIngameMenu extends GuiScreen
 
             case 6:
                 this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.getStatFileWriter()));
+                break;
+            case 200:
+                this.mc.displayGuiScreen(new GuiPortscanner());
                 break;
 
             case 7:

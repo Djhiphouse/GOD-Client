@@ -24,6 +24,7 @@ public class GuiClientSettings extends GuiScreen {
   //      this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("Dashboard")));
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done", new Object[0])));
 
+
     }
     public static int clicked = 1;
     protected void actionPerformed(GuiButton button) throws IOException
