@@ -72,7 +72,8 @@ public class LongJump extends Module {
     private double posY;
     private boolean wet;
     private boolean reachmax = false;
-
+    boolean done = false;
+    boolean leftGround = false;
     private int airTicks;
 
     public Setting Nofall, Speed, off, Glide,boost;
@@ -89,6 +90,7 @@ public class LongJump extends Module {
         options.add("OldCubecraft");
         options.add("Spartan");
         options.add("Test");
+        options.add("badRedesky");
 
 
 
@@ -126,6 +128,8 @@ public class LongJump extends Module {
             Guardian();
         }else if (mode1.getValString().equalsIgnoreCase("Test")) {
             Test();
+        }else if (mode1.getValString().equalsIgnoreCase("badRedesky")) {
+            newredesky();
         }
 
 
@@ -151,6 +155,27 @@ public  static int jumpmotion = 0;
                 this.mc.thePlayer.motionX = (double)x * 1.261;
                 this.mc.thePlayer.motionZ = (double)z * 1.261;
             }
+        }
+    }
+    public void newredesky() {
+        if (!mc.thePlayer.onGround) {
+            mc.timer.timerSpeed = 0.6f;
+            if ((double)mc.thePlayer.fallDistance > 0.5) {
+                this.leftGround = true;
+            }
+            if (mc.thePlayer.fallDistance >= 1.3f) {
+                mc.thePlayer.speedInAir = 0.02f;
+            } else {
+                mc.thePlayer.speedInAir = 0.14f;
+                mc.thePlayer.motionY *= (double)1.15f;
+            }
+            return;
+        }
+        if ((this.done || this.leftGround) && off.getValBoolean()) {
+            this.toggle();
+            this.done = false;
+            this.leftGround = false;
+            mc.timer.timerSpeed = 1.0f;
         }
     }
 public void  Guardian () {

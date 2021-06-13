@@ -57,6 +57,7 @@ public class EntityPlayerSP extends AbstractClientPlayer {
     public final NetHandlerPlayClient sendQueue;
     private final StatFileWriter statWriter;
     public AxisAlignedBB boundingBox;
+    public float speedInAir;
 
 
     /**
