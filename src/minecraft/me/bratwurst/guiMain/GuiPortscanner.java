@@ -43,6 +43,7 @@ public static  boolean Packetjoin = false;
         }
         if (button.id == 202) {
             while (ValuePacket <= 20) {
+                render();
                 ValuePacket++;
                 ValuePacket++;
                 ValuePacket++;
@@ -54,7 +55,31 @@ public static  boolean Packetjoin = false;
                 ValuePacket++;
                 ValuePacket++;
                 ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                ValuePacket++;
+                render();
                 try {
+                    Thread.sleep(200);
                     if (ValuePacket <= 1 )
                     Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketPing());
                     if (ValuePacket >= 5 )
@@ -105,8 +130,7 @@ public static  boolean Packetjoin = false;
         DrawMenuLogoUtil.drawString(1, Serverport, this.width / 3 + 10, this.height / 4 + 25, Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, ServerPing, this.width / 3 + 10, this.height / 4 + 40, Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, ServerBrand, this.width / 3 + 10, this.height / 4 + 55, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, Packets, this.width / 3 + 200, this.height / 3 + 20, Color.CYAN.getRGB());
-        DrawMenuLogoUtil.drawString(1, FailedPacketsend, this.width / 3 + 200, this.height / 3+ 30, Color.CYAN.getRGB());
+
 
 
 
@@ -122,7 +146,10 @@ public static  boolean Packetjoin = false;
     }
 
     public void render() {
-
+        final String Packets = EnumChatFormatting.GREEN + "Packets send: " + EnumChatFormatting.DARK_RED + ValuePacket + "\n";
+        final String FailedPacketsend = EnumChatFormatting.GREEN + "Packets lost: " + EnumChatFormatting.DARK_RED + FailedPacket + "\n";
+        DrawMenuLogoUtil.drawString(1, Packets, this.width / 3 + 200, this.height / 3 + 20, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, FailedPacketsend, this.width / 3 + 200, this.height / 3+ 30, Color.CYAN.getRGB());
         partikelsystem.render();
         partikelsystem.tick(15);
     }
