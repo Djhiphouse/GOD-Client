@@ -13,7 +13,9 @@ import java.io.IOException;
 
 public class GuiClientSettings extends GuiScreen {
     ParticleSystem partikelsystem = new ParticleSystem(1000,230);
-    public static boolean particle = true;
+    public static boolean particle = false;
+    public static boolean shader = true;
+
     public String name = EnumChatFormatting.RED + "OFF";
     public void initGui() {
 
