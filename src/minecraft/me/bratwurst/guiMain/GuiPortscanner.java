@@ -4,6 +4,7 @@ import me.bratwurst.Client;
 import me.bratwurst.cosmetics.CosmeticWings;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import me.bratwurst.utils.DrawMenuLogoUtil;
+import me.bratwurst.utils.TPSUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
@@ -16,12 +17,13 @@ import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class GuiPortscanner extends GuiScreen {
     ParticleSystem partikelsystem = new ParticleSystem(1000, 370);
     public GuiScreen parentScreen;
-
+    DecimalFormat df = new DecimalFormat("#.##");
     public static ArrayList<String> ClosedPort = new ArrayList<>();
     public void initGui() {
         this.buttonList.add(new GuiButton(202, this.width / 2 - 113, this.height / 6 + 150, I18n.format(EnumChatFormatting.GREEN +"START", new Object[0])));
@@ -99,13 +101,14 @@ public static  boolean Packetjoin = false;
         final String Serverport = EnumChatFormatting.BLUE + "Population: " + EnumChatFormatting.AQUA + Minecraft.getMinecraft().getCurrentServerData().playerList + "\n";
         final String ServerPing = EnumChatFormatting.BLUE + "ServerPing: " + EnumChatFormatting.AQUA + Minecraft.getMinecraft().getCurrentServerData().pingToServer + "\n";
         final String ServerBrand = EnumChatFormatting.BLUE + "Version: " + EnumChatFormatting.AQUA + Minecraft.getMinecraft().thePlayer.getClientBrand() + "\n";
-
+        final String ServerTPS = EnumChatFormatting.BLUE + "ServerTPS: " + EnumChatFormatting.YELLOW + this.df.format(TPSUtils.tps) + "\n";
         DrawMenuLogoUtil.drawString(3, Logo, this.width / 11 , this.height / 20, Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, New, this.width / 9, this.height / 4 - 5, Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, ServerAdresse, this.width / 9, this.height / 4 + 15 , Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, Serverport, this.width / 9, this.height / 4 + 30, Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, ServerPing, this.width / 9, this.height / 4 + 45, Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, ServerBrand, this.width / 9, this.height / 4 + 60, Color.CYAN.getRGB());
+        DrawMenuLogoUtil.drawString(1, ServerTPS, this.width / 9, this.height / 4 + 75, Color.CYAN.getRGB());
         //TPS CORDS (X) this.width / 2-50, (Y) this.height / 2 - 15
         DrawMenuLogoUtil.drawString(1, Packets, this.width / 2+ 25, this.height / 2 + 7 , Color.CYAN.getRGB());
         DrawMenuLogoUtil.drawString(1, FailedPacketsend, this.width / 2+25, this.height / 2+ 20, Color.CYAN.getRGB());

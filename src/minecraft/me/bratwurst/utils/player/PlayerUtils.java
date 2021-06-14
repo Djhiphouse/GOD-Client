@@ -2,6 +2,8 @@ package me.bratwurst.utils.player;
 
 import me.bratwurst.Client;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentText;
@@ -27,4 +29,11 @@ public class PlayerUtils {
         int f = potioneffect != null ? potioneffect.getAmplifier() + 1 : 0;
         return (float)(mc.thePlayer.getMaxFallHeight() + f);
     }
+    public static boolean isHoldingBow() {
+        return Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem().getItem() instanceof ItemBow;
+    }
+    public static boolean isHoldingPearl() {
+        return Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() != null && Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem().getItem() instanceof ItemEnderPearl;
+    }
+
 }

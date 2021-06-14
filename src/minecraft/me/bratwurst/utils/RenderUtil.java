@@ -150,7 +150,7 @@ public Minecraft mc = Minecraft.getMinecraft();
         GlStateManager.enableBlend();
         RenderManager localRenderManager = Minecraft.getMinecraft().getRenderManager();
         GlStateManager.translate(-localRenderManager.renderPosX, -localRenderManager.renderPosY, -localRenderManager.renderPosZ);
-        GL11.glColor4f(paramColor.getRed() / 255.0F, paramColor.getGreen() / 255.0F, paramColor.getBlue() / 255.0F, 0.8F);
+
         Tessellator localTessellator = Tessellator.getInstance();
         WorldRenderer localWorldRenderer = localTessellator.getWorldRenderer();
         localWorldRenderer.begin(7, DefaultVertexFormats.POSITION);
@@ -298,24 +298,9 @@ public Minecraft mc = Minecraft.getMinecraft();
         GlStateManager.shadeModel(7425);
         GlStateManager.disableCull();
         GL11.glBegin(7);
-        glSetColor(Color.WHITE.getRGB());
-        GL11.glVertex2f(paramFloat1, paramFloat2);
-        glSetColor(paramInt);
-        GL11.glVertex2f(paramFloat1 + paramFloat3, paramFloat2);
-        glSetColor(Color.BLACK.getRGB());
-        GL11.glVertex2f(paramFloat1 + paramFloat3, paramFloat2 + paramFloat4);
-        GL11.glVertex2f(paramFloat1, paramFloat2 + paramFloat4);
-        GL11.glEnd();
-        GlStateManager.shadeModel(7424);
-        GlStateManager.disableBlend();
-        GlStateManager.enableAlpha();
-        GlStateManager.enableTexture2D();
-        Color[][] arrayOfColor = {{Color.RED, Color.GREEN}, {Color.GREEN, Color.BLUE}, {Color.BLUE, Color.RED}};
-        float f = paramFloat3 / arrayOfColor.length;
-        for (int i = 0; i < arrayOfColor.length; i++) {
-            drawGradientRect(paramFloat1 + i * f, paramFloat2 + paramFloat4 + 10.0F, f, 15.0F, arrayOfColor[i][0].getRGB(), arrayOfColor[i][1].getRGB());
+
         }
-    }
+
 
     public final void drawCircle(float paramFloat1, float paramFloat2, float paramFloat3, int paramInt1, int paramInt2) {
         GlStateManager.pushMatrix();
@@ -343,12 +328,10 @@ public Minecraft mc = Minecraft.getMinecraft();
         GlStateManager.popMatrix();
     }
 
-    public final Color rainbowColor(float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4) {
-        return Color.getHSBColor(((float) System.nanoTime() / 1000000.0F + paramFloat3) % paramFloat4 / paramFloat4, paramFloat1, paramFloat2);
-    }
+
 
     public final void renderAnalogueClock(float paramFloat1, float paramFloat2, float paramFloat3, int paramInt) {
-        drawCircle(paramFloat1, paramFloat2, paramFloat3, Color.BLACK.getRGB(), 1);
+
         int i = Calendar.getInstance().getTime().getHours();
         int j = Calendar.getInstance().getTime().getMinutes();
         GlStateManager.pushMatrix();
@@ -377,6 +360,11 @@ public Minecraft mc = Minecraft.getMinecraft();
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
+            public static void bob(float f2, float f3) {
+                Minecraft minecraft = Minecraft.getMinecraft();
+                Minecraft.getMinecraft().thePlayer.cameraYaw += f2 / 100.0f;
+                Minecraft.getMinecraft().thePlayer.cameraPitch += f3 / 100.0f;
+            }
 }
 
 

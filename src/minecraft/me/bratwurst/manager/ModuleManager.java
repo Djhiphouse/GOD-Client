@@ -128,6 +128,9 @@ public class ModuleManager {
           addModule(new BlockOverlay());
           addModule(new AntiVanish());
           addModule(new Challenge());
+          addModule(new PearlFly());
+          addModule(new AutoSword());
+
 
 
 
@@ -153,7 +156,9 @@ public class ModuleManager {
         }
         return null;
     }
-
+    public static void setExtraInfo(String extraInfo) {
+        extraInfo = extraInfo;
+    }
     public <T extends Module> T getModule(Class<T> clazz) {
         return (T) modules.stream().filter(mod -> mod.getClass() == clazz).findFirst().orElse(null);
     }

@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import me.bratwurst.utils.ShaderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -10,6 +11,7 @@ import org.lwjgl.input.Mouse;
 
 public abstract class GuiSlot
 {
+    public  static ShaderUtils shaderUtilLoader = new ShaderUtils("#ifdef GL_ES\nprecision mediump float;\n#endif\n\nuniform float time;\nuniform vec2 mouse;\nuniform vec2 resolution;\n\nvec2 hash(vec2 p)\n{\n    mat2 m = mat2(  13.85, 47.77,\n                    99.41, 88.48\n                );\n\n    return fract(sin(m*p) * 46738.29);\n}\n\nfloat voronoi(vec2 p)\n{\n    vec2 g = floor(p);\n    vec2 f = fract(p);\n\n    float distanceToClosestFeaturePoint = 1.0;\n    for(int y = -1; y <= 1; y++)\n    {\n        for(int x = -1; x <= 5; x++)\n        {\n            vec2 latticePoint = vec2(x, y);\n            float currentDistance = distance(latticePoint + hash(g+latticePoint), f);\n            distanceToClosestFeaturePoint = min(distanceToClosestFeaturePoint, currentDistance);\n        }\n    }\n\n    return distanceToClosestFeaturePoint;\n}\n\nvoid main( void )\n{\n    vec2 uv = ( gl_FragCoord.xy / resolution.xy ) * 2.0 - 1.0;\n    uv.x *= resolution.x / resolution.y;\n\n    float offset = voronoi(uv*10.0 + vec2(time));\n    float t = 1.0/abs(((uv.x + sin(uv.y + time)) + offset) * 30.0);\n\n    float r = voronoi( uv * 1.0 ) * 10.0;\n    vec3 finalColor = vec3(10.0 * uv.y, 2.0, 1.0 * r) * t;\n    \n    gl_FragColor = vec4(finalColor, 1.0 );\n}");
     protected final Minecraft mc;
     protected int width;
     protected int height;
@@ -221,18 +223,22 @@ public abstract class GuiSlot
 
     public void drawScreen(int mouseXIn, int mouseYIn, float p_148128_3_)
     {
+
         if (this.field_178041_q)
         {
             this.mouseX = mouseXIn;
             this.mouseY = mouseYIn;
-            this.drawBackground();
+            //this.drawBackground();
             int i = this.getScrollBarX();
             int j = i + 6;
             this.bindAmountScrolled();
-            GlStateManager.disableLighting();
-            GlStateManager.disableFog();
+
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+
+            /*
+            GlStateManager.disableLighting();
+            GlStateManager.disableFog();
             this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             float f = 32.0F;
@@ -242,24 +248,28 @@ public abstract class GuiSlot
             worldrenderer.pos((double)this.right, (double)this.top, 0.0D).tex((double)((float)this.right / f), (double)((float)(this.top + (int)this.amountScrolled) / f)).color(32, 32, 32, 255).endVertex();
             worldrenderer.pos((double)this.left, (double)this.top, 0.0D).tex((double)((float)this.left / f), (double)((float)(this.top + (int)this.amountScrolled) / f)).color(32, 32, 32, 255).endVertex();
             tessellator.draw();
+
+             */
             int k = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
             int l = this.top + 4 - (int)this.amountScrolled;
 
             if (this.hasListHeader)
             {
-                this.drawListHeader(k, l, tessellator);
+                //    this.drawListHeader(k, l, tessellator);
             }
 
             this.drawSelectionBox(k, l, mouseXIn, mouseYIn);
             GlStateManager.disableDepth();
             int i1 = 4;
-            this.overlayBackground(0, this.top, 255, 255);
-            this.overlayBackground(this.bottom, this.height, 255, 255);
+            //this.overlayBackground(0, this.top, 255, 255);
+            //this.overlayBackground(this.bottom, this.height, 255, 255);
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
             GlStateManager.disableAlpha();
             GlStateManager.shadeModel(7425);
             GlStateManager.disableTexture2D();
+
+            /*
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
             worldrenderer.pos((double)this.left, (double)(this.top + i1), 0.0D).tex(0.0D, 1.0D).color(0, 0, 0, 0).endVertex();
             worldrenderer.pos((double)this.right, (double)(this.top + i1), 0.0D).tex(1.0D, 1.0D).color(0, 0, 0, 0).endVertex();
@@ -272,6 +282,8 @@ public abstract class GuiSlot
             worldrenderer.pos((double)this.right, (double)(this.bottom - i1), 0.0D).tex(1.0D, 0.0D).color(0, 0, 0, 0).endVertex();
             worldrenderer.pos((double)this.left, (double)(this.bottom - i1), 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 0).endVertex();
             tessellator.draw();
+
+             */
             int j1 = this.func_148135_f();
 
             if (j1 > 0)
@@ -517,7 +529,11 @@ public abstract class GuiSlot
         this.left = leftIn;
         this.right = leftIn + this.width;
     }
-
+    public static void renderShader() {
+        shaderUtilLoader.renderFirst();
+        shaderUtilLoader.addDefaultUniforms();
+        shaderUtilLoader.renderSecond();
+    }
     public int getSlotHeight()
     {
         return this.slotHeight;

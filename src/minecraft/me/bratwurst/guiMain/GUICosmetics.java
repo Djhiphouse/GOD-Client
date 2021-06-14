@@ -21,7 +21,7 @@ public class GUICosmetics extends GuiScreen {
 
     public static ArrayList<String> ClosedPort = new ArrayList<>();
     public void initGui() {
-        this.buttonList.add(new GuiButton(202, this.width / 2 - 113, this.height / 6 + 150, I18n.format(EnumChatFormatting.GREEN +"START", new Object[0])));
+       // this.buttonList.add(new GuiButton(202, this.width / 2 - 113, this.height / 6 + 150, I18n.format(EnumChatFormatting.GREEN +"START", new Object[0])));
         this.buttonList.add(new GuiButton(200, this.width / 2 - 113, this.height / 6 + 180, I18n.format(EnumChatFormatting.RED +"BACK", new Object[0])));
 
 
@@ -53,7 +53,11 @@ public class GUICosmetics extends GuiScreen {
         drawRect(this.width / 9 - 15, this.height / 6 - 25, this.width - 50, this.height / 2 + this.height / 3, new Color(14, 14, 14, 79).getRGB());
         final String Logo = EnumChatFormatting.UNDERLINE + "" + EnumChatFormatting.RED + "Cosmetics " + Client.getInstance().CLIENT_VERSION;
 
-
+//        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/logo/HUT.png"));
+//        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+//
+//        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/logo/Flügel.png"));
+//        Gui.drawModalRectWithCustomSizedTexture(2, 2, 0, 0, this.width /2, this.height /2, this.width, this.height);
 
         DrawMenuLogoUtil.drawString(3, Logo, this.width / 8 -12, this.height / 20, Color.CYAN.getRGB());
 

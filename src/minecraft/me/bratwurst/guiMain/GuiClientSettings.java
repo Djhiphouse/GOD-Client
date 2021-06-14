@@ -37,7 +37,7 @@ public class GuiClientSettings extends GuiScreen {
 
         }
         if(button.id == 113){
-//            mc.displayGuiScreen(new GuiCosmetics());
+            mc.displayGuiScreen(new GUICosmetics());
         }
 
 

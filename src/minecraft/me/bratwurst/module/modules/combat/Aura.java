@@ -13,11 +13,15 @@ import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.World.Clientfriend;
 import me.bratwurst.utils.*;
 import me.bratwurst.utils.player.PlayerUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -31,7 +35,7 @@ public class Aura extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
     public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Criticalshits,
-            Throughwalls,AutoEz,AutoGG,correctMovement;
+            Throughwalls,AutoEz,AutoGG,correctMovement,AutoSword;
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
     public static float yaw;
@@ -62,6 +66,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(AutoGG = new Setting("AutoGG", this, false));
         Client.setmgr.rSetting(Criticalshits = new Setting("Criticalshits", this, true));
         Client.setmgr.rSetting(correctMovement = new Setting("correctMovement", this, false));
+        Client.setmgr.rSetting(AutoSword = new Setting("AutoSword", this, false));
 
     }
 
@@ -100,6 +105,9 @@ public static boolean Criticalshitsallow;
                                 Criticalshitsallow = false;
                             }
 
+                        }
+                        if (AutoSword.getValBoolean()) {
+                            settingAutoSword(target);
                         }
                         if (Criticalshits.getValBoolean()) {
                             if (target.getDistanceToEntity(mc.thePlayer) >= Range.getValInt()) {
@@ -244,7 +252,31 @@ public void CorrectMovment(EventMove event) {
             }
         }
     }
-
+ public void settingAutoSword(Entity e) {
+     if (e != mc.thePlayer && !FreundManager.getInstance().isFriend(e.getName()) && Client.getInstance().getModuleManager().getModuleByName("Aura").isEnabled()) {
+         if (e.getDistanceToEntity(mc.thePlayer) <= 5f) {
+             float damageModifier = 1;
+             int newItem = -1;
+             for(int slot = 0; slot < 9; slot++) {
+                 ItemStack stack = Minecraft.getMinecraft().thePlayer.inventory.mainInventory[slot];
+                 if(stack == null) {
+                     continue;
+                 }
+                 if(stack.getItem() instanceof ItemSword) {
+                     ItemSword is = (ItemSword)stack.getItem();
+                     float damage = is.getDamageVsEntity();
+                     if(damage > damageModifier) {
+                         newItem = slot;
+                         damageModifier = damage;
+                     }
+                 }
+                 if(newItem > -1) {
+                     Minecraft.getMinecraft().thePlayer.inventory.currentItem = newItem;
+                 }
+             }
+         }
+     }
+ }
     public static long randomClickDelay(double minCPS, double maxCPS) {
         return (long) ((Math.random() * (1000 / minCPS - 1000 / maxCPS + 1)) + 1000 / maxCPS);
     }
