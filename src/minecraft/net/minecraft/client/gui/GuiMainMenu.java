@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import me.bratwurst.AltManager.GuiAltManager;
 
+import me.bratwurst.Client;
 import me.bratwurst.guiMain.*;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import me.bratwurst.utils.DrawMenuLogoUtil;
@@ -147,11 +148,24 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
        this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
 
-        if (GuiClientSettings.shader == true){
+        if (GuiThemeMenu.shadetheme == true){
            renderShader();
-        }else if (GuiClientSettings.particle == true) {
+        }else if (GuiThemeMenu.normal == true) {
+            this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
+            Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+            DrawMenuLogoUtil.drawString(5, null, this.width / 12, this.height / 24, Color.CYAN.getRGB());
+        }else if (GuiThemeMenu.particle == true) {
             render();
-        }else if (GuiClientSettings.shader == false){
+            DrawMenuLogoUtil.drawString(5, null, this.width / 12, this.height / 24, Color.CYAN.getRGB());
+        } else if (GuiThemeMenu.old == true) {
+            this.mc.getTextureManager().bindTexture(new ResourceLocation("client/BackGround.jpg"));
+            Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+
+            DrawMenuLogoUtil.drawString(5, null, this.width / 12, this.height / 24, Color.CYAN.getRGB());
+        }else if (GuiThemeMenu.old2 == true) {
+            this.mc.getTextureManager().bindTexture(new ResourceLocation("client/Backhub.png"));
+            Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
+
             DrawMenuLogoUtil.drawString(5, null, this.width / 12, this.height / 24, Color.CYAN.getRGB());
         }
         GlStateManager.color(1, 1, 1);

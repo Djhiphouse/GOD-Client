@@ -22,6 +22,7 @@ public class GuiClientSettings extends GuiScreen {
 
         this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("MenuEffect")));
         this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("Cosmetics")));
+        this.buttonList.add(new GuiButton(177, this.width / 2 - 155 , this.height / 6 + 48 +24 - 6, 150, 20, I18n.format("Themes")));
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done", new Object[0])));
 
 
@@ -37,9 +38,11 @@ public class GuiClientSettings extends GuiScreen {
 
         }
         if(button.id == 113){
-//            mc.displayGuiScreen(new GuiCosmetics());
+            mc.displayGuiScreen(new GUICosmetics());
         }
-
+        if(button.id == 177){
+            mc.displayGuiScreen(new GuiThemeMenu());
+        }
 
     }
 
