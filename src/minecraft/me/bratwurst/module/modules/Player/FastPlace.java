@@ -7,6 +7,7 @@ import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,12 +21,12 @@ public class FastPlace extends Module {
         options.add("Mineplex");
         options.add("Hypixel");
         options.add("Normal");
-        Client.setmgr.rSetting(mode1 = new Setting("FastPlace Mode", this, "Normal", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED +"FastPlace Mode", this, "Normal", options));
     }
     @Override
     public void setup() {
-        Client.setmgr.rSetting(BypassHypixel = new Setting("HypixelBypass", this, true));
-        Client.setmgr.rSetting(Delay = new Setting("Delay", this, 0, 0, 3, true));
+        Client.setmgr.rSetting(BypassHypixel = new Setting(EnumChatFormatting.AQUA +"HypixelBypass", this, true));
+        Client.setmgr.rSetting(Delay = new Setting(EnumChatFormatting.AQUA +"Delay", this, 0, 0, 3, true));
 
     }
 

@@ -4,7 +4,7 @@ import me.bratwurst.Client;
 import me.bratwurst.cosmetics.profile.DragonWingsProfile;
 import me.bratwurst.module.Commands.CosmeticsCommand;
 import me.bratwurst.utils.ColorUtil;
-import me.bratwurst.utils.ColorUtils;
+;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;

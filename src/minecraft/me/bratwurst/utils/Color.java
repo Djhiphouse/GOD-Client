@@ -2,6 +2,9 @@ package me.bratwurst.utils;
 
 public class Color {
 
+    public Color(int i, int i1, int i2, int i3) {
+    }
+
     public static java.awt.Color rainbow(float speed, float off) {
 
         double time = (double) System.currentTimeMillis() / speed;

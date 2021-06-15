@@ -9,6 +9,7 @@ import me.bratwurst.module.Module;
 import me.bratwurst.utils.TimeHelper;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerChest;
+import net.minecraft.util.EnumChatFormatting;
 
 public class Chesteal extends Module {
     public static Setting mode1;
@@ -20,13 +21,14 @@ public class Chesteal extends Module {
 
     @Override
     public void setup() {
-       Client.setmgr.rSetting(Delay = new Setting("Delay", this, 50, 1, 400, true));
-        Client.setmgr.rSetting(AutoClose = new Setting("AutoClose", this, true));
+       Client.setmgr.rSetting(Delay = new Setting(EnumChatFormatting.AQUA +"Delay", this, 50, 1, 400, true));
+        Client.setmgr.rSetting(AutoClose = new Setting(EnumChatFormatting.YELLOW +"AutoClose", this, true));
 
     }
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
+        this.setDisplayname(EnumChatFormatting.RED + " - Delay: " + Delay.getValInt());
         Chest();
 
     }

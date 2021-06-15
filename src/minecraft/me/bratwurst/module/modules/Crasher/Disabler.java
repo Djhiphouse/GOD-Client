@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
+import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.util.ArrayList;
@@ -44,21 +45,24 @@ public class Disabler extends Module {
         options.add("Redesky");
         options.add("Hypixelold");
 
-        Client.instance.setmgr.rSetting(new Setting("Disable Anticheat", this, "Slide", options));
+        Client.instance.setmgr.rSetting(new Setting(EnumChatFormatting.RED +"Disable Anticheat", this, "Slide", options));
     }
 
     @EventTarget
     public void onUpdate(ProcessPacketEvent e) {
         if (mode1.getValString().equalsIgnoreCase("Ghostlie.live")) {
             ghostlie();
+            this.setDisplayname(EnumChatFormatting.RED + " - Ghostlie");
 
         } else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
             Watchdog();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Hypixel");
         } else if (mode1.getValString().equalsIgnoreCase("Replaysucht")) {
          Replaysucht();
+            this.setDisplayname(EnumChatFormatting.RED + " - Replaysucht");
         }else if (mode1.getValString().equalsIgnoreCase("Hypixelold")) {
             Hypixelold(e);
+            this.setDisplayname(EnumChatFormatting.RED + " - Hypixelold");
         }
     }
 

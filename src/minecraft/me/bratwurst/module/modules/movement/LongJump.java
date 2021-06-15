@@ -95,18 +95,18 @@ public class LongJump extends Module {
 
 
 
-        Client.setmgr.rSetting(mode1 = new Setting("LongJump Mode", this, "Mccentral", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "LongJump Mode", this, "Mccentral", options));
     }
 
 
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Nofall = new Setting("Nofall", this, true));
-        Client.setmgr.rSetting(off = new Setting("off", this, true));
-        Client.setmgr.rSetting(Glide = new Setting("Glide", this, true));
-        Client.setmgr.rSetting(boost = new Setting("boost", this, 2, 1, 5, false));
-        Client.setmgr.rSetting(Ticks = new Setting("Ticks", this, 35, 10, 100, true));
+        Client.setmgr.rSetting(Nofall = new Setting(EnumChatFormatting.AQUA + "Nofall", this, true));
+        Client.setmgr.rSetting(off = new Setting(EnumChatFormatting.AQUA +"off", this, true));
+        Client.setmgr.rSetting(Glide = new Setting(EnumChatFormatting.AQUA +"Glide", this, true));
+        Client.setmgr.rSetting(boost = new Setting(EnumChatFormatting.AQUA +"boost", this, 2, 1, 5, false));
+        Client.setmgr.rSetting(Ticks = new Setting(EnumChatFormatting.AQUA +"Ticks", this, 35, 10, 100, true));
     }
 
     public static int state = 0;
@@ -115,25 +115,34 @@ public class LongJump extends Module {
     public void onUpdate(EventMotionUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Bettermccentral")) {
             BetterMccentral();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Bettermccentral");
         } else if (mode1.getValString().equalsIgnoreCase("Redesky")) {
             Redesky();
+            this.setDisplayname(EnumChatFormatting.RED + " - Redesky");
         } else if (mode1.getValString().equalsIgnoreCase("Damage")) {
             Schadenundfly();
+            this.setDisplayname(EnumChatFormatting.RED + " - Damage");
         }else if (mode1.getValString().equalsIgnoreCase("OLDNCP")) {
             NCP();
+            this.setDisplayname(EnumChatFormatting.RED + " - OLDNCP");
         }else if (mode1.getValString().equalsIgnoreCase("Custom")) {
             Custom();
+            this.setDisplayname(EnumChatFormatting.RED + " - Custom");
         }else if (mode1.getValString().equalsIgnoreCase("OldCubecraft")) {
             oldCubecraft();
+            this.setDisplayname(EnumChatFormatting.RED + " - OldCubecraft");
         }else if (mode1.getValString().equalsIgnoreCase("Spartan")) {
             Guardian();
+            this.setDisplayname(EnumChatFormatting.RED + " - Spartan");
         }else if (mode1.getValString().equalsIgnoreCase("Test")) {
             Test();
+            this.setDisplayname(EnumChatFormatting.RED + " - Test");
         }else if (mode1.getValString().equalsIgnoreCase("badRedesky")) {
             newredesky();
+            this.setDisplayname(EnumChatFormatting.RED + " - badRedesky");
         }else if (mode1.getValString().equalsIgnoreCase("FastRedesky")) {
             FastRedesky(Ticks.getValInt());
+            this.setDisplayname(EnumChatFormatting.RED + " - FastRedesky");
         }
 
 

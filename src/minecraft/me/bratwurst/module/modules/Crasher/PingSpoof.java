@@ -9,6 +9,7 @@ import me.bratwurst.manager.TimeHelper;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
+import net.minecraft.util.EnumChatFormatting;
 
 public class PingSpoof extends Module {
     public Setting Ping;
@@ -21,13 +22,13 @@ public class PingSpoof extends Module {
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Ping = new Setting("Ping:", this, 800, 1, 2000, true));
+        Client.setmgr.rSetting(Ping = new Setting(EnumChatFormatting.AQUA +"Ping:", this, 800, 1, 2000, true));
 
     }
 
     @EventTarget
     public void ProcessPacketEvent(ProcessPacketEvent e) {
-
+   this.setDisplayname(EnumChatFormatting.RED + " - Ping: " + Ping.getValInt());
 
         if (e.getPacket() instanceof C00PacketKeepAlive) {
 

@@ -3,6 +3,7 @@ package de.Hero.settings;
 import java.util.ArrayList;
 
 import me.bratwurst.module.Module;
+import net.minecraft.util.EnumChatFormatting;
 
 
 /**
@@ -31,7 +32,7 @@ public class Setting {
 
 
     public Setting(String name, Module parent, String sval, ArrayList<String> options) {
-        this.name = name;
+        this.name =  name;
         this.parent = parent;
         this.sval = sval;
         this.options = options;

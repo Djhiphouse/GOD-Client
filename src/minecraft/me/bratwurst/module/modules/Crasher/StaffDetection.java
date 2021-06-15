@@ -11,6 +11,7 @@ import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,32 +34,26 @@ public class StaffDetection extends Module {
         options.add("Mush");
         options.add("mccentral");
         options.add("Rededark");
-        Client.setmgr.rSetting(mode1 = new Setting("Server", this, "Neruxvace", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED +"Server", this, "Neruxvace", options));
     }
 
     @Override
     public void setup() {
-        Client.setmgr.rSetting(AutoPanic = new Setting("AutoPanic", this, false));
-        Client.setmgr.rSetting(AutoLeave = new Setting("AutoLeave", this, false));
+        Client.setmgr.rSetting(AutoPanic = new Setting(EnumChatFormatting.AQUA +"AutoPanic", this, false));
+        Client.setmgr.rSetting(AutoLeave = new Setting(EnumChatFormatting.AQUA +"AutoLeave", this, false));
     }
 
     @EventTarget
     public void onUpdate(EventUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Neruxvace")) {
             Neruxvace();
-        }
-          /*
-        else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
-            Mineplex();
-        }else if (mode1.getValString().equalsIgnoreCase("Mush")) {
+            this.setDisplayname(EnumChatFormatting.RED + " - Neruxvace");
+        } else if (mode1.getValString().equalsIgnoreCase("Mush")) {
             Mush();
-        }else if (mode1.getValString().equalsIgnoreCase("mccentral")) {
-            Mccentral();
-        }else if (mode1.getValString().equalsIgnoreCase("Rededark")) {
-            Rededark();
+            this.setDisplayname(EnumChatFormatting.RED + " - Mush");
         }
-          /*
-           */
+
+
     }
 
     public void Neruxvace() {
@@ -124,7 +119,7 @@ public class StaffDetection extends Module {
             }
         }
     }
-/*
+
     public void Mineplex() {
         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
@@ -159,59 +154,44 @@ public class StaffDetection extends Module {
                 }
             }
         }
-      */
-    }
-  /*
-    public void Mccentral() {
-        for (Entity e : mc.theWorld.loadedEntityList) {
-            if (e instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) e;
-                switch (player.getName()) {
-                    //hier die namen rein bzw: case "Bratwurst001":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-
-
-                        if (TimeHelper.hasReached(2000)) {
-                            PlayerUtils.sendMessage(EnumChatFormatting.DARK_RED + "Supporter wurde erkannt");
-                            if (AutoLeave.getValBoolean()) {
-                                mc.thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage("/leave"));
-                            }
-                            if (AutoPanic.getValBoolean()) {
-                                for (Module m : Client.moduleManager.getEnabledModules()) {
-                                    if (!m.getName().equalsIgnoreCase("StaffDetection")) {
-                                        m.toggle();
-                                    }
-
-                                }
-
-
-                            }
-                            TimeHelper.reset();
-                        }
-                        break;
-                }
-            }
-        }
-
-
 
     }
-/*
+
+
     public void Mush() {
         for (Entity e : mc.theWorld.loadedEntityList) {
             if (e instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) e;
                 switch (player.getName()) {
                     //hier die namen rein bzw: case "Bratwurst001":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
+                    case "TheGlockz":
+                    case "Trial":
+                    case "mathy9":
+                    case "NannoFromNowhere":
+                    case "zStrikee":
+                    case "Zaard":
+                    case "WksS":
+                    case "todeee":
+                    case "thiagodropa":
+                    case "staay":
+                    case "Repy_":
+                    case "nolanzinhuu":
+                    case "mxthsz_":
+                    case "MatheusBat":
+                    case "Jvfmjamba":
+                    case "sevenho":
+                    case "goltz":
+                    case "Anjeel":
+                    case "angel_try":
+                    case "WGBrasil":
+                    case "Start_":
+                    case "Poderosoftw":
+                    case "mariaum":
+                    case "KuroNoDensetsu":
+                    case "ISlowneR":
+                    case "FEIJAOO":
+                    case "Feelipee":
+
 
 
                         if (TimeHelper.hasReached(2000)) {
@@ -222,6 +202,7 @@ public class StaffDetection extends Module {
                             if (AutoPanic.getValBoolean()) {
                                 for (Module m : Client.moduleManager.getEnabledModules()) {
                                     if (!m.getName().equalsIgnoreCase("StaffDetection")) {
+
                                         m.toggle();
                                     }
 
@@ -237,42 +218,7 @@ public class StaffDetection extends Module {
         }
 
     }
-/*
-    public void Rededark() {
-        for (Entity e : mc.theWorld.loadedEntityList) {
-            if (e instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) e;
-                switch (player.getName()) {
-                    //hier die namen rein bzw: case "Bratwurst001":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
 
 
-                        if (TimeHelper.hasReached(2000)) {
-                            PlayerUtils.sendMessage(EnumChatFormatting.DARK_RED + "Supporter wurde erkannt");
-                            if (AutoLeave.getValBoolean()) {
-                                mc.thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage("/leave"));
-                            }
-                            if (AutoPanic.getValBoolean()) {
-                                for (Module m : Client.moduleManager.getEnabledModules()) {
-                                    if (!m.getName().equalsIgnoreCase("StaffDetection")) {
-                                        m.toggle();
-                                    }
-
-                                }
-
-
-                            }
-                            TimeHelper.reset();
-                        }
-                        break;
-                }
-            }
-        }
-    }
-
- */
+}
 

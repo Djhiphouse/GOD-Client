@@ -28,7 +28,7 @@ public class AntiBot extends Module {
         options.add("Mineplex");
         options.add("Timolia");
         options.add("Jartex");
-        Client.setmgr.rSetting(mode1 = new Setting("AntiBot Mode", this, "Checks", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.AQUA + "AntiBot Mode", this, "Checks", options));
     }
 
     @EventTarget
@@ -38,12 +38,16 @@ public class AntiBot extends Module {
                 if (bot != mc.thePlayer && bot != null) {
                     if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
                         legit((EntityPlayer) bot);
+                        this.setDisplayname(EnumChatFormatting.YELLOW + " - Mineplex");
                     } else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
                         Hypixel((EntityPlayer) bot);
+                        this.setDisplayname(EnumChatFormatting.RED + " - Hypixel");
                     } else if (mode1.getValString().equalsIgnoreCase("Timolia")) {
                         Timolia((EntityPlayer) bot);
+                        this.setDisplayname(EnumChatFormatting.BLUE + " - Timolia");
                     } else if (mode1.getValString().equalsIgnoreCase("Jartex")) {
                         Jartex((EntityPlayer) bot);
+                        this.setDisplayname(EnumChatFormatting.AQUA + " - Jartex");
                     }
 
                 }

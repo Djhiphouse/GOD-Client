@@ -11,6 +11,7 @@ import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C01PacketChatMessage;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,14 +29,14 @@ public class Griefergamesspam extends Module {
         options.add("Tpsfalle");
         options.add("Geld-Gammler");
         options.add("Msg-Spammer");
-        Client.setmgr.rSetting(mode1 = new Setting("SpamMode Mode", this, "Fakemoney", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED +"SpamMode Mode", this, "Fakemoney", options));
 
     }
 
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Delay = new Setting("Delay", this, 1300, 400, 2250, true));
+        Client.setmgr.rSetting(Delay = new Setting(EnumChatFormatting.AQUA +"Delay", this, 1300, 400, 2250, true));
 
     }
 

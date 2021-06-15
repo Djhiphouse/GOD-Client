@@ -2,9 +2,7 @@ package me.bratwurst.module.modules.combat;
 
 import de.Hero.settings.Setting;
 import me.bratwurst.Client;
-import me.bratwurst.event.Event;
 import me.bratwurst.event.EventTarget;
-import me.bratwurst.event.events.Event2D;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.event.events.EventMove;
 import me.bratwurst.manager.FreundManager;
@@ -14,9 +12,6 @@ import me.bratwurst.module.modules.World.Clientfriend;
 import me.bratwurst.utils.*;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,18 +19,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Aura extends Module {
-    public static Setting mode1;
+    public static Setting Rotations;
+    public static Setting Movementbo;
+    public static Setting Fightbo;
+    public static Setting otherbo;
     public static EntityLivingBase target1;
-    public static Setting minCps, maxCps, Range, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth,Criticalshits,
-            Throughwalls,AutoEz,AutoGG,correctMovement,AutoSword;
+    public static Setting minCps, maxCps, Range,  Criticalshits,
+            Throughwalls,  AutoSword;
+    private ArrayList<Entity> Switchtarget = new ArrayList<>();
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
     public static float yaw;
@@ -46,43 +42,71 @@ public class Aura extends Module {
 
     public Aura() {
         super("Aura", Category.COMBAT);
+        ArrayList<String> options = new ArrayList<>();
+        Client.setmgr.rSetting(Rotations = new Setting(EnumChatFormatting.RED + "Rotation options", this, "FailHits", options));
+        options.add("FailHits");
+        options.add("NoRotate");
+        options.add("Switch");
+        options.add("Smothrotate");
+        options.add("Rotate++");
+        ArrayList<String> Movement = new ArrayList<>();
+        Client.setmgr.rSetting(Movementbo = new Setting(EnumChatFormatting.RED + "Movement options", this, "NormalMove", Movement));
+        Movement.add("correctMovement");
+        Movement.add("MovefixNormal");
+
+        ArrayList<String> Fight = new ArrayList<>();
+        Client.setmgr.rSetting(Fightbo = new Setting(EnumChatFormatting.RED + "Fight options", this, "Normal", Fight));
+        Fight.add("AutoBlock");
+        Fight.add("LegitAutoBlock");
+        Fight.add("Normal");
+        ArrayList<String> other = new ArrayList<>();
+        Client.setmgr.rSetting(otherbo = new Setting(EnumChatFormatting.RED + "other options", this, "AutoGG", other));
+        other.add("AutoEz");
+        other.add("AutoGG");
 
     }
 
     @Override
     public void setup() {
-        Client.setmgr.rSetting(minCps = new Setting("MinCPS", this, 8, 1, 20, false));
-        Client.setmgr.rSetting(maxCps = new Setting("MaxCPS", this, 8, 1, 20, false));
-        Client.setmgr.rSetting(Range = new Setting("Range", this, 3.8, 1, 8, false));
-        Client.setmgr.rSetting(FailHits = new Setting("FailHits", this, false));
-        Client.setmgr.rSetting(AutoBlock = new Setting("AutoBlock", this, false));
-        Client.setmgr.rSetting(NoRotate = new Setting("NoRotate", this, false));
-        Client.setmgr.rSetting(Movefix = new Setting("Movefix", this, false));
-        Client.setmgr.rSetting(Rotate = new Setting("Rotate++", this, false));
-        Client.setmgr.rSetting(LegitAutoBlock = new Setting("LegitAutoBlock", this, false));
-        Client.setmgr.rSetting(Smoth = new Setting("Smothrotate", this, false));
-        Client.setmgr.rSetting(Throughwalls = new Setting("Throughwalls", this, false));
-        Client.setmgr.rSetting(AutoEz = new Setting("AutoEz", this, false));
-        Client.setmgr.rSetting(AutoGG = new Setting("AutoGG", this, false));
-        Client.setmgr.rSetting(Criticalshits = new Setting("Criticalshits", this, true));
-        Client.setmgr.rSetting(correctMovement = new Setting("correctMovement", this, false));
-        Client.setmgr.rSetting(AutoSword = new Setting("AutoSword", this, false));
+        Client.setmgr.rSetting(minCps = new Setting(EnumChatFormatting.AQUA + "MinCPS", this, 8, 1, 20, false));
+        Client.setmgr.rSetting(maxCps = new Setting(EnumChatFormatting.AQUA + "MaxCPS", this, 8, 1, 20, false));
+        Client.setmgr.rSetting(Range = new Setting(EnumChatFormatting.AQUA + "Range", this, 3.8, 1, 8, false));
+
+
+        Client.setmgr.rSetting(Throughwalls = new Setting(EnumChatFormatting.AQUA + "Throughwalls", this, false));
+
+        Client.setmgr.rSetting(Criticalshits = new Setting(EnumChatFormatting.AQUA + "Criticalshits", this, true));
+
+        Client.setmgr.rSetting(AutoSword = new Setting(EnumChatFormatting.AQUA + "AutoSword", this, false));
+
 
     }
 
     //  public boolean MoveFix = true;
     public static int Groundticks = 0;
     public static int Airticks = 0;
-public static boolean Criticalshitsallow;
+    public static boolean Criticalshitsallow;
+
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
+
+        if (Rotations.getValString().equalsIgnoreCase("FailHits")) {
+            this.setDisplayname(EnumChatFormatting.AQUA + " - FailHits");
+        } else {
+            if (Rotations.getValString().equalsIgnoreCase("Switch")) {
+                this.setDisplayname(EnumChatFormatting.AQUA + " - Switch");
+            } else {
+                this.setDisplayname("");
+            }
+        }
+
         for (Object o : mc.theWorld.loadedEntityList) {
             if (o instanceof EntityPlayer) {
                 EntityPlayer target = (EntityPlayer) o;
                 if (target != mc.thePlayer && target != null) {
                     String tname = target.getName();
                     if (target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()
-                            && !FreundManager.getInstance().isFriend(tname) && target instanceof EntityPlayer && target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble() && target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname)) {
+                            && !FreundManager.getInstance().isFriend(tname) && target instanceof EntityPlayer && target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble() && target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) && !Client.getInstance().getModuleManager().getModuleByName("Scaffold").isEnabled()) {
                         String TargetName = target.getName();
                         String UUIId = target.getUniqueID().toString();
 
@@ -114,39 +138,47 @@ public static boolean Criticalshitsallow;
                                 Criticalshitsallow = false;
                             }
                         }
-                            //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
-                            //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
+                        //     PlayerUtils.sendMessage(EnumChatFormatting.AQUA+ "--------------------------------------------------------------------------------------------------------------------");
+                        //   PlayerUtils.sendMessage("UUid: " + target1.getUniqueID().toString() + "Name: " + target1.getName() +  " Coustumname: " + target1.getCustomNameTag() + " Groundticks:  " + Groundticks + " Airticks: " + Airticks + " Ticksexited: " + target1.ticksExisted + " leben: " + target1.getHealth() + " Inventotysize: " + target1.getInventory().length + " falldistance: " + target1.fallDistance);
 
 
-                            if (Rotate.getValBoolean()) {
-                                float[] rotate = Aacrotate((EntityPlayer) target1);
-                                yaw = rotate[0];
-                                pitch = rotate[1];
-                                mc.thePlayer.rotationYawHead = rotate[0];
-                                mc.thePlayer.rotationYaw = yaw;
-                                mc.thePlayer.rotationPitchHead = pitch;
-                                mc.thePlayer.rotationPitch = pitch;
+                        if (Rotations.getValString().equalsIgnoreCase("Rotate++")) {
+                            float[] rotate = Aacrotate((EntityPlayer) target1);
+                            yaw = rotate[0];
+                            pitch = rotate[1];
+                            mc.thePlayer.rotationYawHead = rotate[0];
+                            mc.thePlayer.rotationYaw = yaw;
+                            mc.thePlayer.rotationPitchHead = pitch;
+                            mc.thePlayer.rotationPitch = pitch;
+                        }
+                        if (target.isDead && target.ticksExisted > 20 && otherbo.getValString().equalsIgnoreCase("AutoGG")) {
+                            if (TimeHelper.hasReached(50)) {
+                                PlayerUtil.SendPacketchat("GG");
+                                TimeHelper.reset();
                             }
-                            if (target.isDead && target.ticksExisted > 20 && AutoGG.getValBoolean()) {
-                                if (TimeHelper.hasReached(50)){
-                                    PlayerUtil.SendPacketchat("GG");
-                                    TimeHelper.reset();
-                                }
-                            }
-                        if (target.isDead && target.ticksExisted > 20 && AutoEz.getValBoolean()) {
-                            if (TimeHelper.hasReached(50)){
+                        }
+                        if (target.isDead && target.ticksExisted > 20 && otherbo.getValString().equalsIgnoreCase("AutoEz")) {
+                            if (TimeHelper.hasReached(50)) {
                                 PlayerUtil.SendPacketchat("EZ Kill");
                                 TimeHelper.reset();
                             }
 
                         }
-                        if (FailHits.getValBoolean()) {
+                        if (Rotations.getValString().equalsIgnoreCase("Rotate++")) {
                             Attack(target, e);
                         }
-                        if (AutoBlock.getValBoolean()) {
+                        if (Rotations.getValString().equalsIgnoreCase("FailHits")) {
+                            Attack(target, e);
+
+                        }
+                        if (Rotations.getValString().equalsIgnoreCase("Switch")) {
+
+                            Attack(target, e);
+                        }
+                        if (Fightbo.getValString().equalsIgnoreCase("AutoBlock")) {
                             autoB();
                         }
-                        if (LegitAutoBlock.getValBoolean()) {
+                        if (Fightbo.getValString().equalsIgnoreCase("LegitAutoBlock")) {
                             if (mc.thePlayer.isUsingItem() && bocking) {
                                 bocking = false;
                             }
@@ -176,7 +208,7 @@ public static boolean Criticalshitsallow;
         }
 
 
-        if (NoRotate.getValBoolean()) {
+        if (Rotations.getValString().equalsIgnoreCase("NoRotate")) {
             if (TimeHelper.hasPassed(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
                 Attack = true;
                 mc.playerController.attackEntity(mc.thePlayer, entity);
@@ -214,21 +246,22 @@ public static boolean Criticalshitsallow;
         }
         Attack = false;
     }
-@EventTarget
-public void CorrectMovment(EventMove event) {
 
-        if (correctMovement.getValBoolean() && target1 != null && target1.getDistanceToEntity(mc.thePlayer) <= 2){
-            StrafeUtil.customSilentMoveFlying(event,yaw);
+    @EventTarget
+    public void CorrectMovment(EventMove event) {
+
+        if (Movementbo.getValString().equalsIgnoreCase("correctMovement") && target1 != null && target1.getDistanceToEntity(mc.thePlayer) <= 2) {
+            StrafeUtil.customSilentMoveFlying(event, yaw);
             event.setCancelled(true);
             flagged = true;
         } else {
             flagged = false;
         }
-}
+    }
 
     @EventTarget
     public void moveEvent(EventMove event) {
-        if (Movefix.getValBoolean() && target1 != null && target1.getDistanceToEntity(mc.thePlayer) >= 1.5F) {
+        if (Movementbo.getValString().equalsIgnoreCase("NormalMove") && target1 != null && target1.getDistanceToEntity(mc.thePlayer) >= 1.5F) {
             float f = event.getStrafe() * event.getStrafe() + event.getForward() * event.getForward();
 
             if (f >= 1.0E-4F) {
@@ -252,31 +285,33 @@ public void CorrectMovment(EventMove event) {
             }
         }
     }
- public void settingAutoSword(Entity e) {
-     if (e != mc.thePlayer && !FreundManager.getInstance().isFriend(e.getName()) && Client.getInstance().getModuleManager().getModuleByName("Aura").isEnabled()) {
-         if (e.getDistanceToEntity(mc.thePlayer) <= 5f) {
-             float damageModifier = 1;
-             int newItem = -1;
-             for(int slot = 0; slot < 9; slot++) {
-                 ItemStack stack = Minecraft.getMinecraft().thePlayer.inventory.mainInventory[slot];
-                 if(stack == null) {
-                     continue;
-                 }
-                 if(stack.getItem() instanceof ItemSword) {
-                     ItemSword is = (ItemSword)stack.getItem();
-                     float damage = is.getDamageVsEntity();
-                     if(damage > damageModifier) {
-                         newItem = slot;
-                         damageModifier = damage;
-                     }
-                 }
-                 if(newItem > -1) {
-                     Minecraft.getMinecraft().thePlayer.inventory.currentItem = newItem;
-                 }
-             }
-         }
-     }
- }
+
+    public void settingAutoSword(Entity e) {
+        if (e != mc.thePlayer && !FreundManager.getInstance().isFriend(e.getName()) && Client.getInstance().getModuleManager().getModuleByName("Aura").isEnabled()) {
+            if (e.getDistanceToEntity(mc.thePlayer) <= 5f) {
+                float damageModifier = 1;
+                int newItem = -1;
+                for (int slot = 0; slot < 9; slot++) {
+                    ItemStack stack = Minecraft.getMinecraft().thePlayer.inventory.mainInventory[slot];
+                    if (stack == null) {
+                        continue;
+                    }
+                    if (stack.getItem() instanceof ItemSword) {
+                        ItemSword is = (ItemSword) stack.getItem();
+                        float damage = is.getDamageVsEntity();
+                        if (damage > damageModifier) {
+                            newItem = slot;
+                            damageModifier = damage;
+                        }
+                    }
+                    if (newItem > -1) {
+                        Minecraft.getMinecraft().thePlayer.inventory.currentItem = newItem;
+                    }
+                }
+            }
+        }
+    }
+
     public static long randomClickDelay(double minCPS, double maxCPS) {
         return (long) ((Math.random() * (1000 / minCPS - 1000 / maxCPS + 1)) + 1000 / maxCPS);
     }
@@ -387,30 +422,8 @@ public void CorrectMovment(EventMove event) {
 
 */
 
-/*
-  @EventTarget
-    public  void onMoveFix(EventMove eventMove) {
-        float strafe = eventMove.getStrafe();
-        float forward = eventMove.getForward();
-        float friction = eventMove.getFriction();
-        float f = strafe * strafe + forward * forward;
-        if (f >= 1.0E-4F) {
-            f = MathHelper.sqrt_float(f);
 
-            if (f < 1.0F) {
-                f = 1.0F;
-            }
-            f = friction / f;
-            strafe = strafe * f;
-            forward = forward * f;
-            float f1 = MathHelper.sin(Aura.yaw * (float) Math.PI / 180.0F);
-            float f2 = MathHelper.cos(Aura.yaw * (float) Math.PI / 180.0F);
-            mc.thePlayer.motionX += (double) (strafe * f2 - forward * f1);
-            mc.thePlayer.motionZ += (double) (forward * f2 + strafe * f1);
-        }
-        e.setCancelled(true);
-    }
-*/
+
 
     public static boolean Spin = false;
     public static double legitrote = 180;
@@ -432,10 +445,10 @@ public void CorrectMovment(EventMove event) {
         pitch = f1;
 
 
-        if (FailHits.getValBoolean()) {
+        if (Rotations.getValString().equalsIgnoreCase("FailHits")) {
 
 
-            return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw+ randomrotate(-3000, 90), 180f),
+            return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw + randomrotate(-3000, 90), 180f),
                     updateRotation(mc.thePlayer.rotationPitch, pitch + randomrotate(-300, 9000), 180f)};
         } else {
             return new float[]{updateRotation(mc.thePlayer.rotationYaw, yaw + 1 / 2, 180f),

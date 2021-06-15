@@ -12,11 +12,13 @@ import net.minecraft.block.BlockAir;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 
 public class nuker extends Module {
     public Setting Bypass, Range, mccSpeed, Speeddown, InfiniteFly;
     public static Setting mode1;
+    public int Rangeradius;
     public nuker() {
         super("ClickNuker", Category.EXPLOIT);
     }
@@ -29,9 +31,11 @@ public class nuker extends Module {
     @EventTarget
 
     public void onUpdate(EventUpdate event) {
+        this.setDisplayname(EnumChatFormatting.RED + " - Radius: " + Rangeradius);
         if (Minecraft.getMinecraft().theWorld != null && event.state == EventState.POST &&  mc.gameSettings.keyBindAttack.isKeyDown()) {
             int range = Range.getValInt();
             byte radius = (byte) range;
+            range = Rangeradius;
 
             for(int y = 3; y >= -radius; --y) {
                 for(int x = -radius; x <= radius; ++x) {

@@ -12,6 +12,7 @@ import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 
 public class TriggerBot extends Module {
@@ -27,15 +28,15 @@ public class TriggerBot extends Module {
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Range = new Setting("Range", this, 3.8, 1, 5, false));
-        Client.setmgr.rSetting(Delay = new Setting("Delay", this, 5, 1, 500, true));
+        Client.setmgr.rSetting(Range = new Setting(EnumChatFormatting.AQUA + "Range", this, 3.8, 1, 5, false));
+        Client.setmgr.rSetting(Delay = new Setting(EnumChatFormatting.AQUA + "Delay", this, 5, 1, 500, true));
 
 
     }
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
-
+       this.setDisplayname(EnumChatFormatting.RED + " - R: " + Range.getValDouble() + " D: " + Delay.getValInt());
         if (mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mc.objectMouseOver.entityHit instanceof EntityPlayer) {
             if (mc.objectMouseOver.entityHit.getDistanceToEntity(mc.thePlayer) <= Range.getValInt() && TimeHelper.hasReached(Delay.getValInt())) {
                 mc.clickMouse();

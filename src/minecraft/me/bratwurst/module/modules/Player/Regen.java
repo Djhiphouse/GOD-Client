@@ -10,6 +10,7 @@ import me.bratwurst.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 
@@ -24,24 +25,28 @@ public class Regen extends Module {
         options.add("Normal");
         options.add("Packet");
         options.add("Burst");
-        Client.setmgr.rSetting(mode1 = new Setting("Regen Mode", this, "Normal", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED +"Regen Mode", this, "Normal", options));
     }
 
     @Override
     public void setup() {
-        Client.setmgr.rSetting(Packets = new Setting("Packets:", this, 10, 1, 25, true));
+        Client.setmgr.rSetting(Packets = new Setting(EnumChatFormatting.AQUA +"Packets:", this, 10, 1, 25, true));
     }
 
     int packets = 3;
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
+
         if (mode1.getValString().equalsIgnoreCase("Packet")) {
             packetRegen(Packets.getValInt());
+            this.setDisplayname(EnumChatFormatting.RED + " - Packet");
         } else if (mode1.getValString().equalsIgnoreCase("Normal")) {
             Normal();
+            this.setDisplayname(EnumChatFormatting.RED + " - Normal");
         }else if (mode1.getValString().equalsIgnoreCase("Burst")) {
             Burst(Packets.getValInt());
+            this.setDisplayname(EnumChatFormatting.RED + " - Burst");
         }
 
 

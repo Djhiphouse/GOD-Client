@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 
@@ -26,9 +27,9 @@ public class ChestAura extends Module {
     }
     @Override
     public void setup() {
-        Client.setmgr.rSetting(range = new Setting("Range", this, 4, 1, 6, false));
+        Client.setmgr.rSetting(range = new Setting(EnumChatFormatting.AQUA +"Range", this, 4, 1, 6, false));
 
-        Client.setmgr.rSetting(delay = new Setting("Delay", this, true));
+        Client.setmgr.rSetting(delay = new Setting(EnumChatFormatting.AQUA +"Delay", this, true));
 
     }
 
@@ -38,6 +39,7 @@ public class ChestAura extends Module {
 
     @EventTarget
     public void onUpdate(EventUpdate event) {
+ this.setDisplayname(EnumChatFormatting.RED + " - R: "+range.getValInt());
         if(mc.thePlayer != null && mc.theWorld != null){
             if(!mc.thePlayer.isUsingItem() && !(mc.currentScreen instanceof GuiInventory)){
                 if(openNext != null){

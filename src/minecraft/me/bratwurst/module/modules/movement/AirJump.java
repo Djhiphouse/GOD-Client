@@ -8,6 +8,7 @@ import me.bratwurst.manager.TimeHelper;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 
@@ -21,14 +22,16 @@ public class AirJump extends Module {
 
 
 
-        Client.setmgr.rSetting(mode1 = new Setting("AirJump Mode", this, "Mccentral", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED +"AirJump Mode", this, "Mccentral", options));
     }
     @EventTarget
     public void onUpdate(EventUpdate e) {
         if (mode1.getValString().equalsIgnoreCase("Jump")) {
             Jump();
+            this.setDisplayname(EnumChatFormatting.RED + " - Jump");
         }else if (mode1.getValString().equalsIgnoreCase("Motion")) {
             Motion();
+            this.setDisplayname(EnumChatFormatting.RED + " - Motion");
         }
     }
     public void Jump() {

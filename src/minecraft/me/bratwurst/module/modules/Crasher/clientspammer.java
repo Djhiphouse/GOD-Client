@@ -41,7 +41,7 @@ public class clientspammer extends Module {
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Delay = new Setting("Delay", this, 1300, 400, 2250, true));
+        Client.setmgr.rSetting(Delay = new Setting(EnumChatFormatting.AQUA +"Delay", this, 1300, 400, 2250, true));
 
     }
 

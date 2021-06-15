@@ -36,35 +36,44 @@ public class VeloCity extends Module {
         options.add("legit");
         options.add("Packet");
 
-        Client.setmgr.rSetting(mode1 = new Setting("Velocity Mode", this, "Hypixel", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "Velocity Mode", this, "Hypixel", options));
     }
 
     @Override
     public void setup() {
-        Client.setmgr.rSetting(NCPPush = new Setting("NCPPush", this, false));
+        Client.setmgr.rSetting(NCPPush = new Setting(EnumChatFormatting.AQUA + "NCPPush", this, false));
 
     }
     @EventTarget
     public void onUpdate(EventUpdate event) {
         if (mode1.getValString().equalsIgnoreCase("Oldaac")) {
             Oldaac();
+            this.setDisplayname(EnumChatFormatting.RED + " - Oldaac");
         } else if (mode1.getValString().equalsIgnoreCase("Intave")) {
             Intave();
+            this.setDisplayname(EnumChatFormatting.RED + " - Intave");
         } else if (mode1.getValString().equalsIgnoreCase("Revesre")) {
             Revesre();
+            this.setDisplayname(EnumChatFormatting.RED + " - Revesre");
 
         } else if (mode1.getValString().equalsIgnoreCase("Jump")) {
             Jump();
+            this.setDisplayname(EnumChatFormatting.RED + " - Jump");
         }else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
             Hypixel();
+            this.setDisplayname(EnumChatFormatting.RED + " - Hypixel");
         }else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
             Mineplex();
+            this.setDisplayname(EnumChatFormatting.RED + " - Mineplex");
         }else if (mode1.getValString().equalsIgnoreCase("0knock")) {
             nullknock();
+            this.setDisplayname(EnumChatFormatting.RED + " - 0knock");
         }else if (mode1.getValString().equalsIgnoreCase("Dev")) {
             Dev();
+            this.setDisplayname(EnumChatFormatting.RED + " - Dev");
         }else if (mode1.getValString().equalsIgnoreCase("legit")) {
             legit();
+            this.setDisplayname(EnumChatFormatting.RED + " - legit");
 
         }
     }

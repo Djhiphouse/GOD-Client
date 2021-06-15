@@ -8,6 +8,7 @@ import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumChatFormatting;
 
 public class HitBox extends Module {
     public static Setting mode1;
@@ -18,13 +19,14 @@ public class HitBox extends Module {
     }
     @Override
     public void setup() {
-        Client.setmgr.rSetting(Breite = new Setting("Breite", this, 2, 1, 6, false));
-        Client.setmgr.rSetting(Hoehe = new Setting("Hoehe", this, 2, 1, 6, false));
+        Client.setmgr.rSetting(Breite = new Setting(EnumChatFormatting.AQUA + "Breite", this, 2, 1, 6, false));
+        Client.setmgr.rSetting(Hoehe = new Setting(EnumChatFormatting.AQUA + "Hoehe", this, 2, 1, 6, false));
 
     }
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
+        this.setDisplayname(EnumChatFormatting.RED + " - H: " + Hoehe.getValInt() + " - B: " + Breite.getValInt());
         for (Entity o : this.mc.theWorld.loadedEntityList) {
             if (o instanceof net.minecraft.entity.player.EntityPlayer){
                 if (o != mc.thePlayer) {

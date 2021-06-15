@@ -23,6 +23,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
@@ -57,16 +58,16 @@ public class InfiniteAura extends Module {
     public ArrayList<CustomVec3> path = new ArrayList<>();
 
     public InfiniteAura() {
-        super("InfiniteAura", Category.COMBAT);
+        super( "InfiniteAura", Category.COMBAT);
     }
 
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Target = new Setting("Targets", this, 2, 1, 20, true));
-        Client.setmgr.rSetting(Range = new Setting("Range", this, 75, 50, 200, true));
-        Client.setmgr.rSetting(APS = new Setting("APS", this, 1500, 800, 2000, true));
-        Client.setmgr.rSetting(canbeseen = new Setting("canbeseen", this,  true));
+        Client.setmgr.rSetting(Target = new Setting(EnumChatFormatting.AQUA + "Targets", this, 2, 1, 20, true));
+        Client.setmgr.rSetting(Range = new Setting(EnumChatFormatting.AQUA + "Range", this, 75, 50, 200, true));
+        Client.setmgr.rSetting(APS = new Setting(EnumChatFormatting.AQUA + "APS", this, 1500, 800, 2000, true));
+        Client.setmgr.rSetting(canbeseen = new Setting(EnumChatFormatting.AQUA + "canbeseen", this,  true));
 
     }
 
@@ -74,6 +75,7 @@ public class InfiniteAura extends Module {
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
+        this.setDisplayname(EnumChatFormatting.RED + " - Range: " + Range.getValInt());
         for (Object o : mc.theWorld.loadedEntityList) {
             if (o instanceof EntityPlayer) {
                 EntityPlayer target = (EntityPlayer) o;

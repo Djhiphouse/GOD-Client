@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class Nofall extends Module {
         options.add("Hypixel");
         options.add("Verus");
 
-        Client.setmgr.rSetting(mode1 = new Setting("Nofall Mode", this, "Vanilla", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED +"Nofall Mode", this, "Vanilla", options));
     }
 
     @EventTarget
@@ -46,28 +47,28 @@ public class Nofall extends Module {
 
         if (mode1.getValString().equalsIgnoreCase("Vanilla")) {
             Vanilla();
-
+           this.setDisplayname(EnumChatFormatting.RED + " - Vanilla");
         }else  if (mode1.getValString().equalsIgnoreCase("AAC")) {
             AAC();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - AAC");
         }else  if (mode1.getValString().equalsIgnoreCase("Jartex")) {
            Jartex();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Jartex");
         }else  if (mode1.getValString().equalsIgnoreCase("AAC 3.3.1")) {
             AAC2();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - AAC 3.3.1");
         }else  if (mode1.getValString().equalsIgnoreCase("Cubecraft")) {
             Cubecraft();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Cubecraft");
         }else  if (mode1.getValString().equalsIgnoreCase("Intave")) {
             Intave();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Intave");
         }else  if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
             Hypixel();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Hypixel");
         }else  if (mode1.getValString().equalsIgnoreCase("Verus")) {
             Verus();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Verus");
         }
     }
 

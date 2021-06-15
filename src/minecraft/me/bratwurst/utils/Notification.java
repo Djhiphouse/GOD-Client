@@ -3,17 +3,12 @@ package me.bratwurst.utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.Sys;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 public class Notification {
     private NotificationType type;
@@ -65,17 +60,17 @@ public class Notification {
         Color color1;
 
         if(type == NotificationType.INFO) {
-            color1 = new Color(0, 245, 210);
+            color1 = new Color(0, 245, 210, 220);
         }else if(type == NotificationType.WARNING) {
-            color1 = new Color(240, 255, 0);
+            color1 = new Color(240, 255, 0, 220);
         }else {
-            color1 = new Color(255, 0, 0);
+            color1 = new Color(255, 0, 0, 220);
         }
         FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
 
-        drawRect(GuiScreen.width - offset, GuiScreen.height - 5 - height, GuiScreen.width, GuiScreen.height - 5, color.getRGB());
+        drawRect(GuiScreen.width - offset, GuiScreen.height - 5 - height, GuiScreen.width, GuiScreen.height - 5, 0x90000000);
         GL11.glLineWidth(2.0F);
-        drawRect(GL11.GL_LINE_LOOP ,GuiScreen.width - offset, GuiScreen.height - 5 - height, GuiScreen.width, GuiScreen.height - 5, color1.getRGB());
+        drawRect(GL11.GL_LINE_LOOP ,GuiScreen.width - offset, GuiScreen.height - 5 - height, GuiScreen.width, GuiScreen.height - 5, 0x90000000);
 
         fontRenderer.drawString(title, GuiScreen.width - offset + 6, GuiScreen.height - 2 - height, -1);
         fontRenderer.drawString(message, GuiScreen.width - offset + 6, GuiScreen.height - 15, -1);

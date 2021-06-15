@@ -76,11 +76,11 @@ public class HUD extends Module {
 
         ScaledResolution sr = new ScaledResolution(mc);
         for (Module m : modules) {
-            String name = m.getName();
+            String name = m.getName() + m.getDisplayname();
             double offset = count * (mc.fontRendererObj.FONT_HEIGHT + 6);
-            net.minecraft.client.gui.Gui.drawRect(sr.getScaledWidth() - mc.fontRendererObj.getStringWidth(name) - 10,
+            net.minecraft.client.gui.Gui.drawRect(sr.getScaledWidth() - mc.fontRendererObj.getStringWidth(name ) - 10,
                     offset, sr.getScaledWidth() - mc.fontRendererObj.getStringWidth(name) - 8,
-                    6 + mc.fontRendererObj.FONT_HEIGHT + offset, -1);
+                    6 + mc.fontRendererObj.FONT_HEIGHT + offset, 1);
             net.minecraft.client.gui.Gui.drawRect(sr.getScaledWidth() - mc.fontRendererObj.getStringWidth(name) - 8,
                     offset, sr.getScaledWidth(), 6 + mc.fontRendererObj.FONT_HEIGHT + offset, 0x90000000);
             GlStateManager.enableBlend();

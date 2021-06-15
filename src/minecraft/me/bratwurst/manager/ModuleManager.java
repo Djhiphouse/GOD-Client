@@ -109,7 +109,7 @@ public class ModuleManager {
         addModule(new NameProtect());
       //  addModule(new bowfly());
         addModule(new nuker());
-        addModule(new TargetHud());
+
         addModule(new MidClick());
         addModule(new AntiBan());
         addModule(new AntiExploitCrash());
@@ -130,6 +130,8 @@ public class ModuleManager {
           addModule(new Challenge());
           addModule(new PearlFly());
           addModule(new AutoSword());
+          addModule(new Opsign());
+
 
 
 

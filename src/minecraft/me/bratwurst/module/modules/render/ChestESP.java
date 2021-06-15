@@ -4,7 +4,6 @@ import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
-import me.bratwurst.utils.EspUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 
@@ -24,7 +23,7 @@ public class ChestESP extends Module {
 
                 Color chestColor = new Color(-1);
 
-                EspUtil.chestESPBox(tileEntity, 0, chestColor);
+
             }
         }
     }

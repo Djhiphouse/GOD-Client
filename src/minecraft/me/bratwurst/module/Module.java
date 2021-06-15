@@ -15,8 +15,10 @@ public class Module {
     public boolean toggle;
     public int key;
     public Category category;
+    public String displayname = "";
 
-    public void setup() { }
+    public void setup() {
+    }
 
     public Module(String name, int key, Category category) {
         this.name = name;
@@ -26,10 +28,19 @@ public class Module {
     }
 
     public Module(String name, Category category) {
-        this.name =  name;
+        this.name = name;
         this.key = 0;
         this.category = category;
         setup();
+    }
+
+    public void setDisplayname(String optionsetting) {
+        this.displayname = optionsetting;
+
+    }
+
+    public String getDisplayname() {
+        return displayname;
     }
 
     public String getName() {
@@ -54,14 +65,13 @@ public class Module {
 
     public void toggle() {
         toggle = !toggle;
-        if(toggle) {
+        if (toggle) {
             onEnable();
-            if(!getName().equalsIgnoreCase("clickgui"))
-                NotificationManager.show(new Notification(NotificationType.INFO, EnumChatFormatting.GREEN + "Aktiviert", EnumChatFormatting.GOLD + this.getName(),1));
-        }
-        else {
+            if (!getName().equalsIgnoreCase("clickgui"))
+                NotificationManager.show(new Notification(NotificationType.INFO, EnumChatFormatting.GREEN + "Aktiviert", EnumChatFormatting.GOLD + this.getName(), 1));
+        } else {
             onDisable();
-            if(!getName().equalsIgnoreCase("clickgui"))
+            if (!getName().equalsIgnoreCase("clickgui"))
                 NotificationManager.show(new Notification(NotificationType.INFO, EnumChatFormatting.RED + "Deaktiviert", EnumChatFormatting.GOLD + this.getName(), 1));
         }
     }

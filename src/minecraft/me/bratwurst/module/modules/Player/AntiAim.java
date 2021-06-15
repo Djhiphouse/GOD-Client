@@ -9,6 +9,7 @@ import me.bratwurst.module.Module;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 
 import java.util.Random;
@@ -40,6 +41,7 @@ public class AntiAim extends Module {
     @EventTarget
 
     public void onUpdate(EventMotionUpdate e) {
+        this.setDisplayname(EnumChatFormatting.RED + " - Spin: " + SpinSpeed.getValInt() + "Head: " + SpinHead.getValInt() );
         Rotationmove+= SpinSpeed.getValInt();
         Headrotate += SpinHead.getValInt();
         float[] rotate = Aacrotate();

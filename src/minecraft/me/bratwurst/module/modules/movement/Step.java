@@ -7,6 +7,7 @@ import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.utils.player.PlayerUtils;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 
@@ -28,8 +29,10 @@ public class Step extends Module {
     public void onUpdate(EventUpdate event) {
        if (mode1.getValString().equalsIgnoreCase("Legit")) {
            legit();
+           this.setDisplayname(EnumChatFormatting.YELLOW + " - legit");
        }else if (mode1.getValString().equalsIgnoreCase("Vanilla")) {
           Vanilla();
+           this.setDisplayname(EnumChatFormatting.RED + " - Vanilla");
        }
     }
 public void legit() {

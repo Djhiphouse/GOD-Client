@@ -73,17 +73,17 @@ public class Glide extends Module {
         options.add("Disabler");
 
 
-        Client.setmgr.rSetting(mode1 = new Setting("Glide Mode", this, "Mccentral", options));
+        Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "Glide Mode", this, "Mccentral", options));
     }
 
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Speed = new Setting("Speed", this, 1, 1, 25, false));
-        Client.setmgr.rSetting(mccSpeed = new Setting("Mcccspeed", this, 1, 1, 4, true));
-        Client.setmgr.rSetting(Speeddown = new Setting("Downsp", this, 600, 250, 1000, true));
-        Client.setmgr.rSetting(Bypass = new Setting("Bypass", this, false));
-        Client.setmgr.rSetting(InfiniteFly = new Setting("InfiniteFly", this, false));
+        Client.setmgr.rSetting(Speed = new Setting(EnumChatFormatting.AQUA +"Speed", this, 1, 1, 25, false));
+        Client.setmgr.rSetting(mccSpeed = new Setting(EnumChatFormatting.AQUA +"Mcccspeed", this, 1, 1, 4, true));
+        Client.setmgr.rSetting(Speeddown = new Setting(EnumChatFormatting.AQUA +"Downsp", this, 600, 250, 1000, true));
+        Client.setmgr.rSetting(Bypass = new Setting(EnumChatFormatting.AQUA +"Bypass", this, false));
+        Client.setmgr.rSetting(InfiniteFly = new Setting(EnumChatFormatting.AQUA +"InfiniteFly", this, false));
     }
 
     public boolean ticktrue = false;
@@ -95,38 +95,50 @@ public class Glide extends Module {
         if (mode1.getValString().equalsIgnoreCase("Mccentral")) {
 
             Damage();
-
+            this.setDisplayname(EnumChatFormatting.RED + " - Cubecraft");
 
         } else if (mode1.getValString().equalsIgnoreCase("Vanilla")) {
             Vanilla(Speed.getValInt());
+            this.setDisplayname(EnumChatFormatting.RED + " - Vanilla");
         } else if (mode1.getValString().equalsIgnoreCase("GlideUp")) {
             Glideup();
+            this.setDisplayname(EnumChatFormatting.RED + " - GlideUp");
         } else if (mode1.getValString().equalsIgnoreCase("Down")) {
             Down(Speeddown.getValInt());
+            this.setDisplayname(EnumChatFormatting.RED + " - Down");
         } else if (mode1.getValString().equalsIgnoreCase("FakeLag")) {
 
         } else if (mode1.getValString().equalsIgnoreCase("BetterMccentral")) {
             BetterMccentral(1);
+            this.setDisplayname(EnumChatFormatting.RED + " - BetterMccentral");
         } else if (mode1.getValString().equalsIgnoreCase("damage")) {
             damage();
+            this.setDisplayname(EnumChatFormatting.RED + " - damage");
         } else if (mode1.getValString().equalsIgnoreCase("BetterSpartan")) {
             intave();
+            this.setDisplayname(EnumChatFormatting.RED + " - BetterSpartan");
         } else if (mode1.getValString().equalsIgnoreCase("Spartan")) {
             Hypixel();
+            this.setDisplayname(EnumChatFormatting.RED + " - Spartan");
         } else if (mode1.getValString().equalsIgnoreCase("NoDown")) {
             NoDown();
+            this.setDisplayname(EnumChatFormatting.RED + " - NoDown");
 
         } else if (mode1.getValString().equalsIgnoreCase("Test")) {
             Damage2();
+            this.setDisplayname(EnumChatFormatting.RED + " - Test");
 
         } else if (mode1.getValString().equalsIgnoreCase("bowfly")) {
             Bowfly(e);
+            this.setDisplayname(EnumChatFormatting.RED + " - bowfly");
 
         } else if (mode1.getValString().equalsIgnoreCase("FakeFlag")) {
             FakeFlagFly();
+            this.setDisplayname(EnumChatFormatting.RED + " - FakeFlag");
 
         }else if (mode1.getValString().equalsIgnoreCase("Disabler")) {
             Disabler();
+            this.setDisplayname(EnumChatFormatting.RED + " - Disabler");
 
         }
     }
