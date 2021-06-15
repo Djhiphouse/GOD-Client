@@ -3,29 +3,28 @@ package me.bratwurst.guiMain;
 import me.bratwurst.Client;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
 import me.bratwurst.utils.DrawMenuLogoUtil;
-import net.minecraft.client.Minecraft;
+import me.bratwurst.utils.WbUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.network.play.client.C00PacketKeepAlive;
-import net.minecraft.network.status.client.C01PacketPing;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-public class GUICosmetics extends GuiScreen {
+public class GuiOpenCosmeticWings extends GuiScreen{
     ParticleSystem partikelsystem = new ParticleSystem(1000, 370);
-    public static boolean cosWings = false;
-    public static boolean cosHat = false;
 
     public static ArrayList<String> ClosedPort = new ArrayList<>();
     public void initGui() {
-         this.buttonList.add(new GuiButton(200, this.width / 2 - 113, this.height / 2 + 50, I18n.format(EnumChatFormatting.RED +"BACK", new Object[0])));
-         this.buttonList.add(new GuiButton(1912, this.width / 2 - 100, this.height / 6 + 48 - 6, I18n.format(EnumChatFormatting.AQUA +"Cosmetic (Hat)", new Object[0])));
-         this.buttonList.add(new GuiButton(1913, this.width / 2 - 100, this.height / 6 + 48 + 24- 6, I18n.format(EnumChatFormatting.GREEN +"Cosmetic (Wings)", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 113, this.height / 2 + 50, I18n.format(EnumChatFormatting.RED +"BACK", new Object[0])));
+        this.buttonList.add(new GuiButton(1912, this.width / 2 - 100, this.height / 6 + 48 - 6, I18n.format(EnumChatFormatting.AQUA +"Bild Ansehen", new Object[0])));
+        this.buttonList.add(new GuiButton(1913, this.width / 2 - 100, this.height / 6 + 48 +24 - 6, I18n.format(EnumChatFormatting.GREEN +"Aktivieren", new Object[0])));
+        this.buttonList.add(new GuiButton(1914, this.width / 2 - 100, this.height / 6 + 48 + 24 + 24 - 6, I18n.format(EnumChatFormatting.RED +"Deaktivieren", new Object[0])));
 
 
     }
@@ -40,10 +39,19 @@ public class GUICosmetics extends GuiScreen {
 
         }
         if (button.id == 1912) {
-            mc.displayGuiScreen(new GuiOpenCosmeticHat());
+            try {
+                //BILD
+                WbUtils.openWebsite(new URI("https://null"));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
         if (button.id == 1913) {
-            mc.displayGuiScreen(new GuiOpenCosmeticWings());
+            GUICosmetics.cosWings = true;
+
+        }
+        if (button.id == 1914) {
+            GUICosmetics.cosWings = false;
         }
 
     }
