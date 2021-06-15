@@ -31,9 +31,9 @@ public class PingSpoof extends Module {
 
         if (e.getPacket() instanceof C00PacketKeepAlive) {
 
-            mc.getNetHandler().getNetworkManager().sendPacket(new C00PacketKeepAlive(10000));
+            mc.getNetHandler().getNetworkManager().sendPacket(new C00PacketKeepAlive(Integer.MAX_VALUE));
 
-            e.setCancelled(true);
+
         }
 
 

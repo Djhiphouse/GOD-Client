@@ -76,7 +76,7 @@ public class LongJump extends Module {
     boolean leftGround = false;
     private int airTicks;
 
-    public Setting Nofall, Speed, off, Glide,boost;
+    public Setting Nofall, Speed, off, Glide,boost,Ticks;
     public static Setting mode1;
 
     public LongJump() {
@@ -91,6 +91,7 @@ public class LongJump extends Module {
         options.add("Spartan");
         options.add("Test");
         options.add("badRedesky");
+        options.add("FastRedesky");
 
 
 
@@ -105,6 +106,7 @@ public class LongJump extends Module {
         Client.setmgr.rSetting(off = new Setting("off", this, true));
         Client.setmgr.rSetting(Glide = new Setting("Glide", this, true));
         Client.setmgr.rSetting(boost = new Setting("boost", this, 2, 1, 5, false));
+        Client.setmgr.rSetting(Ticks = new Setting("Ticks", this, 35, 10, 100, true));
     }
 
     public static int state = 0;
@@ -130,6 +132,8 @@ public class LongJump extends Module {
             Test();
         }else if (mode1.getValString().equalsIgnoreCase("badRedesky")) {
             newredesky();
+        }else if (mode1.getValString().equalsIgnoreCase("FastRedesky")) {
+            FastRedesky(Ticks.getValInt());
         }
 
 
@@ -177,6 +181,22 @@ public  static int jumpmotion = 0;
             this.leftGround = false;
             mc.timer.timerSpeed = 1.0f;
         }
+    }
+    public int  ticks2 = 0;
+    public void FastRedesky(int ticks) {
+
+        if (ticks2 < ticks) {
+            this.mc.thePlayer.motionY *= 1.07;
+            this.mc.thePlayer.motionX *= 0.99;
+            this.mc.thePlayer.motionZ *= 0.99;
+            this.mc.timer.timerSpeed = 2.0f;
+            this.mc.thePlayer.jump();
+            ticks2++;
+        }else {
+            toggle();
+            ticks2=0;
+        }
+
     }
 public void  Guardian () {
     EntityPlayerSP player = this.mc.thePlayer;

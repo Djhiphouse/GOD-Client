@@ -16,8 +16,7 @@ import net.minecraft.util.BlockPos;
 public class AutpGapple extends Module {
     public static Setting mode1;
     public static EntityLivingBase target1;
-    public static Setting minCps, instanthealth, Starthealth, FailHits, Rotate, AutoBlock, NoRotate, LegitAutoBlock, Movefix, Smoth, Raycast,
-            Throughwalls;
+    public static Setting minCps, instanthealth, Starthealth, Rotate, Movefix;
 
     public AutpGapple() {
         super("AutpGapple", Category.PLAYER);

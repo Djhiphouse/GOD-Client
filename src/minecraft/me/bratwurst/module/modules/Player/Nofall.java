@@ -9,9 +9,11 @@ import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.movement.LongJump;
 import me.bratwurst.utils.player.PlayerUtils;
+import net.minecraft.block.BlockAir;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.util.BlockPos;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class Nofall extends Module {
         options.add("AAC 3.3.1");
         options.add("Cubecraft");
         options.add("Intave");
+        options.add("Hypixel");
+        options.add("Verus");
 
         Client.setmgr.rSetting(mode1 = new Setting("Nofall Mode", this, "Vanilla", options));
     }
@@ -58,6 +62,12 @@ public class Nofall extends Module {
         }else  if (mode1.getValString().equalsIgnoreCase("Intave")) {
             Intave();
 
+        }else  if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
+            Hypixel();
+
+        }else  if (mode1.getValString().equalsIgnoreCase("Verus")) {
+            Verus();
+
         }
     }
 
@@ -79,6 +89,19 @@ public class Nofall extends Module {
 
 
 
+    }
+    public void Verus() {
+        if(mc.thePlayer.fallDistance > 2.9){
+            mc.thePlayer.sendQueue.addToSendQueue ( new C03PacketPlayer.C04PacketPlayerPosition () );
+            mc.thePlayer.fallDistance = 0.1f;
+        }
+    }
+    public void Hypixel() {
+        if (mc.thePlayer.fallDistance > 3.0F && isBlockUnder() && !Client.instance.getModuleManager().getModuleByName("Glide").isEnabled() && !Client.instance.getModuleManager().getModuleByName("LongJump").isEnabled() &&(
+                mc.thePlayer.posY % 0.0625D != 0.0D || mc.thePlayer.posY % 0.015256D != 0.0D)) {
+            mc.getNetHandler().addToSendQueueSilent(new C03PacketPlayer(true));
+            mc.thePlayer.fallDistance = 0.0F;
+        }
     }
     public void AAC() {
         mc.thePlayer.motionZ = 0.0D;
@@ -134,6 +157,14 @@ public class Nofall extends Module {
             final Minecraft mc6 = Nofall.mc;
             mc.thePlayer.capabilities.isFlying = false;
         }
+    }
+    private boolean isBlockUnder() {
+        for (int i = (int) (mc.thePlayer.posY - 1.0); i > 0; --i) {
+            BlockPos pos = new BlockPos( mc.thePlayer.posX, i, mc.thePlayer.posZ);
+            if (mc.theWorld.getBlockState(pos).getBlock() instanceof BlockAir) continue;
+            return true;
+        }
+        return false;
     }
 }
 

@@ -5,23 +5,34 @@ import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.event.events.ProcessPacketEvent;
+import me.bratwurst.manager.ModuleManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.MainUtil;
 import me.bratwurst.utils.TimeHelper;
+import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C00PacketKeepAlive;
-import net.minecraft.network.play.client.C0CPacketInput;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
-import net.minecraft.network.play.client.C13PacketPlayerAbilities;
+import net.minecraft.network.play.client.*;
+import net.minecraft.network.play.server.S08PacketPlayerPosLook;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.util.ArrayList;
 
 public class Disabler extends Module {
     public static Setting mode1;
+    protected double x;
+    protected double y;
+    protected double z;
+    protected float yaw;
+    protected float pitch;
+    protected boolean onGround;
+    protected boolean moving;
+    protected boolean rotating;
     ArrayList<Packet> Packets = new ArrayList<>();
-
+    ArrayList<Packet> transactions = new ArrayList<Packet>();
+    int currentTransaction = 0;
     public Disabler() {
         super("Disabler", Category.EXPLOIT);
         ArrayList<String> options = new ArrayList<>();
@@ -30,22 +41,39 @@ public class Disabler extends Module {
         options.add("Hypixel");
         options.add("KAURI");
         options.add("Replaysucht");
+        options.add("Redesky");
+        options.add("Hypixelold");
 
         Client.instance.setmgr.rSetting(new Setting("Disable Anticheat", this, "Slide", options));
     }
 
     @EventTarget
-    public void onUpdate(EventUpdate event) {
+    public void onUpdate(ProcessPacketEvent e) {
         if (mode1.getValString().equalsIgnoreCase("Ghostlie.live")) {
             ghostlie();
+
         } else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
             Watchdog();
 
         } else if (mode1.getValString().equalsIgnoreCase("Replaysucht")) {
          Replaysucht();
+        }else if (mode1.getValString().equalsIgnoreCase("Hypixelold")) {
+            Hypixelold(e);
         }
     }
 
+public void Hypixelold(ProcessPacketEvent e) {
+    PlayerUtils.sendMessage("Hi");
+    if (mode1.getValString().equalsIgnoreCase("Verus")) {
+        if (e.getPacket () instanceof C0FPacketConfirmTransaction) {
+            Packets.add ( e.getPacket () );
+            e.setCancelled ( true );
+        } else if (e.getPacket () instanceof C00PacketKeepAlive) {
+            Packets.add ( e.getPacket () );
+            e.setCancelled ( true );
+        }
+    }
+}
 public void Replaysucht() {
        if (!mc.thePlayer.onGround) {
            if (TimeHelper.hasReached(1)) {
@@ -74,10 +102,21 @@ public void Replaysucht() {
 
     }
 
+
     public void ProcessPacketEvent(ProcessPacketEvent e) {
 
         for (Packet p : Packets) {
             if (p instanceof C0FPacketConfirmTransaction) {
+                e.setCancelled(true);
+            }
+
+        }
+        Packets.clear();
+    }
+    public void Redesky(ProcessPacketEvent e) {
+
+        for (Packet p : Packets) {
+            if (p instanceof S08PacketPlayerPosLook) {
                 e.setCancelled(true);
             }
 

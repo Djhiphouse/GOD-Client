@@ -299,6 +299,13 @@ public void Disabler() {
             float pitch = -87.5F;
             e.setYaw(yaw);
             e.setPitch(pitch);
+            if (PlayerUtils.isHoldingBow())
+            this.mc.playerController.sendUseItem(this.mc.thePlayer, this.mc.theWorld, this.mc.thePlayer.inventory.getCurrentItem());
+            this.mc.playerController.sendUseItem(this.mc.thePlayer, this.mc.theWorld, this.mc.thePlayer.inventory.getCurrentItem());
+            this.mc.playerController.sendUseItem(this.mc.thePlayer, this.mc.theWorld, this.mc.thePlayer.inventory.getCurrentItem());
+            this.mc.playerController.sendUseItem(this.mc.thePlayer, this.mc.theWorld, this.mc.thePlayer.inventory.getCurrentItem());
+            this.mc.playerController.sendUseItem(this.mc.thePlayer, this.mc.theWorld, this.mc.thePlayer.inventory.getCurrentItem());
+            this.mc.playerController.sendUseItem(this.mc.thePlayer, this.mc.theWorld, this.mc.thePlayer.inventory.getCurrentItem());
             PlayerUtils.sendMessage(EnumChatFormatting.DARK_RED + "Schiesse mit demm Bogen leicht in die luft so das dich der Pfeill trifft ");
 
         }
