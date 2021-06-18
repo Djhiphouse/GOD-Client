@@ -12,6 +12,7 @@ import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
 import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
+import me.pseey.utils.TimeHelper;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.ServerData;
@@ -192,7 +193,7 @@ public class GuiIngameMenu extends GuiScreen
             this.drawString(this.fontRendererObj, "\u00a7c5", (int)x + (int)w + 2, (int)y + 168, -1);
             this.drawString(this.fontRendererObj, "\u00a7c3", (int)x + (int)w + 2, (int)y + 178, -1);
             this.drawString(this.fontRendererObj, "\u00a741", (int)x + (int)w + 2, (int)y + 188, -1);
-            GuiIngameMenu.drawCenteredString(this.fontRendererObj, "\u00a7a" + this.df.format(TPSUtils.tps) + " TPS", this.width / 2, (int)y + (int)h + 1, -1);
+            GuiIngameMenu.drawCenteredString(this.fontRendererObj, "\u00a7a" + this.df.format(TPSUtils.lastTps) + " TPS", this.width / 2, (int)y + (int)h + 1, -1);
         }
         float average = 0.0f;
         if (!this.tps.isEmpty()) {
@@ -234,11 +235,14 @@ public class GuiIngameMenu extends GuiScreen
             float min = Math.max(0, this.lowestTps - 20);
             double percent = (on - min) / (max - min) * h - (float)(this.tps.size() < 80 ? this.tps.get(i) * 6 : 0);
             if (this.tps.size() < 80) continue;
-            if (this.redLineTimer < 3300) {
-                ++this.redLineTimer;
-                continue;
+                if (this.redLineTimer < 3300) {
+                    ++this.redLineTimer;
+                    continue;
+
             }
-            GL11.glVertex2d((double)((double)x + 2.5 + (double)i * 2.5), (double)((double)(y + h) - 2.0 - percent));
+
+        GL11.glVertex2d((double)((double)x + 2.5 + (double)i * 2.5), (double)((double)(y + h) - 1 - percent));
+
         }
         GL11.glEnd();
         GL11.glDisable((int)2848);

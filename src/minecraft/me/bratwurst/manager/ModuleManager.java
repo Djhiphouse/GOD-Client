@@ -130,8 +130,8 @@ public class ModuleManager {
           addModule(new Challenge());
           addModule(new PearlFly());
           addModule(new AutoSword());
-          addModule(new Opsign());
-
+         // addModule(new Opsign());
+         addModule(new GtaDeadScreen());
 
 
 

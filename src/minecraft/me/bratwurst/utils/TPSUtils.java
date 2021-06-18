@@ -6,6 +6,7 @@ import net.minecraft.network.play.server.S00PacketKeepAlive;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
 
+import javax.sound.midi.MidiFileFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public enum TPSUtils {
             tempTicks = 0;
         }
         if ((float)tpsList.size() >= listTime) {
-            tpsList.clear();
+
             tpsList.add(Float.valueOf((float)tps));
         }
         for (int i2 = 0; i2 < tpsList.size(); ++i2) {

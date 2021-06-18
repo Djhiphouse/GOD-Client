@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
+import me.bratwurst.Client;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -107,6 +108,10 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        if (Client.getInstance().getModuleManager().getModuleByName("GtaDeadScreen").isEnabled()) {
+            this.drawGradientRect(0, 0, this.width, this.height, 0x60500000, -1602211792);
+            return;
+        }
         this.drawGradientRect(0, 0, this.width, this.height, 1615855616, -1602211792);
         GlStateManager.pushMatrix();
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
