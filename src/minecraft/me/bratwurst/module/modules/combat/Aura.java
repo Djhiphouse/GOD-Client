@@ -168,6 +168,7 @@ public class Aura extends Module {
                             Attack(target, e);
                         }
                         if (Rotations.getValString().equalsIgnoreCase("FailHits")) {
+
                             Attack(target, e);
 
                         }

@@ -2,6 +2,7 @@ package de.Hero.clickgui.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 
 /**
@@ -14,6 +15,7 @@ import net.minecraft.util.StringUtils;
 public class FontUtil {
 	private static FontRenderer fontRenderer;
 
+	//public static FontRenderer Superherofx = FontRenderer.createFontRenderer(getFont(14, false, new ResourceLocation("urclinetname/superherofx/1.ttf")));
 
 	public static void setupFontUtils() {
 		fontRenderer = Minecraft.getMinecraft().fontRendererObj;

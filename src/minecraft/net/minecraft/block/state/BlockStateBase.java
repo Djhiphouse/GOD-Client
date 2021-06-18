@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.util.ResourceLocation;
+import optifine.MatchBlock;
 
 public abstract class BlockStateBase implements IBlockState
 {
@@ -59,7 +60,27 @@ public abstract class BlockStateBase implements IBlockState
 
         return this.blockStateId;
     }
+    public static boolean block(BlockStateBase p_block_0_, MatchBlock[] p_block_1_)
+    {
+        if (p_block_1_ == null)
+        {
+            return true;
+        }
+        else
+        {
+            for (int i = 0; i < p_block_1_.length; ++i)
+            {
+                MatchBlock matchblock = p_block_1_[i];
 
+                if (matchblock.matches(p_block_0_))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
     public int getMetadata()
     {
         if (this.metadata < 0)

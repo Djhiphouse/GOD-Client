@@ -4,14 +4,22 @@ import de.Hero.settings.Setting;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
+import me.bratwurst.event.events.EventUpdate;
+import me.bratwurst.event.events.ProcessPacketEvent;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.module.modules.combat.Aura;
 import me.bratwurst.utils.MainUtil;
+import me.bratwurst.utils.MovementUtils;
 import me.bratwurst.utils.TimeHelper;
+import me.bratwurst.utils.WorldUtils;
+import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
+import net.minecraft.network.play.server.S2FPacketSetSlot;
 import net.minecraft.util.*;
 
 import java.util.ArrayList;
@@ -20,7 +28,8 @@ public class Sacffold extends Module {
     public static Setting mode1;
     public static Setting Towerob;
     public static Setting modemove;
-    public static Setting AirSprint, NoSprint, Range, Fastbrige, Boost, delay,BoostMode,Timer;
+    public static Setting AirSprint, NoSprint, Range, Fastbrige, KeepY, delay, BoostMode, Timer, overrideKeepY, extendblock;
+
 
     public Sacffold() {
         super("Scaffold", Category.WORLD);
@@ -29,6 +38,7 @@ public class Sacffold extends Module {
         options2.add("Boost");
         options2.add("Timer");
         options2.add("Normal");
+
         ArrayList<String> options = new ArrayList<>();
         options.add("NCP");
         options.add("AAC");
@@ -40,8 +50,6 @@ public class Sacffold extends Module {
         Tower.add("LegitTower");
 
 
-
-
         Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "AC options", this, "AAC", options));
 
     }
@@ -49,38 +57,42 @@ public class Sacffold extends Module {
 
     public static float Yaw;
     public static float Pitch;
-
+public static float motionSpeed = 0.5f;
     @Override
     public void setup() {
         ArrayList<String> nix = new ArrayList<>();
-        Client.setmgr.rSetting(delay = new Setting(EnumChatFormatting.AQUA +"Delay", this, 25, 1, 1000, true));
+        Client.setmgr.rSetting(delay = new Setting(EnumChatFormatting.AQUA + "Delay", this, 25, 1, 1000, true));
         Client.setmgr.rSetting(NoSprint = new Setting(EnumChatFormatting.AQUA + "NoSprint", this, false));
-        Client.setmgr.rSetting(Fastbrige = new Setting(EnumChatFormatting.AQUA +"Eagle", this, false));
+        Client.setmgr.rSetting(Fastbrige = new Setting(EnumChatFormatting.AQUA + "Eagle", this, false));
 
-
-        Client.setmgr.rSetting(BoostMode = new Setting(EnumChatFormatting.BLUE + "Movement Mode", this, "",nix));
+        Client.setmgr.rSetting(BoostMode = new Setting(EnumChatFormatting.BLUE + "Movement Mode", this, "", nix));
         Client.setmgr.rSetting(Timer = new Setting(EnumChatFormatting.YELLOW + "Timer", this, 1.2, 1, 2, true));
+        Client.setmgr.rSetting(extendblock = new Setting(EnumChatFormatting.YELLOW + "extendblock", this, 2, 1, 6, true));
         Client.setmgr.rSetting(AirSprint = new Setting(EnumChatFormatting.YELLOW + "AirSprint", this, false));
 
     }
+
+    private static int keepPosY = 0;
     public boolean Spartan = false;
-public static float pistsch = 85.3f;
+    public static float pistsch = 85.3f;
+
     @EventTarget
     public void onMotionUpdate(EventMotionUpdate event) {
-    if (mode1.getValString().equalsIgnoreCase("NCP")) {
-        pistsch = 85.3f;
-        this.setDisplayname(EnumChatFormatting.AQUA + " - NCP");
-    }
 
-        if (mode1.getValString().equalsIgnoreCase("Spartan")){
+        if (mode1.getValString().equalsIgnoreCase("NCP")) {
+            pistsch = 85.3f;
+            this.setDisplayname(EnumChatFormatting.AQUA + " - NCP");
+        }
+
+        if (mode1.getValString().equalsIgnoreCase("Spartan")) {
             pistsch = 85.3f;
             Spartan = true;
             this.setDisplayname(EnumChatFormatting.YELLOW + " - Spartan");
-        }else {
+        } else {
             Spartan = false;
         }
 
-        if (mode1.getValString().equalsIgnoreCase("AAC")){
+        if (mode1.getValString().equalsIgnoreCase("AAC")) {
             pistsch = 85.3f;
             this.setDisplayname(EnumChatFormatting.BLUE + " - AAC");
         }
@@ -90,13 +102,16 @@ public static float pistsch = 85.3f;
         int Speed = delay.getValInt();
         BlockPos blockPos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
 
-        setBlockAndFacing(blockPos,event);
+        setBlockAndFacing(blockPos, event);
         if (event.isPre()) {
             event.setYaw(mc.thePlayer.rotationYaw + 180);
             event.setPitch(pistsch);
 
 
         }
+
+
+
 
 
 
@@ -141,19 +156,28 @@ public static float pistsch = 85.3f;
 
         }
         if (modemove.getValString().equalsIgnoreCase("Timer")) {
-           mc.timer.timerSpeed = Timer.getValInt();
+            mc.timer.timerSpeed = Timer.getValInt();
 
         }else {
             mc.timer.timerSpeed = 1;
         }
-         int d = 0;
+        int d = 0;
         if (Towerob.getValString().equalsIgnoreCase("TowerMotion")) {
+            if (this.mc.thePlayer.getHeldItem() != null && this.mc.thePlayer.getHeldItem().getItem() instanceof net.minecraft.item.ItemBlock && mc.gameSettings.keyBindJump.pressed && mc.thePlayer.moveForward < 0.1)
+                this.mc.thePlayer.motionY = motionSpeed;
+
+
+
+
+
+
+            /*
             if (Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown()) {
                 if (mc.thePlayer.onGround) {
                     mc.timer.timerSpeed = 0.8f;
                     if (d == 0) {
-                       MainUtil.setpos(mc.thePlayer.posX,mc.thePlayer.posY + 1,mc.thePlayer.posZ ,false,false);
-                       d++;
+                        MainUtil.setpos(mc.thePlayer.posX,mc.thePlayer.posY + 1,mc.thePlayer.posZ ,false,false);
+                        d++;
                     }else {
                         MainUtil.setpos(mc.thePlayer.posX,mc.thePlayer.posY + 0.1,mc.thePlayer.posZ ,false,false);
                     }
@@ -167,6 +191,8 @@ public static float pistsch = 85.3f;
             } else {
 
             }
+
+             */
             if (Towerob.getValString().equalsIgnoreCase("LegitTower")) {
                 mc.thePlayer.jump();
                 event.setPitch(90f);
@@ -174,45 +200,45 @@ public static float pistsch = 85.3f;
             }
         }
 
-            //    float[] rotate = getRotations(blockPos, currentFacing);
-            //   event.setYaw(rotate[0]);
-            //    event.setPitch(rotate[1]);
+        //    float[] rotate = getRotations(blockPos, currentFacing);
+        //   event.setYaw(rotate[0]);
+        //    event.setPitch(rotate[1]);
 
 
-            if (event.getState() == EventMotionUpdate.State.POST && TimeHelper.hasReached(Speed) || Spartan == true) {
-                if (Fastbrige.getValBoolean()) {
-                    if (this.mc.thePlayer != null && this.mc.theWorld != null) {
-                        ItemStack i = this.mc.thePlayer.getCurrentEquippedItem();
-                        BlockPos bP = new BlockPos(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 0.9D, this.mc.thePlayer.posZ);
-                        if (i != null) {
-                            if (i.getItem() instanceof ItemBlock) {
-                                this.mc.gameSettings.keyBindSneak.pressed = false;
-                                if (this.mc.theWorld.getBlockState(bP).getBlock() == Blocks.air) {
-                                    this.mc.gameSettings.keyBindSneak.pressed = true;
-                                    if (NoSprint.getValBoolean()) {
-                                        Minecraft.getMinecraft().thePlayer.setSprinting(true);
-                                        placmentblock(blockPos, currentFacing);
-                                    } else {
-                                        placmentblock(blockPos, currentFacing);
-                                    }
-
+        if (event.getState() == EventMotionUpdate.State.POST && TimeHelper.hasReached(Speed) || Spartan == true) {
+            if (Fastbrige.getValBoolean()) {
+                if (this.mc.thePlayer != null && this.mc.theWorld != null) {
+                    ItemStack i = this.mc.thePlayer.getCurrentEquippedItem();
+                    BlockPos bP = new BlockPos(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 0.9D, this.mc.thePlayer.posZ);
+                    if (i != null) {
+                        if (i.getItem() instanceof ItemBlock) {
+                            this.mc.gameSettings.keyBindSneak.pressed = false;
+                            if (this.mc.theWorld.getBlockState(bP).getBlock() == Blocks.air) {
+                                this.mc.gameSettings.keyBindSneak.pressed = true;
+                                if (NoSprint.getValBoolean()) {
+                                    Minecraft.getMinecraft().thePlayer.setSprinting(true);
+                                    placmentblock(blockPos, currentFacing);
+                                } else {
+                                    placmentblock(blockPos, currentFacing);
                                 }
+
                             }
                         }
                     }
-                } else {
-                    if (NoSprint.getValBoolean()) {
-                        mc.thePlayer.setSprinting(false);
-                        placmentblock(blockPos, currentFacing);
-                    }
+                }
+            } else {
+                if (NoSprint.getValBoolean()) {
+                    mc.thePlayer.setSprinting(false);
                     placmentblock(blockPos, currentFacing);
                 }
-
-                TimeHelper.reset();
+                placmentblock(blockPos, currentFacing);
             }
 
-        moveBlocksToHotbar();
+            TimeHelper.reset();
         }
+
+        moveBlocksToHotbar();
+    }
 
 
 
@@ -236,7 +262,7 @@ public static float pistsch = 85.3f;
         }
 
     }
-
+public int lastSlot;
     private Vec3 getVec3(BlockData data) {
         BlockPos pos = data.getPosition();
         EnumFacing face = data.getFacing();
@@ -287,15 +313,7 @@ public static float pistsch = 85.3f;
     }
 
     private void moveBlocksToHotbar() {
-        boolean added = false;
-        if (!isHotbarFull()) {
-            for (int k = 0; k < mc.thePlayer.inventory.mainInventory.length; ++k) {
-                if (k > 8 && !added) {
-                    final ItemStack itemStack = mc.thePlayer.inventory.mainInventory[k];
 
-                }
-            }
-        }
     }
 
 
@@ -320,10 +338,10 @@ public static float pistsch = 85.3f;
 
 
         //if(!shouldDownwards()) {
-         if (this.mc.theWorld.getBlockState(var1.add(0, -1, 0)).getBlock() != Blocks.air) {
+        if (this.mc.theWorld.getBlockState(var1.add(0, -1, 0)).getBlock() != Blocks.air) {
             currentPos = var1.add(0, -1, 0);
             currentFacing = EnumFacing.UP;
-             e.setYaw(yaw);
+            e.setYaw(yaw);
         } else if (this.mc.theWorld.getBlockState(var1.add(-1, 0, 0)).getBlock() != Blocks.air) {
             currentPos = var1.add(-1, 0, 0);
             currentFacing = EnumFacing.EAST;
@@ -438,7 +456,7 @@ public static float pistsch = 85.3f;
 
 
 
-        }
+    }
 
 
     public BlockPos currentPos;
@@ -447,7 +465,10 @@ public static float pistsch = 85.3f;
     @Override
     public void onDisable() {
         super.onDisable();
-        mc.timer.timerSpeed = 1F;
+        mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));
+        lastSlot = -1;
+        mc.timer.timerSpeed = 1;
+        motionSpeed = 1;
     }
 }
 
@@ -468,4 +489,4 @@ public static float pistsch = 85.3f;
 
 
 
-  //if (Helper.mc().getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net")
+//if (Helper.mc().getCurrentServerData().serverIP.toLowerCase().contains("hypixel.net")

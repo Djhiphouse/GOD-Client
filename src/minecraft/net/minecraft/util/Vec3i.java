@@ -8,10 +8,10 @@ public class Vec3i implements Comparable<Vec3i>
     public static final Vec3i NULL_VECTOR = new Vec3i(0, 0, 0);
 
     /** X coordinate */
-    private final int x;
+    public final int x;
 
     /** Y coordinate */
-    private final int y;
+    public int y;
 
     /** Z coordinate */
     private final int z;

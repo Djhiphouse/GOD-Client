@@ -98,7 +98,7 @@ public class Client {
             Client.getInstance().getModuleManager().getModuleByName("HUD").toggle();
 
         }
-     DiscordRP.getInstance().startup();
+
 
         try {
             new ViaFabric().onInitialize();

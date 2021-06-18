@@ -1,0 +1,90 @@
+---- Minecraft Crash Report ----
+// I let you down. Sorry :(
+
+Time: 18.06.21 14:19
+Description: Rendering screen
+
+java.lang.ArithmeticException: / by zero
+	at net.minecraft.client.gui.GuiIngameMenu.drawScreen(GuiIngameMenu.java:145)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1235)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1039)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.gui.GuiIngameMenu.drawScreen(GuiIngameMenu.java:145)
+
+-- Screen render details --
+Details:
+	Screen name: net.minecraft.client.gui.GuiIngameMenu
+	Mouse location: Scaled: (480, 257). Absolute: (960, 513)
+	Screen size: Scaled: (960, 514). Absolute: (1920, 1027). Scale factor of 2
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['God515'/209207, l='MpServer', x=107,53, y=102,00, z=226,69]]
+	Chunk stats: MultiplayerChunkCache: 180, 180
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: 144,00,67,00,245,00 - World: (144,67,245), Chunk: (at 0,4,5 in 9,15; contains blocks 144,0,240 to 159,255,255), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 84104126 game time, 25257336 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 26 total; [EntityPlayerSP['God515'/209207, l='MpServer', x=107,53, y=102,00, z=226,69], EntityPig['Pig'/145474, l='MpServer', x=92,13, y=63,00, z=190,94], EntityZombie['Zombie'/209347, l='MpServer', x=124,50, y=39,00, z=256,50], EntitySkeleton['Skeleton'/209152, l='MpServer', x=116,50, y=24,00, z=272,50], EntityCreeper['Creeper'/208524, l='MpServer', x=97,50, y=47,00, z=195,50], EntityPig['Pig'/91, l='MpServer', x=105,44, y=77,00, z=256,44], EntityZombie['Zombie'/209368, l='MpServer', x=65,50, y=40,00, z=200,50], EntityArmorStand['§4Hallo my boi'/163614, l='MpServer', x=162,69, y=76,00, z=278,69], EntityCreeper['Creeper'/208286, l='MpServer', x=130,50, y=41,00, z=258,50], EntityArmorStand['§4Hallo my boi'/163615, l='MpServer', x=162,69, y=76,00, z=278,69], EntitySkeleton['Skeleton'/208995, l='MpServer', x=125,50, y=23,00, z=233,50], EntityBoat['Boat'/118625, l='MpServer', x=142,25, y=66,00, z=196,25], EntityArmorStand['§4Hallo my boi'/163618, l='MpServer', x=162,69, y=76,00, z=278,69], EntityZombie['Zombie'/208930, l='MpServer', x=71,50, y=70,00, z=228,50], EntityArmorStand['§4Hallo my boi'/163616, l='MpServer', x=162,69, y=76,00, z=278,69], EntityArmorStand['§4Hallo my boi'/163617, l='MpServer', x=162,69, y=76,00, z=278,69], EntityRabbit['Rabbit'/207975, l='MpServer', x=126,31, y=68,00, z=270,63], EntityZombie['Zombie'/208932, l='MpServer', x=72,50, y=70,00, z=228,50], EntitySheep['Sheep'/207977, l='MpServer', x=143,13, y=71,00, z=270,78], EntitySheep['Sheep'/207976, l='MpServer', x=119,72, y=67,00, z=239,47], EntityZombie['Zombie'/209192, l='MpServer', x=67,47, y=28,00, z=256,94], EntityWitch['Witch'/208183, l='MpServer', x=92,50, y=15,00, z=262,50], EntityZombie['Zombie'/208309, l='MpServer', x=97,50, y=47,00, z=192,50], EntityRabbit['Rabbit'/149498, l='MpServer', x=137,69, y=66,00, z=224,63], EntityRabbit['Rabbit'/149499, l='MpServer', x=123,16, y=63,00, z=209,19], EntityCow['Cow'/44985, l='MpServer', x=136,69, y=66,00, z=224,28]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 512801088 bytes (489 MB) / 880279552 bytes (839 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

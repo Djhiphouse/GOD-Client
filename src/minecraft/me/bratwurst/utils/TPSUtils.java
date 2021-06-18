@@ -61,14 +61,12 @@ public enum TPSUtils {
     }
 
     public static void onUpdate() {
-        if (TimeHelper.hasReached(2000) && TPSUtils.getServerLagTime() > 5000) {
+        if (TimeHelper.hasReached(2000)) {
             TimeHelper.reset();
             tps /= 2.0;
         }
 
-        if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null) {
-            tpsList.clear();
-        }
+
         float tteemmpp = 0.0f;
         if (tempTicks >= 20) {
             tpsList.add(Float.valueOf((float)tps));
@@ -101,13 +99,7 @@ public enum TPSUtils {
         }
     }
 
-    public static long getServerLagTime() {
-        if (startTime <= 999999999) {
-            return 0;
-        }
-        lagms =  Minecraft.getMinecraft().getCurrentServerData().pingToServer;
-        return System.currentTimeMillis();
-    }
+
 
     public static char getTPSColorCode(double tps2) {
         if (tps2 >= 17.0) {
