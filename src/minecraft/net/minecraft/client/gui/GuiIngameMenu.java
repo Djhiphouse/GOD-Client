@@ -14,6 +14,7 @@ import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
+import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
@@ -52,17 +53,35 @@ public class GuiIngameMenu extends GuiScreen
             ((GuiButton)this.buttonList.get(0)).displayString = I18n.format("menu.disconnect", new Object[0]);
         }
         int b = 24;
-        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + i, I18n.format("menu.returnToGame", new Object[0])));
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + i+ b *2, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 4 + 72 + i, I18n.format(EnumChatFormatting.RED + "ServerPinger", new Object[0])));
-        this.buttonList.add(new GuiButton(929, this.width / 2 - 100, this.height / 4 + 72 + i +b, I18n.format(EnumChatFormatting.AQUA + "GodSettings", new Object[0])));
-        if(Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=") || Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU="))
+    //    this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + i, I18n.format("menu.returnToGame", new Object[0])));
+      //  this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + i+ b *2, 98, 20, I18n.format("menu.options", new Object[0])));
+//        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 4 + 72 + i, I18n.format(EnumChatFormatting.RED + "ServerPinger", new Object[0])));
+//        this.buttonList.add(new GuiButton(929, this.width / 2 - 100, this.height / 4 + 72 + i +b, I18n.format(EnumChatFormatting.AQUA + "GodSettings", new Object[0])));
+       if(Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=") || Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU="))
         this.buttonList.add(new GuiButton(999, this.width / 2 - 100, this.height / 4 + 72 + i +b*2, I18n.format(EnumChatFormatting.RED + "AdminMenu", new Object[0])));
         GuiButton guibutton;
-        this.buttonList.add(guibutton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + i + b *2 , 98, 20, I18n.format("menu.shareToLan", new Object[0])));
+       this.buttonList.add(guibutton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 -24 -24 + i + b *2 , 98, 20, I18n.format("menu.shareToLan", new Object[0])));
+//        this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.achievements", new Object[0])));
+          guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
+
+        //NEW
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4  + 24+ i, I18n.format("menu.returnToGame", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + i, 98, 20, I18n.format("menu.options", new Object[0])));
+     //   GuiButton guiButton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + i, 98, 20, I18n.format("menu.shareToLan", new Object[0]));
+        this.buttonList.add(guibutton);
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.achievements", new Object[0])));
         this.buttonList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.stats", new Object[0])));
-        guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
+        boolean bl = guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
+        if (!this.mc.isSingleplayer()) {
+//            this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
+//            this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, "Resolve SRV"));
+//            this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
+//            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
+            this.buttonList.add(new GuiButton(61, this.width / 2 + 2, this.height / 4 + 72 + i, 98, 20, "Copy IP"));
+            this.buttonList.add(new GuiButton(62, this.width / 2 - 100, this.height / 4 + 144 + i, "Reconnect"));
+        }
+        this.buttonList.add(new GuiButton(60, this.width / 2 - 100, this.height / 4 + 72 + i, this.mc.isSingleplayer() ? 200 : 98, 20, EnumChatFormatting.AQUA + "GodSettings"));
+
     }
 
     /**
@@ -117,9 +136,19 @@ public class GuiIngameMenu extends GuiScreen
             case 200:
                 this.mc.displayGuiScreen(new GuiPortscanner());
                 break;
-            case 929:
+            case 60:
                 mc.displayGuiScreen(new GuiClientSettings());
                 break;
+            case 61: {
+                GuiIngameMenu.setClipboardString(this.mc.getCurrentServerData().serverIP);
+                break;
+            }
+            case 62: {
+                this.data = this.mc.getCurrentServerData();
+                this.mc.theWorld.sendQuittingDisconnectingPacket();
+                this.mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(new GuiMainMenu()), this.mc, this.data));
+                break;
+            }
             case 999:
 //                mc.displayGuiScreen(new GuiAdmin());
                 break;
