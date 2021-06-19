@@ -56,7 +56,14 @@ public class Client {
     public static boolean Zensiert = false;
     public static String ZensiertMOTD = EnumChatFormatting.RED + "--------------" + EnumChatFormatting.DARK_RED + "ZENSIERT" + EnumChatFormatting.RED + "--------------";
     public static Client instance = new Client();
-
+    public static String ipadresse;
+    public static String ipNumber;
+    public static String ipVersion;
+    public static String countryName;
+    public static String countryCode2;
+    public static String isp;
+    public static String responseCode;
+    public static String responseMessage;
     public static Client getInstance() {
         return instance;
     }

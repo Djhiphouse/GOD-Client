@@ -12,16 +12,20 @@ import me.bratwurst.Client;
 import me.bratwurst.checkHost.FTools_CheckHostScreen;
 import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
+import me.bratwurst.manager.network.GodNetworkClient;
 import me.bratwurst.utils.FTools;
 import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
+import me.bratwurst.utils.TimeHelperAPI;
 import me.pseey.utils.TimeHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.realms.RealmsBridge;
 import net.minecraft.util.EnumChatFormatting;
@@ -202,9 +206,36 @@ public class GuiIngameMenu extends GuiScreen
             this.tps.add((int)TPSUtils.lastTps);
             this.reload = 0;
         }
+        Ipinfos();
 
 
 
+    }
+    public void Ipinfos() {
+
+        if(!this.mc.isSingleplayer()) {
+            Color color = new Color(14, 14, 14, 154);
+            if (TimeHelperAPI.hasReached(4000)) {
+                Client.networkClient.getIp()
+                        .exceptionally(throwable -> {
+                            throwable.printStackTrace();
+                            return null;
+                        });
+                TimeHelperAPI.reset();
+            }
+
+            GlStateManager.pushMatrix();
+            drawRect(this.width / 9 - 80, this.height / 2 - 30, this.width / 4, 154, color.getRGB());
+            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Richtige IP: " + EnumChatFormatting.AQUA + Client.ipadresse, this.width /9 - 75, this.height /3 - 12, 0);
+            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Land: " + EnumChatFormatting.AQUA +  Client.countryName, this.width /9 - 75, this.height /3 + 12, 0);
+            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Landcode: " + EnumChatFormatting.AQUA +  Client.countryCode2, this.width /9 - 75, this.height /3 + 4 * 6, 0);
+            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Isp: " + EnumChatFormatting.AQUA +  Client.isp, this.width /9 - 75, this.height /3 + 7 * 5, 0);
+            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Ipnummer: " + EnumChatFormatting.AQUA +  Client.ipNumber, this.width /9 - 75, this.height /3, 0);
+            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Server Status: " + EnumChatFormatting.AQUA +  Client.responseMessage, this.width /9 - 75, this.height /3 + 9 * 5, 0);
+            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Server code: " + EnumChatFormatting.AQUA +  Client.responseCode, this.width /9 - 75, this.height /1, 0);
+
+            GlStateManager.popMatrix();
+        }
 
     }
     private void renderTpsBox() {

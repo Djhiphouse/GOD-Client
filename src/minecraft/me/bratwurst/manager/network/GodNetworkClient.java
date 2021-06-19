@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.beans.binding.StringExpression;
+import me.bratwurst.Client;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import okhttp3.*;
@@ -184,23 +185,33 @@ public class GodNetworkClient {
     }
 
     public static class IpResponse {
-        public String ip;
+        public  String ip;
         @SerializedName("ip_number")
-        public String ipNumber;
+        public  String ipNumber;
         @SerializedName("ip_version")
-        public int ipVersion;
+        public  int ipVersion;
         @SerializedName("country_name")
-        public String countryName;
+        public   String countryName;
         @SerializedName("country_code2")
-        public String countryCode2;
-        public String isp;
+        public  String countryCode2;
+        public  String isp;
         @SerializedName("response_code")
-        public String responseCode;
+        public  String responseCode;
         @SerializedName("response_message")
-        public String responseMessage;
+        public  String responseMessage;
+
 
         @Override
         public String toString() {
+            Client.ipadresse = ip;
+            Client.responseMessage = responseMessage;
+            Client.responseCode = responseCode;
+            Client.isp = isp;
+            Client.ipNumber =  ipNumber;
+            Client.countryCode2 = countryCode2;
+            Client.countryName = countryName;
+
+
             return "IpResponse{" +
                     "ip='" + ip + '\'' +
                     ", ipNumber='" + ipNumber + '\'' +
@@ -211,6 +222,7 @@ public class GodNetworkClient {
                     ", responseCode='" + responseCode + '\'' +
                     ", responseMessage='" + responseMessage + '\'' +
                     '}';
+
         }
     }
 
