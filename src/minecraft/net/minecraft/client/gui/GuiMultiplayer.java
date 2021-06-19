@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.flori2007.viaforge.gui.GuiProtocolSelector;
 import me.bratwurst.guiMain.GuiRcon;
+import me.bratwurst.news.serverfinder.ServerFinderScreen;
 import me.bratwurst.utils.ShaderUtils;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
@@ -98,6 +99,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
 
         this.buttonList.add(new GuiButton(1337, 10, 5, 100, 20, EnumChatFormatting.AQUA + "Via"+EnumChatFormatting.BLUE+"Version"));
         this.buttonList.add(new GuiButton(1339, this.width - 110, 5, 100, 20, EnumChatFormatting.AQUA + "R"+EnumChatFormatting.BLUE+"con"));
+        this.buttonList.add(new GuiButton(1340, this.width - 110, 24, 100, 20, EnumChatFormatting.AQUA + "Server"+EnumChatFormatting.BLUE+"finder"));
 
         this.selectServer(this.serverListSelector.func_148193_k());
     }
@@ -173,6 +175,8 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
                 this.mc.displayGuiScreen(new GuiProtocolSelector(this));
             } else if (button.id == 1339) {
                 this.mc.displayGuiScreen(new GuiRcon(this));
+            } else if (button.id == 1340) {
+                this.mc.displayGuiScreen(new ServerFinderScreen(this));
             }
         }
     }
