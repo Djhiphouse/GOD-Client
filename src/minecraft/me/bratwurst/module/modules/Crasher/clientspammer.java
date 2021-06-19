@@ -35,31 +35,28 @@ public class clientspammer extends Module {
         ArrayList<String> options = new ArrayList<>();
 
 
+    }
+
+
+    @EventTarget
+    public void onUpdate(EventMotionUpdate e) {
+
 
     }
 
     @Override
-    public void setup() {
-
-        Client.setmgr.rSetting(Delay = new Setting(EnumChatFormatting.AQUA +"Delay", this, 1300, 400, 2250, true));
-
+    public void onEnable() {
+        super.onEnable();
+        Client.networkClient.getIp()
+                .exceptionally(throwable -> {
+                    throwable.printStackTrace();
+                    return null;
+                });
+        PlayerUtils.sendMessage("send request");
     }
 
-    @EventTarget
-    public void onUpdate(EventMotionUpdate e) {
-        Onspam(1300);
-    }
-
-
-    public void Onspam(int delay) {
-        Random rdm = new Random();
-       int zufall = rdm.nextInt();
-        String Clientmessage = Client.getInstance().CLIENT_NAME + " | Version | " + Client.getInstance().getCLIENT_VERSION() + " by " + Client.getInstance().getCLIENT_CODER() + " :  " + zufall;
-
-        delay = Delay.getValInt();
-        if (TimeHelper.hasReached(delay)){
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(Clientmessage));
-            TimeHelper.reset();
-        }
+    @Override
+    public void onDisable() {
+        super.onDisable();
     }
 }
