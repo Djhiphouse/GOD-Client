@@ -1,0 +1,128 @@
+---- Minecraft Crash Report ----
+// Who set us up the TNT?
+
+Time: 19.06.21 22:29
+Description: Loading entity NBT
+
+java.lang.NullPointerException: Loading entity NBT
+	at net.minecraft.entity.item.EntityFallingBlock.readEntityFromNBT(EntityFallingBlock.java:249)
+	at net.minecraft.entity.Entity.readFromNBT(Entity.java:1518)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.spawnNewEntity(MobSpawnerBaseLogic.java:177)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.func_180612_a(MobSpawnerBaseLogic.java:347)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderMob(TileEntityMobSpawnerRenderer.java:24)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:15)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:9)
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntityAt(TileEntityRendererDispatcher.java:134)
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntity(TileEntityRendererDispatcher.java:114)
+	at net.minecraft.client.renderer.RenderGlobal.renderEntities(RenderGlobal.java:848)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1511)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1351)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1184)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1039)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.entity.item.EntityFallingBlock.readEntityFromNBT(EntityFallingBlock.java:249)
+
+-- Entity being loaded --
+Details:
+	Entity Type: FallingSand (net.minecraft.entity.item.EntityFallingBlock)
+	Entity ID: 68628
+	Entity Name: Falling Block
+	Entity's Exact location: 0,00, 0,00, 0,00
+	Entity's Block location: 0,00,0,00,0,00 - World: (0,0,0), Chunk: (at 0,0,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Entity's Momentum: 0,00, 0,00, 0,00
+	Entity's Rider: ~~ERROR~~ NullPointerException: null
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.entity.Entity.readFromNBT(Entity.java:1518)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.spawnNewEntity(MobSpawnerBaseLogic.java:177)
+	at net.minecraft.tileentity.MobSpawnerBaseLogic.func_180612_a(MobSpawnerBaseLogic.java:347)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderMob(TileEntityMobSpawnerRenderer.java:24)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:15)
+	at net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.renderTileEntityAt(TileEntityMobSpawnerRenderer.java:9)
+
+-- Block Entity Details --
+Details:
+	Name: MobSpawner // net.minecraft.tileentity.TileEntityMobSpawner
+	Block type: ID #52 (tile.mobSpawner // net.minecraft.block.BlockMobSpawner)
+	Block data value: 0 / 0x0 / 0b0000
+	Block location: World: (161,64,156), Chunk: (at 1,4,12 in 10,9; contains blocks 160,0,144 to 175,255,159), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Actual block type: ID #52 (tile.mobSpawner // net.minecraft.block.BlockMobSpawner)
+	Actual block data value: 0 / 0x0 / 0b0000
+Stacktrace:
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntityAt(TileEntityRendererDispatcher.java:134)
+	at net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.renderTileEntity(TileEntityRendererDispatcher.java:114)
+	at net.minecraft.client.renderer.RenderGlobal.renderEntities(RenderGlobal.java:848)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1511)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1351)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7Childish_Corbino'/3292, l='MpServer', x=161,68, y=64,00, z=154,36], EntityOtherPlayerMP['§a[§bGod§cOwner§a] §7SoalBlaze'/3860, l='MpServer', x=159,84, y=64,91, z=152,72]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -176,00,64,00,256,00 - World: (-176,64,256), Chunk: (at 0,4,0 in -11,16; contains blocks -176,0,256 to -161,255,271), Region: (-1,0; contains chunks -32,0 to -1,31, blocks -512,0,0 to -1,255,511)
+	Level time: 67856 game time, 67856 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 63 total; [EntityArmorStand['Armor Stand'/4096, l='MpServer', x=160,22, y=65,00, z=145,09], EntityCreeper['Creeper'/3586, l='MpServer', x=124,50, y=71,00, z=129,50], EntityCreeper['Creeper'/3588, l='MpServer', x=117,50, y=71,00, z=128,50], EntityZombie['Zombie'/3602, l='MpServer', x=153,81, y=68,00, z=112,28], EntityZombie['Zombie'/3603, l='MpServer', x=153,41, y=68,00, z=113,22], EntitySkeleton['Skeleton'/3615, l='MpServer', x=125,50, y=71,00, z=112,50], EntityArmorStand['§3Kacke'/3628, l='MpServer', x=166,25, y=63,00, z=150,59], EntityArmorStand['§3Kacke'/3629, l='MpServer', x=166,25, y=64,00, z=159,34], EntityArmorStand['§3Kacke'/3630, l='MpServer', x=164,03, y=64,00, z=159,47], EntityArmorStand['§3Kacke'/3631, l='MpServer', x=161,97, y=63,00, z=152,38], EntityArmorStand['§3Kacke'/3632, l='MpServer', x=166,19, y=63,00, z=151,88], EntityArmorStand['§3Kacke'/3633, l='MpServer', x=166,28, y=63,00, z=153,91], EntityArmorStand['Armor Stand'/4146, l='MpServer', x=162,22, y=65,00, z=144,19], EntityArmorStand['Armor Stand'/4147, l='MpServer', x=161,06, y=64,00, z=151,63], EntityZombie['Zombie'/3636, l='MpServer', x=181,50, y=11,00, z=105,50], EntityArmorStand['§3Kacke'/3637, l='MpServer', x=162,91, y=63,00, z=159,06], EntityArmorStand['§3Kacke'/3641, l='MpServer', x=160,50, y=63,00, z=154,34], EntityArmorStand['§3Kacke'/3642, l='MpServer', x=160,75, y=64,00, z=157,56], EntityArmorStand['§3Kacke'/3644, l='MpServer', x=160,28, y=64,00, z=155,88], EntityArmorStand['§3Kacke'/3647, l='MpServer', x=159,50, y=63,00, z=158,66], EntityArmorStand['§3Kacke'/3649, l='MpServer', x=155,38, y=62,00, z=157,25], EntityArmorStand['§3Kacke'/3653, l='MpServer', x=157,41, y=63,00, z=155,13], EntitySquid['Squid'/4176, l='MpServer', x=207,28, y=55,59, z=123,53], EntitySkeleton['Skeleton'/4712, l='MpServer', x=121,50, y=71,00, z=135,50], EntityOtherPlayerMP['§a[§bGod§cOwner§a] §7SoalBlaze'/3860, l='MpServer', x=159,84, y=64,91, z=152,72], EntityItem['item.tile.sapling.oak'/3740, l='MpServer', x=160,25, y=62,00, z=166,19], EntitySquid['Squid'/6305, l='MpServer', x=206,94, y=56,13, z=185,50], EntityItem['item.tile.sand.default'/3754, l='MpServer', x=161,09, y=63,00, z=163,09], EntitySkeleton['Skeleton'/4287, l='MpServer', x=115,50, y=59,00, z=158,50], EntityZombie['Zombie'/4304, l='MpServer', x=179,50, y=65,56, z=123,48], EntityZombie['Zombie'/4310, l='MpServer', x=122,50, y=26,00, z=175,50], EntityZombie['Zombie'/4329, l='MpServer', x=164,50, y=30,00, z=179,50], EntityItem['item.tile.dirt.default'/3828, l='MpServer', x=153,00, y=64,00, z=172,69], EntityItem['item.tile.sand.default'/3841, l='MpServer', x=155,91, y=61,00, z=158,59], EntityItem['item.tile.dirt.default'/3843, l='MpServer', x=153,25, y=59,00, z=160,69], EntityItem['item.tile.dirt.default'/3848, l='MpServer', x=152,88, y=59,00, z=167,88], EntityItem['item.tile.dirt.default'/3850, l='MpServer', x=157,34, y=63,00, z=172,88], EntityItem['item.tile.dirt.default'/3852, l='MpServer', x=150,13, y=61,00, z=164,38], EntityItem['item.tile.sandStone.default'/3854, l='MpServer', x=153,13, y=58,00, z=164,66], EntityItem['item.tile.sandStone.default'/3855, l='MpServer', x=155,88, y=58,00, z=165,88], EntityItem['item.tile.stonebrick'/3856, l='MpServer', x=158,38, y=60,00, z=168,16], EntityOtherPlayerMP['§a[§bGod§cOwner§a] §7SoalBlaze'/3860, l='MpServer', x=159,84, y=64,91, z=152,72], EntityCreeper['Creeper'/4403, l='MpServer', x=168,50, y=29,00, z=186,50], EntitySquid['Squid'/3416, l='MpServer', x=141,34, y=55,94, z=214,66], EntitySkeleton['Skeleton'/3417, l='MpServer', x=179,50, y=29,00, z=193,50], EntitySkeleton['Skeleton'/3421, l='MpServer', x=163,50, y=32,00, z=191,50], EntityCreeper['Creeper'/3426, l='MpServer', x=120,50, y=25,00, z=173,50], EntityRabbit['Rabbit'/3427, l='MpServer', x=120,66, y=70,00, z=140,66], EntityRabbit['Rabbit'/3428, l='MpServer', x=126,56, y=69,00, z=149,59], EntityZombie['Zombie'/3942, l='MpServer', x=133,50, y=64,00, z=190,50], EntityItem['item.item.seeds'/3443, l='MpServer', x=143,41, y=64,00, z=148,91], EntityRabbit['Rabbit'/3444, l='MpServer', x=140,63, y=71,00, z=147,81], EntitySkeleton['Skeleton'/3968, l='MpServer', x=159,78, y=67,00, z=119,44], EntityCreeper['Creeper'/3970, l='MpServer', x=167,91, y=62,75, z=135,28], EntityPlayerSP['§a[§bGod§cOwner§a] §7Childish_Corbino'/3292, l='MpServer', x=161,68, y=64,00, z=154,36], EntityBat['Bat'/3990, l='MpServer', x=128,94, y=38,00, z=191,47], EntitySpider['Spider'/4035, l='MpServer', x=192,50, y=63,00, z=114,50], EntityChicken['Chicken'/3537, l='MpServer', x=139,86, y=68,00, z=186,50], EntityRabbit['Rabbit'/4053, l='MpServer', x=120,50, y=71,00, z=139,50], EntitySquid['Squid'/4065, l='MpServer', x=174,63, y=54,53, z=192,00], EntityZombie['Zombie'/3566, l='MpServer', x=125,50, y=71,00, z=109,50], EntityCreeper['Creeper'/3569, l='MpServer', x=127,50, y=71,00, z=104,50], EntityCreeper['Creeper'/3570, l='MpServer', x=127,50, y=71,00, z=105,50]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	Java Version: 1.8.0_281, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 541138984 bytes (516 MB) / 750256128 bytes (715 MB) up to 1881145344 bytes (1794 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 26, tallocated: 190
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce 940MX/PCIe/SSE2 GL version 4.6.0 NVIDIA 466.47, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 466.47
+	OpenGlRenderer: NVIDIA GeForce 940MX/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 4
