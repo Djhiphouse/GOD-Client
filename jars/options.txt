@@ -16,7 +16,7 @@ ao:2
 renderClouds:true
 resourcePacks:[]
 incompatibleResourcePacks:[]
-lastServer:minesucht.net
+lastServer:njsystems.de:25577
 lang:en_US
 chatVisibility:0
 chatColors:true

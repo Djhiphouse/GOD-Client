@@ -1,6 +1,8 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
+import me.bratwurst.checkHost.FTools_CheckHostScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
@@ -36,6 +38,8 @@ public class GuiScreenServerList extends GuiScreen
         this.buttonList.clear();
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, I18n.format(EnumChatFormatting.BLUE+"Beitreten", new Object[0])));
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, I18n.format(EnumChatFormatting.BLUE+"Zurück", new Object[0])));
+        this.buttonList.add(new GuiButton(4, 5, 6, 100, 20, "Check Host Ping"));
+        this.buttonList.add(new GuiButton(5, 5, 30, 100, 20, "Check Host TCP"));
         this.field_146302_g = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, 116, 200, 20);
         this.field_146302_g.setMaxStringLength(128);
         this.field_146302_g.setFocused(true);
@@ -68,6 +72,14 @@ public class GuiScreenServerList extends GuiScreen
             {
                 this.field_146301_f.serverIP = this.field_146302_g.getText();
                 this.field_146303_a.confirmClicked(true, 0);
+            }
+            else if (button.id == 4)
+            {
+                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.field_146302_g.getText(), "Ping", this));
+            }
+            else if (button.id == 5)
+            {
+                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.field_146302_g.getText(), "TCP", this));
             }
         }
     }
