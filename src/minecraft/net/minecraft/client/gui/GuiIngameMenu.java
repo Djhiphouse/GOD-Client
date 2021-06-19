@@ -12,20 +12,17 @@ import me.bratwurst.Client;
 import me.bratwurst.checkHost.FTools_CheckHostScreen;
 import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
-import me.bratwurst.manager.network.GodNetworkClient;
+import me.bratwurst.guiMain.NewPortScanner;
 import me.bratwurst.utils.FTools;
 import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
-import me.bratwurst.utils.TimeHelperAPI;
 import me.pseey.utils.TimeHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.realms.RealmsBridge;
 import net.minecraft.util.EnumChatFormatting;
@@ -63,30 +60,30 @@ public class GuiIngameMenu extends GuiScreen
             ((GuiButton)this.buttonList.get(0)).displayString = I18n.format("menu.disconnect", new Object[0]);
         }
         int b = 24;
-        //    this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + i, I18n.format("menu.returnToGame", new Object[0])));
-        //  this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + i+ b *2, 98, 20, I18n.format("menu.options", new Object[0])));
+    //    this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + i, I18n.format("menu.returnToGame", new Object[0])));
+      //  this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + i+ b *2, 98, 20, I18n.format("menu.options", new Object[0])));
 //        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 4 + 72 + i, I18n.format(EnumChatFormatting.RED + "ServerPinger", new Object[0])));
 //        this.buttonList.add(new GuiButton(929, this.width / 2 - 100, this.height / 4 + 72 + i +b, I18n.format(EnumChatFormatting.AQUA + "GodSettings", new Object[0])));
-        if(Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=") || Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU="))
-            this.buttonList.add(new GuiButton(999, this.width / 2 - 100, this.height / 4 + 72 + i +b*2, I18n.format(EnumChatFormatting.RED + "AdminMenu", new Object[0])));
+
+        this.buttonList.add(new GuiButton(999, this.width / 2 - 100, this.height / 4 + 72 + i +b*2, I18n.format(EnumChatFormatting.RED + "PortScanner", new Object[0])));
         GuiButton guibutton;
-        this.buttonList.add(guibutton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 -24 -24 + i + b *2 , 98, 20, I18n.format("menu.shareToLan", new Object[0])));
+       this.buttonList.add(guibutton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 -24 -24 + i + b *2 , 98, 20, I18n.format("menu.shareToLan", new Object[0])));
 //        this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.achievements", new Object[0])));
-        guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
+          guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
 
         //NEW
         this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4  + 24+ i, I18n.format("menu.returnToGame", new Object[0])));
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + i, 98, 20, I18n.format("menu.options", new Object[0])));
-        //   GuiButton guiButton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + i, 98, 20, I18n.format("menu.shareToLan", new Object[0]));
+     //   GuiButton guiButton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + i, 98, 20, I18n.format("menu.shareToLan", new Object[0]));
         this.buttonList.add(guibutton);
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.achievements", new Object[0])));
         this.buttonList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.stats", new Object[0])));
         boolean bl = guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
         if (!this.mc.isSingleplayer()) {
-            //      this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
+      //      this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
 //            this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, "Resolve SRV"));
             this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
-            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
+           this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
             this.buttonList.add(new GuiButton(61, this.width / 2 + 2, this.height / 4 + 72 + i, 98, 20, "Copy IP"));
             this.buttonList.add(new GuiButton(62, this.width / 2 - 100, this.height / 4 + 144 + i, "Reconnect"));
         }
@@ -169,7 +166,7 @@ public class GuiIngameMenu extends GuiScreen
                 break;
             }
             case 999:
-//                mc.displayGuiScreen(new GuiAdmin());
+                mc.displayGuiScreen(new NewPortScanner(this));
                 break;
             case 7:
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
@@ -194,9 +191,9 @@ public class GuiIngameMenu extends GuiScreen
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.drawDefaultBackground();
+         this.drawDefaultBackground();
 
-        //  drawRect(this.width / 0, this.height / 0, this.width - 0, this.height / 0 + this.height / 0, new Color(40, 40, 40, 166).getRGB());
+      //  drawRect(this.width / 0, this.height / 0, this.width - 0, this.height / 0 + this.height / 0, new Color(40, 40, 40, 166).getRGB());
 
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderTpsBox();
@@ -206,36 +203,9 @@ public class GuiIngameMenu extends GuiScreen
             this.tps.add((int)TPSUtils.lastTps);
             this.reload = 0;
         }
-        Ipinfos();
 
 
 
-    }
-    public void Ipinfos() {
-
-        if(!this.mc.isSingleplayer()) {
-            Color color = new Color(14, 14, 14, 154);
-            if (TimeHelperAPI.hasReached(4000)) {
-                Client.networkClient.getIp()
-                        .exceptionally(throwable -> {
-                            throwable.printStackTrace();
-                            return null;
-                        });
-                TimeHelperAPI.reset();
-            }
-
-            GlStateManager.pushMatrix();
-            drawRect(this.width / 9 - 80, this.height / 2 - 30, this.width / 4, 154, color.getRGB());
-            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Richtige IP: " + EnumChatFormatting.AQUA + Client.ipadresse, this.width /9 - 75, this.height /3 - 12, 0);
-            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Land: " + EnumChatFormatting.AQUA +  Client.countryName, this.width /9 - 75, this.height /3 + 12, 0);
-            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Landcode: " + EnumChatFormatting.AQUA +  Client.countryCode2, this.width /9 - 75, this.height /3 + 4 * 6, 0);
-            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Isp: " + EnumChatFormatting.AQUA +  Client.isp, this.width /9 - 75, this.height /3 + 7 * 5, 0);
-            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Ipnummer: " + EnumChatFormatting.AQUA +  Client.ipNumber, this.width /9 - 75, this.height /3, 0);
-            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Server Status: " + EnumChatFormatting.AQUA +  Client.responseMessage, this.width /9 - 75, this.height /3 + 9 * 5, 0);
-            drawString(fontRendererObj, EnumChatFormatting.BLUE + "Server code: " + EnumChatFormatting.AQUA +  Client.responseCode, this.width /9 - 75, this.height /1, 0);
-
-            GlStateManager.popMatrix();
-        }
 
     }
     private void renderTpsBox() {
@@ -311,13 +281,13 @@ public class GuiIngameMenu extends GuiScreen
             float min = Math.max(0, this.lowestTps - 20);
             double percent = (on - min) / (max - min) * h - (float)(this.tps.size() < 80 ? this.tps.get(i) * 6 : 0);
             if (this.tps.size() < 80) continue;
-            if (this.redLineTimer < 3300) {
-                ++this.redLineTimer;
-                continue;
+                if (this.redLineTimer < 3300) {
+                    ++this.redLineTimer;
+                    continue;
 
             }
 
-            GL11.glVertex2d((double)((double)x + 2.5 + (double)i * 2.5), (double)((double)(y + h) - 1 - percent));
+        GL11.glVertex2d((double)((double)x + 2.5 + (double)i * 2.5), (double)((double)(y + h) - 1 - percent));
 
         }
         GL11.glEnd();
