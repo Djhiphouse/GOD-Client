@@ -16,6 +16,7 @@ public class flyitems extends Command {
             MainUtil.SendClientMesage(EnumChatFormatting.AQUA + "Bitte trage ein item Namen ein");
         } else {
             try {
+                MainUtil.SendClientMesage(EnumChatFormatting.GREEN + "Erfolgreich");
                 mc.thePlayer.sendQueue.addToSendQueue(new C10PacketCreativeInventoryAction(36, FTools_ItemUtils.getSpawnerFromFurnace(FTools_ItemUtils.getFlyBlocks(args[0]))));
             }
             catch (Exception e) {
