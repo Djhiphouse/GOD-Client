@@ -69,7 +69,7 @@ public class Client {
     }
     public static Minecraft mc = Minecraft.getMinecraft();
 
-    public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.1", CLIENT_CODER = "Bratwust001";
+    public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.2", CLIENT_CODER = "Bratwust001";
 
     public final String CLIENT_PREFIX = EnumChatFormatting.AQUA + "[" + EnumChatFormatting.BLUE + "GOD" + EnumChatFormatting.AQUA + "]";
 
