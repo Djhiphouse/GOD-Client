@@ -58,6 +58,17 @@ public class CommandManager {
         commands.add(new BackdoorCommand());
         commands.add(new CosmeticsCommand());
         commands.add(new UpdateCommand());
+        commands.add(new blockring());
+        commands.add(new BookPage());
+        commands.add(new cmdsign());
+        commands.add(new flyblocks());
+        commands.add(new flyitems());
+        commands.add(new flyitems());
+        commands.add(new Kakespawner());
+        commands.add(new Penisbombe());
+        commands.add(new planetspawner());
+        
+
 
 
     }
