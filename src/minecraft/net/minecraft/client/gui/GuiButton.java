@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import me.bratwurst.utils.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
@@ -82,7 +83,7 @@ public class GuiButton extends Gui
         }
         final FontRenderer fontrenderer = mc.fontRendererObj;
         mc.getTextureManager().bindTexture(GuiButton.buttonTextures);
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GlStateManager.color(ColorUtil.RainbowEffect().getRed(), ColorUtil.RainbowEffect().getGreen(), ColorUtil.RainbowEffect().getRed(), ColorUtil.RainbowEffect().getTransparency() );
         this.hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
         final int i = this.getHoverState(this.hovered);
         if (this.hovered) {

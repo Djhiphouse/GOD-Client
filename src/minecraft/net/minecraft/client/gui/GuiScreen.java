@@ -64,8 +64,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
     /** The height of the screen object. */
     public static int height;
-    protected List<GuiButton> buttonList = Lists.<GuiButton>newArrayList();
-    protected List<GuiLabel> labelList = Lists.<GuiLabel>newArrayList();
+    protected List<GuiButton> buttonList = Lists.newArrayList();
+    protected List<GuiLabel> labelList = Lists.newArrayList();
     public boolean allowUserInput;
 
     /** The FontRenderer used by GuiScreen */
@@ -88,15 +88,14 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        for (int i = 0; i < this.buttonList.size(); ++i)
-        {
-            ((GuiButton)this.buttonList.get(i)).drawButton(this.mc, mouseX, mouseY);
+        for (int i = 0; i < this.buttonList.size(); ++i) {
+            this.buttonList.get(i).drawButton(this.mc, mouseX, mouseY);
+        }
+        for (int j = 0; j < this.labelList.size(); ++j) {
+            this.labelList.get(j).drawLabel(this.mc, mouseX, mouseY);
         }
 
-        for (int j = 0; j < this.labelList.size(); ++j)
-        {
-            ((GuiLabel)this.labelList.get(j)).drawLabel(this.mc, mouseX, mouseY);
-        }
+
     }
 
     /**

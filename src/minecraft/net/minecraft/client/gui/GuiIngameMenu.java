@@ -2,19 +2,23 @@ package net.minecraft.client.gui;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import me.bratwurst.Client;
+import me.bratwurst.checkHost.FTools_CheckHostScreen;
 import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
+import me.bratwurst.utils.FTools;
 import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
@@ -27,6 +31,7 @@ public class GuiIngameMenu extends GuiScreen
 
     private int lowestTps = Integer.MAX_VALUE;
     private boolean isAutoReconnectClicked = false;
+
     private ServerData data;
     private int reload = 200;
     private int redLineTimer = 10;
@@ -73,10 +78,10 @@ public class GuiIngameMenu extends GuiScreen
         this.buttonList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.stats", new Object[0])));
         boolean bl = guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
         if (!this.mc.isSingleplayer()) {
-//            this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
+      //      this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
 //            this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, "Resolve SRV"));
-//            this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
-//            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
+            this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
+           this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
             this.buttonList.add(new GuiButton(61, this.width / 2 + 2, this.height / 4 + 72 + i, 98, 20, "Copy IP"));
             this.buttonList.add(new GuiButton(62, this.width / 2 - 100, this.height / 4 + 144 + i, "Reconnect"));
         }
@@ -143,10 +148,19 @@ public class GuiIngameMenu extends GuiScreen
                 GuiIngameMenu.setClipboardString(this.mc.getCurrentServerData().serverIP);
                 break;
             }
+
             case 62: {
                 this.data = this.mc.getCurrentServerData();
                 this.mc.theWorld.sendQuittingDisconnectingPacket();
                 this.mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(new GuiMainMenu()), this.mc, this.data));
+                break;
+            }
+            case 58: {
+                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.mc.getCurrentServerData().serverIP, "Ping", this));
+                break;
+            }
+            case 59: {
+                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.mc.getCurrentServerData().serverIP, "TCP", this));
                 break;
             }
             case 999:
@@ -187,6 +201,8 @@ public class GuiIngameMenu extends GuiScreen
             this.tps.add((int)TPSUtils.lastTps);
             this.reload = 0;
         }
+
+
 
 
     }
