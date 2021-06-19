@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 import de.flori2007.viaforge.gui.GuiProtocolSelector;
+import me.bratwurst.guiMain.GuiRcon;
 import me.bratwurst.utils.ShaderUtils;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
@@ -96,6 +97,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
         this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 76, this.height - 28, 75, 20, I18n.format(EnumChatFormatting.BLUE+ "Abbrechen", new Object[0])));
 
         this.buttonList.add(new GuiButton(1337, 10, 5, 100, 20, EnumChatFormatting.AQUA + "Via"+EnumChatFormatting.BLUE+"Version"));
+        this.buttonList.add(new GuiButton(1339, this.width - 110, 5, 100, 20, EnumChatFormatting.AQUA + "R"+EnumChatFormatting.BLUE+"con"));
 
         this.selectServer(this.serverListSelector.func_148193_k());
     }
@@ -169,6 +171,8 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
 
             } else if (button.id == 1337) {
                 this.mc.displayGuiScreen(new GuiProtocolSelector(this));
+            } else if (button.id == 1339) {
+                this.mc.displayGuiScreen(new GuiRcon(this));
             }
         }
     }
