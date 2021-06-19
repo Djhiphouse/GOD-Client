@@ -2,12 +2,17 @@ package me.bratwurst.manager.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.beans.binding.StringExpression;
+import me.bratwurst.utils.player.PlayerUtils;
+import net.minecraft.client.Minecraft;
 import okhttp3.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -121,6 +126,36 @@ public class GodNetworkClient {
                 }
             } catch (IOException exception) {
                 throw new RuntimeException(exception);
+
+            }
+        }, executor);
+    }
+
+    public static String ips = "";
+
+    public CompletableFuture<IpResponse> getIp() {
+        String hostString = ((InetSocketAddress) Minecraft.getMinecraft()
+                .getNetHandler().getNetworkManager().getRemoteAddress())
+                .getAddress()
+                .getHostAddress();
+
+        Request okRequest = new Request.Builder()
+                .url("https://api.iplocation.net/?ip=" + hostString)
+                .get()
+                .build();
+
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Response response = client.newCall(okRequest).execute();
+                try (ResponseBody body = response.body();
+                     InputStream bodyStream = body.byteStream()) {
+                    InputStreamReader json = new InputStreamReader(bodyStream);
+                    IpResponse ipResponse = gson.fromJson(json, IpResponse.class);
+                    System.out.println(ipResponse);
+                    return ipResponse;
+                }
+            } catch (IOException exception) {
+                throw new RuntimeException(exception);
             }
         }, executor);
     }
@@ -147,6 +182,38 @@ public class GodNetworkClient {
     public static class ShadeResponse {
         public Map<UUID, Rank> users = new HashMap<>();
     }
+
+    public static class IpResponse {
+        public String ip;
+        @SerializedName("ip_number")
+        public String ipNumber;
+        @SerializedName("ip_version")
+        public int ipVersion;
+        @SerializedName("country_name")
+        public String countryName;
+        @SerializedName("country_code2")
+        public String countryCode2;
+        public String isp;
+        @SerializedName("response_code")
+        public String responseCode;
+        @SerializedName("response_message")
+        public String responseMessage;
+
+        @Override
+        public String toString() {
+            return "IpResponse{" +
+                    "ip='" + ip + '\'' +
+                    ", ipNumber='" + ipNumber + '\'' +
+                    ", ipVersion=" + ipVersion +
+                    ", countryName='" + countryName + '\'' +
+                    ", countryCode2='" + countryCode2 + '\'' +
+                    ", isp='" + isp + '\'' +
+                    ", responseCode='" + responseCode + '\'' +
+                    ", responseMessage='" + responseMessage + '\'' +
+                    '}';
+        }
+    }
+
 
     private static class ShadeRequest {
         public String[] ids;
