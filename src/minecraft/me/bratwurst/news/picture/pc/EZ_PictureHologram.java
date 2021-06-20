@@ -61,7 +61,7 @@ public class EZ_PictureHologram {
             Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C10PacketCreativeInventoryAction(36, this.stands[this.counter++]));
 
             PlayerUtils.sendMessage("Du musst noch " + (this.is.pictures - this.counter + 1) + " Holograme platzieren");
-            
+
 
             if (this.counter >= this.stands.length) {
                 this.counter = 0;
