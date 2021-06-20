@@ -1,0 +1,102 @@
+---- Minecraft Crash Report ----
+// Shall we play a game?
+
+Time: 20.06.21 16:29
+Description: Updating screen events
+
+java.lang.NullPointerException: Updating screen events
+	at me.bratwurst.module.Commands.BildHologram.onCommand(BildHologram.java:33)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:83)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:331)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1567)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1015)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at me.bratwurst.module.Commands.BildHologram.onCommand(BildHologram.java:33)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:83)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:331)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+
+-- Affected screen --
+Details:
+	Screen name: net.minecraft.client.gui.GuiChat
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God244'/2247, l='MpServer', x=148,03, y=70,00, z=253,70]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -4,00,64,00,252,00 - World: (-4,64,252), Chunk: (at 12,4,12 in -1,15; contains blocks -16,0,240 to -1,255,255), Region: (-1,0; contains chunks -32,0 to -1,31, blocks -512,0,0 to -1,255,511)
+	Level time: 1290921 game time, 1290921 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 44 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God244'/2247, l='MpServer', x=148,03, y=70,00, z=253,70], EntitySkeleton['Skeleton'/2326, l='MpServer', x=125,50, y=64,00, z=222,50], EntityCreeper['Creeper'/2327, l='MpServer', x=166,29, y=74,00, z=261,50], EntityZombie['Zombie'/2329, l='MpServer', x=165,50, y=39,00, z=282,50], EntitySkeleton['Skeleton'/2330, l='MpServer', x=161,50, y=40,00, z=287,50], EntityPig['Pig'/2331, l='MpServer', x=194,16, y=69,00, z=216,44], EntityZombie['Zombie'/2333, l='MpServer', x=177,50, y=36,00, z=293,50], EntitySkeleton['Skeleton'/2334, l='MpServer', x=170,50, y=36,00, z=294,50], EntityZombie['Zombie'/2335, l='MpServer', x=173,50, y=36,00, z=291,50], EntityZombie['Zombie'/2336, l='MpServer', x=174,50, y=36,00, z=292,50], EntityRabbit['Rabbit'/1441, l='MpServer', x=127,63, y=65,00, z=203,44], EntityRabbit['Rabbit'/1443, l='MpServer', x=110,50, y=68,94, z=274,97], EntityCreeper['Creeper'/1455, l='MpServer', x=125,06, y=64,00, z=214,66], EntityZombie['Zombie'/2105, l='MpServer', x=118,50, y=64,00, z=275,50], EntityEnderman['Enderman'/2116, l='MpServer', x=110,50, y=64,00, z=214,50], EntityRabbit['Rabbit'/2252, l='MpServer', x=123,53, y=63,00, z=270,13], EntitySkeleton['Skeleton'/2253, l='MpServer', x=137,81, y=67,00, z=283,25], EntitySkeleton['Skeleton'/2258, l='MpServer', x=133,69, y=64,00, z=205,59], EntitySkeleton['Skeleton'/468, l='MpServer', x=105,66, y=63,00, z=258,19], EntityRabbit['Rabbit'/2260, l='MpServer', x=135,03, y=69,00, z=296,84], EntityArmorStand['Armor Stand'/2268, l='MpServer', x=153,91, y=71,00, z=249,28], EntityArmorStand[' a'/2269, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2270, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2271, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2272, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2273, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2274, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2275, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2276, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2277, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2278, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2279, l='MpServer', x=155,22, y=70,00, z=250,59], EntityArmorStand[' a'/2280, l='MpServer', x=155,22, y=70,00, z=250,59], EntityCreeper['Creeper'/2281, l='MpServer', x=99,50, y=76,00, z=289,50], EntityChicken['Chicken'/234, l='MpServer', x=112,50, y=73,00, z=281,75], EntityCreeper['Creeper'/2285, l='MpServer', x=148,50, y=64,00, z=215,50], EntityRabbit['Rabbit'/2286, l='MpServer', x=145,28, y=70,00, z=279,06], EntitySkeleton['Skeleton'/2294, l='MpServer', x=150,22, y=65,00, z=206,19], EntityRabbit['Rabbit'/248, l='MpServer', x=112,94, y=63,00, z=241,84], EntityRabbit['Rabbit'/2040, l='MpServer', x=122,47, y=64,00, z=221,22], EntityCreeper['Creeper'/2297, l='MpServer', x=157,13, y=64,00, z=206,72], EntityHorse['Horse'/249, l='MpServer', x=115,63, y=64,00, z=227,34], EntityChicken['Chicken'/252, l='MpServer', x=118,11, y=72,00, z=275,50], EntityChicken['Chicken'/253, l='MpServer', x=106,78, y=72,00, z=264,66]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2333)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	Java Version: 1.8.0_281, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 440215472 bytes (419 MB) / 636485632 bytes (607 MB) up to 1881145344 bytes (1794 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce 940MX/PCIe/SSE2 GL version 4.6.0 NVIDIA 466.47, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 4x Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 466.47
+	OpenGlRenderer: NVIDIA GeForce 940MX/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 4
