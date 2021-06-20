@@ -11,6 +11,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import me.bratwurst.Client;
 import me.bratwurst.checkHost.FTools_CheckHostScreen;
+import me.bratwurst.guiMain.GuiAdminGUI;
 import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
 import me.bratwurst.guiMain.NewPortScanner;
@@ -85,7 +86,7 @@ public class GuiIngameMenu extends GuiScreen
         boolean bl = guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
         if (!this.mc.isSingleplayer()) {
             this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
-//            this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, "Resolve SRV"));
+            this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, EnumChatFormatting.RED + "AdminGui"));
             this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
             this.buttonList.add(new GuiButton(61, this.width / 2 + 2, this.height / 4 + 72 + i, 98, 20, "Copy IP"));
@@ -173,6 +174,10 @@ public class GuiIngameMenu extends GuiScreen
             }
             case 55: {
                 mc.displayGuiScreen(new GuiCrashScreen(this));
+                break;
+            }
+            case 56: {
+                mc.displayGuiScreen(new GuiAdminGUI());
                 break;
             }
             case 999:
