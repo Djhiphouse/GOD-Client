@@ -486,6 +486,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Starts the game: initializes the canvas, the title, the settings, etcetera.
      */
     private void startGame() throws LWJGLException, IOException {
+
         this.gameSettings = new GameSettings(this, this.mcDataDir);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
         this.startTimerHackThread();
@@ -1524,6 +1525,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Runs the current tick.
      */
     public void runTick() throws IOException {
+
         if (this.rightClickDelayTimer > 0) {
             --this.rightClickDelayTimer;
         }

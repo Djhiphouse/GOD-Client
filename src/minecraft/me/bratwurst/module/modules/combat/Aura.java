@@ -152,15 +152,15 @@ public class Aura extends Module {
                             mc.thePlayer.rotationPitch = pitch;
                         }
                         if (target.isDead && target.ticksExisted > 20 && otherbo.getValString().equalsIgnoreCase("AutoGG")) {
-                            if (TimeHelper.hasReached(50)) {
+                            if (KillauraTimehelper.hasReached(50)) {
                                 PlayerUtil.SendPacketchat("GG");
-                                TimeHelper.reset();
+                                KillauraTimehelper.reset();
                             }
                         }
                         if (target.isDead && target.ticksExisted > 20 && otherbo.getValString().equalsIgnoreCase("AutoEz")) {
-                            if (TimeHelper.hasReached(50)) {
+                            if (KillauraTimehelper.hasReached(50)) {
                                 PlayerUtil.SendPacketchat("EZ Kill");
-                                TimeHelper.reset();
+                                KillauraTimehelper.reset();
                             }
 
                         }
@@ -210,12 +210,12 @@ public class Aura extends Module {
 
 
         if (Rotations.getValString().equalsIgnoreCase("NoRotate")) {
-            if (TimeHelper.hasPassed(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
+            if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
                 Attack = true;
                 mc.playerController.attackEntity(mc.thePlayer, entity);
                 mc.thePlayer.swingItem();
 
-                TimeHelper.reset();
+                KillauraTimehelper.reset();
             }
             Attack = false;
         } else {
@@ -225,12 +225,12 @@ public class Aura extends Module {
             mc.thePlayer.rotationYawHead = rotate[0];
             e.setYaw(yaw);
             e.setPitch(pitch);
-            if (TimeHelper.hasPassed(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
+            if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
                 Attack = true;
                 mc.playerController.attackEntity(mc.thePlayer, entity);
                 mc.thePlayer.swingItem();
 
-                TimeHelper.reset();
+                KillauraTimehelper.reset();
             }
             Attack = false;
         }
@@ -238,12 +238,12 @@ public class Aura extends Module {
         //FailHits
 
 
-        if (TimeHelper.hasPassed(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
+        if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
             Attack = true;
             mc.playerController.attackEntity(mc.thePlayer, entity);
             mc.thePlayer.swingItem();
 
-            TimeHelper.reset();
+            KillauraTimehelper.reset();
         }
         Attack = false;
     }

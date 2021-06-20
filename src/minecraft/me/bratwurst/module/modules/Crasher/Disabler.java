@@ -88,10 +88,9 @@ public void Replaysucht() {
        }
 }
     public void ghostlie() {
-        if (TimeHelper.hasReached(200)) {
+
             Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C0CPacketInput(999, 999, true, true));
-            TimeHelper.reset();
-        }
+
 
     }
 

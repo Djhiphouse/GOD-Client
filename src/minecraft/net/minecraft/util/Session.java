@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class Session
 {
-    private final String username;
+    public String username;
     private final String playerID;
     private final String token;
     private final Session.Type sessionType;

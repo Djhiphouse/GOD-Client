@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -17,6 +18,7 @@ import me.bratwurst.utils.FTools;
 import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
 import me.pseey.utils.TimeHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -30,10 +32,10 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiIngameMenu extends GuiScreen
 {
-
+    public static boolean NamenHack = false;
     private int lowestTps = Integer.MAX_VALUE;
     private boolean isAutoReconnectClicked = false;
-
+    DecimalFormat df = new DecimalFormat("#.##");
     private ServerData data;
     private int reload = 200;
     private int redLineTimer = 10;
@@ -41,7 +43,7 @@ public class GuiIngameMenu extends GuiScreen
     private final ArrayList<Integer> tps = new ArrayList();
     private int field_146445_a;
     private int field_146444_f;
-    DecimalFormat df = new DecimalFormat("#.##");
+
     /**
      * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
      * window resizes, the buttonList is cleared beforehand.
@@ -66,6 +68,7 @@ public class GuiIngameMenu extends GuiScreen
 //        this.buttonList.add(new GuiButton(929, this.width / 2 - 100, this.height / 4 + 72 + i +b, I18n.format(EnumChatFormatting.AQUA + "GodSettings", new Object[0])));
 
         this.buttonList.add(new GuiButton(999, this.width / 2 - 100, this.height / 4 + 72 + i +b*2, I18n.format(EnumChatFormatting.RED + "PortScanner", new Object[0])));
+
         GuiButton guibutton;
        this.buttonList.add(guibutton = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 -24 -24 + i + b *2 , 98, 20, I18n.format("menu.shareToLan", new Object[0])));
 //        this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.achievements", new Object[0])));
@@ -150,6 +153,8 @@ public class GuiIngameMenu extends GuiScreen
                 GuiIngameMenu.setClipboardString(this.mc.getCurrentServerData().serverIP);
                 break;
             }
+            case 888:
+
 
             case 62: {
                 this.data = this.mc.getCurrentServerData();
@@ -203,7 +208,12 @@ public class GuiIngameMenu extends GuiScreen
             this.tps.add((int)TPSUtils.lastTps);
             this.reload = 0;
         }
+        Ipinfo();
+        if (TimeHelper.hasReached(1000)){
+            Client.networkClient.getIp();
+            TimeHelper.reset();
 
+        }
 
 
 
@@ -299,5 +309,41 @@ public class GuiIngameMenu extends GuiScreen
         float max = Math.max(1, this.highestTps) + 20;
         float min = Math.max(0, this.lowestTps - 20);
         GL11.glPopMatrix();
+    }
+    public void Ipinfo() {
+        drawRect(this.width / 16, this.height / 3 -5, this.width - 79 * 9, this.height / 3 + this.height / 5, new Color(19, 17, 17, 168).getRGB());
+        this.drawString(this.fontRendererObj, EnumChatFormatting.AQUA  + "IP: " +EnumChatFormatting.BLUE +  Client.ipadresse,this.width / 16, this.height / 3 + 1, -1);
+        this.drawString(this.fontRendererObj, EnumChatFormatting.AQUA  + "IPNumber: " +EnumChatFormatting.BLUE +  Client.ipNumber,this.width / 16, this.height / 3 + 13, -1);
+        this.drawString(this.fontRendererObj, EnumChatFormatting.AQUA  + "Country: " +EnumChatFormatting.BLUE +  Client.countryName,this.width / 16, this.height / 3 + 26, -1);
+        this.drawString(this.fontRendererObj, EnumChatFormatting.AQUA  + "CountryCode: " +EnumChatFormatting.BLUE +  Client.countryCode2,this.width / 16, this.height / 3 + 39, -1);
+
+        this.drawString(this.fontRendererObj, EnumChatFormatting.AQUA  + "isp: " +EnumChatFormatting.BLUE +  Client.isp,this.width / 16, this.height / 3 + 53, -1);
+        this.drawString(this.fontRendererObj, EnumChatFormatting.AQUA  + "ServerStatus: " +EnumChatFormatting.BLUE +  Client.responseMessage,this.width / 16, this.height / 3 + 67, -1);
+        this.drawString(this.fontRendererObj, EnumChatFormatting.AQUA  + "TPS: " +EnumChatFormatting.BLUE +  this.df.format(TPSUtils.tps),this.width / 16, this.height / 3 + 80, -1);
+    }
+    public static Random rdn = new Random();
+    public static String NutzerNamenHack = "";
+    public String GenerateKomischerNutzernamen() {
+        String result = "";
+        char[] nutzernamenBuchstaben = NutzerNamenHack.toCharArray();
+        for (int i = 0; i < nutzernamenBuchstaben.length; i++) {
+            if (rdn.nextInt(2) == 1) {
+                result += String.valueOf(nutzernamenBuchstaben[i]).toUpperCase();
+            }else {
+                result += String.valueOf(nutzernamenBuchstaben[i]).toLowerCase();
+            }
+        }
+        return result;
+    }
+
+    public  void NamenHackexploit() {
+        try {
+            if (Minecraft.getMinecraft().thePlayer == null) {
+                Minecraft.getMinecraft().session.username = GenerateKomischerNutzernamen();
+            }
+        }catch (Exception e) {
+
+        }
+
     }
 }
