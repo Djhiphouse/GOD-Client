@@ -5,6 +5,7 @@ import me.bratwurst.AltManager.GuiAltManager;
 import me.bratwurst.Client;
 import me.bratwurst.guiMain.*;
 import me.bratwurst.manager.PartikelSystem.ParticleSystem;
+import me.bratwurst.news.proxy.ProxyMenuScreen;
 import me.bratwurst.utils.DrawMenuLogoUtil;
 import me.bratwurst.utils.ShaderUtils;
 import me.bratwurst.utils.WbUtils;
@@ -21,6 +22,7 @@ import org.lwjgl.opengl.GLContext;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.UUID;
@@ -66,11 +68,12 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
 
         //    addButton();
 
-        this.buttonList.add(new GuiButton(0, 0, this.height / 2, this.width /7, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, 0 , this.height / 2 + i * 1, this.width /7, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(0, 0, this.height / 2+i*2, this.width /7, 20, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new GuiButton(4, 0 , this.height / 2 + i * 3, this.width /7, 20, I18n.format("menu.quit", new Object[0])));
         this.buttonList.add(new GuiButton(1, 0, this.height / 2 - i * 3, this.width /7, 20, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new GuiButton(2, 0, this.height / 2 - i * 2, this.width /7, 20, I18n.format("menu.multiplayer", new Object[0])));
         this.buttonList.add(new GuiButton(14, 0, this.height / 2 - i * 1, this.width /7, 20, I18n.format("AltManager", new Object[0])));
+        this.buttonList.add(new GuiButton(15, 0, this.height / 2 + i * 1, this.width /7, 20, I18n.format("ProxyMenu", new Object[0])));
 
         this.buttonList.add(new GuiLogoButton(9992 , scaledResolution, this.width - 50, this.height /6 , 35, 35, youtube, false));
         this.buttonList.add(new GuiLogoButton(9993 , scaledResolution, this.width - 50, this.height /6 +i *2 -2, 35, 35, discord, false));
@@ -109,6 +112,9 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
 
         if (button.id == 14) {
             this.mc.displayGuiScreen(new GuiAltManager());
+        }
+        if (button.id == 15) {
+            this.mc.displayGuiScreen(new ProxyMenuScreen(this));
         }
 
         if (button.id == 4) {

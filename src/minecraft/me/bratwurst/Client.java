@@ -11,6 +11,7 @@ import me.bratwurst.manager.ConfigManager;
 import me.bratwurst.manager.HWIDcheck.HWIDcheck;
 import me.bratwurst.manager.ModuleManager;
 import me.bratwurst.manager.network.GodNetworkClient;
+import me.bratwurst.news.picture.EZ_HologrammManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.Items;
@@ -68,6 +69,7 @@ public class Client {
         return instance;
     }
     public static Minecraft mc = Minecraft.getMinecraft();
+    private EZ_HologrammManager hologramManager = new EZ_HologrammManager();
 
     public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.2", CLIENT_CODER = "Bratwust001";
 
@@ -88,7 +90,9 @@ public class Client {
     public static final String hwid = HWIDcheck.getHwid();
     public static final GodNetworkClient networkClient = new GodNetworkClient();
 
-
+    public EZ_HologrammManager getHologramManager() {
+        return this.hologramManager;
+    }
     public void start() {
         instance = this;
         init();

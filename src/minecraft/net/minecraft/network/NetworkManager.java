@@ -24,6 +24,8 @@ import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import me.bratwurst.event.events.ProcessPacketEvent;
+import me.bratwurst.news.proxy.ProxyFactory;
+import me.bratwurst.news.proxy.ProxyMenuScreen;
 import me.bratwurst.utils.TPSUtils;
 import me.bratwurst.utils.TimeHelper;
 import net.minecraft.util.*;
@@ -374,6 +376,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
             oclass = NioSocketChannel.class;
             lazyloadbase = CLIENT_NIO_EVENTLOOP;
         }
+        Bootstrap b = new Bootstrap();
         ((Bootstrap) ((Bootstrap) ((Bootstrap) (new Bootstrap()).group((EventLoopGroup) lazyloadbase.getValue()))
                 .handler(new ChannelInitializer<Channel>() {
                     protected void initChannel(Channel p_initChannel_1_) throws Exception {
@@ -402,6 +405,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                         }
                     }
                 })).channel(oclass)).connect(p_181124_0_, p_181124_1_).syncUninterruptibly();
+        if (ProxyMenuScreen.useProxy) {
+            b.channelFactory(new ProxyFactory(ProxyMenuScreen.currentProxy));
+        } else {
+            b.channel(oclass);
+        }
         return networkmanager;
     }
 

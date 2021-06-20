@@ -67,6 +67,7 @@ public class CommandManager {
         commands.add(new Kakespawner());
         commands.add(new Penisbombe());
         commands.add(new planetspawner());
+        commands.add(new BildHologram());
 
 
 
