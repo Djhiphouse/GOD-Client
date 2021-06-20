@@ -38,7 +38,7 @@ public class Hitanimation extends Module {
         options.add("Table");
         options.add("Remix");
         Client.instance.setmgr.rSetting(new Setting("BlockAnimation", this, "Slide", options));
-        Client.instance.setmgr.rSetting(new Setting(EnumChatFormatting.AQUA +"BlockAnimation Speed", this, 3, 1, 50, true));
+        Client.instance.setmgr.rSetting(new Setting("BlockAnimation Speed", this, 3, 1, 50, true));
 
     }
 

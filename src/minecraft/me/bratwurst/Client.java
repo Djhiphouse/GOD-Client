@@ -22,12 +22,15 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.util.EnumChatFormatting;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Client {
+
+    public static File filePath = getWorkingPath("minecraft/God/Tools/");
 
     /**
      * Main events you may need:
@@ -170,7 +173,68 @@ public class Client {
         });
 
     }
+    public static File getWorkingPath(String applicationName) {
+        String userHome = System.getProperty("user.home", ".");
+        File workingDirectory = null;
+        switch (Client.getPlatform()) {
+            case LINUX: {
+                workingDirectory = new File(userHome, '.' + applicationName + '/');
+                break;
+            }
+            case UNKNOWN:
+            case MACOS: {
+                workingDirectory = new File(userHome, "Library/Application Support/" + applicationName);
+                break;
+            }
+            case WINDOWS:
+            case SOLARIS: {
+                String applicationData = System.getenv("APPDATA");
+                if (applicationData != null) {
+                    workingDirectory = new File(applicationData, "." + applicationName + '/');
+                    break;
+                }
+                workingDirectory = new File(userHome, '.' + applicationName + '/');
+                break;
+            }
+            default: {
+                workingDirectory = new File(userHome, applicationName + '/');
+            }
+        }
+        if (!workingDirectory.exists() && !workingDirectory.mkdirs()) {
+            throw new RuntimeException("The working directory could not be created: " + workingDirectory);
+        }
+        return workingDirectory;
+    }
 
+    public static OS getPlatform() {
+        String osName = System.getProperty("os.name").toLowerCase();
+        for (OS os : OS.values()) {
+            if (os == OS.UNKNOWN) continue;
+            for (String name : os.getOsNames()) {
+                if (!osName.contains(name)) continue;
+                return os;
+            }
+        }
+        return OS.UNKNOWN;
+    }
+
+    public static enum OS {
+        LINUX("linux", "unix"),
+        SOLARIS("solaris", "sunos"),
+        WINDOWS("win"),
+        MACOS("mac"),
+        UNKNOWN(new String[0]);
+
+        private String[] osNames;
+
+        private OS(String ... osNames) {
+            this.osNames = osNames;
+        }
+
+        public String[] getOsNames() {
+            return this.osNames;
+        }
+    }
     public void shutdown() {
         DiscordRP.getInstance().shutdown();
     }

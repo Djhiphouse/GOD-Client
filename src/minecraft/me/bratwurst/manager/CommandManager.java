@@ -68,6 +68,7 @@ public class CommandManager {
         commands.add(new Penisbombe());
         commands.add(new planetspawner());
         commands.add(new BildHologram());
+        commands.add(new instantcrash());
 
 
 

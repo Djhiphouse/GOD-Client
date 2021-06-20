@@ -1,0 +1,92 @@
+---- Minecraft Crash Report ----
+// Don't do that.
+
+Time: 20.06.21 22:39
+Description: Unexpected error
+
+java.lang.NullPointerException: Unexpected error
+	at net.minecraft.client.renderer.ItemRenderer.renderItemInFirstPerson(ItemRenderer.java:409)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:918)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:874)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1674)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1351)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1184)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1040)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.renderer.ItemRenderer.renderItemInFirstPerson(ItemRenderer.java:409)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:918)
+	at net.minecraft.client.renderer.EntityRenderer.renderHand(EntityRenderer.java:874)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1674)
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1351)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7Bcleland11'/14251163, l='MpServer', x=271,53, y=50,42, z=201,47], EntityOtherPlayerMP['_Troughy_'/14235907, l='MpServer', x=266,75, y=50,00, z=200,81]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: 301,00,49,00,200,00 - World: (301,49,200), Chunk: (at 13,3,8 in 18,12; contains blocks 288,0,192 to 303,255,207), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 1378991914 game time, 6000 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 106 total; [EntityArmorStand['Armor Stand'/587, l='MpServer', x=298,50, y=49,00, z=205,50], EntityIronGolem['Iron Golem'/588, l='MpServer', x=298,50, y=49,00, z=205,50], EntityArmorStand['§6PvP Arena'/592, l='MpServer', x=337,50, y=53,94, z=220,50], EntityArmorStand['Console'/593, l='MpServer', x=298,50, y=49,00, z=195,50], EntityIronGolem['Iron Golem'/594, l='MpServer', x=298,50, y=49,00, z=195,50], EntityArmorStand['Enchant'/595, l='MpServer', x=292,50, y=50,00, z=209,50], EntityIronGolem['Iron Golem'/596, l='MpServer', x=292,50, y=50,00, z=209,50], EntityArmorStand['§6You need help? Do '/tutorial''/597, l='MpServer', x=311,50, y=54,94, z=200,50], EntityArmorStand['§6You need help? Do '/tutorial''/602, l='MpServer', x=301,50, y=54,94, z=190,50], EntityArmorStand['Armor Stand'/604, l='MpServer', x=298,56, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/605, l='MpServer', x=299,19, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/606, l='MpServer', x=299,81, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/607, l='MpServer', x=300,44, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/608, l='MpServer', x=301,06, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/609, l='MpServer', x=301,69, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/610, l='MpServer', x=302,31, y=51,16, z=185,50], EntityOtherPlayerMP['_Troughy_'/14235907, l='MpServer', x=320,02, y=50,59, z=194,53], EntityArmorStand['Armor Stand'/611, l='MpServer', x=302,94, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/612, l='MpServer', x=303,56, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/613, l='MpServer', x=304,19, y=51,16, z=185,50], EntityArmorStand['Armor Stand'/614, l='MpServer', x=298,88, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/615, l='MpServer', x=299,50, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/616, l='MpServer', x=300,13, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/617, l='MpServer', x=300,75, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/618, l='MpServer', x=301,38, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/619, l='MpServer', x=302,00, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/620, l='MpServer', x=302,63, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/621, l='MpServer', x=303,25, y=51,78, z=185,50], EntityArmorStand['Armor Stand'/622, l='MpServer', x=303,88, y=51,78, z=185,50], EntityArmorStand['§6Speed'/624, l='MpServer', x=298,50, y=53,94, z=170,50], EntityArmorStand['Heal'/625, l='MpServer', x=296,50, y=49,00, z=197,50], EntityIronGolem['Iron Golem'/626, l='MpServer', x=296,50, y=49,00, z=197,50], EntityArmorStand['Armor Stand'/627, l='MpServer', x=304,50, y=49,00, z=205,50], EntityIronGolem['Iron Golem'/628, l='MpServer', x=304,50, y=49,00, z=205,50], EntityArmorStand['Armor Stand'/631, l='MpServer', x=286,50, y=51,16, z=203,41], EntityArmorStand['Armor Stand'/632, l='MpServer', x=286,50, y=51,16, z=202,78], EntityArmorStand['Armor Stand'/633, l='MpServer', x=286,50, y=51,16, z=202,16], EntityArmorStand['Armor Stand'/634, l='MpServer', x=286,50, y=51,16, z=201,53], EntityArmorStand['Armor Stand'/635, l='MpServer', x=286,50, y=51,16, z=200,91], EntityArmorStand['Armor Stand'/636, l='MpServer', x=286,50, y=51,16, z=200,28], EntityArmorStand['Armor Stand'/637, l='MpServer', x=286,50, y=51,16, z=199,66], EntityArmorStand['Armor Stand'/638, l='MpServer', x=286,50, y=51,16, z=199,03], EntityArmorStand['Armor Stand'/639, l='MpServer', x=286,50, y=51,16, z=198,41], EntityArmorStand['Armor Stand'/640, l='MpServer', x=286,50, y=51,16, z=197,78], EntityArmorStand['Armor Stand'/641, l='MpServer', x=286,50, y=51,78, z=203,09], EntityArmorStand['Armor Stand'/642, l='MpServer', x=286,50, y=51,78, z=202,47], EntityArmorStand['Armor Stand'/643, l='MpServer', x=286,50, y=51,78, z=201,84], EntityArmorStand['Armor Stand'/644, l='MpServer', x=286,50, y=51,78, z=201,22], EntityArmorStand['Armor Stand'/645, l='MpServer', x=286,50, y=51,78, z=200,59], EntityArmorStand['Armor Stand'/646, l='MpServer', x=286,50, y=51,78, z=199,97], EntityArmorStand['Armor Stand'/647, l='MpServer', x=286,50, y=51,78, z=199,34], EntityArmorStand['Armor Stand'/648, l='MpServer', x=286,50, y=51,78, z=198,72], EntityArmorStand['Armor Stand'/649, l='MpServer', x=286,50, y=51,78, z=198,09], EntityArmorStand['Theme'/651, l='MpServer', x=306,50, y=49,00, z=197,50], EntityIronGolem['Iron Golem'/652, l='MpServer', x=306,50, y=49,00, z=197,50], EntityArmorStand['§6Step'/653, l='MpServer', x=287,50, y=53,94, z=204,50], EntityArmorStand['Config'/654, l='MpServer', x=304,50, y=49,00, z=195,50], EntityIronGolem['Iron Golem'/655, l='MpServer', x=304,50, y=49,00, z=195,50], EntityArmorStand['Armor Stand'/658, l='MpServer', x=304,41, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/659, l='MpServer', x=303,78, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/660, l='MpServer', x=303,16, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/661, l='MpServer', x=302,53, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/662, l='MpServer', x=301,91, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/663, l='MpServer', x=301,28, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/664, l='MpServer', x=300,66, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/665, l='MpServer', x=300,03, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/666, l='MpServer', x=299,41, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/667, l='MpServer', x=298,78, y=51,16, z=215,50], EntityArmorStand['Armor Stand'/668, l='MpServer', x=304,09, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/669, l='MpServer', x=303,47, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/670, l='MpServer', x=302,84, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/671, l='MpServer', x=302,22, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/672, l='MpServer', x=301,59, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/673, l='MpServer', x=300,97, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/674, l='MpServer', x=300,34, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/675, l='MpServer', x=299,72, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/676, l='MpServer', x=299,09, y=51,78, z=215,50], EntityArmorStand['Armor Stand'/679, l='MpServer', x=316,50, y=51,16, z=197,56], EntityArmorStand['Armor Stand'/680, l='MpServer', x=316,50, y=51,16, z=198,19], EntityArmorStand['Armor Stand'/681, l='MpServer', x=316,50, y=51,16, z=198,81], EntityArmorStand['Armor Stand'/682, l='MpServer', x=316,50, y=51,16, z=199,44], EntityArmorStand['Armor Stand'/683, l='MpServer', x=316,50, y=51,16, z=200,06], EntityArmorStand['Armor Stand'/684, l='MpServer', x=316,50, y=51,16, z=200,69], EntityArmorStand['Armor Stand'/685, l='MpServer', x=316,50, y=51,16, z=201,31], EntityArmorStand['Armor Stand'/686, l='MpServer', x=316,50, y=51,16, z=201,94], EntityArmorStand['Armor Stand'/687, l='MpServer', x=316,50, y=51,16, z=202,56], EntityArmorStand['Armor Stand'/688, l='MpServer', x=316,50, y=51,16, z=203,19], EntityArmorStand['Armor Stand'/689, l='MpServer', x=316,50, y=51,78, z=197,88], EntityArmorStand['Armor Stand'/690, l='MpServer', x=316,50, y=51,78, z=198,50], EntityArmorStand['Armor Stand'/691, l='MpServer', x=316,50, y=51,78, z=199,13], EntityArmorStand['Armor Stand'/692, l='MpServer', x=316,50, y=51,78, z=199,75], EntityArmorStand['Armor Stand'/693, l='MpServer', x=316,50, y=51,78, z=200,38], EntityArmorStand['Armor Stand'/694, l='MpServer', x=316,50, y=51,78, z=201,00], EntityArmorStand['Armor Stand'/695, l='MpServer', x=316,50, y=51,78, z=201,63], EntityArmorStand['Armor Stand'/696, l='MpServer', x=316,50, y=51,78, z=202,25], EntityArmorStand['Armor Stand'/697, l='MpServer', x=316,50, y=51,78, z=202,88], EntityArmorStand['§6You need help? Do '/tutorial''/698, l='MpServer', x=301,50, y=54,94, z=210,50], EntityArmorStand['§6Glide'/701, l='MpServer', x=263,50, y=83,94, z=190,50], EntityArmorStand['§6Long Jump'/702, l='MpServer', x=297,50, y=53,94, z=230,50], EntityArmorStand['§6Jesus'/703, l='MpServer', x=244,50, y=53,94, z=196,50], EntityArmorStand['§6Nofall'/704, l='MpServer', x=271,50, y=68,94, z=191,50], EntityArmorStand['§6Fast Ladder'/705, l='MpServer', x=221,50, y=53,94, z=196,50], EntityArmorStand['§6You need help? Do '/tutorial''/707, l='MpServer', x=291,50, y=54,94, z=200,50], EntityPlayerSP['§a[§bGod§cOwner§a] §7Bcleland11'/14251163, l='MpServer', x=271,53, y=50,42, z=201,47], EntityOtherPlayerMP['_Troughy_'/14235907, l='MpServer', x=266,75, y=50,00, z=200,81], EntityOtherPlayerMP['_Troughy_'/14235907, l='MpServer', x=266,75, y=50,00, z=200,81]]
+	Retry entities: 0 total; []
+	Server brand: PaperSpigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2335)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:472)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 272042784 bytes (259 MB) / 959447040 bytes (915 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

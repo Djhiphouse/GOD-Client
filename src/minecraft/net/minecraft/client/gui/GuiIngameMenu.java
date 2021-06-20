@@ -14,7 +14,9 @@ import me.bratwurst.checkHost.FTools_CheckHostScreen;
 import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
 import me.bratwurst.guiMain.NewPortScanner;
+import me.bratwurst.news.crash.Bungesmash;
 import me.bratwurst.news.crash.GuiCrashScreen;
+import me.bratwurst.news.crash.Nullping;
 import me.bratwurst.utils.FTools;
 import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
@@ -84,7 +86,9 @@ public class GuiIngameMenu extends GuiScreen
         this.buttonList.add(new GuiButton(6, this.width / 2 + 2, this.height / 4 + 48 + i, 98, 20, I18n.format("gui.stats", new Object[0])));
         boolean bl = guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
         if (!this.mc.isSingleplayer()) {
-            this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
+            this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, EnumChatFormatting.RED + "Instant-Crasher"));
+            this.buttonList.add(new GuiButton(456, this.width - 105, 26, 100, 20, EnumChatFormatting.RED + "Bungeesmasher"));
+            this.buttonList.add(new GuiButton(457, this.width - 105, 46, 100, 20, EnumChatFormatting.RED + "Nullping"));
 //            this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, "Resolve SRV"));
             this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
@@ -154,7 +158,7 @@ public class GuiIngameMenu extends GuiScreen
                 GuiIngameMenu.setClipboardString(this.mc.getCurrentServerData().serverIP);
                 break;
             }
-            case 888:
+            case 444:
 
 
             case 62: {
@@ -180,6 +184,15 @@ public class GuiIngameMenu extends GuiScreen
                 break;
             case 7:
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
+                break;
+            case 456:
+                this.mc.displayGuiScreen(new Bungesmash(this));
+                break;
+            case 457:
+                this.mc.displayGuiScreen(new Nullping(this));
+                break;
+
+
         }
     }
 

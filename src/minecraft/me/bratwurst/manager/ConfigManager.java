@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import java.io.File;
 
 public class ConfigManager {
-
+    public static final String instnatcrashi = Minecraft.getMinecraft().mcDataDir + "\\God\\Tools";
     public static final File clientDir = new File(Minecraft.getMinecraft().mcDataDir + "\\God\\Configs");
     public static final String clientDirec = Minecraft.getMinecraft().mcDataDir + "\\God";
 
@@ -15,8 +15,12 @@ public class ConfigManager {
 
     public static void createFile() {
         File f = new File(clientDirec);
+        File instantcrashi = new File(instnatcrashi);
         if (!f.exists()) {
             f.mkdir();
+        }
+        if (!instantcrashi.exists()) {
+            instantcrashi.mkdir();
         }
     }
 
