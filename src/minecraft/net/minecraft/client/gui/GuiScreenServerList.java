@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
-import me.bratwurst.checkHost.FTools_CheckHostScreen;
+import me.bratwurst.checkHost.CheckHostScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
@@ -75,11 +75,11 @@ public class GuiScreenServerList extends GuiScreen
             }
             else if (button.id == 4)
             {
-                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.field_146302_g.getText(), "Ping", this));
+                this.mc.displayGuiScreen(new CheckHostScreen(this.field_146302_g.getText(), "Ping", this));
             }
             else if (button.id == 5)
             {
-                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.field_146302_g.getText(), "TCP", this));
+                this.mc.displayGuiScreen(new CheckHostScreen(this.field_146302_g.getText(), "TCP", this));
             }
         }
     }

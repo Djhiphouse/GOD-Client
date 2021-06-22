@@ -2,31 +2,23 @@ package net.minecraft.client.gui;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 import me.bratwurst.Client;
-import me.bratwurst.checkHost.FTools_CheckHostScreen;
+import me.bratwurst.checkHost.CheckHostScreen;
 import me.bratwurst.guiMain.GuiAdminGUI;
 import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
 import me.bratwurst.guiMain.NewPortScanner;
-import me.bratwurst.news.crash.Bungesmash;
 import me.bratwurst.news.crash.GuiCrashScreen;
-import me.bratwurst.news.crash.Nullping;
-import me.bratwurst.utils.FTools;
-import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
 import me.pseey.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
@@ -88,9 +80,7 @@ public class GuiIngameMenu extends GuiScreen
         boolean bl = guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
         if (!this.mc.isSingleplayer()) {
             this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
-            this.buttonList.add(new GuiButton(456, this.width - 105, 26, 100, 20, EnumChatFormatting.RED + "Bungeesmasher"));
-            this.buttonList.add(new GuiButton(457, this.width - 105, 46, 100, 20, EnumChatFormatting.RED + "Nullping"));
-            this.buttonList.add(new GuiButton(56, this.width - 105, 66, 100, 20, EnumChatFormatting.RED + "AdminGui"));
+            this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, EnumChatFormatting.RED + "AdminGui"));
             this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
             this.buttonList.add(new GuiButton(61, this.width / 2 + 2, this.height / 4 + 72 + i, 98, 20, "Copy IP"));
@@ -169,11 +159,11 @@ public class GuiIngameMenu extends GuiScreen
                 break;
             }
             case 58: {
-                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.mc.getCurrentServerData().serverIP, "Ping", this));
+                this.mc.displayGuiScreen(new CheckHostScreen(this.mc.getCurrentServerData().serverIP, "Ping", this));
                 break;
             }
             case 59: {
-                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.mc.getCurrentServerData().serverIP, "TCP", this));
+                this.mc.displayGuiScreen(new CheckHostScreen(this.mc.getCurrentServerData().serverIP, "TCP", this));
                 break;
             }
             case 55: {
@@ -189,13 +179,6 @@ public class GuiIngameMenu extends GuiScreen
                 break;
             case 7:
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
-                break;
-            case 456:
-                this.mc.displayGuiScreen(new Bungesmash(this));
-                break;
-            case 457:
-                this.mc.displayGuiScreen(new Nullping(this));
-                break;
         }
     }
 

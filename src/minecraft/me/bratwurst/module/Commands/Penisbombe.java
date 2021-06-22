@@ -1,8 +1,7 @@
 package me.bratwurst.module.Commands;
 
 import me.bratwurst.manager.Command;
-import me.bratwurst.utils.FTools_ItemUtils;
-import me.bratwurst.utils.MainUtil;
+import me.bratwurst.news.newutils.ItemUtil;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
 
 public class Penisbombe extends Command {
@@ -11,6 +10,6 @@ public class Penisbombe extends Command {
     }
     @Override
     public void onCommand(String command, String[] args) {
-        mc.thePlayer.sendQueue.addToSendQueue(new C10PacketCreativeInventoryAction(36, FTools_ItemUtils.getSpawnerFromFurnace(FTools_ItemUtils.getPennisDestroyer())));
+        mc.thePlayer.sendQueue.addToSendQueue(new C10PacketCreativeInventoryAction(36, ItemUtil.getSpawnerFromFurnace(ItemUtil.getPennisDestroyer())));
     }
 }
