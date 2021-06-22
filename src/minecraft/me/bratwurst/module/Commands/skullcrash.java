@@ -2,10 +2,8 @@ package me.bratwurst.module.Commands;
 
 
 import me.bratwurst.manager.Command;
-import me.bratwurst.utils.FTools_ItemUtils;
 import me.bratwurst.utils.MainUtil;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
 
 public class skullcrash extends Command {
     public skullcrash() {

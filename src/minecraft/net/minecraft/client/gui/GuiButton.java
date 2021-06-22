@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import me.bratwurst.news.newutils.NewRenderUtil;
 import me.bratwurst.utils.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -101,11 +102,18 @@ public class GuiButton extends Gui
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.blendFunc(770, 771);
-        Gui.drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, this.hovered ? -1867863382 : 1621797546);
-        this.drawHorizontalLine(this.xPosition, this.xPosition + this.width, this.yPosition, -16777216);
-        this.drawHorizontalLine(this.xPosition, this.xPosition + this.width, this.yPosition + this.height, -16777216);
-        this.drawVerticalLine(this.xPosition, this.yPosition, this.yPosition + this.height, -16777216);
-        this.drawVerticalLine(this.xPosition + this.width, this.yPosition, this.yPosition + this.height, -16777216);
+        Gui.drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, this.hovered ?-872415232 : Integer.MIN_VALUE);
+        FontRenderer fontRenderer = Minecraft.fontRendererObj;
+        int x = this.xPosition;
+        int y = this.yPosition;
+        int width = this.width;
+        int height = this.height;
+
+        Gui.drawRect(x, y, x + width, y + height, width);
+        NewRenderUtil.drawRainbowRectBorder(x, y, x + width, y + height, 1);
+
+        Gui.drawCenteredString(fontRenderer, null, x + width / 2, y + (height - fontRenderer.FONT_HEIGHT) / 2 + 1, -1);
+
         this.mouseDragged(mc, mouseX, mouseY);
         int j = 14737632;
         if (!this.enabled) {

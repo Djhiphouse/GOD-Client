@@ -2,29 +2,23 @@ package net.minecraft.client.gui;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 import me.bratwurst.Client;
-import me.bratwurst.checkHost.FTools_CheckHostScreen;
+import me.bratwurst.checkHost.CheckHostScreen;
 import me.bratwurst.guiMain.GuiAdminGUI;
 import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
 import me.bratwurst.guiMain.NewPortScanner;
 import me.bratwurst.news.crash.GuiCrashScreen;
-import me.bratwurst.utils.FTools;
-import me.bratwurst.utils.FTools_ServerPerformanceCalculator;
 import me.bratwurst.utils.TPSUtils;
 import me.pseey.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
@@ -165,11 +159,11 @@ public class GuiIngameMenu extends GuiScreen
                 break;
             }
             case 58: {
-                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.mc.getCurrentServerData().serverIP, "Ping", this));
+                this.mc.displayGuiScreen(new CheckHostScreen(this.mc.getCurrentServerData().serverIP, "Ping", this));
                 break;
             }
             case 59: {
-                this.mc.displayGuiScreen(new FTools_CheckHostScreen(this.mc.getCurrentServerData().serverIP, "TCP", this));
+                this.mc.displayGuiScreen(new CheckHostScreen(this.mc.getCurrentServerData().serverIP, "TCP", this));
                 break;
             }
             case 55: {
