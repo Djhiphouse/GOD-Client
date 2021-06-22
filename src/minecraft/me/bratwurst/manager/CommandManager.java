@@ -69,6 +69,7 @@ public class CommandManager {
         commands.add(new planetspawner());
         commands.add(new BildHologram());
         commands.add(new instantcrash());
+        commands.add(new bugitem());
 
 
 

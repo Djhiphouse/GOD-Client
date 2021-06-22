@@ -37,6 +37,7 @@ public class AntiVanish extends Module {
             }
         }
     }
+    @EventTarget
     public void preTick(EntityPlayer e) {
         try {
             if (!this.mc.isSingleplayer()) {
@@ -59,7 +60,7 @@ public class AntiVanish extends Module {
     public String getName(EntityPlayer e,UUID uuid) {
         return e.getName();
     }
-
+    @EventTarget
     private boolean checkList(final UUID uuid) {
         if (this.vanished.contains(uuid)) {
             this.vanished.remove(uuid);
