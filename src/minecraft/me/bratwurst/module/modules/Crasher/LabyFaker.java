@@ -19,14 +19,8 @@ public class LabyFaker extends Module {
 
     @EventTarget
     public void onUpdate(EventUpdate event) {
-        final PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-        if (TimeHelper.hasReached(500)) {
-            buffer.writeString("LMC");
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("LMC", buffer));
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("LabyMod", buffer));
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("Laby", buffer));
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("LabyModClient", buffer));
-        }
+
+
 
 
     }

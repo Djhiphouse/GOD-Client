@@ -3,6 +3,8 @@ package me.bratwurst.news.proxy;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+
+import me.bratwurst.utils.ShaderUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -16,10 +18,11 @@ public final class ProxyMenuScreen
     public static boolean useProxy = false;
     static GuiTextField ip;
     static GuiScreen before;
-    private static boolean isRunning;
+    public static boolean isRunning;
     private GuiButton button;
     private String status;
     public static String renderText;
+    public  static ShaderUtils shaderUtilLoader = new ShaderUtils("#ifdef GL_ES\nprecision mediump float;\n#endif\n\nuniform float time;\nuniform vec2 mouse;\nuniform vec2 resolution;\n\nvec2 hash(vec2 p)\n{\n    mat2 m = mat2(  13.85, 47.77,\n                    99.41, 88.48\n                );\n\n    return fract(sin(m*p) * 46738.29);\n}\n\nfloat voronoi(vec2 p)\n{\n    vec2 g = floor(p);\n    vec2 f = fract(p);\n\n    float distanceToClosestFeaturePoint = 1.0;\n    for(int y = -1; y <= 1; y++)\n    {\n        for(int x = -1; x <= 5; x++)\n        {\n            vec2 latticePoint = vec2(x, y);\n            float currentDistance = distance(latticePoint + hash(g+latticePoint), f);\n            distanceToClosestFeaturePoint = min(distanceToClosestFeaturePoint, currentDistance);\n        }\n    }\n\n    return distanceToClosestFeaturePoint;\n}\n\nvoid main( void )\n{\n    vec2 uv = ( gl_FragCoord.xy / resolution.xy ) * 2.0 - 1.0;\n    uv.x *= resolution.x / resolution.y;\n\n    float offset = voronoi(uv*10.0 + vec2(time));\n    float t = 1.0/abs(((uv.x + sin(uv.y + time)) + offset) * 30.0);\n\n    float r = voronoi( uv * 1.0 ) * 10.0;\n    vec3 finalColor = vec3(10.0 * uv.y, 2.0, 1.0 * r) * t;\n    \n    gl_FragColor = vec4(finalColor, 1.0 );\n}");
 
     public ProxyMenuScreen(GuiScreen before) {
         ProxyMenuScreen.before = before;
@@ -30,24 +33,30 @@ public final class ProxyMenuScreen
         switch (button.id) {
             case 0: {
                 if (!isRunning) {
-                    String[] split = ip.getText().split(":");
-                    if (split.length == 2) {
-                        currentProxy = ProxyMenuScreen.getProxyFromString(ip.getText());
-                        this.status = "\u00a76Proxy used " + currentProxy.address().toString();
-                        useProxy = true;
-                        renderText = "\u00a7aSuccessful";
-                        isRunning = true;
-                        button.displayString = "\u00a7cDisconnect";
-                        break;
+                    try {
+                        String[] split = ip.getText().split(":");
+                        if (split.length == 2) {
+                            currentProxy = ProxyMenuScreen.getProxyFromString(ip.getText());
+                            this.status = "\u00a76Proxy used " + currentProxy.address().toString();
+                            useProxy = true;
+                            renderText = "\u00a7aSuccessful";
+                            isRunning = true;
+                            button.displayString = "\u00a7cDisconnect";
+
+                        }
+                        this.status = "\u00a7cPlease use: <host>:<port>";
+
+
+                        isRunning = false;
+                        button.displayString = "\u00a7aConnect";
+                        currentProxy = null;
+                        useProxy = false;
+                    } catch (Exception e) {
+
                     }
-                    this.status = "\u00a7cPlease use: <host>:<port>";
+
                     break;
                 }
-                isRunning = false;
-                button.displayString = "\u00a7aConnect";
-                currentProxy = null;
-                useProxy = false;
-                break;
             }
             case 1: {
                 this.mc.displayGuiScreen(before);
@@ -63,6 +72,7 @@ public final class ProxyMenuScreen
     public void drawScreen(int x, int y, float z) {
         new ScaledResolution(this.mc);
         this.drawDefaultBackground();
+        RenderShader();
         GL11.glPushMatrix();
         GL11.glColor4d((double)1.0, (double)1.0, (double)1.0, (double)1.0);
         GL11.glScaled((double)4.0, (double)4.0, (double)4.0);
@@ -125,6 +135,11 @@ public final class ProxyMenuScreen
 
     static {
         renderText = "";
+    }
+    public void RenderShader() {
+        shaderUtilLoader.renderFirst();
+        shaderUtilLoader.addDefaultUniforms();
+        shaderUtilLoader.renderSecond();
     }
 }
 

@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -14,14 +15,18 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C02PacketUseEntity;
-import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.network.play.client.C0BPacketEntityAction;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.*;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.*;
+import net.minecraft.world.WorldSettings;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -1405,6 +1410,11 @@ public class Utils {
         return ee;
     }
 
+
+    public static void giveItem(int slot, ItemStack itemStack) {
+
+        (Minecraft.getMinecraft()).thePlayer.sendQueue.addToSendQueue((Packet)new C10PacketCreativeInventoryAction(slot, itemStack));
+    }
     private final static float limitAngleChange(final float current, final float intended, final float maxChange) {
         float change = intended - current;
         if (change > maxChange)
@@ -1438,7 +1448,24 @@ public class Utils {
     public static boolean isBlockPosAir(BlockPos blockPos) {
         return mc.theWorld.getBlockState(blockPos).getBlock().getMaterial() == Material.air;
     }
-
+    public static ItemStack createHologramm(String text, double x, double y, double z) {
+        ItemStack itm = new ItemStack((Item) Items.armor_stand);
+        NBTTagCompound base = new NBTTagCompound();
+        NBTTagCompound entityTag = new NBTTagCompound();
+        entityTag.setInteger("Invisible", 1);
+        entityTag.setString("CustomName", text);
+        entityTag.setInteger("CustomNameVisible", 1);
+        entityTag.setInteger("NoGravity", 1);
+        entityTag.setInteger("NoBasePlate", 1);
+        NBTTagList pos = new NBTTagList();
+        pos.appendTag((NBTBase)new NBTTagDouble(x));
+        pos.appendTag((NBTBase)new NBTTagDouble(y));
+        pos.appendTag((NBTBase)new NBTTagDouble(z));
+        entityTag.setTag("Pos", (NBTBase)pos);
+        base.setTag("EntityTag", (NBTBase)entityTag);
+        itm.setTagCompound(base);
+        return itm;
+    }
     public static Block getBlockRelativeToEntity(Entity en, double d) {
         return getBlock(new BlockPos(en.posX, en.posY + d, en.posZ));
     }

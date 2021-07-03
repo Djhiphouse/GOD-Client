@@ -14,7 +14,7 @@ public class FastEat extends Module {
     @EventTarget
     public void onUpdate(EventUpdate event) {
    if (this.mc.thePlayer.onGround && this.mc.thePlayer.getItemInUseDuration() >= 15 && this.mc.thePlayer.getItemInUse().getItem() instanceof net.minecraft.item.ItemFood) {
-       for (byte b = 0; b <= 20; b = (byte)(b + 1))
+       for (byte b = 0; b <= 50; b = (byte)(b + 1))
            this.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer(true));
    }
     }

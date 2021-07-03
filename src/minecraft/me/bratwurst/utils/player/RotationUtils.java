@@ -1,9 +1,13 @@
 package me.bratwurst.utils.player;
 
 import me.bratwurst.event.events.EventMotionUpdate;
+import me.bratwurst.utils.PlayerUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
+import optifine.MathUtils;
 
 public class RotationUtils {
 
@@ -27,6 +31,20 @@ public class RotationUtils {
         float f1 = (float) (-(MathHelper.func_181159_b(d1, d3) * 180.0D / Math.PI));
         event.setYaw(f + randomNumber(3, -3));
         event.setPitch(f1 + randomNumber(3, -3));
+    }
+    public static float[] getRotations(double posX, double posY, double posZ) {
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        double x = posX - player.posX;
+        double y = posY - (player.posY + (double)player.getEyeHeight());
+        double z = posZ - player.posZ;
+        double dist = (double)MathHelper.sqrt_double(x * x + z * z);
+        float yaw = (float)(Math.atan2(z, x) * 180.0D / 3.141592653589793D) - 90.0F;
+        float pitch = (float)(-(Math.atan2(y, dist) * 180.0D / 3.141592653589793D));
+        return new float[]{yaw, pitch};
+    }
+
+    public static float[] getRotationsEntity(EntityLivingBase entity) {
+        return  PlayerUtil.isMoving2() ? getRotations(entity.posX + MathUtils.randomNumber(0.03D, -0.03D), entity.posY + (double)entity.getEyeHeight() - 0.4D + MathUtils.randomNumber(0.07D, -0.07D), entity.posZ + MathUtils.randomNumber(0.03D, -0.03D)) : getRotations(entity.posX, entity.posY + (double)entity.getEyeHeight() - 0.4D, entity.posZ);
     }
 
     public static int randomNumber(int max, int min) {

@@ -1,5 +1,6 @@
 package me.bratwurst.utils;
 
+import me.bratwurst.event.events.EventMove;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
@@ -30,7 +31,36 @@ public class MovementUtils {
         }
         return Math.toRadians(f2);
     }
+    public static void setSpeed(EventMove moveEvent, double moveSpeed, float pseudoYaw, double pseudoStrafe, double pseudoForward) {
+        double forward = pseudoForward;
+        double strafe = pseudoStrafe;
+        float yaw = pseudoYaw;
+        if (pseudoForward != 0.0D) {
+            if (pseudoStrafe > 0.0D) {
+                yaw = pseudoYaw + (float)(pseudoForward > 0.0D ? -45 : 45);
+            } else if (pseudoStrafe < 0.0D) {
+                yaw = pseudoYaw + (float)(pseudoForward > 0.0D ? 45 : -45);
+            }
 
+            strafe = 0.0D;
+            if (pseudoForward > 0.0D) {
+                forward = 1.0D;
+            } else if (pseudoForward < 0.0D) {
+                forward = -1.0D;
+            }
+        }
+
+        if (strafe > 0.0D) {
+            strafe = 1.0D;
+        } else if (strafe < 0.0D) {
+            strafe = -1.0D;
+        }
+
+        double mx = Math.cos(Math.toRadians((double)(yaw + 90.0F)));
+        double mz = Math.sin(Math.toRadians((double)(yaw + 90.0F)));
+        moveEvent.x = forward * moveSpeed * mx + strafe * moveSpeed * mz;
+        moveEvent.z = forward * moveSpeed * mz - strafe * moveSpeed * mx;
+    }
     public static void speedTest(float f2) {
         MovementUtils.mc.thePlayer.motionX += (double)f2;
         MovementUtils.mc.thePlayer.motionZ += (double)f2;

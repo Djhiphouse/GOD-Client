@@ -1,0 +1,108 @@
+---- Minecraft Crash Report ----
+// Hi. I'm Minecraft, and I'm a crashaholic.
+
+Time: 25.06.21 19:01
+Description: Updating screen events
+
+java.lang.NullPointerException: Updating screen events
+	at me.bratwurst.utils.Utils.getGameType(Utils.java:1416)
+	at me.bratwurst.utils.Utils.giveItem(Utils.java:1419)
+	at me.bratwurst.module.Commands.imghologram.nextItem(imghologram.java:105)
+	at me.bratwurst.module.Commands.imghologram.onCommand(imghologram.java:76)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:86)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:331)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1569)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1016)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at me.bratwurst.utils.Utils.getGameType(Utils.java:1416)
+	at me.bratwurst.utils.Utils.giveItem(Utils.java:1419)
+	at me.bratwurst.module.Commands.imghologram.nextItem(imghologram.java:105)
+	at me.bratwurst.module.Commands.imghologram.onCommand(imghologram.java:76)
+	at me.bratwurst.manager.CommandManager.call(CommandManager.java:86)
+	at net.minecraft.client.entity.EntityPlayerSP.sendChatMessage(EntityPlayerSP.java:331)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:485)
+	at net.minecraft.client.gui.GuiScreen.sendChatMessage(GuiScreen.java:475)
+	at net.minecraft.client.gui.GuiChat.keyTyped(GuiChat.java:133)
+	at net.minecraft.client.gui.GuiScreen.handleKeyboardInput(GuiScreen.java:625)
+	at net.minecraft.client.gui.GuiScreen.handleInput(GuiScreen.java:576)
+
+-- Affected screen --
+Details:
+	Screen name: net.minecraft.client.gui.GuiChat
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God109'/254, l='MpServer', x=-168,18, y=79,00, z=235,66]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -159,00,64,00,231,00 - World: (-159,64,231), Chunk: (at 1,4,7 in -10,14; contains blocks -160,0,224 to -145,255,239), Region: (-1,0; contains chunks -32,0 to -1,31, blocks -512,0,0 to -1,255,511)
+	Level time: 825156 game time, 825156 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 28 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7God109'/254, l='MpServer', x=-168,18, y=79,00, z=235,66], EntityCow['Cow'/133, l='MpServer', x=-128,28, y=62,59, z=243,03], EntityChicken['Chicken'/69, l='MpServer', x=-196,91, y=62,81, z=235,16], EntityChicken['Chicken'/70, l='MpServer', x=-192,75, y=62,75, z=237,63], EntityCow['Cow'/135, l='MpServer', x=-131,31, y=64,00, z=248,47], EntitySquid['Squid'/455, l='MpServer', x=-173,50, y=57,00, z=183,50], EntityItem['item.item.egg'/456, l='MpServer', x=-180,28, y=61,00, z=225,06], EntityItem['item.item.egg'/458, l='MpServer', x=-197,34, y=62,00, z=234,22], EntityItem['item.item.egg'/459, l='MpServer', x=-186,13, y=62,00, z=227,19], EntityItem['item.item.egg'/460, l='MpServer', x=-167,14, y=60,86, z=212,06], EntityChicken['Chicken'/85, l='MpServer', x=-174,09, y=62,47, z=212,44], EntityChicken['Chicken'/88, l='MpServer', x=-179,00, y=62,69, z=225,38], EntityChicken['Chicken'/89, l='MpServer', x=-186,59, y=62,63, z=226,47], EntityChicken['Chicken'/96, l='MpServer', x=-168,16, y=62,56, z=189,06], EntityChicken['Chicken'/97, l='MpServer', x=-170,84, y=62,59, z=204,34], EntityChicken['Chicken'/100, l='MpServer', x=-166,00, y=62,56, z=211,09], EntityArmorStand['§3Kacke'/101, l='MpServer', x=-164,34, y=75,00, z=240,31], EntityArmorStand['§3Kacke'/102, l='MpServer', x=-161,25, y=84,00, z=245,22], EntityArmorStand['§3Kacke'/103, l='MpServer', x=-166,00, y=86,00, z=252,81], EntityArmorStand['§3Kacke'/104, l='MpServer', x=-164,50, y=85,00, z=255,41], EntityCow['Cow'/112, l='MpServer', x=-163,66, y=79,00, z=236,59], EntityArmorStand['§3Kacke'/113, l='MpServer', x=-155,25, y=74,00, z=240,19], EntityArmorStand['§3Kacke'/114, l='MpServer', x=-159,53, y=77,00, z=240,81], EntityArmorStand['§3Kacke'/115, l='MpServer', x=-154,28, y=73,00, z=240,25], EntityCow['Cow'/121, l='MpServer', x=-131,91, y=63,00, z=263,56], EntityCow['Cow'/122, l='MpServer', x=-131,69, y=62,06, z=268,94], EntityCow['Cow'/123, l='MpServer', x=-133,53, y=63,00, z=269,75], EntityChicken['Chicken'/60, l='MpServer', x=-208,50, y=65,00, z=229,50]]
+	Retry entities: 0 total; []
+	Server brand: Spigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2335)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_275, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 282299856 bytes (269 MB) / 675807232 bytes (644 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

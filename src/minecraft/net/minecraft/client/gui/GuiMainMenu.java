@@ -155,7 +155,7 @@ ParticleSystem partikelsystem = new ParticleSystem(1000,230);
        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);
 
         if (GuiThemeMenu.shadetheme == true){
-           renderShader();
+         renderShader();
         }else if (GuiThemeMenu.normal == true) {
             this.mc.getTextureManager().bindTexture(new ResourceLocation("client/336293.png"));
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, this.width, this.height, this.width, this.height);

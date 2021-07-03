@@ -76,7 +76,7 @@ public class LongJump extends Module {
     boolean leftGround = false;
     private int airTicks;
 
-    public Setting Nofall, Speed, off, Glide,boost,Ticks;
+    public Setting Nofall, Speed, off, Glide,boost,Ticks,JumpMotion;
     public static Setting mode1;
 
     public LongJump() {
@@ -92,6 +92,7 @@ public class LongJump extends Module {
         options.add("Test");
         options.add("badRedesky");
         options.add("FastRedesky");
+        options.add("Mineplexlow");
 
 
 
@@ -107,6 +108,7 @@ public class LongJump extends Module {
         Client.setmgr.rSetting(Glide = new Setting(EnumChatFormatting.AQUA +"Glide", this, true));
         Client.setmgr.rSetting(boost = new Setting(EnumChatFormatting.AQUA +"boost", this, 2, 1, 5, false));
         Client.setmgr.rSetting(Ticks = new Setting(EnumChatFormatting.AQUA +"Ticks", this, 35, 10, 100, true));
+        Client.setmgr.rSetting(JumpMotion = new Setting(EnumChatFormatting.AQUA +"JumpMotion", this, 0.01, 0.650, 0.9, false));
     }
 
     public static int state = 0;
@@ -143,6 +145,9 @@ public class LongJump extends Module {
         }else if (mode1.getValString().equalsIgnoreCase("FastRedesky")) {
             FastRedesky(Ticks.getValInt());
             this.setDisplayname(EnumChatFormatting.RED + " - FastRedesky");
+        }else if (mode1.getValString().equalsIgnoreCase("Mineplexlow")) {
+         Mineplexlow(JumpMotion.getValDouble());
+            this.setDisplayname(EnumChatFormatting.RED + " - Mineplexlow");
         }
 
 
@@ -169,6 +174,43 @@ public  static int jumpmotion = 0;
                 this.mc.thePlayer.motionZ = (double)z * 1.261;
             }
         }
+    }
+    public static int Value = 0;
+    public static boolean jumping = false;
+    public void Mineplexlow(double Jumpspeed){
+        if (Value < 25 && mc.thePlayer.onGround) {
+            jumping = true;
+           if ( mc.thePlayer.ticksExisted % 4 == 0) {
+              mc.thePlayer.setSpeed(-0.35);
+              Value++;
+           }else if (mc.thePlayer.ticksExisted % 2 == 0) {
+               mc.thePlayer.setSpeed(+0.35);
+               Value++;
+           }
+
+        }else {
+
+            if (jumping == true){
+                mc.thePlayer.jump();
+                Value++;
+            jumping = false;
+            }
+
+            if (Value <= 47 ){
+                if (!mc.thePlayer.onGround)
+                mc.thePlayer.setSpeed(Jumpspeed);
+
+                Value++;
+            }else {
+                if (mc.thePlayer.onGround) {
+
+                    this.toggle();
+                }
+
+            }
+
+        }
+
     }
     public void newredesky() {
         if (!mc.thePlayer.onGround) {
@@ -686,7 +728,7 @@ public void Custom() {
 
         damageState = 0;
         disableState = 0;
-
+        Value = 0;
         mc.thePlayer.capabilities.isFlying = false;
         tick = 0;
         toggleState = 0;

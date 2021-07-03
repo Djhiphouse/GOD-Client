@@ -57,6 +57,7 @@ public class Speed extends Module {
         options.add("StrafeHop");
         options.add("MC-CentralFast");
         options.add("LowHop");
+        options.add("Mineplex");
 
 
 
@@ -66,7 +67,7 @@ public class Speed extends Module {
     @Override
     public void setup() {
         Client.setmgr.rSetting(Bypass = new Setting("Bypass", this, false));
-        Client.setmgr.rSetting(Speed = new Setting("Speed", this, 0.3, 0.1, 1, false));
+        Client.setmgr.rSetting(Speed = new Setting("Speed", this, 0.3, 0.1, 0.6, false));
         Client.setmgr.rSetting(TeleportDelay = new Setting("TPDelay", this, 1000, 65, 2000, true));
         Client.setmgr.rSetting(TPRange = new Setting("TPrange", this, 1, 1, 4, true));
 
@@ -98,6 +99,8 @@ public class Speed extends Module {
             Mccentralfast();
         }else if (mode1.getValString().equalsIgnoreCase("LowHop")) {
             Mccentralfast();
+        }else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
+            Mineplex(Speed.getValDouble());
         }
     }
 
@@ -164,6 +167,19 @@ public void lowhop() {
             this.mc.thePlayer.motionX *= 1.1D;
             this.mc.thePlayer.motionZ *= 1.1D;
 
+        }
+    }
+    public static boolean Groundmineplex = false;
+    public void Mineplex(double speed) {
+
+
+        if (mc.thePlayer.onGround) {
+            mc.thePlayer.motionX = 0;
+            mc.thePlayer.motionZ = 0;
+            mc.thePlayer.setSpeed(-0.15);
+            mc.thePlayer.jump();
+        }else {
+            mc.thePlayer.setSpeed(speed);
         }
     }
 
@@ -346,6 +362,7 @@ public void lowhop() {
     @Override
     public void onDisable() {
         super.onDisable();
+        Groundmineplex = false;
         mc.timer.timerSpeed = 1;
     }
 }

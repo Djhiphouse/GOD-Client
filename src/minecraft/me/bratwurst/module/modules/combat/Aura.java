@@ -30,7 +30,7 @@ public class Aura extends Module {
     public static Setting otherbo;
     public static EntityLivingBase target1;
     public static Setting minCps, maxCps, Range,  Criticalshits,
-            Throughwalls,  AutoSword;
+            Throughwalls,  AutoSword,NoSprint;
     private ArrayList<Entity> Switchtarget = new ArrayList<>();
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
@@ -53,7 +53,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(Movementbo = new Setting(EnumChatFormatting.RED + "Movement options", this, "NormalMove", Movement));
         Movement.add("correctMovement");
         Movement.add("MovefixNormal");
-
+        Movement.add("Nix");
         ArrayList<String> Fight = new ArrayList<>();
         Client.setmgr.rSetting(Fightbo = new Setting(EnumChatFormatting.RED + "Fight options", this, "Normal", Fight));
         Fight.add("AutoBlock");
@@ -71,7 +71,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(minCps = new Setting(EnumChatFormatting.AQUA + "MinCPS", this, 8, 1, 20, false));
         Client.setmgr.rSetting(maxCps = new Setting(EnumChatFormatting.AQUA + "MaxCPS", this, 8, 1, 20, false));
         Client.setmgr.rSetting(Range = new Setting(EnumChatFormatting.AQUA + "Range", this, 3.8, 1, 8, false));
-
+        Client.setmgr.rSetting(NoSprint = new Setting(EnumChatFormatting.AQUA + "NoSprint", this,false));
 
         Client.setmgr.rSetting(Throughwalls = new Setting(EnumChatFormatting.AQUA + "Throughwalls", this, false));
 
@@ -129,6 +129,10 @@ public class Aura extends Module {
                                 Criticalshitsallow = false;
                             }
 
+                        }
+                        if (NoSprint.getValBoolean()) {
+                            if (mc.thePlayer.isSprinting())
+                                mc.thePlayer.setSneaking(false);
                         }
                         if (AutoSword.getValBoolean()) {
                             settingAutoSword(target);

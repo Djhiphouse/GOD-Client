@@ -1,8 +1,11 @@
 package me.bratwurst.manager;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 
-public class Command {
+public abstract class Command {
 
     String name;
     String syntax;
@@ -44,5 +47,6 @@ public class Command {
     public void onCommand(String command, String[] args) {
 
     }
+
 
 }

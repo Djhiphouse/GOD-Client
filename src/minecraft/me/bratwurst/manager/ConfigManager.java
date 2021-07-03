@@ -1,8 +1,10 @@
 package me.bratwurst.manager;
 
 import me.bratwurst.Client;
+import me.bratwurst.utils.MainUtil;
 import me.bratwurst.utils.SaveLoad;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.io.File;
 
@@ -46,11 +48,18 @@ public class ConfigManager {
 
     public static void loadConfig(String name) {
         File configF = new File(clientDirec + "\\Configs");
-        if(!configF.exists())
-            configF.mkdir();
-        File f = new File(clientDirec + "\\Configs\\" + name + ".cfg");
-        if (f.exists()) {
-            SaveLoad.load(f);
+        try
+        {
+            if(!configF.exists())
+                configF.mkdir();
+            File f = new File(clientDirec + "\\Configs\\" + name + ".cfg");
+            if (f.exists()) {
+                SaveLoad.load(f);
+            }
+        }catch (Exception exception){
+            MainUtil.SendClientMesage(EnumChatFormatting.RED + "Die Config wurde leider nicht gefunden");
         }
+
+
     }
 }

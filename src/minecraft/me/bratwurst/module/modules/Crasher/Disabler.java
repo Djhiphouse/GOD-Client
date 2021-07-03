@@ -1,6 +1,7 @@
 package me.bratwurst.module.modules.Crasher;
 
 import de.Hero.settings.Setting;
+import de.gerrygames.viarewind.utils.PacketUtil;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventUpdate;
@@ -9,6 +10,7 @@ import me.bratwurst.manager.ModuleManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.utils.MainUtil;
+import me.bratwurst.utils.PacketTimer;
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
@@ -32,6 +34,7 @@ public class Disabler extends Module {
     protected boolean moving;
     protected boolean rotating;
     ArrayList<Packet> Packets = new ArrayList<>();
+    ArrayList<Packet> PacketsZone = new ArrayList<>();
     ArrayList<Packet> transactions = new ArrayList<Packet>();
     int currentTransaction = 0;
     public Disabler() {
@@ -44,6 +47,8 @@ public class Disabler extends Module {
         options.add("Replaysucht");
         options.add("Redesky");
         options.add("Hypixelold");
+        options.add("OmegaCraft");
+        options.add("zonecraft");
 
         Client.instance.setmgr.rSetting(new Setting(EnumChatFormatting.RED +"Disable Anticheat", this, "Slide", options));
     }
@@ -51,7 +56,7 @@ public class Disabler extends Module {
     @EventTarget
     public void onUpdate(ProcessPacketEvent e) {
         if (mode1.getValString().equalsIgnoreCase("Ghostlie.live")) {
-            ghostlie();
+            ghostlie(e);
             this.setDisplayname(EnumChatFormatting.RED + " - Ghostlie");
 
         } else if (mode1.getValString().equalsIgnoreCase("Hypixel")) {
@@ -63,12 +68,17 @@ public class Disabler extends Module {
         }else if (mode1.getValString().equalsIgnoreCase("Hypixelold")) {
             Hypixelold(e);
             this.setDisplayname(EnumChatFormatting.RED + " - Hypixelold");
+        }else if (mode1.getValString().equalsIgnoreCase("OmegaCraft")) {
+            OmegaCraft(e);
+            this.setDisplayname(EnumChatFormatting.RED + " - OmegaCraft");
+        }else if (mode1.getValString().equalsIgnoreCase("zonecraft")) {
+
+            this.setDisplayname(EnumChatFormatting.RED + " - zonecraft");
         }
     }
 
 public void Hypixelold(ProcessPacketEvent e) {
-    PlayerUtils.sendMessage("Hi");
-    if (mode1.getValString().equalsIgnoreCase("Verus")) {
+       if (mode1.getValString().equalsIgnoreCase("Verus")) {
         if (e.getPacket () instanceof C0FPacketConfirmTransaction) {
             Packets.add ( e.getPacket () );
             e.setCancelled ( true );
@@ -77,6 +87,35 @@ public void Hypixelold(ProcessPacketEvent e) {
             e.setCancelled ( true );
         }
     }
+}
+public static boolean flymove = false;
+ @EventTarget
+public void zonecraft(ProcessPacketEvent event) {
+     if (mode1.getValString().equalsIgnoreCase("zonecraft")) {
+         flymove = true;
+         if (PacketTimer.hasReached(100)) {
+         if (event.getPacket () instanceof C02PacketUseEntity) {
+             PacketsZone.add(event.getPacket());
+             event.setCancelled(true);
+         }else if(event.getPacket () instanceof C03PacketPlayer) {
+             PacketsZone.add(event.getPacket());
+             event.setCancelled(true);
+         }
+
+
+
+
+
+             flymove = false;
+
+             event.setCancelled(false);
+             mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
+
+             PacketTimer.reset();
+         }
+     }
+
+
 }
 public void Replaysucht() {
        if (!mc.thePlayer.onGround) {
@@ -87,12 +126,21 @@ public void Replaysucht() {
            }
        }
 }
-    public void ghostlie() {
-
+public void OmegaCraft(ProcessPacketEvent event) {
+    if (event.getPacket() instanceof C0FPacketConfirmTransaction)
+        event.setCancelled(true);
+}
+    public void ghostlie(ProcessPacketEvent event) {
+        if (event.getPacket() instanceof C03PacketPlayer)
             Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C0CPacketInput(999, 999, true, true));
-
-
+            MainUtil.sendPacketSilent(new C0CPacketInput());
+        if (event.getPacket() instanceof C0FPacketConfirmTransaction)
+            event.setCancelled(true);
     }
+
+
+
+
 
     public void Watchdog() {
         if (Client.moduleManager.getModuleByName("Glide").isToggle()) {
@@ -125,5 +173,17 @@ public void Replaysucht() {
 
         }
         Packets.clear();
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+        flymove = false;
+    }
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
+
     }
 }

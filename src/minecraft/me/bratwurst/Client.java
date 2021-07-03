@@ -23,6 +23,8 @@ import net.minecraft.util.EnumChatFormatting;
 
 import javax.swing.*;
 import java.io.File;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -74,7 +76,7 @@ public class Client {
     public static Minecraft mc = Minecraft.getMinecraft();
     private EZ_HologrammManager hologramManager = new EZ_HologrammManager();
 
-    public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.2", CLIENT_CODER = "Bratwust001";
+    public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.3", CLIENT_CODER = "Bratwust001";
 
     public final String CLIENT_PREFIX = EnumChatFormatting.AQUA + "[" + EnumChatFormatting.BLUE + "GOD" + EnumChatFormatting.AQUA + "]";
 
@@ -129,6 +131,7 @@ public class Client {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleAtFixedRate(() -> {
             try {
+
                 EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
                 if (thePlayer == null) {
 

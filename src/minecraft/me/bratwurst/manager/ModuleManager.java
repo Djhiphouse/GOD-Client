@@ -132,7 +132,7 @@ public class ModuleManager {
           addModule(new AutoSword());
          // addModule(new Opsign());
          addModule(new GtaDeadScreen());
-         addModule(new chunkAnimator());
+        // addModule(new chunkAnimator());
 
 
 

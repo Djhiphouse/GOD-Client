@@ -4,13 +4,17 @@ import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.Event3D;
 import me.bratwurst.event.events.EventMove;
+import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.combat.Aura;
+import me.bratwurst.utils.MovementUtils;
 import me.bratwurst.utils.StrafeUtil;
+import me.bratwurst.utils.player.RotationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
 
@@ -21,49 +25,59 @@ import static org.lwjgl.opengl.GL11.glPopMatrix;
 
 public class TargetStrafe extends Module {
     public static boolean flagged;
-
+    public static double dir = 1;
     public TargetStrafe() {
         super("TargetStrafe", Category.MOVEMENT);
     }
-
+    private int direction = -1;
     public boolean esp = true;
     public static double distance = 8;
     float speed = 0.099f;
-
+    private void invertStrafe() {
+        dir = -dir;
+    }
     @EventTarget
-    public void onPlayerUpdate(EventMove event) {
+    public void onPlayerUpdate(EventUpdate event) {
         if (Client.getInstance().getModuleManager().getModuleByName("Aura").isToggle()) {
-            mc.thePlayer.movementInput.setForward(0);
-            doStrafeAtSpeed(event, getSpeed() + speed);
+           // mc.thePlayer.movementInput.setForward(0);
+            //doStrafeAtSpeed(event, getSpeed() + speed);
+            if (event.isPre()) {
+                if (mc.thePlayer.isCollidedHorizontally) {
+                    this.switchDirection();
+                }
 
+                if (mc.gameSettings.keyBindLeft.isPressed()) {
+                    this.direction = 1;
+                }
+
+                if (mc.gameSettings.keyBindRight.isPressed()) {
+                    this.direction = -1;
+                }
+            }
         }
     }
+    private void switchDirection() {
+        if (this.direction == 1) {
+            this.direction = -1;
+        } else {
+            this.direction = 1;
+        }
 
+    }
     public static float getSpeed() {
         return (float) Math
                 .sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ);
     }
 
-    public final static boolean doStrafeAtSpeed(EventMove event, final double moveSpeed) {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (mc.thePlayer.getDistanceToEntity(Aura.target1) < distance) {
-            if (Aura.target1.getDistanceToEntity(mc.thePlayer) <= 6) {
-                StrafeUtil.customSilentMoveFlying(event, Aura.yaw);
-                mc.gameSettings.keyBindJump.pressed = true;
-                event.setCancelled(true);
-                flagged = true;
-            } else {
-                mc.gameSettings.keyBindJump.pressed = false;
-
-                flagged = false;
-            }
-            mc.thePlayer.setSpeed(moveSpeed);
+    public void strafe(EventMove event, double moveSpeed) {
+        EntityLivingBase target = Aura.target1;
+        float[] rotations = RotationUtils.getRotationsEntity(target);
+        if ((double)mc.thePlayer.getDistanceToEntity(target) <= 5) {
+            MovementUtils.setSpeed(event, moveSpeed, rotations[0], (double)this.direction, 0.0D);
+        } else {
+            MovementUtils.setSpeed(event, moveSpeed, rotations[0], (double)this.direction, 1.0D);
         }
-
-
-
-
-        return true;
+        event.setCancelled(true);
     }
 
     @EventTarget
@@ -74,7 +88,9 @@ public class TargetStrafe extends Module {
             }
         }
     }
-
+    public static boolean canStrafe() {
+        return Client.getInstance().getModuleManager().getModuleByName("Aura").isEnabled() && Aura.target1 != null;
+    }
     public double yLevel;
     boolean decreasing;
 

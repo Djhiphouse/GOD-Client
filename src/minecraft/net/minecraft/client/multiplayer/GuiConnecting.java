@@ -1,17 +1,21 @@
 package net.minecraft.client.multiplayer;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.github.creeper123123321.viafabric.ViaFabric;
+import me.bratwurst.utils.DrawMenuLogoUtil;
 import me.bratwurst.utils.ShaderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerLoginClient;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
@@ -25,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 
 public class GuiConnecting extends GuiScreen
 {
+    private ArrayList<String>LoginInfos = new ArrayList<>();
     private static final AtomicInteger CONNECTION_ID = new AtomicInteger(0);
     private static final Logger logger = LogManager.getLogger();
     private NetworkManager networkManager;
@@ -69,14 +74,21 @@ public class GuiConnecting extends GuiScreen
 
                     inetaddress = InetAddress.getByName(ip);
                     GuiConnecting.this.networkManager = NetworkManager.func_181124_a(inetaddress, port, GuiConnecting.this.mc.gameSettings.func_181148_f());
+                      LoginInfos.add(EnumChatFormatting.GREEN + "Login Start");
                     GuiConnecting.this.networkManager.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.networkManager, GuiConnecting.this.mc, GuiConnecting.this.previousGuiScreen));
+                    LoginInfos.add(EnumChatFormatting.GREEN + "NetHandlerLoginClient Started");
                     GuiConnecting.this.networkManager.sendPacket(new C00Handshake(47, ip, port, EnumConnectionState.LOGIN));
+                    LoginInfos.add(EnumChatFormatting.GREEN + "Handshake send");
                     GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().getProfile()));
+                    LoginInfos.add(EnumChatFormatting.GREEN + "Login Done");
                 }
                 catch (UnknownHostException unknownhostexception)
                 {
+                    LoginInfos.add(EnumChatFormatting.DARK_RED + "Login Failed");
+                    LoginInfos.clear();
                     if (GuiConnecting.this.cancel)
                     {
+                        LoginInfos.clear();
                         return;
                     }
 
@@ -164,8 +176,12 @@ public class GuiConnecting extends GuiScreen
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        this.drawDefaultBackground();
+
         renderShader();
+        GlStateManager.pushMatrix();
+
+
+        GlStateManager.popMatrix();
         if (this.networkManager == null)
         {
             this.drawCenteredString(this.fontRendererObj, I18n.format("connect.connecting", new Object[0]), this.width / 2, this.height / 2 - 50, 16777215);
@@ -182,5 +198,7 @@ public class GuiConnecting extends GuiScreen
         shaderUtilLoader.addDefaultUniforms();
         shaderUtilLoader.renderSecond();
     }
+
+
 
 }

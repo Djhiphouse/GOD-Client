@@ -146,21 +146,44 @@ public class Glide extends Module {
     public int ms = 163;
 
 
-
+public static double speed = 0.55;
 public void Disabler() {
+
+
+
+    if (mc.gameSettings.keyBindJump.isPressed()) {
+        mc.thePlayer.motionY
+                = -0.01;
+
+    }
     if (mc.thePlayer.ticksExisted % 1 == 0) {
         mc.thePlayer.onGround = true;
         mc.thePlayer.capabilities.isFlying = true;
         double yaw = mc.thePlayer.posY;
         yaw = Math.toRadians(yaw);
-        double dY = Math.sin(yaw) * 0.28D;
+        double dY = Math.sin(yaw) * 3D;
         mc.thePlayer.motionY = dY;
         if (!mc.thePlayer.isInWater()) {
+            double yaww = Math.toRadians(mc.thePlayer.rotationYaw);
+            double pitch = Math.toRadians(mc.thePlayer.rotationPitch);
+            double x = -Math.sin(yaww) * 0.15;
+            double z = Math.cos(yaww) * 0.13;
+            double y = -Math.sin(pitch) * 0.1;
+
+            mc.thePlayer.motionX = x;
+            mc.thePlayer.motionZ = z;
+            mc.thePlayer.motionY = y;
+            mc.thePlayer.moveForward *= 1.0F;
+            mc.thePlayer.moveStrafing *= 1.0F;
             mc.thePlayer.ticksExisted = 15;
             mc.thePlayer.isInWater();
             mc.thePlayer.motionY = 0.0D;
+            mc.thePlayer.motionY = -0.03D;
+            mc.timer.timerSpeed = 1.0f;
         }
     }
+    //AntiUp
+
 }
     public void Mccentral() {
         double y = mc.thePlayer.posY;
@@ -617,5 +640,6 @@ public void Disabler() {
         DamageSource.hungerDamage = 0.3F;
         fly2 = 0;
         fly = 0;
+        speed = 0.55;
     }
 }

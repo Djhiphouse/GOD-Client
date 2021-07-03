@@ -35,6 +35,13 @@ public class MainUtil extends Utils {
         blockedEffects = new Potion[]{Potion.hunger, Potion.moveSlowdown, Potion.digSlowdown, Potion.harm, Potion.confusion, Potion.blindness, Potion.weakness, Potion.wither, Potion.poison};
     }
 
+    public static void sendPacketSilent(Packet packet) {
+        mc.getNetHandler().getNetworkManager().sendPacket(packet);
+    }
+
+    public static void sendPacket(Packet packet) {
+        mc.thePlayer.sendQueue.addToSendQueue(packet);
+    }
     public MainUtil() {
         this.p = mc.thePlayer;
     }

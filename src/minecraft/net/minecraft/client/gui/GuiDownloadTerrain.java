@@ -1,12 +1,18 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
+import io.netty.buffer.Unpooled;
+import me.bratwurst.Client;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
+import net.minecraft.network.play.client.C17PacketCustomPayload;
 
 public class GuiDownloadTerrain extends GuiScreen
 {
+    public static long last = 0L;
     private NetHandlerPlayClient netHandlerPlayClient;
     private int progress;
 
@@ -29,7 +35,24 @@ public class GuiDownloadTerrain extends GuiScreen
      */
     public void initGui()
     {
+
         this.buttonList.clear();
+
+        if (!Client.getInstance().getModuleManager().getModuleByName("LabyFaker").isEnabled()) {
+            return;
+        }
+        if (last + 400L - System.currentTimeMillis() < 0L) {
+            PacketBuffer buf = new PacketBuffer(Unpooled.buffer());
+            buf.writeString("3.4.7");
+            String channel = "LABYMOD";
+            C17PacketCustomPayload packet = new C17PacketCustomPayload(channel, buf);
+            PacketBuffer buf2 = new PacketBuffer(Unpooled.buffer());
+            buf2.writeString("3.4.7");
+            String channel2 = "LMC";
+            C17PacketCustomPayload packet2 = new C17PacketCustomPayload(channel2, buf2);
+            mc.thePlayer.sendQueue.addToSendQueue(packet);
+            mc.thePlayer.sendQueue.addToSendQueue(packet2);
+        }
     }
 
     /**
