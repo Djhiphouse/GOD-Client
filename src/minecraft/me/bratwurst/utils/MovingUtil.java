@@ -63,6 +63,9 @@ public class MovingUtil {
         }
 
     }
+    public static void MotionY(double y) {
+
+    }
     public static void setMotion(double speed) {
         double forward = mc.thePlayer.movementInput.moveForward;
         double strafe = mc.thePlayer.movementInput.moveStrafe;

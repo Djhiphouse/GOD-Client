@@ -13,6 +13,7 @@ import me.bratwurst.guiMain.GuiClientSettings;
 import me.bratwurst.guiMain.GuiPortscanner;
 import me.bratwurst.guiMain.NewPortScanner;
 import me.bratwurst.news.crash.GuiCrashScreen;
+import me.bratwurst.news.crash.MSGSpamScreen;
 import me.bratwurst.utils.TPSUtils;
 import me.pseey.utils.TimeHelper;
 import net.minecraft.client.Minecraft;
@@ -80,6 +81,7 @@ public class GuiIngameMenu extends GuiScreen
         boolean bl = guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
         if (!this.mc.isSingleplayer()) {
             this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
+            this.buttonList.add(new GuiButton(77, this.width - 105, 54, 100, 20, "MsgSpammer"));
             this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, EnumChatFormatting.RED + "AdminGui"));
             this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
@@ -179,6 +181,9 @@ public class GuiIngameMenu extends GuiScreen
                 break;
             case 7:
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
+                break;
+            case 77:
+                this.mc.displayGuiScreen(new MSGSpamScreen(this));
         }
     }
 

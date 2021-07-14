@@ -1,6 +1,7 @@
 package me.bratwurst.manager;
 
 import me.bratwurst.Client;
+import me.bratwurst.module.Module;
 import me.bratwurst.utils.MainUtil;
 import me.bratwurst.utils.SaveLoad;
 import net.minecraft.client.Minecraft;
@@ -50,14 +51,20 @@ public class ConfigManager {
         File configF = new File(clientDirec + "\\Configs");
         try
         {
+
             if(!configF.exists())
                 configF.mkdir();
             File f = new File(clientDirec + "\\Configs\\" + name + ".cfg");
             if (f.exists()) {
+                for (Module m : Client.moduleManager.getEnabledModules())
+                      m.toggle();
+
                 SaveLoad.load(f);
+            }else {
+                MainUtil.SendClientMesage(EnumChatFormatting.RED + "Die Config wurde leider nicht gefunden");
             }
         }catch (Exception exception){
-            MainUtil.SendClientMesage(EnumChatFormatting.RED + "Die Config wurde leider nicht gefunden");
+
         }
 
 

@@ -17,11 +17,13 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
@@ -51,7 +53,7 @@ public class Glide extends Module {
     private double groundZ;
     private int counter;
     public float i;
-
+    public boolean verusDamaged = false;
     public Glide() {
 
         super("Glide", Category.MOVEMENT);
@@ -71,6 +73,9 @@ public class Glide extends Module {
         options.add("FakeFlag");
         options.add("HypixelZoom");
         options.add("Disabler");
+        options.add("VerusFast");
+        options.add("BlinkSlow");
+
 
 
         Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "Glide Mode", this, "Mccentral", options));
@@ -140,12 +145,38 @@ public class Glide extends Module {
             Disabler();
             this.setDisplayname(EnumChatFormatting.RED + " - Disabler");
 
+        }else if (mode1.getValString().equalsIgnoreCase("VerusFast")) {
+            Verusfast();
+            this.setDisplayname(EnumChatFormatting.RED + " - VerusFast");
+
+        }else if (mode1.getValString().equalsIgnoreCase("BlinkSlow")) {
+            Blockslow();
+            this.setDisplayname(EnumChatFormatting.RED + " - BlinkSlow");
+
         }
     }
 
     public int ms = 163;
+public void Blockslow(){
+    if (mc.thePlayer.moveForward != 0) {
+        mc.thePlayer.motionY = 0;
+        if (mc.thePlayer.ticksExisted % 2 == 0) {
+            mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.0006185623653, mc.thePlayer.posZ);
+        } else {
+            mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 0.0006185623653, mc.thePlayer.posZ);
+        }
+    }
+}
 
-
+public void Verusfast() {
+    if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0, 3.45, 0).expand(0, 0, 0)).isEmpty()) {
+        this.verusDamaged = true;
+        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 3.45, mc.thePlayer.posZ, false));
+        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
+        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, true));
+        this.verusDamaged = false;
+    }
+}
 public static double speed = 0.55;
 public void Disabler() {
 

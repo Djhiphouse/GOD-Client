@@ -46,9 +46,11 @@ public class Disabler extends Module {
         options.add("KAURI");
         options.add("Replaysucht");
         options.add("Redesky");
-        options.add("Hypixelold");
         options.add("OmegaCraft");
         options.add("zonecraft");
+        options.add("zonecraftnew");
+        options.add("MEME");
+        options.add("Verus");
 
         Client.instance.setmgr.rSetting(new Setting(EnumChatFormatting.RED +"Disable Anticheat", this, "Slide", options));
     }
@@ -65,19 +67,25 @@ public class Disabler extends Module {
         } else if (mode1.getValString().equalsIgnoreCase("Replaysucht")) {
          Replaysucht();
             this.setDisplayname(EnumChatFormatting.RED + " - Replaysucht");
-        }else if (mode1.getValString().equalsIgnoreCase("Hypixelold")) {
-            Hypixelold(e);
-            this.setDisplayname(EnumChatFormatting.RED + " - Hypixelold");
         }else if (mode1.getValString().equalsIgnoreCase("OmegaCraft")) {
             OmegaCraft(e);
             this.setDisplayname(EnumChatFormatting.RED + " - OmegaCraft");
         }else if (mode1.getValString().equalsIgnoreCase("zonecraft")) {
 
             this.setDisplayname(EnumChatFormatting.RED + " - zonecraft");
+        }else if (mode1.getValString().equalsIgnoreCase("MEME")) {
+          Meme(e);
+            this.setDisplayname(EnumChatFormatting.RED + " - Meme");
+        }else if (mode1.getValString().equalsIgnoreCase("Verus")) {
+            Verus(e);
+            this.setDisplayname(EnumChatFormatting.RED + " - Verus");
+        }else if (mode1.getValString().equalsIgnoreCase("zonecraftnew")) {
+            zone(e);
+            this.setDisplayname(EnumChatFormatting.RED + " - zonecraftnew");
         }
     }
 
-public void Hypixelold(ProcessPacketEvent e) {
+public void Verus(ProcessPacketEvent e) {
        if (mode1.getValString().equalsIgnoreCase("Verus")) {
         if (e.getPacket () instanceof C0FPacketConfirmTransaction) {
             Packets.add ( e.getPacket () );
@@ -88,31 +96,27 @@ public void Hypixelold(ProcessPacketEvent e) {
         }
     }
 }
+
+public void zone(ProcessPacketEvent e) {
+    if(e.getPacket() instanceof S08PacketPlayerPosLook) {
+        S08PacketPlayerPosLook pppl = (S08PacketPlayerPosLook) e.getPacket();
+        e.setCancelled(true);
+        mc.getNetHandler().addToSendQueueSilent(new C03PacketPlayer.C06PacketPlayerPosLook(pppl.getX(), pppl.getY() + 0.05, pppl.getZ(), mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, true));
+    }
+}
+public void Meme(ProcessPacketEvent e) {
+    if(e.getPacket() instanceof C03PacketPlayer) {
+        e.setCancelled(true);
+    }
+}
 public static boolean flymove = false;
  @EventTarget
 public void zonecraft(ProcessPacketEvent event) {
-     if (mode1.getValString().equalsIgnoreCase("zonecraft")) {
-         flymove = true;
-         if (PacketTimer.hasReached(100)) {
-         if (event.getPacket () instanceof C02PacketUseEntity) {
-             PacketsZone.add(event.getPacket());
-             event.setCancelled(true);
-         }else if(event.getPacket () instanceof C03PacketPlayer) {
-             PacketsZone.add(event.getPacket());
-             event.setCancelled(true);
-         }
-
-
-
-
-
-             flymove = false;
-
-             event.setCancelled(false);
-             mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
-
-             PacketTimer.reset();
-         }
+     if(event.getPacket() instanceof C0FPacketConfirmTransaction) {
+         event.setCancelled(true);
+     }
+     if(event.getPacket() instanceof C00PacketKeepAlive) {
+         event.setCancelled(true);
      }
 
 

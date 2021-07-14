@@ -28,6 +28,7 @@ public class Sacffold extends Module {
     public static Setting mode1;
     public static Setting Towerob;
     public static Setting modemove;
+    public  static Setting place;
     public static Setting AirSprint, NoSprint, Range, Fastbrige, KeepY, delay, BoostMode, Timer, overrideKeepY, extendblock;
 
 
@@ -48,13 +49,25 @@ public class Sacffold extends Module {
         Client.setmgr.rSetting(Towerob = new Setting(EnumChatFormatting.RED + "Tower options", this, "TowerMotion", Tower));
         Tower.add("TowerMotion");
         Tower.add("LegitTower");
-
+        ArrayList<String> plop = new ArrayList<>();
+        Client.setmgr.rSetting(place = new Setting(EnumChatFormatting.RED + "Place options", this, "Packet", plop));
+        plop.add("Packet");
+        plop.add("Betterplace");
+        plop.add("Legitplace");
 
         Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "AC options", this, "AAC", options));
 
     }
 
+@EventTarget
+public  void OnUpdate(EventUpdate e) {
+        if (place.getValString().equalsIgnoreCase("Packet")){
+            if (mc.thePlayer.getCurrentEquippedItem().getItem() != null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock && mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), currentPos, currentFacing, new Vec3(currentPos.getX(), currentPos.getY(), currentPos.getZ()))) {
+                mc.thePlayer.swingItem();
+            }
+        }
 
+}
     public static float Yaw;
     public static float Pitch;
 public static float motionSpeed = 0.5f;

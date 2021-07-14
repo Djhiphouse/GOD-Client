@@ -5,16 +5,14 @@ import de.Hero.settings.Setting;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
+import me.bratwurst.event.events.ProcessPacketEvent;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.Crasher.AntiBan;
 import me.bratwurst.module.modules.Player.AntiAim;
 import me.bratwurst.module.modules.Player.Nofall;
-import me.bratwurst.utils.BlockUtils;
+import me.bratwurst.utils.*;
 
-import me.bratwurst.utils.MovingUtil;
-import me.bratwurst.utils.PlayerUtil;
-import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -22,13 +20,17 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C18PacketSpectate;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovementInput;
 
 import javax.vecmath.Vector3d;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class LongJump extends Module {
 
@@ -76,7 +78,7 @@ public class LongJump extends Module {
     boolean leftGround = false;
     private int airTicks;
 
-    public Setting Nofall, Speed, off, Glide,boost,Ticks,JumpMotion;
+    public Setting Nofall, Speed, off, Glide, boost, Ticks, JumpMotion;
     public static Setting mode1;
 
     public LongJump() {
@@ -93,7 +95,8 @@ public class LongJump extends Module {
         options.add("badRedesky");
         options.add("FastRedesky");
         options.add("Mineplexlow");
-
+        options.add("Blockmcold");
+        options.add("OPJUMP");
 
 
         Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "LongJump Mode", this, "Mccentral", options));
@@ -104,17 +107,17 @@ public class LongJump extends Module {
     public void setup() {
 
         Client.setmgr.rSetting(Nofall = new Setting(EnumChatFormatting.AQUA + "Nofall", this, true));
-        Client.setmgr.rSetting(off = new Setting(EnumChatFormatting.AQUA +"off", this, true));
-        Client.setmgr.rSetting(Glide = new Setting(EnumChatFormatting.AQUA +"Glide", this, true));
-        Client.setmgr.rSetting(boost = new Setting(EnumChatFormatting.AQUA +"boost", this, 2, 1, 5, false));
-        Client.setmgr.rSetting(Ticks = new Setting(EnumChatFormatting.AQUA +"Ticks", this, 35, 10, 100, true));
-        Client.setmgr.rSetting(JumpMotion = new Setting(EnumChatFormatting.AQUA +"JumpMotion", this, 0.01, 0.650, 0.9, false));
+        Client.setmgr.rSetting(off = new Setting(EnumChatFormatting.AQUA + "off", this, true));
+        Client.setmgr.rSetting(Glide = new Setting(EnumChatFormatting.AQUA + "Glide", this, true));
+        Client.setmgr.rSetting(boost = new Setting(EnumChatFormatting.AQUA + "boost", this, 2, 1, 5, false));
+        Client.setmgr.rSetting(Ticks = new Setting(EnumChatFormatting.AQUA + "Ticks", this, 35, 10, 100, true));
+        Client.setmgr.rSetting(JumpMotion = new Setting(EnumChatFormatting.AQUA + "JumpMotion", this, 0.01, 0.650, 0.9, false));
     }
 
     public static int state = 0;
 
     @EventTarget
-    public void onUpdate(EventMotionUpdate event) {
+    public void onUpdate(EventMotionUpdate e) {
         if (mode1.getValString().equalsIgnoreCase("Bettermccentral")) {
             BetterMccentral();
             this.setDisplayname(EnumChatFormatting.RED + " - Bettermccentral");
@@ -124,84 +127,216 @@ public class LongJump extends Module {
         } else if (mode1.getValString().equalsIgnoreCase("Damage")) {
             Schadenundfly();
             this.setDisplayname(EnumChatFormatting.RED + " - Damage");
-        }else if (mode1.getValString().equalsIgnoreCase("OLDNCP")) {
+        } else if (mode1.getValString().equalsIgnoreCase("OLDNCP")) {
             NCP();
             this.setDisplayname(EnumChatFormatting.RED + " - OLDNCP");
-        }else if (mode1.getValString().equalsIgnoreCase("Custom")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Custom")) {
             Custom();
             this.setDisplayname(EnumChatFormatting.RED + " - Custom");
-        }else if (mode1.getValString().equalsIgnoreCase("OldCubecraft")) {
+        } else if (mode1.getValString().equalsIgnoreCase("OldCubecraft")) {
             oldCubecraft();
             this.setDisplayname(EnumChatFormatting.RED + " - OldCubecraft");
-        }else if (mode1.getValString().equalsIgnoreCase("Spartan")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Spartan")) {
             Guardian();
             this.setDisplayname(EnumChatFormatting.RED + " - Spartan");
-        }else if (mode1.getValString().equalsIgnoreCase("Test")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Test")) {
             Test();
             this.setDisplayname(EnumChatFormatting.RED + " - Test");
-        }else if (mode1.getValString().equalsIgnoreCase("badRedesky")) {
+        } else if (mode1.getValString().equalsIgnoreCase("badRedesky")) {
             newredesky();
             this.setDisplayname(EnumChatFormatting.RED + " - badRedesky");
-        }else if (mode1.getValString().equalsIgnoreCase("FastRedesky")) {
+        } else if (mode1.getValString().equalsIgnoreCase("FastRedesky")) {
             FastRedesky(Ticks.getValInt());
             this.setDisplayname(EnumChatFormatting.RED + " - FastRedesky");
-        }else if (mode1.getValString().equalsIgnoreCase("Mineplexlow")) {
-         Mineplexlow(JumpMotion.getValDouble());
+        } else if (mode1.getValString().equalsIgnoreCase("Mineplexlow")) {
+            Mineplexlow(JumpMotion.getValDouble());
             this.setDisplayname(EnumChatFormatting.RED + " - Mineplexlow");
+        }else if (mode1.getValString().equalsIgnoreCase("Blockmcold")) {
+            Blockmc();
+            this.setDisplayname(EnumChatFormatting.RED + " - Blockmcold");
+        }else if (mode1.getValString().equalsIgnoreCase("OPJUMP")) {
+            SpecLungjump();
+            this.setDisplayname(EnumChatFormatting.RED + " - OPJUMP");
         }
 
 
-
-
-}
+    }
 
     public static int Ground = 0;
     public static int tick = 0;
     public static boolean onground;
-public  static int jumpmotion = 0;
+    public static int jumpmotion = 0;
     public int disableState, damageState;
+    public static boolean maxhight = false;
+    public static Boolean Damage = false;
+public  void SpecLungjump() {
+//Damage methode By Bratwurst001
+    if (tick == 0) {
+        for (int i = 0; i < 10;i++){
+            mc.thePlayer.motionX = 0;
+            mc.thePlayer.motionZ = 0;
+            mc.thePlayer.sendQueue.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX,mc.thePlayer.posY + 0.002,mc.thePlayer.posZ,false));
+            mc.thePlayer.sendQueue.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX,mc.thePlayer.posY + 0.0982,mc.thePlayer.posZ,false));
+            mc.thePlayer.sendQueue.addToSendQueueSilent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX,mc.thePlayer.posY + 0.3682,mc.thePlayer.posZ,false));
+
+
+        }
+        //auf den Boden setzten für den Damage
+        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
+        if (mc.thePlayer.hurtTime < 0.1) {
+            if (tick == 1){
+                MainUtil.SendClientMesage(EnumChatFormatting.RED + "FLAG: " + "  Damege Flag: " + tick + " Gefahr: Kritik");
+                toggle();
+            }
+        }
+
+    }
+    // + 1 damit die Damage methode nur 1 durch geht
+     tick++;
+
+
+
+
+
+
+if (mc.thePlayer.motionX != mc.thePlayer.motionX )
+        MainUtil.SendClientMesage(EnumChatFormatting.RED + "FLAG: " + "  Cord X Flag: " + tick + " Gefahr: Kritik");
+    if (mc.thePlayer.motionY != mc.thePlayer.motionY )
+        MainUtil.SendClientMesage(EnumChatFormatting.RED + "FLAG: " + "  Cord Y Flag: " + tick + " Gefahr: Kritik");
+    if (mc.thePlayer.motionZ != mc.thePlayer.motionZ )
+        MainUtil.SendClientMesage(EnumChatFormatting.RED + "FLAG: " + "  Cord Z Flag: " + tick + " Gefahr: Kritik");
+
+   //Damage wir auf true gesetzt
+    if (mc.thePlayer.hurtTime > 0.1){
+        Damage = true;
+    }else {
+
+
+    }
+
+
+
+
+    //wenn der damage gegeben wurde
+ if (Damage == true){
+
+
+     mc.thePlayer.sendQueue.addToSendQueue(new C18PacketSpectate((UUID.randomUUID())));
+
+     mc.timer.timerSpeed = MovingUtil.isOnGround(0.001) ? 0.75f : 0.6f;
+     System.out.println();
+     jumpmotion++;
+     if (jumpmotion == 1) {
+         mc.thePlayer.jump();
+
+     }
+     if (mc.thePlayer.onGround && maxhight == true){
+
+         toggle();
+         maxhight = false;
+     }
+     if (PlayerUtil.isMoving2()) {
+
+         mc.thePlayer.jump();
+         count++;
+         if (maxhight == true) {
+             if (MovingUtil.isOnGround( 5)){
+                 mc.thePlayer.motionY = -0.1;
+                 MovingUtil.setMotion(0.1);
+             }else if (MovingUtil.isOnGround( 3)) {
+                 mc.thePlayer.motionY = -0.3;
+                 MovingUtil.setMotion(0.1);
+             }
+         }
+         if (count == 1) {
+
+             MovingUtil.setMotion(1.3);
+         } else if (count == 2) {
+             if (mc.thePlayer.moveForward > 0.5)
+                 mc.thePlayer.motionY = 0.16;
+             //   mc.thePlayer.setPositionAndUpdate(mc.thePlayer.posX,mc.thePlayer.posY + 0.1,mc.thePlayer.posZ);
+             MovingUtil.setMotion(1.0);
+             if (!MovingUtil.isOnGround(0.001)) {
+                 count = 0;
+             } else {
+                 mc.timer.timerSpeed = 1;
+             }
+             if (MovingUtil.isOnGround( 7)){
+                 maxhight = true;
+             }else {
+
+                 if ( maxhight == true){
+                     if (MovingUtil.isOnGround( 0.2)){
+                         toggle();
+                         maxhight = false;
+                     }
+
+                 }
+             }
+         } else if (count >= 3) {
+             MovingUtil.setMotion(0.9);
+             count = 0;
+         }
+     } else {
+         count = 0;
+         // MovingUtil.setMotion(0);
+     }
+ }
+
+}
     public void Test() {
         if (PlayerUtil.MovementInput() && this.mc.thePlayer.fallDistance < 1.0f) {
             float direction = this.mc.thePlayer.rotationYaw;
-            float x = (float)Math.cos((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
-            float z = (float)Math.sin((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
+            float x = (float) Math.cos((double) (direction + 90.0f) * 3.141592653589793 / 180.0);
+            float z = (float) Math.sin((double) (direction + 90.0f) * 3.141592653589793 / 180.0);
             if (this.mc.thePlayer.isCollidedVertically && PlayerUtil.MovementInput() && this.mc.gameSettings.keyBindJump.pressed) {
                 this.mc.thePlayer.motionX = x * 0.29f;
                 this.mc.thePlayer.motionZ = z * 0.29f;
             }
             if (this.mc.thePlayer.motionY == 0.33319999363422365 && PlayerUtil.MovementInput()) {
-                this.mc.thePlayer.motionX = (double)x * 1.261;
-                this.mc.thePlayer.motionZ = (double)z * 1.261;
+                this.mc.thePlayer.motionX = (double) x * 1.261;
+                this.mc.thePlayer.motionZ = (double) z * 1.261;
             }
         }
     }
+    public void Blockmc() {
+        if ((mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0)) {
+            mc.thePlayer.speedInAir = 1.2F * 0.1F;
+            mc.timer.timerSpeed = 1F;
+            if (!mc.thePlayer.onGround) {
+                mc.timer.timerSpeed = 0.9F;
+            }
+        }
+    }
+
     public static int Value = 0;
     public static boolean jumping = false;
-    public void Mineplexlow(double Jumpspeed){
+
+    public void Mineplexlow(double Jumpspeed) {
         if (Value < 25 && mc.thePlayer.onGround) {
             jumping = true;
-           if ( mc.thePlayer.ticksExisted % 4 == 0) {
-              mc.thePlayer.setSpeed(-0.35);
-              Value++;
-           }else if (mc.thePlayer.ticksExisted % 2 == 0) {
-               mc.thePlayer.setSpeed(+0.35);
-               Value++;
-           }
-
-        }else {
-
-            if (jumping == true){
-                mc.thePlayer.jump();
+            if (mc.thePlayer.ticksExisted % 4 == 0) {
+                mc.thePlayer.setSpeed(-0.35);
                 Value++;
-            jumping = false;
+            } else if (mc.thePlayer.ticksExisted % 2 == 0) {
+                mc.thePlayer.setSpeed(+0.35);
+                Value++;
             }
 
-            if (Value <= 47 ){
+        } else {
+
+            if (jumping == true) {
+                mc.thePlayer.jump();
+                Value++;
+                jumping = false;
+            }
+
+            if (Value <= 47) {
                 if (!mc.thePlayer.onGround)
-                mc.thePlayer.setSpeed(Jumpspeed);
+                    mc.thePlayer.setSpeed(Jumpspeed);
 
                 Value++;
-            }else {
+            } else {
                 if (mc.thePlayer.onGround) {
 
                     this.toggle();
@@ -212,17 +347,18 @@ public  static int jumpmotion = 0;
         }
 
     }
+
     public void newredesky() {
         if (!mc.thePlayer.onGround) {
             mc.timer.timerSpeed = 0.6f;
-            if ((double)mc.thePlayer.fallDistance > 0.5) {
+            if ((double) mc.thePlayer.fallDistance > 0.5) {
                 this.leftGround = true;
             }
             if (mc.thePlayer.fallDistance >= 1.3f) {
                 mc.thePlayer.speedInAir = 0.02f;
             } else {
                 mc.thePlayer.speedInAir = 0.14f;
-                mc.thePlayer.motionY *= (double)1.15f;
+                mc.thePlayer.motionY *= (double) 1.15f;
             }
             return;
         }
@@ -233,7 +369,9 @@ public  static int jumpmotion = 0;
             mc.timer.timerSpeed = 1.0f;
         }
     }
-    public int  ticks2 = 0;
+
+    public int ticks2 = 0;
+
     public void FastRedesky(int ticks) {
 
         if (ticks2 < ticks) {
@@ -243,90 +381,91 @@ public  static int jumpmotion = 0;
             this.mc.timer.timerSpeed = 2.0f;
             this.mc.thePlayer.jump();
             ticks2++;
-        }else {
+        } else {
             toggle();
-            ticks2=0;
+            ticks2 = 0;
         }
 
     }
-public void  Guardian () {
-    EntityPlayerSP player = this.mc.thePlayer;
-    if (!PlayerUtil.MovementInput()) {
-        return;
-    }
-    if (this.mc.thePlayer.onGround) {
-        this.lastHDistance = 0;
-    }
-    float direction = this.mc.thePlayer.rotationYaw + (float)(this.mc.thePlayer.moveForward < 0.0f ? 180 : 0) + (this.mc.thePlayer.moveStrafing > 0.0f ? -90.0f * (this.mc.thePlayer.moveForward > 0.0f ? 0.5f : (this.mc.thePlayer.moveForward < 0.0f ? -0.5f : 1.0f)) : 0.0f) - (this.mc.thePlayer.moveStrafing < 0.0f ? -90.0f * (this.mc.thePlayer.moveForward > 0.0f ? 0.5f : (this.mc.thePlayer.moveForward < 0.0f ? -0.5f : 1.0f)) : 0.0f);
-    float xDir = (float)Math.cos((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
-    float zDir = (float)Math.sin((double)(direction + 90.0f) * 3.141592653589793 / 180.0);
-    if (!this.mc.thePlayer.isCollidedVertically) {
-        this.isSpeeding = true;
-        this.groundTicks = 0;
+
+    public void Guardian() {
+        EntityPlayerSP player = this.mc.thePlayer;
+        if (!PlayerUtil.MovementInput()) {
+            return;
+        }
+        if (this.mc.thePlayer.onGround) {
+            this.lastHDistance = 0;
+        }
+        float direction = this.mc.thePlayer.rotationYaw + (float) (this.mc.thePlayer.moveForward < 0.0f ? 180 : 0) + (this.mc.thePlayer.moveStrafing > 0.0f ? -90.0f * (this.mc.thePlayer.moveForward > 0.0f ? 0.5f : (this.mc.thePlayer.moveForward < 0.0f ? -0.5f : 1.0f)) : 0.0f) - (this.mc.thePlayer.moveStrafing < 0.0f ? -90.0f * (this.mc.thePlayer.moveForward > 0.0f ? 0.5f : (this.mc.thePlayer.moveForward < 0.0f ? -0.5f : 1.0f)) : 0.0f);
+        float xDir = (float) Math.cos((double) (direction + 90.0f) * 3.141592653589793 / 180.0);
+        float zDir = (float) Math.sin((double) (direction + 90.0f) * 3.141592653589793 / 180.0);
         if (!this.mc.thePlayer.isCollidedVertically) {
-            if (this.mc.thePlayer.motionY == -0.07190068807140403) {
-                player.motionY *= 0.3499999940395355;
-            } else if (this.mc.thePlayer.motionY == -0.10306193759436909) {
-                player.motionY *= 0.550000011920929;
-            } else if (this.mc.thePlayer.motionY == -0.13395038817442878) {
-                player.motionY *= 0.6700000166893005;
-            } else if (this.mc.thePlayer.motionY == -0.16635183030382) {
-                player.motionY *= 0.6899999976158142;
-            } else if (this.mc.thePlayer.motionY == -0.19088711097794803) {
-                player.motionY *= 0.7099999785423279;
-            } else if (this.mc.thePlayer.motionY == -0.21121925191528862) {
-                player.motionY *= 0.20000000298023224;
-            } else if (this.mc.thePlayer.motionY == -0.11979897632390576) {
-                player.motionY *= 0.9300000071525574;
-            } else if (this.mc.thePlayer.motionY == -0.18758479151225355) {
-                player.motionY *= 0.7200000286102295;
-            } else if (this.mc.thePlayer.motionY == -0.21075983825251726) {
-                player.motionY *= 0.7599999904632568;
-            }
-            if (this.mc.thePlayer.motionY < -0.2 && this.mc.thePlayer.motionY > -0.24) {
-                player.motionY *= 0.7;
-            }
-            if (this.mc.thePlayer.motionY < -0.25 && this.mc.thePlayer.motionY > -0.32) {
-                player.motionY *= 0.8;
-            }
-            if (this.mc.thePlayer.motionY < -0.35 && this.mc.thePlayer.motionY > -0.8) {
-                player.motionY *= 0.98;
-            }
-            if (this.mc.thePlayer.motionY < -0.8 && this.mc.thePlayer.motionY > -1.6) {
-                player.motionY *= 0.99;
-            }
-        }
-        this.mc.timer.timerSpeed = 0.8f;
-        double[] speedVals = new double[]{0.420606, 0.417924, 0.415258, 0.412609, 0.409977, 0.407361, 0.404761, 0.402178, 0.399611, 0.39706, 0.394525, 0.392, 0.3894, 0.38644, 0.383655, 0.381105, 0.37867, 0.37625, 0.37384, 0.37145, 0.369, 0.3666, 0.3642, 0.3618, 0.35945, 0.357, 0.354, 0.351, 0.348, 0.345, 0.342, 0.339, 0.336, 0.333, 0.33, 0.327, 0.324, 0.321, 0.318, 0.315, 0.312, 0.309, 0.307, 0.305, 0.303, 0.3, 0.297, 0.295, 0.293, 0.291, 0.289, 0.287, 0.285, 0.283, 0.281, 0.279, 0.277, 0.275, 0.273, 0.271, 0.269, 0.267, 0.265, 0.263, 0.261, 0.259, 0.257, 0.255, 0.253, 0.251, 0.249, 0.247, 0.245, 0.243, 0.241, 0.239, 0.237};
-        if (this.mc.gameSettings.keyBindForward.pressed) {
-            try {
-                this.mc.thePlayer.motionX = (double)xDir * speedVals[this.airTicks - 1] * 3.0;
-                this.mc.thePlayer.motionZ = (double)zDir * speedVals[this.airTicks - 1] * 3.0;
-            }
-            catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {}
-        } else {
-            this.mc.thePlayer.motionX = 0.0;
-            this.mc.thePlayer.motionZ = 0.0;
-        }
-    } else {
-        this.mc.timer.timerSpeed = 1.0f;
-        this.airTicks = 0;
-        player.motionX /= 13.0;
-        player.motionZ /= 13.0;
-        if (this.groundTicks == 1) {
-            this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
-            this.updatePosition(this.mc.thePlayer.posX + 0.0624, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
-            this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY + 0.419, this.mc.thePlayer.posZ);
-            this.updatePosition(this.mc.thePlayer.posX + 0.0624, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
-            this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY + 0.419, this.mc.thePlayer.posZ);
-        } else if (this.groundTicks > 2) {
+            this.isSpeeding = true;
             this.groundTicks = 0;
-            this.mc.thePlayer.motionX = (double)xDir * 0.3;
-            this.mc.thePlayer.motionZ = (double)zDir * 0.3;
-            this.mc.thePlayer.motionY = 0.42399999499320984;
+            if (!this.mc.thePlayer.isCollidedVertically) {
+                if (this.mc.thePlayer.motionY == -0.07190068807140403) {
+                    player.motionY *= 0.3499999940395355;
+                } else if (this.mc.thePlayer.motionY == -0.10306193759436909) {
+                    player.motionY *= 0.550000011920929;
+                } else if (this.mc.thePlayer.motionY == -0.13395038817442878) {
+                    player.motionY *= 0.6700000166893005;
+                } else if (this.mc.thePlayer.motionY == -0.16635183030382) {
+                    player.motionY *= 0.6899999976158142;
+                } else if (this.mc.thePlayer.motionY == -0.19088711097794803) {
+                    player.motionY *= 0.7099999785423279;
+                } else if (this.mc.thePlayer.motionY == -0.21121925191528862) {
+                    player.motionY *= 0.20000000298023224;
+                } else if (this.mc.thePlayer.motionY == -0.11979897632390576) {
+                    player.motionY *= 0.9300000071525574;
+                } else if (this.mc.thePlayer.motionY == -0.18758479151225355) {
+                    player.motionY *= 0.7200000286102295;
+                } else if (this.mc.thePlayer.motionY == -0.21075983825251726) {
+                    player.motionY *= 0.7599999904632568;
+                }
+                if (this.mc.thePlayer.motionY < -0.2 && this.mc.thePlayer.motionY > -0.24) {
+                    player.motionY *= 0.7;
+                }
+                if (this.mc.thePlayer.motionY < -0.25 && this.mc.thePlayer.motionY > -0.32) {
+                    player.motionY *= 0.8;
+                }
+                if (this.mc.thePlayer.motionY < -0.35 && this.mc.thePlayer.motionY > -0.8) {
+                    player.motionY *= 0.98;
+                }
+                if (this.mc.thePlayer.motionY < -0.8 && this.mc.thePlayer.motionY > -1.6) {
+                    player.motionY *= 0.99;
+                }
+            }
+            this.mc.timer.timerSpeed = 0.8f;
+            double[] speedVals = new double[]{0.420606, 0.417924, 0.415258, 0.412609, 0.409977, 0.407361, 0.404761, 0.402178, 0.399611, 0.39706, 0.394525, 0.392, 0.3894, 0.38644, 0.383655, 0.381105, 0.37867, 0.37625, 0.37384, 0.37145, 0.369, 0.3666, 0.3642, 0.3618, 0.35945, 0.357, 0.354, 0.351, 0.348, 0.345, 0.342, 0.339, 0.336, 0.333, 0.33, 0.327, 0.324, 0.321, 0.318, 0.315, 0.312, 0.309, 0.307, 0.305, 0.303, 0.3, 0.297, 0.295, 0.293, 0.291, 0.289, 0.287, 0.285, 0.283, 0.281, 0.279, 0.277, 0.275, 0.273, 0.271, 0.269, 0.267, 0.265, 0.263, 0.261, 0.259, 0.257, 0.255, 0.253, 0.251, 0.249, 0.247, 0.245, 0.243, 0.241, 0.239, 0.237};
+            if (this.mc.gameSettings.keyBindForward.pressed) {
+                try {
+                    this.mc.thePlayer.motionX = (double) xDir * speedVals[this.airTicks - 1] * 3.0;
+                    this.mc.thePlayer.motionZ = (double) zDir * speedVals[this.airTicks - 1] * 3.0;
+                } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
+                }
+            } else {
+                this.mc.thePlayer.motionX = 0.0;
+                this.mc.thePlayer.motionZ = 0.0;
+            }
+        } else {
+            this.mc.timer.timerSpeed = 1.0f;
+            this.airTicks = 0;
+            player.motionX /= 13.0;
+            player.motionZ /= 13.0;
+            if (this.groundTicks == 1) {
+                this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
+                this.updatePosition(this.mc.thePlayer.posX + 0.0624, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
+                this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY + 0.419, this.mc.thePlayer.posZ);
+                this.updatePosition(this.mc.thePlayer.posX + 0.0624, this.mc.thePlayer.posY, this.mc.thePlayer.posZ);
+                this.updatePosition(this.mc.thePlayer.posX, this.mc.thePlayer.posY + 0.419, this.mc.thePlayer.posZ);
+            } else if (this.groundTicks > 2) {
+                this.groundTicks = 0;
+                this.mc.thePlayer.motionX = (double) xDir * 0.3;
+                this.mc.thePlayer.motionZ = (double) zDir * 0.3;
+                this.mc.thePlayer.motionY = 0.42399999499320984;
+            }
         }
     }
-}
 
     public void oldCubecraft() {
         mc.timer.timerSpeed = MovingUtil.isOnGround(0.001) ? 0.75f : 0.6f;
@@ -335,56 +474,58 @@ public void  Guardian () {
             mc.thePlayer.jump();
         }
 
-        if(PlayerUtil.isMoving2()){
+        if (PlayerUtil.isMoving2()) {
 
-            count ++;
-            if(count == 1){
+            count++;
+            if (count == 1) {
 
                 MovingUtil.setMotion(1.9);
-            }else if(count == 2){
+            } else if (count == 2) {
                 MovingUtil.setMotion(0);
-                if(!MovingUtil.isOnGround(0.001)){
+                if (!MovingUtil.isOnGround(0.001)) {
                     count = 0;
-                }else{
+                } else {
                     mc.timer.timerSpeed = 1;
                 }
-            }else if(count >= 3){
+            } else if (count >= 3) {
                 MovingUtil.setMotion(0);
                 count = 0;
             }
-        }else{
+        } else {
             count = 0;
             MovingUtil.setMotion(0);
         }
     }
-public void Custom() {
-    float x2 = 1f + MovingUtil.getSpeedEffect() * 0.45f;
-    if ((mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0) && mc.thePlayer.onGround) {
 
-        if (mc.thePlayer.onGround && state == 3) {
-            toggle();
-            return;
-        }
-        if (mc.thePlayer.onGround && state <= 3) {
+    public void Custom() {
+        float x2 = 1f + MovingUtil.getSpeedEffect() * 0.45f;
+        if ((mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0) && mc.thePlayer.onGround) {
+
+            if (mc.thePlayer.onGround && state == 3) {
+                toggle();
+                return;
+            }
+            if (mc.thePlayer.onGround && state <= 3) {
+                mc.thePlayer.jump();
+
+                state = 1;
+            }
+            groundTicks++;
+            mc.thePlayer.motionX *= 1;
+            mc.thePlayer.motionZ *= 1;
             mc.thePlayer.jump();
-
-            state = 1;
         }
-        groundTicks++;
-        mc.thePlayer.motionX *= 1;
-        mc.thePlayer.motionZ *= 1;
-        mc.thePlayer.jump();
+        if (mc.thePlayer.onGround && BlockUtils.isOnGround(0.01)) {
+            air = 0;
+        } else {
+            mc.thePlayer.motionX *= 0;
+            mc.thePlayer.motionZ *= 0;
+            float speed = (((Number) boost.getValInt()).floatValue() + MovingUtil.getSpeedEffect() * 0.2f) - air / 25;
+            mc.thePlayer.jumpMovementFactor = speed > 0.28f ? speed : 0.28f;
+            air += x2 * ((Number) boost.getValInt()).floatValue() * 2;
+        }
     }
-    if (mc.thePlayer.onGround && BlockUtils.isOnGround(0.01)) {
-        air = 0;
-    } else {
-        mc.thePlayer.motionX *= 0;
-        mc.thePlayer.motionZ *= 0;
-        float speed = (((Number) boost.getValInt()).floatValue() + MovingUtil.getSpeedEffect() * 0.2f) - air / 25;
-        mc.thePlayer.jumpMovementFactor = speed > 0.28f ? speed : 0.28f;
-        air += x2 *((Number) boost.getValInt()).floatValue() * 2;
-    }
-}
+
     public void NCP() {
         mc.thePlayer.lastReportedPosY = 0;
         float x2 = 1f + MovingUtil.getSpeedEffect() * 0.45f;
@@ -737,6 +878,9 @@ public void Custom() {
         onground = false;
         groundTicks = 0;
         mc.timer.timerSpeed = 1f;
+        maxhight = false;
+        tick = 0;
+        Damage = false;
         MovingUtil.setMotion(0.2);
         jumpmotion = 0;
 
@@ -764,6 +908,7 @@ public void Custom() {
             return mc.thePlayer.motionY;
         }
     }
+
     public void updatePosition(double x, double y, double z) {
         this.mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, this.mc.thePlayer.onGround));
     }

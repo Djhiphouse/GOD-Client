@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.awt.*;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
@@ -13,6 +14,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import me.bratwurst.Client;
 import me.bratwurst.adminNotifications.AdminNotification;
@@ -21,9 +24,7 @@ import me.bratwurst.adminNotifications.UpdateNotificationManager;
 import me.bratwurst.event.events.Event2D;
 import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.modules.combat.Aura;
-import me.bratwurst.utils.Holder;
-import me.bratwurst.utils.TPSUtils;
-import me.bratwurst.utils.Time;
+import me.bratwurst.utils.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -150,6 +151,7 @@ public class GuiIngame extends Gui {
     double width1, height1;
 
     public void onRender() {
+
         if (Aura.target1 != null) {
             if (Client.getInstance().moduleManager.getModuleByName("Aura").isToggle()) {
 
@@ -586,59 +588,64 @@ public class GuiIngame extends Gui {
     }
 
     private void renderScoreboard(ScoreObjective p_180475_1_, ScaledResolution p_180475_2_) {
-        Scoreboard scoreboard = p_180475_1_.getScoreboard();
-        Collection collection = scoreboard.getSortedScores(p_180475_1_);
-        ArrayList arraylist = Lists.newArrayList(Iterables.filter(collection, new Predicate() {
-            private static final String __OBFID = "CL_00001958";
+        if (Client.getInstance().getModuleManager().getModuleByName("NoScoreBoard").isEnabled()){
 
-            public boolean apply(Score p_apply_1_) {
-                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
+        }else {
+            Scoreboard scoreboard = p_180475_1_.getScoreboard();
+            Collection collection = scoreboard.getSortedScores(p_180475_1_);
+            ArrayList arraylist = Lists.newArrayList(Iterables.filter(collection, new Predicate() {
+                private static final String __OBFID = "CL_00001958";
+
+                public boolean apply(Score p_apply_1_) {
+                    return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
+                }
+
+                public boolean apply(Object p_apply_1_) {
+                    return this.apply((Score) p_apply_1_);
+                }
+            }));
+            ArrayList arraylist1;
+
+            if (arraylist.size() > 15) {
+                arraylist1 = Lists.newArrayList(Iterables.skip(arraylist, collection.size() - 15));
+            } else {
+                arraylist1 = arraylist;
             }
 
-            public boolean apply(Object p_apply_1_) {
-                return this.apply((Score) p_apply_1_);
+            int i = this.getFontRenderer().getStringWidth(p_180475_1_.getDisplayName());
+
+            for (Object score : arraylist1) {
+                ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(((Score) score).getPlayerName());
+                String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, ((Score) score).getPlayerName()) + ": " + EnumChatFormatting.RED + ((Score) score).getScorePoints();
+                i = Math.max(i, this.getFontRenderer().getStringWidth(s));
             }
-        }));
-        ArrayList arraylist1;
 
-        if (arraylist.size() > 15) {
-            arraylist1 = Lists.newArrayList(Iterables.skip(arraylist, collection.size() - 15));
-        } else {
-            arraylist1 = arraylist;
-        }
+            int j1 = arraylist1.size() * this.getFontRenderer().FONT_HEIGHT;
+            int k1 = p_180475_2_.getScaledHeight() / 2 + j1 / 3;
+            byte b0 = 3;
+            int j = p_180475_2_.getScaledWidth() - i - b0;
+            int k = 0;
 
-        int i = this.getFontRenderer().getStringWidth(p_180475_1_.getDisplayName());
+            for (Object score1 : arraylist1) {
+                ++k;
+                ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(((Score) score1).getPlayerName());
+                String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, ((Score) score1).getPlayerName());
+                String s2 = EnumChatFormatting.RED + "" + ((Score) score1).getScorePoints();
+                int l = k1 - k * this.getFontRenderer().FONT_HEIGHT;
+                int i1 = p_180475_2_.getScaledWidth() - b0 + 2;
+                drawRect(j - 2, l, i1, l + this.getFontRenderer().FONT_HEIGHT, 1342177280);
+                this.getFontRenderer().drawString(s1, j, l, 553648127);
+                this.getFontRenderer().drawString(s2, i1 - this.getFontRenderer().getStringWidth(s2), l, 553648127);
 
-        for (Object score : arraylist1) {
-            ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(((Score) score).getPlayerName());
-            String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, ((Score) score).getPlayerName()) + ": " + EnumChatFormatting.RED + ((Score) score).getScorePoints();
-            i = Math.max(i, this.getFontRenderer().getStringWidth(s));
-        }
-
-        int j1 = arraylist1.size() * this.getFontRenderer().FONT_HEIGHT;
-        int k1 = p_180475_2_.getScaledHeight() / 2 + j1 / 3;
-        byte b0 = 3;
-        int j = p_180475_2_.getScaledWidth() - i - b0;
-        int k = 0;
-
-        for (Object score1 : arraylist1) {
-            ++k;
-            ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(((Score) score1).getPlayerName());
-            String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, ((Score) score1).getPlayerName());
-            String s2 = EnumChatFormatting.RED + "" + ((Score) score1).getScorePoints();
-            int l = k1 - k * this.getFontRenderer().FONT_HEIGHT;
-            int i1 = p_180475_2_.getScaledWidth() - b0 + 2;
-            drawRect(j - 2, l, i1, l + this.getFontRenderer().FONT_HEIGHT, 1342177280);
-            this.getFontRenderer().drawString(s1, j, l, 553648127);
-            this.getFontRenderer().drawString(s2, i1 - this.getFontRenderer().getStringWidth(s2), l, 553648127);
-
-            if (k == arraylist1.size()) {
-                String s3 = p_180475_1_.getDisplayName();
-                drawRect(j - 2, l - this.getFontRenderer().FONT_HEIGHT - 1, i1, l - 1, 1610612736);
-                drawRect(j - 2, l - 1, i1, l, 1342177280);
-                this.getFontRenderer().drawString(s3, j + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, l - this.getFontRenderer().FONT_HEIGHT, 553648127);
+                if (k == arraylist1.size()) {
+                    String s3 = p_180475_1_.getDisplayName();
+                    drawRect(j - 2, l - this.getFontRenderer().FONT_HEIGHT - 1, i1, l - 1, 1610612736);
+                    drawRect(j - 2, l - 1, i1, l, 1342177280);
+                    this.getFontRenderer().drawString(s3, j + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, l - this.getFontRenderer().FONT_HEIGHT, 553648127);
+                }
             }
         }
+
     }
 
     private void renderPlayerStats(ScaledResolution p_180477_1_) {
@@ -1113,6 +1120,7 @@ public class GuiIngame extends Gui {
     public void setRecordPlaying(IChatComponent p_175188_1_, boolean p_175188_2_) {
         this.setRecordPlaying(p_175188_1_.getUnformattedText(), p_175188_2_);
     }
+
 
     /**
      * returns a pointer to the persistant Chat GUI, containing all previous chat messages and such

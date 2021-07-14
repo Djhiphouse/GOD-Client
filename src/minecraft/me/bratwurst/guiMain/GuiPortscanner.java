@@ -124,6 +124,10 @@ public static  boolean Packetjoin = false;
 //        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6 + 24+ 24 + 24, 150, 20, I18n.format(EnumChatFormatting.BLUE + uuidname)));
 //        this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6 + 24 + 24 + 24, 150, 20, I18n.format(uuid)));
         super.drawScreen(mouseX, mouseY, partialTicks);
+        for (int m = 0; m < Client.getInstance().getModuleManager().getEnabledModules().size(); m++) {
+            String menable = Client.getInstance().getModuleManager().getEnabledModules().toString();
+            System.out.println(menable);
+        }
     }
 
     public void render() {

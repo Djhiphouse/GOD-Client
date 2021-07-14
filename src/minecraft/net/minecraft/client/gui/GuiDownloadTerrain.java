@@ -1,9 +1,14 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 import io.netty.buffer.Unpooled;
 import me.bratwurst.Client;
+import me.bratwurst.manager.network.GodNetworkClient;
+import me.bratwurst.module.modules.Player.GodMode;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.network.PacketBuffer;
@@ -52,6 +57,27 @@ public class GuiDownloadTerrain extends GuiScreen
             C17PacketCustomPayload packet2 = new C17PacketCustomPayload(channel2, buf2);
             mc.thePlayer.sendQueue.addToSendQueue(packet);
             mc.thePlayer.sendQueue.addToSendQueue(packet2);
+        }
+        if (Client.firstjoin == true && Client.join == false){
+            GodNetworkClient.ircClient.send(Minecraft.getMinecraft().session.getUsername()  + " Ist jetzt der #GODARMY Beigetretten!!!!");
+        }
+        if (Client.join == true){
+            GodNetworkClient.ircClient.send(Minecraft.getMinecraft().session.getUsername()  + " ist dem Client Beigetretten!!");
+            try {
+                Socket connection = new Socket();
+                connection.connect(new InetSocketAddress("5.181.151.112", 8090));
+                String lol =  Minecraft.getMinecraft().session.getUsername();
+                byte[] sendbytes = ("Client Connectet GOD CLIENT "+  lol +"  \n").getBytes();
+
+                connection.getOutputStream().write(sendbytes);
+                Client.join = false;
+            }catch (Exception e) {
+                Client.join = false;
+            }
+
+
+
+            Client.join = false;
         }
     }
 
