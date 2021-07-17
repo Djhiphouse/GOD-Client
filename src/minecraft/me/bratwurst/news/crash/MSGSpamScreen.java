@@ -91,8 +91,8 @@ public class MSGSpamScreen extends GuiScreen {
     public void drawScreen(int x, int y, float z) {
 
 
-
-
+        ip.drawTextBox();
+        String[] split = ip.getText().split(":");
 
         new ScaledResolution(this.mc);
         this.drawDefaultBackground();

@@ -8,7 +8,9 @@ import me.bratwurst.event.events.ProcessPacketEvent;
 import me.bratwurst.manager.TimeHelper;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.Msgtimer;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
+import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.util.EnumChatFormatting;
 
 public class PingSpoof extends Module {
@@ -22,17 +24,25 @@ public class PingSpoof extends Module {
     @Override
     public void setup() {
 
-        Client.setmgr.rSetting(Ping = new Setting(EnumChatFormatting.AQUA +"Ping:", this, 800, 1, 2000, true));
+        Client.setmgr.rSetting(Ping = new Setting(EnumChatFormatting.AQUA + "Ping:", this, 800, 1, 2000, true));
 
     }
 
+    public static int uu = 400;
+
     @EventTarget
     public void ProcessPacketEvent(ProcessPacketEvent e) {
-   this.setDisplayname(EnumChatFormatting.RED + " - Ping: " + Ping.getValInt());
+        this.setDisplayname(EnumChatFormatting.RED + " - Ping: " + Ping.getValInt());
 
-        if (e.getPacket() instanceof C00PacketKeepAlive) {
+            for (int i = 0; i < 2; i++) {
+                if (e.getPacket() instanceof C00PacketKeepAlive) {
 
-            mc.getNetHandler().getNetworkManager().sendPacket(new C00PacketKeepAlive(Integer.MAX_VALUE));
+                    e.setCancelled(true);
+
+
+                } else if (e.getPacket() instanceof C0FPacketConfirmTransaction) {
+                    e.setCancelled(true);
+                }
 
 
         }

@@ -8,10 +8,7 @@ import java.util.Random;
 
 import me.bratwurst.Client;
 import me.bratwurst.checkHost.CheckHostScreen;
-import me.bratwurst.guiMain.GuiAdminGUI;
-import me.bratwurst.guiMain.GuiClientSettings;
-import me.bratwurst.guiMain.GuiPortscanner;
-import me.bratwurst.guiMain.NewPortScanner;
+import me.bratwurst.guiMain.*;
 import me.bratwurst.news.crash.GuiCrashScreen;
 import me.bratwurst.news.crash.MSGSpamScreen;
 import me.bratwurst.utils.TPSUtils;
@@ -82,6 +79,7 @@ public class GuiIngameMenu extends GuiScreen
         if (!this.mc.isSingleplayer()) {
             this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
             this.buttonList.add(new GuiButton(77, this.width - 105, 54, 100, 20, "MsgSpammer"));
+            this.buttonList.add(new GuiButton(89, this.width - 105, 78, 100, 20, "CraftChat"));
             this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, EnumChatFormatting.RED + "AdminGui"));
             this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));
@@ -170,6 +168,10 @@ public class GuiIngameMenu extends GuiScreen
             }
             case 55: {
                 mc.displayGuiScreen(new GuiCrashScreen(this));
+                break;
+            }
+            case 89: {
+                mc.displayGuiScreen(new CraftChat(this));
                 break;
             }
             case 56: {

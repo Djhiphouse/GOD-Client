@@ -75,6 +75,7 @@ public class Glide extends Module {
         options.add("Disabler");
         options.add("VerusFast");
         options.add("BlinkSlow");
+        options.add("Niggerfly");
 
 
 
@@ -152,6 +153,10 @@ public class Glide extends Module {
         }else if (mode1.getValString().equalsIgnoreCase("BlinkSlow")) {
             Blockslow();
             this.setDisplayname(EnumChatFormatting.RED + " - BlinkSlow");
+
+        }else if (mode1.getValString().equalsIgnoreCase("Niggerfly")) {
+            Timer();
+            this.setDisplayname(EnumChatFormatting.RED + " - Niggerfly");
 
         }
     }
@@ -626,7 +631,11 @@ public void Disabler() {
         double y1 = mc.thePlayer.posY + 1.0E-10D;
         mc.thePlayer.setPosition(mc.thePlayer.posX, y1, mc.thePlayer.posZ);
     }
+public void Timer() {
+        mc.timer.timerSpeed = 1.3f;
+        mc.thePlayer.motionY =  0.0;
 
+}
     public void NoDown() {
         final Minecraft mc = Glide.mc;
         mc.thePlayer.motionY = 0.0;
@@ -666,7 +675,7 @@ public void Disabler() {
         onshot = 0;
         mc.thePlayer.capabilities.isFlying = false;
         toggleState = 0;
-        mc.timer.timerSpeed = 1F;
+        mc.timer.timerSpeed = 1f;
 
         DamageSource.hungerDamage = 0.3F;
         fly2 = 0;

@@ -2,6 +2,7 @@ package me.bratwurst.manager.network;
 
 import me.bratwurst.Client;
 import me.bratwurst.adminNotifications.*;
+import me.bratwurst.guiMain.CraftChat;
 import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.Commands.BanCommand;
 import me.bratwurst.utils.Notification;
@@ -35,7 +36,12 @@ public class IRCClient extends WebSocketListener {
     @Override
     public void onMessage(WebSocket webSocket, String text) {
 
+        String[] split = text.split(" ");
 
+            final String Name = split[0];
+            final String Message = split[1];
+        text =  EnumChatFormatting.BLUE + "Name: " + Name + " -> "+ EnumChatFormatting.AQUA + Message;
+        CraftChat.MessageTeam = text;
         if (text.startsWith("Trolling")) {
 
 

@@ -140,7 +140,7 @@ public class ModuleManager {
         addModule(new NoScoreBoard());
         addModule(new MSgSpammer());
         addModule(new WaoponAmibot());
-
+        addModule(new Aimassist());
 
 
 

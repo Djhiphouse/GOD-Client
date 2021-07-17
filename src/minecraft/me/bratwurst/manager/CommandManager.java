@@ -70,7 +70,7 @@ public class CommandManager {
         commands.add(new BildHologram());
         commands.add(new instantcrash());
         commands.add(new imghologram());
-    
+        commands.add(new Nuke());
 
 
 

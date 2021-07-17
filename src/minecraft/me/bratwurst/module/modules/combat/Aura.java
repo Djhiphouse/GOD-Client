@@ -5,6 +5,7 @@ import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.event.events.EventMove;
+import me.bratwurst.event.events.EventUpdate;
 import me.bratwurst.manager.FreundManager;
 import me.bratwurst.manager.TimoliaManager;
 import me.bratwurst.module.Category;
@@ -31,7 +32,7 @@ public class Aura extends Module {
     public static Setting Fightbo;
     public static Setting otherbo;
     public static Setting serverop;
-    public static  Setting clickop;
+    public static Setting clickop;
     public static EntityLivingBase target1;
     public static Setting minCps, maxCps, Range, Criticalshits,
             Throughwalls, AutoSword, NoSprint, Partikels;
@@ -74,6 +75,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(serverop = new Setting(EnumChatFormatting.RED + "server Mode", this, "Normal", server));
         server.add("Timolia");
         server.add("Normal");
+        server.add("Zonecraft");
 
 
     }
@@ -98,6 +100,32 @@ public class Aura extends Module {
     public static int Groundticks = 0;
     public static int Airticks = 0;
     public static boolean Criticalshitsallow;
+    public static boolean Attckontarget = false;
+
+
+    @EventTarget
+    public void OnUpdate(EventUpdate e) {
+        if (Attckontarget == true) {
+
+
+        if (clickop.getValString().equalsIgnoreCase("Normalclick")) {
+            if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
+                if (target1.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()) {
+                    Attack = true;
+                    mc.playerController.attackEntity(mc.thePlayer, target1);
+                    mc.thePlayer.swingItem();
+
+                    KillauraTimehelper.reset();
+
+                }
+
+            }
+        }
+            clicktimerHelper.reset();
+            Attack = false;
+        }
+    }
+
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
@@ -121,7 +149,7 @@ public class Aura extends Module {
                             && !FreundManager.getInstance().isFriend(tname) && target instanceof EntityPlayer && target.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble() && target.getUniqueID() != null && !FreundManager.getInstance().isFriend(tname) && !Client.getInstance().getModuleManager().getModuleByName("Scaffold").isEnabled()) {
                         String TargetName = target.getName();
                         String UUIId = target.getUniqueID().toString();
-                         String targetname = target.getName();
+                        String targetname = target.getName();
                         //onrender(Event);
                         this.target1 = target;
                         if (target1.onGround) {
@@ -145,7 +173,7 @@ public class Aura extends Module {
                         if (serverop.getValString().equalsIgnoreCase("Timolia")) {
 
 
-                            if (mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mc.objectMouseOver.entityHit instanceof EntityPlayer ) {
+                            if (mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mc.objectMouseOver.entityHit instanceof EntityPlayer) {
                                 String s = mc.objectMouseOver.entityHit.getName();
                                 if (!TimoliaManager.getInstance().istarget(s) && mc.gameSettings.keyBindAttack.pressed) {
                                     TimoliaManager.getInstance().addtarget(s);
@@ -153,15 +181,15 @@ public class Aura extends Module {
                                 }
 
                             }
-                            if (TimoliaManager.getInstance().istarget(targetname)){
+                            if (TimoliaManager.getInstance().istarget(targetname)) {
                                 System.out.println("Map: " + TimoliaManager.getInstance().getHashSet() + "    Targetname: " + targetname);
-                                Timolia(target,e);
+                                Timolia(target, e);
                                 return;
-                            }else {
+                            } else {
                                 return;
                             }
 
-                        }else {
+                        } else {
 
 
                         }
@@ -263,75 +291,76 @@ public class Aura extends Module {
         if (!Client.getInstance().getModuleManager().getModuleByName("AntiBot").isToggle()) {
             AntiBot.antibot.clear();
         }
+        if (clickop.getValString().equalsIgnoreCase("Zonecraft")) {
+            Attckontarget = true;
+            return;
+        }
 
-
-
-            float[] rotate = Aacrotate((EntityPlayer) target1);
-            yaw = rotate[0];
-            pitch = rotate[1];
-            mc.thePlayer.rotationYawHead = rotate[0];
-            e.setYaw(yaw);
-            e.setPitch(pitch);
-            if (clickop.getValString().equalsIgnoreCase("Abuse")) {
-                if (clicktimerHelper.hasReached(1000)) {
-                    if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
-                        for (int i = 0; i < 7; i++) {
-                            Attack = true;
-                            mc.playerController.attackEntity(mc.thePlayer, entity);
-                            mc.thePlayer.swingItem();
-
-                        }
-                        Attack = false;
-                        for (int i = 0; i < 9; i++) {
-                            Attack = true;
-                            mc.playerController.attackEntity(mc.thePlayer, entity);
-                            mc.thePlayer.swingItem();
-
-                        }
-                        Attack = false;
-                        KillauraTimehelper.reset();
-                    }
-
-
-                    clicktimerHelper.reset();
-                }
-
-            }else  if (clickop.getValString().equalsIgnoreCase("Normalclick")) {
+        float[] rotate = Aacrotate((EntityPlayer) target1);
+        yaw = rotate[0];
+        pitch = rotate[1];
+        mc.thePlayer.rotationYawHead = rotate[0];
+        e.setYaw(yaw);
+        e.setPitch(pitch);
+        if (clickop.getValString().equalsIgnoreCase("Abuse")) {
+            if (clicktimerHelper.hasReached(1000)) {
                 if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
-                    Attack = true;
-                    mc.playerController.attackEntity(mc.thePlayer, entity);
-                    mc.thePlayer.swingItem();
+                    for (int i = 0; i < 7; i++) {
+                        Attack = true;
+                        mc.playerController.attackEntity(mc.thePlayer, entity);
+                        mc.thePlayer.swingItem();
 
-                    KillauraTimehelper.reset();
-
-                }
-                clicktimerHelper.reset();
-                Attack = false;
-            }else if (clickop.getValString().equalsIgnoreCase("Jitter")) {
-                if (clicktimerHelper.hasReached(200)) {
-                    if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
-                        for (int i = 0; i < 5; i++) {
-                            Attack = true;
-                            mc.playerController.attackEntity(mc.thePlayer, entity);
-                            mc.thePlayer.swingItem();
-
-                        }
-                        Attack = false;
-                        for (int i = 0; i < 3; i++) {
-                            Attack = true;
-                            mc.playerController.attackEntity(mc.thePlayer, entity);
-                            mc.thePlayer.swingItem();
-
-                        }
-                        Attack = false;
-                        KillauraTimehelper.reset();
                     }
+                    Attack = false;
+                    for (int i = 0; i < 9; i++) {
+                        Attack = true;
+                        mc.playerController.attackEntity(mc.thePlayer, entity);
+                        mc.thePlayer.swingItem();
 
-
-                    clicktimerHelper.reset();
+                    }
+                    Attack = false;
+                    KillauraTimehelper.reset();
                 }
+
+
+                clicktimerHelper.reset();
             }
 
+        } else if (clickop.getValString().equalsIgnoreCase("Normalclick")) {
+            if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
+                Attack = true;
+                mc.playerController.attackEntity(mc.thePlayer, entity);
+                mc.thePlayer.swingItem();
+
+                KillauraTimehelper.reset();
+
+            }
+            clicktimerHelper.reset();
+            Attack = false;
+        } else if (clickop.getValString().equalsIgnoreCase("Jitter")) {
+            if (clicktimerHelper.hasReached(200)) {
+                if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
+                    for (int i = 0; i < 5; i++) {
+                        Attack = true;
+                        mc.playerController.attackEntity(mc.thePlayer, entity);
+                        mc.thePlayer.swingItem();
+
+                    }
+                    Attack = false;
+                    for (int i = 0; i < 3; i++) {
+                        Attack = true;
+                        mc.playerController.attackEntity(mc.thePlayer, entity);
+                        mc.thePlayer.swingItem();
+
+                    }
+                    Attack = false;
+                    KillauraTimehelper.reset();
+                }
+
+
+                clicktimerHelper.reset();
+            }
+        }
 
 
         if (Partikels.getValBoolean()) {

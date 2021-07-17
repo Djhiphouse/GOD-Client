@@ -910,6 +910,25 @@ public class WorldRenderer
         return this.needsUpdate;
     }
 
+    public void addVertex(double p_178984_1_, double p_178984_3_, double p_178984_5_) {
+        if (Config.isShaders()) {
+            SVertexBuilder.beginAddVertex(this);
+        }
+    }
+
+    public void startDrawing(int p_178964_1_)
+    {
+        if (this.isDrawing)
+        {
+            throw new IllegalStateException("Already building!");
+        }
+
+
+        this.isDrawing = true;
+        reset();
+        this.drawMode = p_178964_1_;
+        this.needsUpdate = false;
+    }
     static final class WorldRenderer$2
     {
         static final int[] field_181661_a = new int[VertexFormatElement.EnumType.values().length];

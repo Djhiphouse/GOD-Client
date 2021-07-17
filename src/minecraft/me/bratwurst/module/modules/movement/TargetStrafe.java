@@ -2,9 +2,7 @@ package me.bratwurst.module.modules.movement;
 
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
-import me.bratwurst.event.events.Event3D;
-import me.bratwurst.event.events.EventMove;
-import me.bratwurst.event.events.EventUpdate;
+import me.bratwurst.event.events.*;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
 import me.bratwurst.module.modules.combat.Aura;
@@ -33,17 +31,16 @@ public class TargetStrafe extends Module {
     public boolean esp = true;
     public static double distance = 8;
     float speed = 0.099f;
-    private void invertStrafe() {
-        dir = -dir;
-    }
+
     @EventTarget
     public void onPlayerUpdate(EventUpdate event) {
         if (Client.getInstance().getModuleManager().getModuleByName("Aura").isToggle()) {
-           // mc.thePlayer.movementInput.setForward(0);
+            // mc.thePlayer.movementInput.setForward(0);
             //doStrafeAtSpeed(event, getSpeed() + speed);
             if (event.isPre()) {
                 if (mc.thePlayer.isCollidedHorizontally) {
                     this.switchDirection();
+
                 }
 
                 if (mc.gameSettings.keyBindLeft.isPressed()) {
@@ -68,8 +65,15 @@ public class TargetStrafe extends Module {
         return (float) Math
                 .sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ);
     }
-
-    public void strafe(EventMove event, double moveSpeed) {
+    @EventTarget
+    public void Move(MoveEvent event) {
+        if (Client.getInstance().getModuleManager().getModuleByName("Aura").isToggle()) {
+            if (canStrafe()) {
+                strafe(event,2);
+            }
+        }
+    }
+    public void strafe(MoveEvent event, double moveSpeed) {
         EntityLivingBase target = Aura.target1;
         float[] rotations = RotationUtils.getRotationsEntity(target);
         if ((double)mc.thePlayer.getDistanceToEntity(target) <= 5) {

@@ -8,7 +8,7 @@ public class ServerData
 {
     public String serverName;
     public String serverIP;
-
+    public boolean pinged;
     /**
      * the string indicating number of players on and capacity of the server that is shown on the server browser (i.e.
      * "5/20" meaning 5 slots used out of 20 slots total)

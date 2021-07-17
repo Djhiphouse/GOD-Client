@@ -50,14 +50,19 @@ public class GuiPlayerTabOverlay extends Gui {
      * Returns the name that should be renderd for the player supplied
      */
     public String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn) {
+
         UUID id = networkPlayerInfoIn.getGameProfile().getId();
         GodNetworkClient.Rank rank = EntityPlayer.cachedRanks
-                .getOrDefault(id, new GodNetworkClient.Rank());
-        return /*networkPlayerInfoIn.getDisplayName() != null
-                ?*/ EntityPlayer.replaceColorCodes(rank.prefix)
-                + networkPlayerInfoIn.getGameProfile().getName()
-                + EntityPlayer.replaceColorCodes(rank.suffix);
-                //: ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+                .get(id);
+
+        return rank != null ?
+                EntityPlayer.replaceColorCodes(rank.prefix)
+                        + networkPlayerInfoIn.getGameProfile().getName()
+                        + EntityPlayer.replaceColorCodes(rank.suffix)
+                : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+                /*networkPlayerInfoIn.getDisplayName() != null
+                ?*/
+        //: ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
         //return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
     }
 

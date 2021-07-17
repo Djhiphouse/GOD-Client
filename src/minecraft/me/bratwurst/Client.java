@@ -89,7 +89,7 @@ public class Client {
     public static Minecraft mc = Minecraft.getMinecraft();
     private EZ_HologrammManager hologramManager = new EZ_HologrammManager();
 
-    public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.3", CLIENT_CODER = "Bratwust001";
+    public final String CLIENT_NAME = "God", CLIENT_VERSION = "1.4", CLIENT_CODER = "Bratwust001";
 
     public final String CLIENT_PREFIX = EnumChatFormatting.AQUA + "[" + EnumChatFormatting.BLUE + "GOD" + EnumChatFormatting.AQUA + "]";
 

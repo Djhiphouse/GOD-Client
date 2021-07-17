@@ -3,7 +3,9 @@ package net.minecraft.client.entity;
 import me.bratwurst.Client;
 import me.bratwurst.event.Event;
 import me.bratwurst.event.events.EventMotionUpdate;
+import me.bratwurst.event.events.EventMove;
 import me.bratwurst.event.events.EventUpdate;
+import me.bratwurst.event.events.MoveEvent;
 import me.bratwurst.module.modules.Player.Chesteal;
 import me.bratwurst.module.modules.Player.NoSlowdown;
 import net.minecraft.client.Minecraft;
@@ -235,6 +237,12 @@ public class EntityPlayerSP extends AbstractClientPlayer {
         if (this.mc.thePlayer.isPotionActive(Potion.moveSpeed))
             baseSpeed *= 1.0D + 0.2D * (this.mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1);
         return baseSpeed;
+    }
+
+    public void moveEntity(float x, float y, float z) {
+        MoveEvent event = new MoveEvent(x, y, z);
+        event.call();
+        super.moveEntity(event.x, event.y, event.z);
     }
 
     /**

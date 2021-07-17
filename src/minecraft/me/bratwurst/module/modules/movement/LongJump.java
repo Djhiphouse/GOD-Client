@@ -97,6 +97,7 @@ public class LongJump extends Module {
         options.add("Mineplexlow");
         options.add("Blockmcold");
         options.add("OPJUMP");
+        options.add("Mineplex");
 
 
         Client.setmgr.rSetting(mode1 = new Setting(EnumChatFormatting.RED + "LongJump Mode", this, "Mccentral", options));
@@ -156,7 +157,10 @@ public class LongJump extends Module {
             this.setDisplayname(EnumChatFormatting.RED + " - Blockmcold");
         }else if (mode1.getValString().equalsIgnoreCase("OPJUMP")) {
             SpecLungjump();
-            this.setDisplayname(EnumChatFormatting.RED + " - OPJUMP");
+            this.setDisplayname(EnumChatFormatting.RED + " - Spec");
+        }else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
+            mine();
+            this.setDisplayname(EnumChatFormatting.RED + " - Mineplex");
         }
 
 
@@ -169,6 +173,54 @@ public class LongJump extends Module {
     public int disableState, damageState;
     public static boolean maxhight = false;
     public static Boolean Damage = false;
+
+    public void mine() {
+        if (!mc.thePlayer.onGround && !BlockUtils.isOnGround(0.01) && air > 0) {
+            air++;
+            if(mc.thePlayer.isCollidedVertically){
+                air = 0;
+            }
+            if(mc.thePlayer.isCollidedHorizontally && !collided){
+                collided = !collided;
+            }
+            double speed = half?0.5- air / 100 : 0.658 - air / 100;
+            mc.thePlayer.motionX = 0;
+            mc.thePlayer.motionZ = 0;
+            motionY -= 0.04000000000001;
+            if(air > 24){
+                motionY -= 0.02;
+            }
+            if(air == 12){
+                motionY = -0.005;
+            }
+            if(speed < 0.3)
+                speed = 0.3;
+            if(collided)
+                speed = 0.2873;
+            mc.thePlayer.motionY = motionY;
+           MovingUtil.setMotion(speed);
+        } else {
+            if (air > 0) {
+                air = 0;
+            }
+        }
+
+        if (mc.thePlayer.onGround && MovingUtil.isOnGround(0.01) && mc.thePlayer.isCollidedVertically && (mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0)) {
+            Module longjump = Client.getInstance().getModuleManager().getModuleByName("LongJump");
+            double groundspeed = 0;
+            collided = mc.thePlayer.isCollidedHorizontally;
+            groundTicks ++;
+
+            mc.thePlayer.motionX *= groundspeed;
+            mc.thePlayer.motionZ *= groundspeed;
+
+            half = mc.thePlayer.posY != (int)mc.thePlayer.posY;
+            mc.thePlayer.motionY = 0.4299999;
+            air = 1;
+            motionY = mc.thePlayer.motionY;
+        }
+    }
+
 public  void SpecLungjump() {
 //Damage methode By Bratwurst001
     if (tick == 0) {
