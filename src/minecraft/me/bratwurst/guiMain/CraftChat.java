@@ -107,7 +107,7 @@ public class CraftChat extends GuiScreen {
         GL11.glPopMatrix();
         CraftChat.drawCenteredString(this.mc.fontRendererObj, this.status, this.width / 2, 20, -1);
         ip.drawTextBox();
-        nickfeld.drawTextBox();
+      //  nickfeld.drawTextBox();
         CraftChat.drawCenteredString(this.mc.fontRendererObj, "\u00a77Nachricht", this.width / 2, this.height / 2 + 100 - 14, -1);
       //  DrawMenuLogoUtil.drawString(2,"test" ,100,this.height / 3 + i, new Color(252, 0, 0, 188).getRGB());
 
@@ -120,7 +120,7 @@ public class CraftChat extends GuiScreen {
         int i = 24;
 
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100,  this.height /2 + 100 +24 , I18n.format("Send", new Object[0])));
-        this.buttonList.add(new GuiButton(6, 0, this.height / 2 - i * 3, this.width /7, 20, I18n.format("Nick", new Object[0])));
+      //  this.buttonList.add(new GuiButton(6, 0, this.height / 2 - i * 3, this.width /7, 20, I18n.format("Nick", new Object[0])));
 
         this.buttonList.add(new GuiButton(200, 0 , this.height / 2 + i * 3, this.width /7, 20, I18n.format("Done", new Object[0])));
         GlStateManager.pushMatrix();
