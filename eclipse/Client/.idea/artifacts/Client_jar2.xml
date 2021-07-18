@@ -45,14 +45,10 @@
       <element id="extracted-dir" path="$USER_HOME$/Downloads/ViaRewind-1.5.3.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/ViaSnakeYaml-1.27.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/ViaVersion-3.2.1.jar" path-in-jar="/" />
-      <element id="library" level="project" name="okhttp-4.9.0" />
-      <element id="library" level="project" name="kotlin-stdlib-1.5.0" />
-      <element id="library" level="project" name="okio-2.10.0" />
       <element id="library" level="project" name="ViaVersion-3.2.1" />
       <element id="library" level="project" name="lwjgl_util-2.9.4-nightly-20150209" />
       <element id="library" level="project" name="lwjgl-platform-2.9.4-nightly-20150209-natives-windows" />
       <element id="library" level="project" name="lwjgl-2.9.4-nightly-20150209" />
-      <element id="library" level="project" name="Client" />
       <element id="library" level="project" name="authlib-1.5.21" />
       <element id="library" level="project" name="discord-rpc" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../kotlin-stdlib-1.5.0.jar" path-in-jar="/" />
@@ -60,7 +56,6 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../okio-2.10.0.jar" path-in-jar="/" />
       <element id="directory" name="folder" />
       <element id="file-copy" path="$PROJECT_DIR$/../../lib/gson-2.2.4.jar" />
-      <element id="library" level="project" name="libs" />
     </root>
   </artifact>
 </component>
