@@ -39,33 +39,49 @@ public class IRCClient extends WebSocketListener {
 
         String[] split = text.split(" ");
         System.out.println(Arrays.toString(split));
-        final String Name = split[0];
-        final String Message = split[1];
-        if (Name.startsWith(""))
-        text = EnumChatFormatting.BLUE + "Name: " + Name + " -> " + EnumChatFormatting.AQUA + Message;
-        CraftChat.list.add(text);
-        if (text.startsWith("Trolling")) {
+        if (split.length > 1) {
+            final String Name = split[1];
+
+            text = text
+                    .replace(Name + " ", "")
+                    .replace("Porn ", "");
+            String message = text;
 
 
-            startgoogle();
+            if (Name.startsWith("Ente1") || Name.startsWith("DerEchteGian") || Name.startsWith("Ente1")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.DARK_RED + "Admin: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("WOLLROCK")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.GREEN + "TS-Admin: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("PowerBurst")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BLUE + "Developer: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Bratwurst001") || Name.startsWith("Jxnnik25") || Name.startsWith("Schwitziges")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.AQUA + "JrDeveloper: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Freddy1994Phil")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.YELLOW + "Owner: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Skill_Ben")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BOLD + "SrDeveloper: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("flokellner24")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.DARK_PURPLE + "JrSupporter: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Nummbrs1") || Name.startsWith("Milchschnite22")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.DARK_GRAY + "Supporter: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Insane89m")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.ITALIC + "SrModerator: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("PixleSiuox")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BOLD + "Moderator: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("NYzio")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BOLD + "SrSupporter: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            }
+
+            System.out.println("Full text: " + text);
+            if (!message.equals(text)) {
+                CraftChat.list.add(text);
+                return;
+            }
+        }
+        if (text.startsWith("7hhefwiu5325he25986736674&?3636453245648267356")) {
+            CraftChat.list.clear();
             return;
-
         }
-
-
-        if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        }
-
         if (text.startsWith(EnumChatFormatting.GOLD + "Name: " + EnumChatFormatting.RED + Minecraft.getMinecraft().session.getUsername())) {
             System.out.println("Banned message received");
             Client.networkClient.ban(Client.hwid, BanCommand.banntime)
@@ -88,8 +104,13 @@ public class IRCClient extends WebSocketListener {
             UpdateNotificationManager.show(new UpdateNotification(UpdateNotificationType.UPDATE, EnumChatFormatting.RED + "UPDATE", EnumChatFormatting.GOLD + text, 1));
 
         } else {
+            if (!text.contains(EnumChatFormatting.BLUE + "Name: ")) {
+                PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
 
-            PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
+            } else {
+                //  PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
+
+            }
 
 
         }

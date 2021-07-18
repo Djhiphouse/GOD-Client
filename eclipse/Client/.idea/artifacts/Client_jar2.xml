@@ -24,13 +24,11 @@
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jna-3.4.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/commons-compress-1.8.1.jar" path-in-jar="/" />
       <element id="dir-copy" path="$PROJECT_DIR$" />
-      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/authlib-1.5.21.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/realms-1.7.39.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jinput-2.0.5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/commons-codec-1.9.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/platform-3.4.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/log4j-api-2.0-beta9.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$USER_HOME$/Music/libAll/codecjorbis-20101023.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/librarylwjglopenal-20100824.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/jutils-1.0.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/Music/libAll/libraryjavasound-20101123.jar" path-in-jar="/" />

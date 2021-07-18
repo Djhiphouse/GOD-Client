@@ -8,6 +8,7 @@ import net.minecraft.client.gui.*;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -53,18 +54,20 @@ public class CraftChat extends GuiScreen {
             case 1:
                 mc.displayGuiScreen(new GuiIngameMenu());
                 break;
+            case 7:
+                Client.networkClient.getIrcClient().send("7hhefwiu5325he25986736674&?3636453245648267356");
 
+                break;
             case 5:
                 String Nachricht = ip.getText();
                 try {
                     if (!Nachricht.equals("") && !Nachricht.matches("\\s+")) {
                         if(nick.contains(Minecraft.getMinecraft().session.getUsername())){
-                            Client.networkClient.getIrcClient().send(nickname + " " +  Nachricht);
-                            i = i+24;
+                            Client.networkClient.getIrcClient().send( "Porn " + nickname + " " +  Nachricht);
                         }else{
                             Client.networkClient.getIrcClient().send(Minecraft.getMinecraft().session.getUsername() + " " +  Nachricht);
-                            i = i+24;
                         }
+                        i = i+24;
 
                     }
 
@@ -92,9 +95,12 @@ public class CraftChat extends GuiScreen {
             int i = 12;
             for (String string : list) {
                 i++;
-                this.drawString(this.fontRendererObj, String.valueOf(string), this.width /7 +100, 100+ i, Color.WHITE.hashCode());
+                this.drawString(this.fontRendererObj, String.valueOf(EntityPlayer.replaceColorCodes(string)), this.width /7 +100, 100+ i, Color.WHITE.hashCode());
                 i += this.fontRendererObj.FONT_HEIGHT ;
 
+            }
+            if (list.size() > 24){
+                list.clear();
             }
         }
 
@@ -121,6 +127,7 @@ public class CraftChat extends GuiScreen {
 
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100,  this.height /2 + 100 +24 , I18n.format("Send", new Object[0])));
         this.buttonList.add(new GuiButton(6, 0, this.height / 2 - i * 3, this.width /7, 20, I18n.format("Nick", new Object[0])));
+        this.buttonList.add(new GuiButton(7, 0, this.height / 2 - i * 2, this.width /7, 20, I18n.format("Clear", new Object[0])));
 
         this.buttonList.add(new GuiButton(200, 0 , this.height / 2 + i * 3, this.width /7, 20, I18n.format("Done", new Object[0])));
         GlStateManager.pushMatrix();
