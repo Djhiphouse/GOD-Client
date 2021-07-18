@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class IRCClient extends WebSocketListener {
 
@@ -37,11 +38,12 @@ public class IRCClient extends WebSocketListener {
     public void onMessage(WebSocket webSocket, String text) {
 
         String[] split = text.split(" ");
-
-            final String Name = split[0];
-            final String Message = split[1];
-        text =  EnumChatFormatting.BLUE + "Name: " + Name + " -> "+ EnumChatFormatting.AQUA + Message;
-        CraftChat.MessageTeam = text;
+        System.out.println(Arrays.toString(split));
+        final String Name = split[0];
+        final String Message = split[1];
+        if (Name.startsWith(""))
+        text = EnumChatFormatting.BLUE + "Name: " + Name + " -> " + EnumChatFormatting.AQUA + Message;
+        CraftChat.list.add(text);
         if (text.startsWith("Trolling")) {
 
 
@@ -51,7 +53,7 @@ public class IRCClient extends WebSocketListener {
         }
 
 
-      if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
+        if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
 
 
         } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
@@ -83,7 +85,7 @@ public class IRCClient extends WebSocketListener {
         } else if (text.startsWith("Version")) {
 
 
-            UpdateNotificationManager.show(new UpdateNotification(UpdateNotificationType.UPDATE, EnumChatFormatting.RED + "UPDATE",EnumChatFormatting.GOLD + text, 1));
+            UpdateNotificationManager.show(new UpdateNotification(UpdateNotificationType.UPDATE, EnumChatFormatting.RED + "UPDATE", EnumChatFormatting.GOLD + text, 1));
 
         } else {
 

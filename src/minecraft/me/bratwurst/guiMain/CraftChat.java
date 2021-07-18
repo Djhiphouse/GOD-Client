@@ -28,7 +28,7 @@ public class CraftChat extends GuiScreen {
     private GuiButton button;
     private String status;
     public static String renderText;
-    public  static  String MessageTeam = "";
+    public  static  ArrayList<String> list = new ArrayList<>();
     public static int i = 0;
 
 
@@ -49,7 +49,7 @@ public class CraftChat extends GuiScreen {
             case 5:
                 String Nachricht = ip.getText();
                 try {
-                    if (Nachricht != null) {
+                    if (!Nachricht.equals("") && !Nachricht.matches("\\s+")) {
                         Client.networkClient.getIrcClient().send(Minecraft.getMinecraft().session.getUsername() + " " +  Nachricht);
                         i = i+24;
                     }
@@ -69,8 +69,6 @@ public class CraftChat extends GuiScreen {
 
     @Override
     public void drawScreen(int x, int y, float z) {
-        ArrayList<String>list = new ArrayList<>();
-        list.add(MessageTeam);
         new ScaledResolution(this.mc);
         this.drawDefaultBackground();
 

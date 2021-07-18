@@ -58,6 +58,9 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../kotlin-stdlib-1.5.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../okhttp-4.9.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../okio-2.10.0.jar" path-in-jar="/" />
+      <element id="directory" name="folder" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../lib/gson-2.2.4.jar" />
+      <element id="library" level="project" name="libs" />
     </root>
   </artifact>
 </component>

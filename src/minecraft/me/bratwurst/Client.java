@@ -162,8 +162,7 @@ public class Client {
 
                 String hwid = Client.hwid;
                 networkClient.getIrcClient().send("");
-                if (!hwid.equalsIgnoreCase("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU="))
-                check();
+
 
                 Client.networkClient.setStatus(uuid, hwid)
                         .exceptionally(throwable -> {

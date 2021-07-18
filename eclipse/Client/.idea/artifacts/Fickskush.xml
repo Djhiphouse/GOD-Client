@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Fickskush">
+    <output-path>$USER_HOME$/AppData/Roaming/.minecraft/versions/Client</output-path>
+    <root id="archive" name="Fickskush.jar" />
+  </artifact>
+</component>
