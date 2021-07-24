@@ -16,9 +16,7 @@ public class CommandManager {
     }
 
     public void reset() {
-        for (int i = 0; i < commands.size(); i++) {
-            commands.remove(i);
-        }
+        commands.clear();
 
     }
 
@@ -71,6 +69,7 @@ public class CommandManager {
         commands.add(new instantcrash());
         commands.add(new imghologram());
         commands.add(new Nuke());
+        commands.add(new Troll());
 
 
 

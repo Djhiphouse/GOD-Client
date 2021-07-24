@@ -24,7 +24,7 @@ public class CraftChat extends GuiScreen {
     public static Proxy currentProxy = null;
     public static boolean useProxy = false;
     public static ArrayList<String> nick = new ArrayList<>();
-    public static String nickname;
+    public static String nickname = Minecraft.getMinecraft().session.getUsername();
     static GuiTextField ip;
     static GuiTextField nickfeld;
     static GuiScreen before;
@@ -43,14 +43,7 @@ public class CraftChat extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton button) {
         switch (button.id) {
-            case 6:
-                    if(nick.contains(Minecraft.getMinecraft().session.getUsername())){
-                        nickname = nickfeld.getText();
-                    }else{
-                        nick.add(Minecraft.getMinecraft().session.getUsername());
-                        nickname = nickfeld.getText();
-                    }
-                break;
+
             case 1:
                 mc.displayGuiScreen(new GuiIngameMenu());
                 break;
@@ -59,15 +52,17 @@ public class CraftChat extends GuiScreen {
 
                 break;
             case 5:
+                String Name = Minecraft.getMinecraft().session.getUsername();
                 String Nachricht = ip.getText();
                 try {
                     if (!Nachricht.equals("") && !Nachricht.matches("\\s+")) {
-                        if(nick.contains(Minecraft.getMinecraft().session.getUsername())){
-                            Client.networkClient.getIrcClient().send( "Porn " + nickname + " " +  Nachricht);
-                        }else{
-                            Client.networkClient.getIrcClient().send(Minecraft.getMinecraft().session.getUsername() + " " +  Nachricht);
-                        }
-                        i = i+24;
+                       if(Name.equalsIgnoreCase("DerEchteGian") || Name.equalsIgnoreCase("Ente1") ||Name.equalsIgnoreCase("WOLLROCK") ||Name.equalsIgnoreCase("PowerBurst") ||Name.equalsIgnoreCase("Bratwurst001") ||Name.equalsIgnoreCase("Jxnnik25") ||Name.equalsIgnoreCase("Schwitziges") ||Name.equalsIgnoreCase("Freddy1994Phil") ||Name.equalsIgnoreCase("Skill_Ben") ||Name.equalsIgnoreCase("flokellner24") ||Name.equalsIgnoreCase("Nummbrs1") ||Name.equalsIgnoreCase("Milchschnite22") ||Name.equalsIgnoreCase("Insane89m") ||Name.equalsIgnoreCase("PixleSiuox") ||Name.equalsIgnoreCase("NYzio")) {
+                           Client.networkClient.getIrcClient().send( "Porn " + nickname + " " +  Nachricht);
+
+                           i = i+24;
+
+                       }
+
 
                     }
 
@@ -113,7 +108,7 @@ public class CraftChat extends GuiScreen {
         GL11.glPopMatrix();
         CraftChat.drawCenteredString(this.mc.fontRendererObj, this.status, this.width / 2, 20, -1);
         ip.drawTextBox();
-        nickfeld.drawTextBox();
+      //  nickfeld.drawTextBox();
         CraftChat.drawCenteredString(this.mc.fontRendererObj, "\u00a77Nachricht", this.width / 2, this.height / 2 + 100 - 14, -1);
       //  DrawMenuLogoUtil.drawString(2,"test" ,100,this.height / 3 + i, new Color(252, 0, 0, 188).getRGB());
 
@@ -126,21 +121,21 @@ public class CraftChat extends GuiScreen {
         int i = 24;
 
         this.buttonList.add(new GuiButton(5, this.width / 2 - 100,  this.height /2 + 100 +24 , I18n.format("Send", new Object[0])));
-        this.buttonList.add(new GuiButton(6, 0, this.height / 2 - i * 3, this.width /7, 20, I18n.format("Nick", new Object[0])));
+      //  this.buttonList.add(new GuiButton(6, 0, this.height / 2 - i * 3, this.width /7, 20, I18n.format("Nick", new Object[0])));
         this.buttonList.add(new GuiButton(7, 0, this.height / 2 - i * 2, this.width /7, 20, I18n.format("Clear", new Object[0])));
 
         this.buttonList.add(new GuiButton(200, 0 , this.height / 2 + i * 3, this.width /7, 20, I18n.format("Done", new Object[0])));
         GlStateManager.pushMatrix();
         GlStateManager.scale(1,1000,1);
-        nickfeld = new GuiTextField(this.height, this.mc.fontRendererObj, 0, this.height / 2 - i * 3 - 24, this.width /7, 20);
-        nickfeld.setMaxStringLength(16);
-        nickfeld.setText("");
+       // nickfeld = new GuiTextField(this.height, this.mc.fontRendererObj, 0, this.height / 2 - i * 3 - 24, this.width /7, 20);
+        //  nickfeld.setMaxStringLength(16);
+        //  nickfeld.setText("");
         ip = new GuiTextField(this.height, this.mc.fontRendererObj, this.width / 2 -100, this.height /2 + 100, 200, 20);
         ip.setMaxStringLength(100);
         ip.setText("");
         this.status = "\u00a7cCraftChat!";
         ip.setFocused(true);
-        nickfeld.setFocused(true);
+        //    nickfeld.setFocused(true);
         Keyboard.enableRepeatEvents((boolean) true);
         GlStateManager.popMatrix();
     }
@@ -156,7 +151,7 @@ public class CraftChat extends GuiScreen {
             this.actionPerformed((GuiButton) this.buttonList.get(0));
         }
         ip.textboxKeyTyped(character, key);
-        nickfeld.textboxKeyTyped(character, key);
+        // nickfeld.textboxKeyTyped(character, key);
     }
 
     @Override
@@ -167,7 +162,7 @@ public class CraftChat extends GuiScreen {
             var5.printStackTrace();
         }
         ip.mouseClicked(x, y, button);
-        nickfeld.mouseClicked(x, y, button);
+        //  nickfeld.mouseClicked(x, y, button);
     }
 
     @Override
@@ -178,7 +173,7 @@ public class CraftChat extends GuiScreen {
     @Override
     public void updateScreen() {
         ip.updateCursorCounter();
-        nickfeld.updateCursorCounter();
+        //  nickfeld.updateCursorCounter();
     }
 
     static {

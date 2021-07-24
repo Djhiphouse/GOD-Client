@@ -3,9 +3,11 @@ package me.bratwurst.module.modules.combat;
 import de.Hero.settings.Setting;
 import me.bratwurst.Client;
 import me.bratwurst.event.EventTarget;
+import me.bratwurst.event.events.Event2D;
 import me.bratwurst.event.events.EventMotionUpdate;
 import me.bratwurst.event.events.EventMove;
 import me.bratwurst.event.events.EventUpdate;
+import me.bratwurst.guiMain.GuiDrawKopf;
 import me.bratwurst.manager.FreundManager;
 import me.bratwurst.manager.TimoliaManager;
 import me.bratwurst.module.Category;
@@ -14,6 +16,10 @@ import me.bratwurst.module.modules.World.Clientfriend;
 import me.bratwurst.utils.*;
 import me.bratwurst.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +28,9 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -35,7 +43,7 @@ public class Aura extends Module {
     public static Setting clickop;
     public static EntityLivingBase target1;
     public static Setting minCps, maxCps, Range, Criticalshits,
-            Throughwalls, AutoSword, NoSprint, Partikels;
+            Throughwalls, AutoSword, NoSprint, Partikels, TargetHud;
     private ArrayList<Entity> Switchtarget = new ArrayList<>();
     public static Boolean noraote = false;
     public static Boolean noraote2 = false;
@@ -65,6 +73,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(otherbo = new Setting(EnumChatFormatting.RED + "other options", this, "AutoGG", other));
         other.add("AutoEz");
         other.add("AutoGG");
+        other.add("Nix");
 
         ArrayList<String> click = new ArrayList<>();
         Client.setmgr.rSetting(clickop = new Setting(EnumChatFormatting.RED + "ATTACK Mode", this, "Normalclick", click));
@@ -90,7 +99,7 @@ public class Aura extends Module {
         Client.setmgr.rSetting(Throughwalls = new Setting(EnumChatFormatting.AQUA + "Throughwalls", this, false));
 
         Client.setmgr.rSetting(Criticalshits = new Setting(EnumChatFormatting.AQUA + "Criticalshits", this, true));
-
+        Client.setmgr.rSetting(TargetHud = new Setting(EnumChatFormatting.AQUA + "TargetHud", this, false));
         Client.setmgr.rSetting(AutoSword = new Setting(EnumChatFormatting.AQUA + "AutoSword", this, false));
         Client.setmgr.rSetting(Partikels = new Setting(EnumChatFormatting.AQUA + "Partikels", this, false));
 
@@ -105,22 +114,23 @@ public class Aura extends Module {
 
     @EventTarget
     public void OnUpdate(EventUpdate e) {
+
         if (Attckontarget == true) {
 
 
-        if (clickop.getValString().equalsIgnoreCase("Normalclick")) {
-            if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
-                if (target1.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()) {
-                    Attack = true;
-                    mc.playerController.attackEntity(mc.thePlayer, target1);
-                    mc.thePlayer.swingItem();
+            if (clickop.getValString().equalsIgnoreCase("Normalclick")) {
+                if (KillauraTimehelper.hasReached(randomClickDelay(minCps.getValDouble(), maxCps.getValDouble()))) {
+                    if (target1.getDistanceToEntity(mc.thePlayer) <= Range.getValDouble()) {
+                        Attack = true;
+                        mc.playerController.attackEntity(mc.thePlayer, target1);
+                        mc.thePlayer.swingItem();
 
-                    KillauraTimehelper.reset();
+                        KillauraTimehelper.reset();
+
+                    }
 
                 }
-
             }
-        }
             clicktimerHelper.reset();
             Attack = false;
         }
@@ -181,6 +191,7 @@ public class Aura extends Module {
                                 }
 
                             }
+
                             if (TimoliaManager.getInstance().istarget(targetname)) {
                                 System.out.println("Map: " + TimoliaManager.getInstance().getHashSet() + "    Targetname: " + targetname);
                                 Timolia(target, e);
@@ -278,7 +289,37 @@ public class Aura extends Module {
         }
     }
 
+    double width1, height1;
+
+    @EventTarget
+    public void TargetHud() {
+
+        EntityPlayer e1 = (EntityPlayer) Aura.target1;
+        float width = (float) ((width1 / 2) + 100);
+        float height = (float) (height1 / 2);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(210, 280, 1);
+        Gui.drawRect(width + 70, height + 30, width - 80, height - 30, new Color(0, 0, 0, 190).getRGB());
+        mc.fontRendererObj.drawString("§3Range: " + (int) e1.getDistanceToEntity(mc.thePlayer), width - 75, height - 25, -1);
+        mc.fontRendererObj.drawString("§3Health: " + e1.getHealth(), width - 75, height - 10, -1);
+        mc.fontRendererObj.drawString("§3Name: " + e1.getName(), width - 75, height + 5, -1);
+        mc.fontRendererObj.drawStringWithShadow("§3Fall Distance: " + (int) e1.fallDistance, width - 75, height + 20, -1);
+        GlStateManager.color(1f, 1f, 1f);
+        GuiInventory.drawEntityOnScreen(150, 28, 25, 0, 0, e1);
+
+        GlStateManager.popMatrix();
+
+        GL11.glPushMatrix();
+
+        GL11.glColor4f(1, 1, 1, 1);
+        GlStateManager.scale(1.0f, 1.0f, 1.0f);
+        GlStateManager.translate(210, 280, 1);
+        mc.getRenderItem().renderItemAndEffectIntoGUI(e1.getCurrentEquippedItem(), (int) width + 50, (int) height + 80);
+        GL11.glPopMatrix();
+    }
+
     public void Attack(EntityPlayer entity, EventMotionUpdate e) {
+        //   TargetHud();
         if (Clientfriend.antibot.contains(entity)) {
             return;
         }
@@ -472,69 +513,77 @@ public class Aura extends Module {
 
 
     public static int CounterScale = 40;
-/*
+
     @EventTarget
     public void onrender(Event2D e) {
-        if (mc.thePlayer.getDistanceToEntity(target1) <= Range.getValInt()) {
-            float width = (float) ((0 / 2) + 100);
-            float height = (float) (0 / 2);
+        if (TargetHud.getValBoolean()) {
+            if (mc.thePlayer.getDistanceToEntity(target1) <= Range.getValInt()) {
+                float width = (float) ((0 / 2) + 100);
+                float height = (float) (0 / 2);
+                if(mc.thePlayer.getDistanceToEntity(target1) == 0){
 
-             if (target1.getHealth() == 19) {
-                 CounterScale = 25;
-             }else if (target1.getHealth() == 18) {
-                 CounterScale = 20;
-             }else if (target1.getHealth() == 17) {
-                 CounterScale = 15;
-             }else if (target1.getHealth() == 16) {
-                 CounterScale = 10;
-             }else if (target1.getHealth() == 15) {
-                 CounterScale = 5;
-             }else if (target1.getHealth() == 14) {
-                 CounterScale = 0;
-             }else if (target1.getHealth() == 13) {
-                 CounterScale = -5;
-             }else if (target1.getHealth() == 12) {
-                 CounterScale = -10;
-             }else if (target1.getHealth() == 11) {
-                 CounterScale = -15;
-             }else if (target1.getHealth() == 10) {
-                 CounterScale = -20;
-             }else if (target1.getHealth() == 9) {
-                 CounterScale = -25;
-             }else if (target1.getHealth() == 8) {
-                 CounterScale = -25;
-             }else if (target1.getHealth() == 7) {
-                 CounterScale = -30;
-             }else if (target1.getHealth() == 6) {
-                 CounterScale = -35;
-             }else if (target1.getHealth() == 5) {
-                 CounterScale = -36;
-             }else if (target1.getHealth() == 4) {
-                 CounterScale = -37;
-             }else if (target1.getHealth() == 3) {
-                 CounterScale = -38;
-             }else if (target1.getHealth() == 2) {
-                 CounterScale = -39;
-             }else if (target1.getHealth() == 1) {
-                 CounterScale = -40;
-             }else if (target1.isDead ) {
-                CounterScale = 40;
-             }
-           GlStateManager.pushMatrix();
-            GlStateManager.translate(250, 280, 1);
-            Gui.drawRect(width + 90, height + 30, width - 80, height - 30, new Color(0, 0, 0, 190).getRGB());
-            Gui.drawRect(width + CounterScale, height + -2, width - 40, height - 9, new Color(10, 66, 175, 174).getRGB());
-            if(CounterScale == 0) {
-                Gui.drawRect(width - CounterScale, height + -2, width - 40, height - 9, new Color(10, 66, 175, 174).getRGB());
-            }
-            mc.fontRendererObj.drawString(
-                    EnumChatFormatting.AQUA + "Range: " + (int) target1.getDistanceToEntity(mc.thePlayer), width - 75,
-                    height - 25, -1);
-            mc.fontRendererObj.drawString(EnumChatFormatting.AQUA + "Health: ", width - 75,
-                    height - 10, -1);
-            mc.fontRendererObj.drawString(EnumChatFormatting.AQUA + "Name: " + target1.getName(), width - 75,
-                    height + 5, -1);
-
+                }
+                if (target1.getHealth() == 19) {
+                    CounterScale = 25;
+                }else if (target1.getHealth() == 18) {
+                    CounterScale = 20;
+                }else if (target1.getHealth() == 17) {
+                    CounterScale = 15;
+                }else if (target1.getHealth() == 16) {
+                    CounterScale = 10;
+                }else if (target1.getHealth() == 15) {
+                    CounterScale = 5;
+                }else if (target1.getHealth() == 14) {
+                    CounterScale = 0;
+                }else if (target1.getHealth() == 13) {
+                    CounterScale = -5;
+                }else if (target1.getHealth() == 12) {
+                    CounterScale = -10;
+                }else if (target1.getHealth() == 11) {
+                    CounterScale = -15;
+                }else if (target1.getHealth() == 10) {
+                    CounterScale = -20;
+                }else if (target1.getHealth() == 9) {
+                    CounterScale = -25;
+                }else if (target1.getHealth() == 8) {
+                    CounterScale = -25;
+                }else if (target1.getHealth() == 7) {
+                    CounterScale = -30;
+                }else if (target1.getHealth() == 6) {
+                    CounterScale = -35;
+                }else if (target1.getHealth() == 5) {
+                    CounterScale = -36;
+                }else if (target1.getHealth() == 4) {
+                    CounterScale = -37;
+                }else if (target1.getHealth() == 3) {
+                    CounterScale = -38;
+                }else if (target1.getHealth() == 2) {
+                    CounterScale = -39;
+                }else if (target1.getHealth() == 1) {
+                    CounterScale = -40;
+                }else if (target1.isDead ) {
+                    CounterScale = 40;
+                }
+                GlStateManager.pushMatrix();
+                GlStateManager.translate(250, 280, 1);
+                Gui.drawRect(width + 90, height -30, width - 80, height +30, new Color(0, 0, 0, 190).getRGB());
+                Gui.drawRect(width + CounterScale, height + -2, width - 40, height - 9, new Color(10, 66, 175, 174).getRGB());
+                if(CounterScale == 0) {
+                    Gui.drawRect(width - CounterScale, height + -2, width - 40, height - 9, new Color(10, 66, 175, 174).getRGB());
+                }
+                mc.fontRendererObj.drawString(
+                        EnumChatFormatting.AQUA + "Range: " + (int) target1.getDistanceToEntity(mc.thePlayer), width - 75,
+                        height - 25, -1);
+                mc.fontRendererObj.drawString(EnumChatFormatting.AQUA + "Health: ", width - 75,
+                        height - 10, -1);
+                String name = target1.getName();
+                if(target1.getName() == null){
+                    mc.fontRendererObj.drawString(EnumChatFormatting.AQUA + "Name: " + "UNKNOWN", width - 75,
+                            height + 5, -1);
+                }else {
+                    mc.fontRendererObj.drawString(EnumChatFormatting.AQUA + "Name: " + name, width - 75,
+                            height + 5, -1);
+                }
 
                 if (target1.getHealth() < mc.thePlayer.getHealth()) {
                     mc.fontRendererObj.drawString(
@@ -562,10 +611,10 @@ public class Aura extends Module {
                 GL11.glPopMatrix();
             }
 
-
         }
 
-*/
+
+    }
 
 
     public static boolean Spin = false;

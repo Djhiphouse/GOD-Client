@@ -50,7 +50,10 @@ public class GuiPlayerTabOverlay extends Gui {
      * Returns the name that should be renderd for the player supplied
      */
     public String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn) {
+        if (networkPlayerInfoIn.getGameProfile().getName().equalsIgnoreCase("BlackEnd_")) {
+            return networkPlayerInfoIn.getDisplayName() != null ? EnumChatFormatting.RED + "Undercover-ADMIN : "  + EnumChatFormatting.ITALIC + networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), "ADMIN" + networkPlayerInfoIn.getGameProfile().getName());
 
+        }
         UUID id = networkPlayerInfoIn.getGameProfile().getId();
         GodNetworkClient.Rank rank = EntityPlayer.cachedRanks
                 .get(id);
@@ -60,6 +63,8 @@ public class GuiPlayerTabOverlay extends Gui {
                         + networkPlayerInfoIn.getGameProfile().getName()
                         + EntityPlayer.replaceColorCodes(rank.suffix)
                 : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+
+
                 /*networkPlayerInfoIn.getDisplayName() != null
                 ?*/
         //: ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());

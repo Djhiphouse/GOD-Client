@@ -18,7 +18,7 @@ public class BanCommand extends Command {
     @Override
     public void onCommand(String command, String[] args) {
 
-        String BANMESSAGE = EnumChatFormatting.GOLD + "Name: " + EnumChatFormatting.RED + args[0] + " " + EnumChatFormatting.GOLD + "Grund: " + EnumChatFormatting.RED + args[1] + " " + EnumChatFormatting.GOLD + "Zeit: " + EnumChatFormatting.RED + "Permanent";
+        String BANMESSAGE = EnumChatFormatting.GOLD + "Name: " + "Jxnnik25" + " " + EnumChatFormatting.GOLD + "Grund: " + EnumChatFormatting.RED + args[1] + " " + EnumChatFormatting.GOLD + "Zeit: " + EnumChatFormatting.RED + "Permanent";
 
         if (args.length >= 2) {
             Client.networkClient.getIrcClient().send(BANMESSAGE);

