@@ -1,0 +1,90 @@
+---- Minecraft Crash Report ----
+// I bet Cylons wouldn't have this problem.
+
+Time: 18.07.21 23:02
+Description: Rendering screen
+
+java.lang.NullPointerException: Rendering screen
+	at me.bratwurst.guiMain.CraftChat.drawScreen(CraftChat.java:116)
+	at net.minecraft.client.renderer.EntityRenderer.func_181560_a(EntityRenderer.java:1235)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1040)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:453)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at me.bratwurst.guiMain.CraftChat.drawScreen(CraftChat.java:116)
+
+-- Screen render details --
+Details:
+	Screen name: me.bratwurst.guiMain.CraftChat
+	Mouse location: Scaled: (863, 89). Absolute: (1727, 849)
+	Screen size: Scaled: (960, 514). Absolute: (1920, 1027). Scale factor of 2
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['§a[§bGod§cOwner§a] §7Drew7065'/156588, l='MpServer', x=-23,87, y=65,00, z=89,29]]
+	Chunk stats: MultiplayerChunkCache: 441, 441
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -24,00,78,00,-24,00 - World: (-24,78,-24), Chunk: (at 8,4,8 in -2,-2; contains blocks -32,0,-32 to -17,255,-17), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Level time: 202552447 game time, 206580272 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 34 total; [EntityItemFrame['entity.ItemFrame.name'/536870966, l='MpServer', x=-21,50, y=88,50, z=-10,03], EntityItemFrame['entity.ItemFrame.name'/536870967, l='MpServer', x=-22,50, y=92,50, z=-10,03], EntityPlayerSP['§a[§bGod§cOwner§a] §7Drew7065'/156588, l='MpServer', x=-23,87, y=65,00, z=89,29], EntityItemFrame['entity.ItemFrame.name'/536870968, l='MpServer', x=-22,50, y=91,50, z=-10,03], EntityItemFrame['entity.ItemFrame.name'/536870969, l='MpServer', x=-22,50, y=90,50, z=-10,03], EntityItemFrame['entity.ItemFrame.name'/536870970, l='MpServer', x=-22,50, y=89,50, z=-10,03], EntityItemFrame['entity.ItemFrame.name'/536870971, l='MpServer', x=-22,50, y=88,50, z=-10,03], EntityItemFrame['entity.ItemFrame.name'/536870972, l='MpServer', x=-23,50, y=92,50, z=-10,03], EntityItemFrame['entity.ItemFrame.name'/536870973, l='MpServer', x=-23,50, y=91,50, z=-10,03], EntityOtherPlayerMP['§4Freddy1994Phil'/443, l='MpServer', x=-13,47, y=78,00, z=-18,66], EntityItemFrame['entity.ItemFrame.name'/536870974, l='MpServer', x=-23,50, y=90,50, z=-10,03], EntityOtherPlayerMP['§2Insane89m'/440, l='MpServer', x=-13,53, y=78,00, z=-28,53], EntityItemFrame['entity.ItemFrame.name'/536870975, l='MpServer', x=-23,50, y=89,50, z=-10,03], EntityOtherPlayerMP['§cEnte1'/452, l='MpServer', x=-18,38, y=78,00, z=-13,47], EntityOtherPlayerMP['§cWOLLROCK'/449, l='MpServer', x=-28,38, y=78,00, z=-13,59], EntityOtherPlayerMP['§cLukxsYT'/377740, l='MpServer', x=-33,69, y=78,00, z=-28,53], EntityOtherPlayerMP['§4§lShop'/458, l='MpServer', x=-33,63, y=78,00, z=-18,47], EntityOtherPlayerMP['§cDerEchteGian'/455, l='MpServer', x=-28,22, y=78,00, z=-33,34], EntityOtherPlayerMP['§9Skill_Ben'/446, l='MpServer', x=-18,38, y=78,00, z=-33,69], EntityItemFrame['entity.ItemFrame.name'/348, l='MpServer', x=-38,50, y=27,50, z=104,03], EntityItemFrame['entity.ItemFrame.name'/349, l='MpServer', x=-33,50, y=27,50, z=104,03], EntityItemFrame['entity.ItemFrame.name'/350, l='MpServer', x=-39,50, y=18,50, z=111,03], EntityItemFrame['entity.ItemFrame.name'/352, l='MpServer', x=-37,97, y=42,50, z=114,50], EntityItemFrame['entity.ItemFrame.name'/354, l='MpServer', x=-41,97, y=42,50, z=114,50], EntityItemFrame['entity.ItemFrame.name'/361, l='MpServer', x=-22,50, y=19,50, z=103,03], EntityItemFrame['entity.ItemFrame.name'/362, l='MpServer', x=-25,50, y=19,50, z=103,03], EntityItemFrame['entity.ItemFrame.name'/363, l='MpServer', x=-26,50, y=27,50, z=113,03], EntityItemFrame['entity.ItemFrame.name'/373, l='MpServer', x=-15,50, y=27,50, z=105,03], EntityItemFrame['entity.ItemFrame.name'/374, l='MpServer', x=-11,50, y=27,50, z=105,03], EntityItemFrame['entity.ItemFrame.name'/375, l='MpServer', x=-15,50, y=41,50, z=106,03], EntityItemFrame['entity.ItemFrame.name'/376, l='MpServer', x=-7,03, y=40,50, z=110,50], EntityItemFrame['entity.ItemFrame.name'/377, l='MpServer', x=-12,50, y=19,50, z=116,03], EntityArmorStand['§2§lModerator Insane89m §4§l§f§lund §4§lKöln§f§lClan §4§lOwner :D'/428, l='MpServer', x=-23,41, y=66,66, z=123,00], EntityArmorStand['§l§4S§2p§1e§9n§7d§5e§4n§2-§9B§2r§4u§7n§6n§2e§1n'/436, l='MpServer', x=-22,53, y=20,66, z=120,31]]
+	Retry entities: 0 total; []
+	Server brand: BungeeCord (git:BungeeCord-Bootstrap:1.16-R0.5-SNAPSHOT:a7c6ede:1549) <- PaperSpigot
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:401)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2335)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:466)
+	at net.minecraft.client.main.Main.main(Main.java:106)
+	at Start.main(Start.java:11)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 10 (amd64) version 10.0
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	Java Version: 1.8.0_292, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 316418480 bytes (301 MB) / 1167589376 bytes (1113 MB) up to 3774873600 bytes (3600 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	Launched Version: mcp
+	LWJGL: 2.9.4
+	OpenGL: NVIDIA GeForce RTX 2070/PCIe/SSE2 GL version 4.6.0 NVIDIA 465.89, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 12x Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+	OptiFine Version: OptiFine_1.8.8_HD_U_H8
+	Render Distance Chunks: 8
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 NVIDIA 465.89
+	OpenGlRenderer: NVIDIA GeForce RTX 2070/PCIe/SSE2
+	OpenGlVendor: NVIDIA Corporation
+	CpuCount: 12

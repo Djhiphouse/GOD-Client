@@ -222,7 +222,13 @@ public class GuiIngame extends Gui {
         }
 
         Event2D eventRender2D = new Event2D(scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
+        if(eventRender2D == null){
+
+        }
         eventRender2D.call();
+
+        //
+
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);

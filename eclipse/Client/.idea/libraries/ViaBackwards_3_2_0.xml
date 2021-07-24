@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="ViaBackwards-3.2.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Music/ViaBackwards-3.2.0.jar!/" />
+      <root url="jar://$USER_HOME$/Music/okio-2.10.0.jar!/" />
+      <root url="jar://$USER_HOME$/Music/lambdaattack-core-2.4.0.jar!/" />
+      <root url="jar://$USER_HOME$/Music/kotlin-stdlib-1.5.0.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+      <root url="jar://$USER_HOME$/Music/okhttp-4.9.0.jar!/" />
+      <root url="jar://$USER_HOME$/Music/ViaSnakeYaml-1.27.jar!/" />
+      <root url="jar://$USER_HOME$/Music/ViaRewind-2.0.1.jar!/" />
+      <root url="jar://$USER_HOME$/Music/ViaRewind-1.5.3.jar!/" />
+      <root url="jar://$USER_HOME$/Music/ViaVersion-3.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -73,7 +73,7 @@
     <content url="file://$MODULE_DIR$/../../src/minecraft">
       <sourceFolder url="file://$MODULE_DIR$/../../src/minecraft" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="openjdk-16" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
@@ -448,7 +448,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../libs/okhttp-4.9.0.jar!/" />
@@ -592,5 +592,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="ViaBackwards-3.2.0" level="project" />
+    <orderEntry type="library" name="okhttp-4.9.0" level="project" />
   </component>
 </module>

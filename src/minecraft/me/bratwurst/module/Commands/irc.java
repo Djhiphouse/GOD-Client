@@ -28,6 +28,7 @@ public class irc extends Command {
             if (!text.contains("Hure") && !text.contains("Hurensohn") && !text.contains("Hundesohn") && !text.contains("Sperma") && !text.contains("Penis") && !text.contains("Nigger") && !text.contains("SkidClient") && !text.contains("Dev ist Skid") && !text.contains("fick") && !text.contains("ficken") && !text.contains("ficker")) {
 
                 Client.networkClient.getIrcClient().send(text);
+
             } else {
                 Beleidigungsmeter++;
                 if (Beleidigungsmeter == 1) {

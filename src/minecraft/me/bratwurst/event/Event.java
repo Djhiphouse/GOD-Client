@@ -54,9 +54,9 @@ public abstract class Event {
                         data.target.invoke(data.source, event);
                     }
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+
                 }
 
             }

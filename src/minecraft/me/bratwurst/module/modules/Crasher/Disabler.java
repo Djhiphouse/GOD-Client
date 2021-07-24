@@ -98,6 +98,7 @@ public void Verus(ProcessPacketEvent e) {
 }
 
 public void zone(ProcessPacketEvent e) {
+    System.out.println("gggggg");
     if(e.getPacket() instanceof S08PacketPlayerPosLook) {
         S08PacketPlayerPosLook pppl = (S08PacketPlayerPosLook) e.getPacket();
         e.setCancelled(true);

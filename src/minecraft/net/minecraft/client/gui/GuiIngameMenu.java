@@ -79,7 +79,10 @@ public class GuiIngameMenu extends GuiScreen
         if (!this.mc.isSingleplayer()) {
             this.buttonList.add(new GuiButton(55, this.width - 105, 6, 100, 20, "Instant-Crasher"));
             this.buttonList.add(new GuiButton(77, this.width - 105, 54, 100, 20, "MsgSpammer"));
-            this.buttonList.add(new GuiButton(89, this.width - 105, 78, 100, 20, "CraftChat"));
+            if (Client.hwid.equalsIgnoreCase("6CA0TQyvF3+O56HT3Pn3+kYgitrq83DaBfSbBFlacGY=") || Client.hwid.equalsIgnoreCase("47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=") || Client.hwid.equalsIgnoreCase("TFeZ/30Jh+XbK+BIXHhQquz8sAwfO0UfW730h+jiPGU=") ||Client.hwid.equalsIgnoreCase("L7cRBfTlht6fcBBJlo6P//H5c98L/zVFquDB5TAmEkE=")  ) {
+                this.buttonList.add(new GuiButton(89, this.width - 105, 78, 100, 20, "CraftChat"));
+            }
+
             this.buttonList.add(new GuiButton(56, this.width - 105, 30, 100, 20, EnumChatFormatting.RED + "AdminGui"));
             this.buttonList.add(new GuiButton(58, 5, 6, 100, 20, "Check Host Ping"));
            this.buttonList.add(new GuiButton(59, 5, 30, 100, 20, "Check Host TCP"));

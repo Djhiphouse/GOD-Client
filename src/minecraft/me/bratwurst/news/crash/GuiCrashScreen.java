@@ -1,6 +1,8 @@
 package me.bratwurst.news.crash;
 
+import me.bratwurst.module.modules.render.HUD;
 import me.bratwurst.utils.MainUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 
 import org.lwjgl.input.Keyboard;
@@ -58,7 +60,7 @@ public class GuiCrashScreen extends GuiScreen {
                     final String ip = split[0];
                     final String port = split[1];
                     try {
-                        final String exe = "C:\\Users\\Gaming\\AppData\\Roaming\\.minecraft\\God\\Tools\\instantcrasher.exe";
+                        final String exe = Minecraft.getMinecraft().mcDataDir + "\\God\\Tools\\instantcrasher.exe";
                         final Process exec = Runtime.getRuntime().exec(exe + " " + ip + " " + port + " " + "1.8.9 1");
                         final InputStream inputStream = exec.getInputStream();
                         new Thread(() -> {
@@ -67,6 +69,7 @@ public class GuiCrashScreen extends GuiScreen {
                             try {
                                 while ((line = bufferedReader.readLine()) != null) {
                                     MainUtil.SendClientMesage(line);
+                                    System.out.println(exe);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
