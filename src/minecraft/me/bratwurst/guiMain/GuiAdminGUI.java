@@ -23,7 +23,8 @@ public class GuiAdminGUI extends GuiScreen {
     public void initGui() {
 
 
-        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("ForceOP-Pl")));
+        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("ForceOp-PL")));
+        this.buttonList.add(new GuiButton(113, this.width / 2 - 155 + 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("Plugin New")));
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done", new Object[0])));
 
 
@@ -36,6 +37,10 @@ public class GuiAdminGUI extends GuiScreen {
         }
         if(button.id == 110){
             mc.displayGuiScreen(new GuiForceOp(this));
+
+        }
+        if(button.id == 113){
+            mc.displayGuiScreen(new GuiPlugin());
 
         }
 
